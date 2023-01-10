@@ -112,3 +112,17 @@ These are the types of questions psychologists try to answer.
     * <strong>Functionalism</strong> is the study of the purpose and function of behaviors and mental processes.
       * Influenced by Darwin's Theory of Evolution
       * Describes what the mind <em>does</em>
+
+   * <strong>Behaviorism</strong> is the study of observable behavior.<br>
+      * Behavior is less subjective, and more scientific.<br>
+      * Ex. How does a dog behave if you give it a bone? <br>
+      
+   * <strong>Cognitive psychology</strong><br>
+      * Became popular more recently (1950's-1960's)<br>
+      * Studies mental processes such as how the brain actually works.<br>
+   
+   * <strong>Psychoanalytic Perspective</strong><br>
+      * <strong>Psychoanalytic theory</strong> attempts to explain how behavior and personality are influenced by unconscious processes. <br> 
+      * Studied by <strong>Sigmund Freud</strong><br>
+   
+   * <strong>Cross-cultural psychology</strong> is a field that draws comparisons about individual and group behavios across cultures<br>
