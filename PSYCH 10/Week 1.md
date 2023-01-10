@@ -126,3 +126,5 @@ These are the types of questions psychologists try to answer.
       * Studied by <strong>Sigmund Freud</strong><br>
    
    * <strong>Cross-cultural psychology</strong> is a field that draws comparisons about individual and group behavios across cultures<br>
+      * Psychology is WEIRD.  <strong>W</strong>estern, <strong>E</strong>ducated, <strong>I</strong>ndustrialized, <strong>R</strong>ich, <strong>D</strong>emocratic. <br>
+      * Most of the sample are people from the populations described above.  A very common argument in psychology is that the sample is not representative of everyone in the world.  Thus, comparing psychology between cultures is becoming more popular.<br>
