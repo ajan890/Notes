@@ -141,7 +141,7 @@ You can also create new words based on other smaller words you know.  <br>
 For example, "blobfish".<br>
 
 Other examples of derivations include "Shopaholic", a person who really likes shopping, and it is derived from "alcoholic". <br>
-* "Alcholic" can be meaningfully broken down into "alcohol" + "-ic". <br>
+* "Alcoholic" can be meaningfully broken down into "alcohol" + "-ic". <br>
 * However, "Shopaholic" inherits "-aholic" rather than "-ic".  This interesting because "-aholic" does not mean anything by itself. <br>
 * The same goes with "Chocoholic", and "Workaholic" <br>
 * Native speakers just know that it sounds more correct to say "Shopaholic" rather than "Shopic". <br>
