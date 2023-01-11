@@ -10,6 +10,8 @@
 * Sociolinguistics<br>
   * How we use language in the world<br>
 * Data From Multiple Languages<br>
+* Understanding Human Language<br>
+  * <em>How we learn and use it in daily life</em><br>
 
 ### Objectives
 
@@ -27,6 +29,13 @@
 * <strong>Understand...</strong><br>
   * what it means to know a language.<br>
 
+* <strong>Short quiz: true or false </strong><br>
+> English has 5 vowels (False)<br>
+> There are about 6,000 languages spoken today (True)<br>
+> In sentences like "I didn't see nobody" the two negatives cancel out (False)<br>
+> Some languages don't have rules of grammar (False)<br>
+> "ain't" is not a word. (False)<br>
+
 ## What is Linguistics?
 
 <strong>Linguistics</strong> is the scientific study of language<br>
@@ -39,12 +48,12 @@
 
 ## What is Language?
 
-<strong>Language</strong> is a tool for human communication.<br>
+<strong>Language</strong> is a tool for human communication, as well as a form of knowledge.<br>
 * A large portion of language occurs in the subconscious.  Part of the course is to make you aware of some of the subconsious parts.<br>
   * For example, you subconsciously understand other people are trying to say to you.  You cannot hear it, and choose not to understand it, if you know the language.<br>
   * Language is a type of knowledge that converts symbols (visual), sound (auditory), or even feelings (eg. Braille) into concepts and ideas.<br>
   
-What does it mean to "know" a language?
+### What does it mean to "know" a language?
 * It means you know a set of building blocks, the blocks being grammar, vocabulary, etc., and how to combine them into more complex structures, in this case ideas.<br>
 * You can recognize the blocks and use them <em>unconsciously</em>.<br>
   * Unconscious Knowledge?<br>
@@ -53,7 +62,18 @@ What does it mean to "know" a language?
         > "I can <strong>guaran-goddamn-tee</strong> you of that."<br>
         > "What a <strong>fan-fuckin'-tastic</strong> day!"<br>
       * You may have never seen the bold words before, but you know very well what they mean, because they are composed of blocks that you know before. <br>
-      * Furthermore, you were likely never taught to use expletive infixation, yet you know how to use it anyways, and are able to differentiate between words are inserted at a normal or weird position.<br>
+      * Ex.<br>
+        > "I've never been to Kalamazoo" <br>
+        > "Ka-fuckin'-lamazoo" (Sounds incorrect) <br>
+        > "Kala-fuckin-mazoo" (Sounds fine) <br>
+        > "Kalama-fuckin'-zoo" (Sounds fine) <br>
+      * Ex. <br>
+        > "I've never been to Tatamagouche" <br>
+        > "ta-fuckin'-tamagouche" (Sounds incorrect) <br>
+        > "tata-fuckin'-magouche" (Sounds fine) <br>
+        > "tatama-fuckin'-gouche" (Sounds fine) <br>
+        > "tatamagou-fuckin'-che" (Sounds incorrect) <br>
+      * You were likely never taught to use expletive infixation, yet you know how to use it anyways, and are able to differentiate between words are inserted at a normal or weird position.  English native speakers would tend to agree although it was not explicitly taught.<br>
       * Since you are able to judge what sounds correct and what sounds wrong, although you were never taught expletive infixation, it implies that there was some rule that you <em>did</em> know that was working subconsciously.<br>
       
  ## Building Blocks and Rules
@@ -83,6 +103,10 @@ Your knowledge of English tells you that [rt] is not possible as a starting soun
 
 Why is it that sometimes that plural -s is pronounced as [z] and sometimes [s]?  You just know because you are familiar with the sounds of the language.<br>
 
+<strong>The Wug Test:</strong>
+ * Children as young as two years old were asked to pluralize made-up words and make made-up verbs past tense.<br>
+ * The goal of this test was to prove that native speakers subconsciously know how to change word forms and did not just memorize a bank of words.<br>
+
 ### Morphology
   
 <strong>Morphology:</strong> is the knowledge of word structure. <br>
@@ -106,12 +130,23 @@ You know there are constraints on how a word can be build:<br>
 
 Your knowledge of language allows you to build <strong>complex word structures:</strong><br>
 <em>"Hey, did they change the <strong>failed password security question answer attempts limit</strong>?"</em><br>
+<em>"Ministers mull <strong>volcano ash cloud light chaos measures</strong>."</em><br> 
+<em>"I just got an <strong>airbag malfunction safety recall follow-up notice</strong>."</em><br> 
 
-### Syntax
+### New Words
 
-You can also create new words based on other smaller words you know.  For example, "Shopaholic" is a person who really likes shopping, and it is derived from "alcoholic". <br>
+You can also create new words based on other smaller words you know.  <br>
+
+![image](https://user-images.githubusercontent.com/66571533/211766236-e126d5cb-a2e2-4859-9b16-23ec32e498bc.png)<br>
+For example, "blobfish".<br>
+
+Other examples of derivations include "Shopaholic", a person who really likes shopping, and it is derived from "alcoholic". <br>
 * "Alcholic" can be meaningfully broken down into "alcohol" + "-ic". <br>
 * However, "Shopaholic" inherits "-aholic" rather than "-ic".  This interesting because "-aholic" does not mean anything by itself. <br>
+* The same goes with "Chocoholic", and "Workaholic" <br>
+* Native speakers just know that it sounds more correct to say "Shopaholic" rather than "Shopic". <br>
+
+### Syntax
 
 Part of your knowledge of language is <strong>Syntax</strong>, or phrase and sentence structure.<br>
 * You know subconsciously that the word should be "Shopaholic", and not "Shopic".<br>
@@ -205,6 +240,13 @@ There are two types of Linguistic Knowledge:
   * Subject to physical limitations. (Breath, fatigue, nerves, etc.)<br>
   
 Linguistic competence does not necessarily match linguistic performance.  For example, cases of speech error from jumbling up words.  
+> "Don't you fake your shinger at me." <br>
+
+  Target: "Don't you shake your finger at me."<br>
+  
+> "We're not the only ones with screw looses."<br>
+
+  Target: "We're not the only ones with screws loose."<br>
 
 # Summary
 When you know language, you know... <br>
