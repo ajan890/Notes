@@ -226,6 +226,7 @@ A <strong>correlational design</strong> measures how closely two factors/variabl
         * <strong>Operational definition</strong> -> a description of a property in concrete measurable terms.<br>
    > Variables: # minutes spent browsing (non-academic internet use), Grades on final exam<br> 
 3. Collect the data<br>
+  > Students internet use during a class are monitored, amd their final exam scores are compared.<br>
 4. Analyse data and draw conclusions<br>
 
 A correlational design would have correlation coefficients between -1 and 1.<br>
@@ -233,4 +234,33 @@ A correlational design would have correlation coefficients between -1 and 1.<br>
 
 <strong>JUST BECAUSE TWO VARIABLES ARE CORRELATED DOES NOT MEAN ONE CAUSES THE OTHER</strong><br>
 
+<strong>Third Variables</strong><br>
+* A third variable is one that could vause both the variables being correlated.  <br>
+* Ex.<br>
+  * Consider an expierment correlating internet usage in class and test scores.<br>
+  * They may be correlated, but the quality of the professor may also influence both variables.<br>
+  * This can make the experiment less accurate since many other variabls may be present.<br>
+
+#### Limits and Benefits of Correlational Designs
+<strong>Limitations:</strong><br>
+* Correlation cannot infer causation<br>
+  * Issues with directionality and potential third variables<br>
+
+<strong>Benefits:</strong><br>
+* Can <em>sometimes</em> be a more ethical approach<br>
+* Establishes relationships/makes predictions, can inspire experiments.<br>
+
+#### Experimental Designs
+<strong>Steps:</strong><br>
+1. Formulate a testable hypothesis<br>
+  > Children who watch adults display aggressive behavior will subsequently behave more aggressively.<br>
+2. Select research method and design the study<br>
+  > Research method: Experimental methodology/design<br>
+  > Independent Variable: Whether or not the kids saw the adult model aggressive behavior.<br>
+  > Dependent Variable: The amount of aggresive behavior kids displayed (measured by kicks, punches, etc.)<br>
+3. Collect the data<br>
+  > Kids are split into two groups, one watches a film of an adult beating up a bobo doll, and the other watches a film of an adult playing with a bobo doll.<br>
+  > All other variables must be kept the same: the amount of time kids spent with the bobo doll, the room, the bobo doll, etc.<br>
+
+4. Analyse data and draw conclusions<br>
 
