@@ -1,7 +1,7 @@
 # Week 1
 
 ## Logistics
-* Assignents are due Mondays at 11:59 pm.
+* Assignments are due Mondays at 11:59 pm.
 * Textbook is found [here](https://openstax.org/details/books/psychology)
 
 ### Grading
@@ -105,9 +105,9 @@ These are the types of questions psychologists try to answer.
 ## Schools of thought in Psychology
 
 ### Structuralism vs. Functionalism
-<strong>Structuralism</strong> is the attempt to analyse conscious experience by breaking it down into basic elements.  <em>How is the mind structured?</em><br>
+<strong>Structuralism</strong> is the attempt to analyze conscious experience by breaking it down into basic elements.  <em>How is the mind structured?</em><br>
    * Structuralism was inspired by chemistry.  Like molecules with specific properties are made of elements, Wilhelm Wundt and Edward Titchener believed that all feelings are a combination of certain base feelings called <strong>sensations</strong>.<br>
-   * <strong>Introspection</strong>, or the subjective observation of one's own experiences, was used.  For example, an apple can be characterized by some sensations, such as crunch and juicyness, described by how people experience it themselves.<br>
+   * <strong>Introspection</strong>, or the subjective observation of one's own experiences, was used.  For example, an apple can be characterized by some sensations, such as crunch and juiciness, described by how people experience it themselves.<br>
    * The problem with this is that experience is very subjective, and it is difficult to access subconscious aspects of cognition.<br>
    
 <strong>Functionalism</strong> is the study of the purpose and function of behaviors and mental processes.<br>
@@ -128,7 +128,7 @@ These are the types of questions psychologists try to answer.
    * Studied by <strong>Sigmund Freud</strong><br>
    
 ### Cross-cultural Psychology
-   * A field that draws comparisons about individual and group behavios across cultures<br>
+   * A field that draws comparisons about individual and group behavior across cultures<br>
    * Psychology is WEIRD.  <strong>W</strong>estern, <strong>E</strong>ducated, <strong>I</strong>ndustrialized, <strong>R</strong>ich, <strong>D</strong>emocratic. <br>
    * Most of the sample are people from the populations described above.  A very common argument in psychology is that the sample is not representative of everyone in the world.  Thus, comparing psychology between cultures is becoming more popular.<br>
 
@@ -177,12 +177,12 @@ There are two types of research, <strong>basic research</strong> and <strong>app
       * "Of course the Lakers were going to win that game!"<br>
       * "Of course ______ was going to win the election!"<br>
 
-Findings seem obvious once we know them, were once controversial.
+Findings seem obvious once we know them, but they were once controversial.
    * Ex.<br>
       > Making errors during learning is <strong>bad!</strong><br>
       > Making errors during learning is <strong>good!</strong><br>
 
-### Scientific Method
+## Scientific Method
 
 The scientific method helps reduce bias. <br>
 <img src="https://user-images.githubusercontent.com/66571533/211949686-4cd91525-b43c-46d9-a6f1-5c2127203fa8.png"
@@ -198,10 +198,10 @@ The scientific method helps reduce bias. <br>
 * A good theory must be falsifiable.  <br>
    * <strong>Darwin's Theory of Evolution vs. Freud's Psychoanalytic Theory</strong><br>
    * Darwin's Theory of Evolution can be falsified with concrete evidence gathered by observation. <br>
-   * Freud's psychoanalytic theory is not a good theory, since it focuses on subconscious thoughts, which cannot be retrived accurately.<br><br>
+   * Freud's psychoanalytic theory is not a good theory, since it focuses on subconscious thoughts, which cannot be retrieved accurately.<br><br>
 * If findings support the hypothesis then confidence in the theory grows.<br>
 
-<strong>What makes a good hyposhesis?</strong><br>
+<strong>What makes a good hypothesis?</strong><br>
 * A good hypothesis must be specific and testable.<br>
    * Can we make this more specific?<br>
       > Drivers who use cell phones more frequently will get in more accidents.<br>
@@ -209,9 +209,9 @@ The scientific method helps reduce bias. <br>
    * (Yes.) A better hypothesis would be:<br>
       > Drivers who use cell phones while driving will get in more accidents.<br>
 
-### How we test a hypothesis
+## How we test a hypothesis
 
-#### Correlational Designs
+### Correlational Designs
 A <strong>correlational design</strong> measures how closely two factors/variables vary together, or how well you can predict a change in one variable from observing a change in the other variable.<br>
 * <strong>Positive(+) correlation:</strong> both variables either increase or decrease together. <br>
 * <strong>Negative(-) correlation:</strong> one variable increases when the other decreases.<br>
@@ -226,22 +226,22 @@ A <strong>correlational design</strong> measures how closely two factors/variabl
         * <strong>Operational definition</strong> -> a description of a property in concrete measurable terms.<br>
    > Variables: # minutes spent browsing (non-academic internet use), Grades on final exam<br> 
 3. Collect the data<br>
-  > Students internet use during a class are monitored, amd their final exam scores are compared.<br>
-4. Analyse data and draw conclusions<br>
+   > Students internet use during a class are monitored, amd their final exam scores are compared.<br>
+4. Analyze data and draw conclusions<br>
 
 A correlational design would have correlation coefficients between -1 and 1.<br>
 ![image](https://user-images.githubusercontent.com/66571533/211952539-951542c6-14ca-47ef-bfe8-5a3b397833d0.png)<br>
 
 <strong>JUST BECAUSE TWO VARIABLES ARE CORRELATED DOES NOT MEAN ONE CAUSES THE OTHER</strong><br>
 
-<strong>Third Variables</strong><br>
-* A third variable is one that could vause both the variables being correlated.  <br>
+### Third Variables
+* A third variable is one that could cause both the variables being correlated.  <br>
 * Ex.<br>
-  * Consider an expierment correlating internet usage in class and test scores.<br>
+  * Consider an experiment correlating internet usage in class and test scores.<br>
   * They may be correlated, but the quality of the professor may also influence both variables.<br>
-  * This can make the experiment less accurate since many other variabls may be present.<br>
+  * This can make the experiment less accurate since many other variables may be present.<br>
 
-#### Limits and Benefits of Correlational Designs
+### Limitations and Benefits of Correlational Designs
 <strong>Limitations:</strong><br>
 * Correlation cannot infer causation<br>
   * Issues with directionality and potential third variables<br>
@@ -250,17 +250,96 @@ A correlational design would have correlation coefficients between -1 and 1.<br>
 * Can <em>sometimes</em> be a more ethical approach<br>
 * Establishes relationships/makes predictions, can inspire experiments.<br>
 
-#### Experimental Designs
+### Experimental Designs
+
+In an experimental design, the investigator systematically manipulates a variable (IV) under carefully controlled conditions and observes whether any changes occur in a second variable (DV) as a result.<br>
+
+* <strong>Independent Variable (IV)</strong><br>
+   * Factor that is varied or manipulated.<br>
+* <strong>Dependent Variable (DV)</strong><br>
+   * The behavior that is measured (and is expected to change as a function of change in the independent variable)<br>
+
+In an experimental design, it is important to keep everything else the <em>same</em> across the two levels (or conditions) of the IV.
+The other variables are called <strong>control variables</strong>.
+
 <strong>Steps:</strong><br>
 1. Formulate a testable hypothesis<br>
   > Children who watch adults display aggressive behavior will subsequently behave more aggressively.<br>
 2. Select research method and design the study<br>
   > Research method: Experimental methodology/design<br>
   > Independent Variable: Whether or not the kids saw the adult model aggressive behavior.<br>
-  > Dependent Variable: The amount of aggresive behavior kids displayed (measured by kicks, punches, etc.)<br>
+  > Dependent Variable: The amount of aggressive behavior kids displayed (measured by kicks, punches, etc.)<br>
+  > Control Variables: The room the experiment is done in, the experimenter, the doll, etc.
 3. Collect the data<br>
   > Kids are split into two groups, one watches a film of an adult beating up a bobo doll, and the other watches a film of an adult playing with a bobo doll.<br>
   > All other variables must be kept the same: the amount of time kids spent with the bobo doll, the room, the bobo doll, etc.<br>
+4. Analyze data and draw conclusions<br>
+5. Report the findings<br>
 
-4. Analyse data and draw conclusions<br>
+* After watching an adult model show aggression towards the doll, children were aggressive.<br>
+* Based on this alone, can we say that watching the adult model <strong>caused</strong> an increase in child aggression?<br>
+   * No, because to show that "X causes Y,"  we should measure the behavior (Y) in both the experimental group and the control group.  (Or compare two experimental groups with each other)<br>
 
+### Ensuring the groups are equal
+
+<strong>Random Assignment</strong><br>
+   * Assigning participants randomly to experimental conditions<br>
+      * Increases the chances that characteristics (eg. age, gender, IQ) will be equally distributed across the groups<br>
+
+<strong>How do we <em>select</em> participants for the study?</strong><br>
+   * <strong>Population:</strong> everyone in the group the experimenter is interested in<br>
+   * <strong>Sample:</strong> a subset of a population<br>
+   * Generalization is important!
+
+<strong>Random Sampling</strong><br>
+  * Every person in the population has an equal chance of being selected.<br>
+  * <em>Convenience sample:</em> a sample that consists of people who are conveniently available for the study (Not good!)<br>
+
+### Limitations and Benefits of Experimental Designs
+<strong>Limitations:</strong><br>
+* May be impractical or unethical to address certain types of research questions using an experimental design<br>
+* Highly controlled lab settings can make generalization of findings to the real world more difficult<br>
+
+<strong>Benefits:</strong><br>
+* CAN infer causation<br>
+* Precise control over variables can eliminate alternative explanations<br>
+
+## Recap
+What's the difference between experimental and correlational designs?<br>
+
+<strong>Correlation:</strong><br>
+* Measures the <strong>strength</strong> of the relationship between two things (-1 to 1).<br>
+* Observed<br>
+* <strong>Cannot infer causation</strong> (does A cause B, or B cause A, or is there some third variable?)<br>
+
+<strong>Experiment:</strong><br>
+* <strong>Experimentally manipulating</strong> an independent variable to see its impact on a dependent variable<br>
+* Is controlled (Impact of X on Y while holding Z's constant)<br>
+* <strong>Can infer causation</strong> (change an IV <em>potentially</em> <strong>causes</strong> a change in the DV)<br>
+
+# Summary
+### Psychology is the study of the mind and behavior.<br>
+   * Psychology dates back to the times of ancient Egyptians, and the Greek and Roman Empires, but only recently became a science.<br>
+      * Influenced by evolution and medicine.<br>
+
+### Modern psychology has six schools of thought:
+   * Structuralism - analyzes conscious experience by breaking it down into basic elements<br>
+   * Functionalism - study of the purpose and function of behaviors and mental processes<br>
+   * Behaviorism - study of observable behavior<br>
+   * Cognitive Psychology - studies mental processes<br>
+   * Psychoanalytics - attempts to explain how behavior and personality are influenced by unconscious processes<br>
+   * Cross-cultural Psychology - draws comparisons about individual and group behavior across cultures<br>
+
+### Research
+Research begins with a theory and the formation of a hypothesis.
+* A good theory is one that can be falsified, and a good hypothesis is one that is specific and can be tested.<br>
+* To test the hypothesis:
+   * <strong>Correlational Designs:</strong><br>
+      * Measures how closely two factors/variables vary together<br>
+      * Coefficient ranges from -1 to 1<br>
+      * Observational study<br>
+      * Cannot infer causation<br>
+   * <strong>Experimental Design:</strong><br>
+      * Experimenter alters independent variable, dependent variable is measured.<br>
+      * Is controlled<br>
+      * Can infer causation<br>
