@@ -104,27 +104,133 @@ These are the types of questions psychologists try to answer.
     
 ## Schools of thought in Psychology
 
-  * Structuralism vs. Functionalism
-    * <strong>Structuralism</strong> is the attempt to analyse conscious experience by breaking it down into basic elements.  <em>How is the mind structured?</em><br>
-      * Structuralism was inspired by chemistry.  Like molecules with specific properties are made of elements, Wilhelm Wundt and Edward Titchener believed that all feelings are a combination of certain base feelings called <strong>sensations</strong>.<br>
-      * <strong>Introspection</strong>, or the subjective observation of one's own experiences, was used.  For example, an apple can be characterized by some sensations, such as crunch and juicyness, described by how people experience it themselves.<br>
-      * The problem with this is that experience is very subjective, and it is difficult to access subconscious aspects of cognition.<br>
-    * <strong>Functionalism</strong> is the study of the purpose and function of behaviors and mental processes.
-      * Influenced by Darwin's Theory of Evolution
-      * Describes what the mind <em>does</em>
+### Structuralism vs. Functionalism
+<strong>Structuralism</strong> is the attempt to analyse conscious experience by breaking it down into basic elements.  <em>How is the mind structured?</em><br>
+   * Structuralism was inspired by chemistry.  Like molecules with specific properties are made of elements, Wilhelm Wundt and Edward Titchener believed that all feelings are a combination of certain base feelings called <strong>sensations</strong>.<br>
+   * <strong>Introspection</strong>, or the subjective observation of one's own experiences, was used.  For example, an apple can be characterized by some sensations, such as crunch and juicyness, described by how people experience it themselves.<br>
+   * The problem with this is that experience is very subjective, and it is difficult to access subconscious aspects of cognition.<br>
+   
+<strong>Functionalism</strong> is the study of the purpose and function of behaviors and mental processes.<br>
+   * Influenced by Darwin's Theory of Evolution
+   * Describes what the mind <em>does</em>
 
-   * <strong>Behaviorism</strong> is the study of observable behavior.<br>
-      * Behavior is less subjective, and more scientific.<br>
-      * Ex. How does a dog behave if you give it a bone? <br>
-      
-   * <strong>Cognitive psychology</strong><br>
-      * Became popular more recently (1950's-1960's)<br>
-      * Studies mental processes such as how the brain actually works.<br>
+###  Behaviorism
+   * The study of observable behavior.<br>
+   * Behavior is less subjective, and more scientific.<br>
+   * Ex. How does a dog behave if you give it a bone? <br>
+  
+### Cognitive Psychology
+   * Became popular more recently (1950's-1960's)<br>
+   * Studies mental processes such as how the brain actually works.<br>
+
+### Psychoanalytic Perspective
+   * Attempts to explain how behavior and personality are influenced by unconscious processes. <br> 
+   * Studied by <strong>Sigmund Freud</strong><br>
    
-   * <strong>Psychoanalytic Perspective</strong><br>
-      * <strong>Psychoanalytic theory</strong> attempts to explain how behavior and personality are influenced by unconscious processes. <br> 
-      * Studied by <strong>Sigmund Freud</strong><br>
+### Cross-cultural Psychology
+   * A field that draws comparisons about individual and group behavios across cultures<br>
+   * Psychology is WEIRD.  <strong>W</strong>estern, <strong>E</strong>ducated, <strong>I</strong>ndustrialized, <strong>R</strong>ich, <strong>D</strong>emocratic. <br>
+   * Most of the sample are people from the populations described above.  A very common argument in psychology is that the sample is not representative of everyone in the world.  Thus, comparing psychology between cultures is becoming more popular.<br>
+
+<strong>The Burning House Problem:</strong>
+   > Imagine you are 30 years old, financially well, and married.  Your mother and spouse are stuck in a burning house and need your help to escape.  However, they are in different rooms, and you can only save one of them.  Who would you save?<br>
+
+* In UCLA, Psych 10 students more often save their mother.<br>
+* This test was given to Taiwanese participants and American participants.  All Taiwanese participants were undergraduate students in Taiwan, of Taiwanese descent, and all American participants were undergraduate students in the United States, of European descent. <strong>They found that American participants tend to prefer to save their spouse, and Taiwanese participants tend to prefer to save their mother.</strong><br>
+* The difference is with culture.  American culture places a greater emphasis on independence from family, while Taiwanese culture places a greater emphasis on respect for elders.<br>
+
+## What Does Psychology Today Encompass?
+
+There are two types of research, <strong>basic research</strong> and <strong>applied research</strong>.  Although they mostly cover different areas, there is overlap and the distinction is not always clear. <br>
+
+### Basic Research
+
+* <strong>Biological / Physiological / Neuroscience</strong><br>
+   * Brain, neurons, neurochemicals<br>
+* <strong>Cognitive</strong><br>
+   * Thinking, memory, attention<br>
+* <strong>Developmental</strong><br>
+   * Change over time<br>
+* <strong>Social</strong><br>
+   * How do people interact?<br>
+
+### Applied Research
+
+* <strong>Clinical</strong><br>
+   * Mental Illness<br>
+* <strong>Educational</strong><br>
+   * Educational techniques, diagnosis<br>
+* <strong>Forensic</strong><br>
+   * Criminal and legal matters<br>
+* <strong>Industrial-organizational</strong><br>
+   * In the workplace <br>
+
+### "Isn't psychology just studying the obvious?"
+* The media can misinterpret or over-simplify research findings.<br>
+* Even things that may seem obvious are still worthy of scientific study<br>
+   * More other-race friends -> less prejudice <br>
+      * Still need to understand what aspects are beneficial.<br>
+
+### Hindsight Bias
+<strong>Hindsight Bias</strong> is the belief that an outcome was foreseeable.<br>
+   * "knew it all along" effect<br>
+      * "Of course the Lakers were going to win that game!"<br>
+      * "Of course ______ was going to win the election!"<br>
+
+Findings seem obvious once we know them, were once controversial.
+   * Ex.<br>
+      > Making errors during learning is <strong>bad!</strong><br>
+      > Making errors during learning is <strong>good!</strong><br>
+
+### Scientific Method
+
+The scientific method helps reduce bias. <br>
+<img src="https://user-images.githubusercontent.com/66571533/211949686-4cd91525-b43c-46d9-a6f1-5c2127203fa8.png"
+     alt="scientific-method.png"
+     style="float: left; margin-right: 10px;" 
+     width="300"/><br>
+
+* Ex. 
+   > <strong>Theory:</strong> Spacing out your learning leads to better retention.<br>
+   > <strong>Hypothesis:</strong> Students who spaced out their studying before the Psych 10 exam will perform better than students who "crammed".<br>
+
+<strong>What makes a good theory?</strong><br>
+* A good theory must be falsifiable.  <br>
+   * <strong>Darwin's Theory of Evolution vs. Freud's Psychoanalytic Theory</strong><br>
+   * Darwin's Theory of Evolution can be falsified with concrete evidence gathered by observation. <br>
+   * Freud's psychoanalytic theory is not a good theory, since it focuses on subconscious thoughts, which cannot be retrived accurately.<br><br>
+* If findings support the hypothesis then confidence in the theory grows.<br>
+
+<strong>What makes a good hyposhesis?</strong><br>
+* A good hypothesis must be specific and testable.<br>
+   * Can we make this more specific?<br>
+      > Drivers who use cell phones more frequently will get in more accidents.<br>
    
-   * <strong>Cross-cultural psychology</strong> is a field that draws comparisons about individual and group behavios across cultures<br>
-      * Psychology is WEIRD.  <strong>W</strong>estern, <strong>E</strong>ducated, <strong>I</strong>ndustrialized, <strong>R</strong>ich, <strong>D</strong>emocratic. <br>
-      * Most of the sample are people from the populations described above.  A very common argument in psychology is that the sample is not representative of everyone in the world.  Thus, comparing psychology between cultures is becoming more popular.<br>
+   * (Yes.) A better hypothesis would be:<br>
+      > Drivers who use cell phones while driving will get in more accidents.<br>
+
+### How we test a hypothesis
+
+#### Correlational Designs
+A <strong>correlational design</strong> measures how closely two factors/variables vary together, or how well you can predict a change in one variable from observing a change in the other variable.<br>
+* <strong>Positive(+) correlation:</strong> both variables either increase or decrease together. <br>
+* <strong>Negative(-) correlation:</strong> one variable increases when the other decreases.<br>
+* <strong>Zero correlation:</strong> one variable is not predictable related to the other.<br>
+
+<strong>Steps:</strong><br>
+1. Formulate a testable hypothesis<br>
+   > Internet use in class is negatively related to class performance<br>
+2. Select the research method and design the study<br>
+   > Research method: Correlational study<br>
+      * Operationalize your variables<br>
+        * <strong>Operational definition</strong> -> a description of a property in concrete measurable terms.<br>
+   > Variables: # minutes spent browsing (non-academic internet use), Grades on final exam<br> 
+3. Collect the data<br>
+4. Analyse data and draw conclusions<br>
+
+A correlational design would have correlation coefficients between -1 and 1.<br>
+![image](https://user-images.githubusercontent.com/66571533/211952539-951542c6-14ca-47ef-bfe8-5a3b397833d0.png)<br>
+
+<strong>JUST BECAUSE TWO VARIABLES ARE CORRELATED DOES NOT MEAN ONE CAUSES THE OTHER</strong><br>
+
+
