@@ -30,11 +30,15 @@
   * what it means to know a language.<br>
 
 * <strong>Short quiz: true or false </strong><br>
-> English has 5 vowels (False)<br>
-> There are about 6,000 languages spoken today (True)<br>
-> In sentences like "I didn't see nobody" the two negatives cancel out (False)<br>
-> Some languages don't have rules of grammar (False)<br>
-> "ain't" is not a word. (False)<br>
+  > English has 5 vowels (False)<br>
+  
+  > There are about 6,000 languages spoken today (True)<br>
+  
+  > In sentences like "I didn't see nobody" the two negatives cancel out (False)<br>
+ 
+  > Some languages don't have rules of grammar (False)<br>
+
+  > "ain't" is not a word. (False)<br>
 
 ## What is Linguistics?
 
@@ -49,8 +53,8 @@
 ## What is Language?
 
 <strong>Language</strong> is a tool for human communication, as well as a form of knowledge.<br>
-* A large portion of language occurs in the subconscious.  Part of the course is to make you aware of some of the subconsious parts.<br>
-  * For example, you subconsciously understand other people are trying to say to you.  You cannot hear it, and choose not to understand it, if you know the language.<br>
+* A large portion of language occurs in the subconscious.  Part of the course is to make you aware of some of the subconscious parts.<br>
+  * For example, you subconsciously understand what other people are trying to say to you.  You cannot hear it, and choose not to understand it, if you know the language.<br>
   * Language is a type of knowledge that converts symbols (visual), sound (auditory), or even feelings (eg. Braille) into concepts and ideas.<br>
   
 ### What does it mean to "know" a language?
@@ -73,7 +77,7 @@
         > "tata-fuckin'-magouche" (Sounds fine) <br>
         > "tatama-fuckin'-gouche" (Sounds fine) <br>
         > "tatamagou-fuckin'-che" (Sounds incorrect) <br>
-      * You were likely never taught to use expletive infixation, yet you know how to use it anyways, and are able to differentiate between words are inserted at a normal or weird position.  English native speakers would tend to agree although it was not explicitly taught.<br>
+      * You were likely never taught to use expletive infixation, yet you know how to use it anyways, and are able to differentiate between words inserted at a normal or weird position.  English native speakers would tend to agree although it was not explicitly taught.<br>
       * Since you are able to judge what sounds correct and what sounds wrong, although you were never taught expletive infixation, it implies that there was some rule that you <em>did</em> know that was working subconsciously.<br>
       
  ## Building Blocks and Rules
@@ -142,7 +146,7 @@ For example, "blobfish".<br>
 
 Other examples of derivations include "Shopaholic", a person who really likes shopping, and it is derived from "alcoholic". <br>
 * "Alcoholic" can be meaningfully broken down into "alcohol" + "-ic". <br>
-* However, "Shopaholic" inherits "-aholic" rather than "-ic".  This interesting because "-aholic" does not mean anything by itself. <br>
+* However, "Shopaholic" inherits "-aholic" rather than "-ic".  This is interesting because "-aholic" does not mean anything by itself. <br>
 * The same goes with "Chocoholic", and "Workaholic" <br>
 * Native speakers just know that it sounds more correct to say "Shopaholic" rather than "Shopic". <br>
 
@@ -167,7 +171,7 @@ Part of your knowledge of language is <strong>Syntax</strong>, or phrase and sen
     
     In this example, only the first is correct.<br>
     
-  How do we know which adjectives can follow nouns, and which must come after?  This is also subconscious knowledge native speakers have. <br>
+  How do we know which adjectives can follow nouns, and which must come after?  This is also a subconscious knowledge native speakers have. <br>
 
   The same goes with thich order adjectives are presented in:<br>
   * Ex.<br>
@@ -207,8 +211,8 @@ You know the meanings of many thousands of individual words.  But is that enough
 Consider:
   > "Tom has egg on his face."
   
-In this case, the sentence can literally mean that Tom has egg on his face, or it can also mean that Tom is very embarrased.<br>
-Intuition of the hidden meaning is gained from experience using the language, but becomes an unconsious thought after exposure. <br>
+In this case, the sentence can literally mean that Tom has egg on his face, or it can also mean that Tom is very embarrassed.<br>
+Intuition of the hidden meaning is gained from experience using the language, but becomes an unconscious thought after exposure. <br>
 
 ## What is NOT Knowledge of Language?
 
@@ -225,7 +229,7 @@ What if a person cannot read or write their language, or any language at all? <b
 
 ### Education
 * Being a fully competent native speaker of a language is independent of educational level. <br>
-* Being more (or less) educated does noy make a person a "better" (or "worse") native speaker. <br>
+* Being more (or less) educated does not make a person a "better" (or "worse") native speaker. <br>
 
 ## Linguistic Knowledge
 
@@ -248,6 +252,113 @@ Linguistic competence does not necessarily match linguistic performance.  For ex
 
   Target: "We're not the only ones with screws loose."<br>
 
+## Features of Language
+There is a set of properties that all human languages share.<br>
+* Although all languages are different, they all have their similarities, just how like there are hundreds of different breeds of dogs, but they all have similar bone structure.<br>
+* All languages have:<br>
+  * <strong>Arbitrariness:</strong> the form and meaning in a language.<br>
+    * The relationship between a word and its meaning is arbitrary <br>
+    * Shakespeare - “What’s in a name? That which we call a rose / By any other word would smell as sweet”<br>
+    * This is why different sounds are used to name the same object across languages <br>
+    * True for spoken and sign language.<br>
+
+  * <strong>Creativity:</strong> <br>
+    * Speakers use a finite set of building blocks and rules to create and understand an infinite set of novel sentences <br>
+    * Sentences cannot simply be memorized or learned by imitation <br>
+    * Children are highly productive in their use of language <br>
+    * They can create sentences that are not in adult language.  <br>
+      > Ex. “Who do you think who’s in that box?”<br>
+    * There is no limit on how long a sentence can be.<br>
+    * It may be harder to understand if it is wordy, but it is theoretically possible to make a sentence extremely long. <br>
+    * Creativity is a universal part of human language.  As Linguist Noam Chomsky emphasized, people must be able to understand and produce unique sentences without effort.<br>
+
+## Language Universals 
+* <strong>Universal Grammar (UG)</strong><br>
+ * The set of universal properties possessed by all languages <br>
+ * Thought of as a set of language "laws"<br>
+
+## Properties of universal grammar
+* How do languages differ? <br>
+* What do all languages have in common?<br>
+  * They all have a lexicon, phonetic system, phonology, morphology, syntactic structure, and semantics <br>
+  * True for spoken and signed languages <br>
+  * Certain Properties: <br>
+     1. Ways of forming questions <br>
+     2. Means for negating an utterance <br>
+     3. Means for indicating when an action takes place <br>
+     4. Possess a set of discrete sounds (or gestures) <br>
+     5. Every language is different, but they all share similarities.<br>
+  
+## Development of Grammar
+* All children:<br>
+  * acquire the language of their environment <br>
+  * acquire language spontaneously <br>
+  * exhibit 'linguistic creativity' <br>
+  * pass through similar stages as they build their own grammar <br>
+* Stages of language development:<br>
+  1. Babbling <br>
+  2. Babbling in specific language sounds <br>
+  3. Single word utterances <br>
+  4. Two word utterances <br>
+  5. Overgeneralizations<br>
+     > “I holded the rabbits”<br>
+  6. Fully acquired by age 5 <br>
+
+## Two Kinds of Grammar:
+
+### Descriptive:
+ * The Linguist's description or model of the mental grammar.<br>
+ * What speaker's rules actually are <br>
+   * Speaker's grammar <br>
+   * Linguist's grammar<br>
+
+<em>Descriptive grammar is essentially the way native speakers speak.</em><br>
+ > “I ain’t seen Bill”<br>
+ > “That’s something I can’t deal with”<br>
+
+### Prescriptive:
+ * Rules of grammar (for English, often based on latin) used by teachers <br>
+ * What speaker's rules should be.<br>
+ * <strong>Prescriptive rules</strong> are those that are created, not as a part of grammar, but instead just began when people started using them.  They do not necessarily need to be followed to have grammatical sentences.<br>
+   * <strong>Double Negatives</strong><br>
+     > "I don't know anybody."  (Standard English)<br>
+     > "I don't know nobody."  (Nonstandard English, double negative)<br>
+     > "I don't have any idea." (Standard English)<br>
+     > "I ain't got no idea." (Nonstandard English, double negative)<br>
+  
+     * In some languages (such as French), double negatives are used frequently and they don’t cancel.<br>
+     * In English, the logic that they should cancel is not followed, simply due to how the language developed.<br>
+   
+   * <strong>Stranded Prepositions</strong><br>
+      * This is a rule native English speakers commonly "break."<br>
+        > "Where's the party at?"<br>
+        > "That's the mechanic that I talked to."<br>
+        > "What did you buy this for?"<br>
+      * Based on prescriptive grammar, you cannot end sentences with prepositions.<br>
+      * This rule was invented in 1672 by John Dryden, an essayist, while criticizing Ben Jonson's writing. <br>
+
+ <strong>In many cases, prescriptive grammar does not align with descriptive grammar.</strong><br>
+ These examples below are acceptable in descriptive grammar, but incorrect in prescriptive grammar.<br>
+   > "He don't like it."<br>
+   > "He doesn't like nothing."<br>
+   > "She is taller than me."<br>
+   > "You and me have been invited to a wedding."<br>
+   
+ These below are unacceptable as descriptive grammar:<br>
+ 
+   > "He it like don't."<br>
+   > "Woman the ground on fell."<br>
+   
+ Also, to follow some of the rules of prescriptive grammar, the sentence would become ungrammatical.<br>
+ Consider the following example:<br>
+   > The teacher egged on the students.<br>
+   > Who did the teacher egg <strong>on</strong>?<br>
+ 
+ The alternative to "fix" the second sentence would be:<br>
+   > On <strong>who(m)</strong> did the teacher egg?<br>
+ 
+ This alternative is considered to be ungrammatical by native English speakers.<br>
+  
 # Summary
 When you know language, you know... <br>
 
@@ -259,6 +370,10 @@ Language is subconscious and automatic.<br>
 * <strong>Semantics</strong> (how to interpret words and sentences)<br>
 * Different kinds of <strong>linguistic knowledge</strong> (competence, performance)<br>
 
-  
+There are some universal properties of human language.<br>
+* <strong>Arbitrariness</strong> - the relationship between a word and its meaning is arbitrary<br>
+* <strong>Creativity</strong> - speakers can create an infinite number of different sentences, and others can understand them<br>
 
-
+Languages are structured by <strong>universal grammar</strong> (UG).<br>
+* <strong>Prescriptive grammar</strong> (What people <em>should</em> say)<br>
+* <strong>Descriptive grammar</strong> (What people <em>actually</em> say)<br>
