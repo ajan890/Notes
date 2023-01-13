@@ -66,9 +66,79 @@ The <strong>Sample Space</strong> is a <strong>set</strong> which contains every
 
 ### Probability in Sets
 
-<strong>ℙ(A)</strong> denotes the probability that an outcome is in the subset.
-* Suppose you toss a die.  S = \[\[1, 6]].
-  * ℙ(S) = 1, since all outcomes from the dice toss would be a number in S.
-  * ℙ(Φ) = 0, since none of the outcomes are in the empty set.
-  * ℙ({2, 3, 5, 6}) = 0.66
-          
+<strong>ℙ(A)</strong> denotes the probability that an outcome is in the subset.  A <strong>must</strong> be a set, not an outcome.<br>
+
+* Suppose you toss a die.  S = \[\[1, 6]].<br>
+  * ℙ(S) = 1, since all outcomes from the dice toss would be a number in S.<br>
+  * ℙ(Φ) = 0, since none of the outcomes are in the empty set.<br>
+  * ℙ({2, 3, 5, 6}) = 0.66<br>
+    
+### Sample Space and Events
+Consider sample space S, and sets A and B such that A, B ⊂ S.  <br>
+* A and B would be called <strong>events</strong>.<br>
+* If A ∩ B = Φ, (A and B are <strong>disjoint</strong>) then P(A U B) = P(A) + P(B)<br>
+
+The <strong>three fundamental rules</strong> are:
+1. ℙ(S) = 1
+2. ℙ(A) ≥ 0 for any set A
+3. ℙ(A U B) = ℙ(A) + ℙ(B) if and only if A ∩ B = Φ
+
+Ex.<br>
+Consider S is the sample space of picking a random number between 0 and 1.  Or, S = \[0, 1\].<br>
+Let A = {0.2}.<br>
+* ℙ(A) = 0, although it is counterintuitive.  Since S has an infinite number of elements, the chance of it being 0.2 is 1/∞.  Thus, it is 0.<br>
+* If in this case, A = S ∩ Q, then ℙ(A) = 1.  This is also counterintuitive since Q does not include 0 and 1 themselves.  However, the chance of landing on exactly 0 or 1 is infinitely small.<br>
+* This brings us to three extended rules:<br>
+  1. P(S) = 1<br>
+  2. P(A) = 0 ⇏ A = Φ<br>
+  3. P(B) = 1 ⇏ B = S<br>
+
+### Using the rules to derive formulas
+<strong>Example:</strong> <br>
+ℙ(A<sup>C</sup>) = 1 - ℙ(A)<br>
+Let B = A<sup>C</sup><br>
+
+Since ℙ(A U B) = ℙ(A) + ℙ(B), (since A and B have no overlap)<br>
+<strong>ℙ(A) + ℙ(B) = 1</strong><br>
+
+---
+
+<strong>Example:</strong> <br>
+Suppose A, B, and C are disjointed.<br>
+Therefore, ℙ(A U B U C) = ℙ(A) + ℙ(B) + ℙ(C).<br>
+Let D = A U B.<br>
+
+ℙ(C U D) = ℙ(C) + ℙ(D)<br>
+Therefore, ℙ(A U B U C) = ℙ(C) + ℙ(D)<br>
+
+---
+
+<strong>Example:</strong> <br>
+To prove: ℙ(A U B) = ℙ(A) + ℙ(B) - ℙ(A ∩ B)<br>
+Let <br>
+> C = A ∩ B<sup>C</sup><br>
+> D = B ∩ A<sup>C</sup>.  <br>
+ 
+Thus, C and D are disjointed, and<br>
+
+> ℙ(A U B) = ℙ(C) + ℙ(D) + ℙ(A ∩ B)<br>
+
+Rearranging the equations for C and D,<br>
+> ℙ(C) = ℙ(A) - ℙ(A ∩ B)<br>
+> ℙ(D) = ℙ(B) - ℙ(A ∩ B)<br>
+
+Finally, substituting, <br>
+> ℙ(A U B) = (ℙ(A) - ℙ(A ∩ B)) + (ℙ(B) - ℙ(A ∩ B)) + ℙ(A ∩ B)<br>
+> ℙ(A U B) = ℙ(A) + ℙ(B) - ℙ(A ∩ B)<br>
+
+QED<br>
+
+---
+
+### Equiprobable Outcome Experience
+Example: Toss a die.  S = {1, 2, 3, 4, 5, 6}.<br>
+ℙ({a}) = 1/6. where a ∈ S.<br>
+If you toss two dice, S = \[\[1, 6]]<sup>2</sup><br>
+Therefore, ℙ({2, 3}) = (1/6)<sup>2</sup> = 1/36<br>
+
+The outcomes are <strong>equiprobably</strong> because the probability of two events do not affect each other; they are the same.<br>
