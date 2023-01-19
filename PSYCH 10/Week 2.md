@@ -47,7 +47,7 @@ In both of the examples above, there was not sufficient evidence to support the 
 
 ### Biases in the Experiment
 * <strong>Ex. </strong> Does priming with elderly stereotypes make you walk more slowly?<br>
-* Experimental condition:: "Florida", "retired", "lady", "vacationed", "store"<br>
+* Experimental condition: "Florida", "retired", "lady", "vacationed", "store"<br>
 * Control condition: "put", "mat", "dishes", "sink", "clean"<br>
 * Dependent Variable: How fast participants walked down the hall<br>
 * <strong>Result:</strong>Participants primed with elderly stereotype were <strong>slower to walk</strong> down the hall.<br>
