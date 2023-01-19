@@ -274,8 +274,12 @@ The other variables are called <strong>control variables</strong>.
   > Kids are split into two groups, one watches a film of an adult beating up a bobo doll, and the other watches a film of an adult playing with a bobo doll.<br>
   > All other variables must be kept the same: the amount of time kids spent with the bobo doll, the room, the bobo doll, etc.<br>
 4. Analyze data and draw conclusions<br>
+<img src="https://user-images.githubusercontent.com/66571533/213327000-24679cca-3cdf-4daf-928d-4a9f31dfd168.png"
+     alt="bobo_doll_data.png"
+     style="float: left; margin-right: 10px;" 
+     width="300"/><br>
 5. Report the findings<br>
-
+  > Typically published in a scientific journal<br>
 * After watching an adult model show aggression towards the doll, children were aggressive.<br>
 * Based on this alone, can we say that watching the adult model <strong>caused</strong> an increase in child aggression?<br>
    * No, because to show that "X causes Y,"  we should measure the behavior (Y) in both the experimental group and the control group.  (Or compare two experimental groups with each other)<br>
