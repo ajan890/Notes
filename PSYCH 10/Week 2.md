@@ -82,6 +82,9 @@ In both of the examples above, there was not sufficient evidence to support the 
     * Still have an independent variable, but you are not directly manipulating it
     * Could be confounding variables
 
+## Which method is best?
+Most researchers use <strong>converging operations</strong>
+* This is a research strategy where a variety of research techniques are used to investigate or converge upon a particular experimental or research result.<br>
 
 
 
