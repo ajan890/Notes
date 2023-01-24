@@ -49,8 +49,9 @@ In both of the examples above, there was not sufficient evidence to support the 
 * <strong>Ex. </strong> Does priming with elderly stereotypes make you walk more slowly?<br>
 * Experimental condition: "Florida", "retired", "lady", "vacationed", "store"<br>
 * Control condition: "put", "mat", "dishes", "sink", "clean"<br>
-* Dependent Variable: How fast participants walked down the hall<br>
-* <strong>Result:</strong>Participants primed with elderly stereotype were <strong>slower to walk</strong> down the hall.<br>
+* Dependent Variable: How fast participants walked down the hall.<br>
+* Participants were told that the experiment was based on flexible sentence creation, and their job was to create sentences using at least four of the five words given in the condition.  After the experiment, they were debriefed by the experimenter and told to exit the building by walking down the hall to the elevator.  The speed they walked down the hall was the experimental data, not the word game.<br>
+* <strong>Result:</strong> Participants primed with elderly stereotype were <strong>slower to walk</strong> down the hall.<br>
 <img src="https://user-images.githubusercontent.com/66571533/213328502-4d0b4f0b-5ed5-4371-abc3-be80cc13b900.png"
      alt="bbc_expr.png"
      style="float: left; margin-right: 10px;" 
