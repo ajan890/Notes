@@ -118,14 +118,14 @@ The binding of neurotransmitters to receptors is specific, like lock and key.<br
 ## The Five Senses
 ### Vision - Eyes
 ![image](https://user-images.githubusercontent.com/66571533/216200230-aa5b61fb-a851-4756-bfc6-0c6fb5eb8338.png)<br>
-Cornea is the outer protective surface of the eye.  The iris is the colored part of the eye, pupil is the hole in which light passes through, the retina is the area in the back of the eye where light is absorbed, and the optic nerve sends the signal to the brain.<br>
-Because of the lens, the image that is projected onto the back of the eye is flipped upside-down.  Your brain corrects for this error.<br>
-Near-sightedness and far-sightedness occurs when the lens fails to focus the image onto the retina.  You are near-signted if the image is focused in front of the retina and far sighted if the light is focused behind the retina.<br>
+* Cornea is the outer protective surface of the eye.  The iris is the colored part of the eye, pupil is the hole in which light passes through, the retina is the area in the back of the eye where light is absorbed, and the optic nerve sends the signal to the brain.<br>
+* Because of the lens, the image that is projected onto the back of the eye is flipped upside-down.  Your brain corrects for this error.<br>
+* Near-sightedness and far-sightedness occurs when the lens fails to focus the image onto the retina.  You are near-signted if the image is focused in front of the retina and far sighted if the light is focused behind the retina.<br>
 <strong>The retina:</strong><br>
 ![image](https://user-images.githubusercontent.com/66571533/216201374-266d7fb3-7c33-42a9-9400-e540454f77c8.png)<br>
-The retina is where light is observed.  The ganglion cells that absorb light are at the back of the retina; the optic nerve passses in front of it.  This causes a blind spot (which the brain does a good job of covering up) where light is blocked by the optic nerve and does not get absorbed by ganglion cells.  The eye is structured this way because the ganglion cells require blood in order to function.<br>
+* The retina is where light is observed.  The ganglion cells that absorb light are at the back of the retina; the optic nerve passses in front of it.  This causes a blind spot (which the brain does a good job of covering up) where light is blocked by the optic nerve and does not get absorbed by ganglion cells.  The eye is structured this way because the ganglion cells require blood in order to function.<br>
 <strong>Cones and Rods:</strong><br>
-Cones are responsible for seeing color, and rods are responsible for seeing brightness.  An eye typically has about 6 million cones, located near the fovea, or the center of the retina, and about 120 million rods, located in the periphery of the retina.<br>
+* Cones are responsible for seeing color, and rods are responsible for seeing brightness.  An eye typically has about 6 million cones, located near the fovea, or the center of the retina, and about 120 million rods, located in the periphery of the retina.<br>
 * The best way to view stars at night is to look to the side of the stars, rather than directly at it.  By doing so, moves the image of the star outside the fovea where all the rods are.<br>
 <strong>Trichromatic Color Theory:</strong><br>
 * The theory that 3 different cones each sensitive to different wavelengths of light.  (One sees red, one sees green, and one sees blue).<br>
