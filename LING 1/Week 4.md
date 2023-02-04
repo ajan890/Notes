@@ -24,6 +24,7 @@
   > 5. Pharynx<br>
   > 6. Glottis<br>
 
+![image](https://user-images.githubusercontent.com/66571533/216750839-73c985f6-e394-428c-8227-cd4e81269165.png)<br>
 
 ### Orthography
 * **Phonetics ≠ Spelling**<br>
@@ -75,6 +76,7 @@
   > mak<strong>e</strong><br>
 
 ## International Phonetic Alphabet (Ipa) 
+![6](https://user-images.githubusercontent.com/66571533/216750862-19dc3d1c-c64f-420f-bb15-813782262fe6.png)<br>
 ### Rules
 * One symbol = one sound<br>
 * The International Phonetic Alphabet is universal: it can be used to represent any human language.<br>
@@ -101,15 +103,21 @@
     * Sounds produced by bringing both lips together.  <br>
       > pie, buy, my <br>
       > [p] [b] [m]<br>
+   
+![11 (2)](https://user-images.githubusercontent.com/66571533/216750974-caefae9f-5525-4d2d-8491-5d094f1de694.png)<br>
 
 2. Labiodentals<br>
     * Sounds produced by touching the bottom lip to the upper teeth.<br>
       > five, view <br>
       > [f] [v]<br>
 
+![12 (2)](https://user-images.githubusercontent.com/66571533/216750978-752cfcae-d8ea-4344-9d40-5c2b8db9b5c2.png)<br>
+
 3. Interdentals:<br>
     * Sounds produced by inserting the tip of the tongue between the upper teeth and the lower teeth.<br>
       > thigh, thus [0] [ð]<br> 
+
+![13 (2)](https://user-images.githubusercontent.com/66571533/216750980-833676a7-521e-44bc-9bfd-45b345f2a1ee.png)<br>
 
 
 4. Alveolars:<br>
@@ -117,17 +125,21 @@
       > tie, die, night, sip, zip, light, rock <br>
       > [t] [d] [n] [s] [z] [I] [r]<br>
 
+![14 (2)](https://user-images.githubusercontent.com/66571533/216750984-e149efdd-0a5e-4d99-8415-93dc8a22832e.png)<br>
+
 5. Palatals:<br>
     * Sounds produced by raising the front part of the tongue to the hard palate. (Bony section of the roof of the mouth behind the alveolar ridge)<br>
       > mission, measure, cheap, judge, you <br>
       > [ʃ] [ʒ] [tʃ] [dʒ] [j]<br>
 
-
+![15 (2)](https://user-images.githubusercontent.com/66571533/216750986-a2b64060-13f1-4535-91a5-cb72332cd1e2.png)<br>
 
 6. Velars:<br>
     * Sounds produced by raising the back of the tongue to the soft palate or velum.<br>
       > back, bag, bang <br>
       > [k] [g] [ŋ]<br>
+
+![16 (2)](https://user-images.githubusercontent.com/66571533/216750987-f9195592-7224-4717-90c3-4b0643a3b34f.png)<br>
 
 
 7. Glottals:<br>
@@ -135,10 +147,14 @@
     * [h] produced with the flow of air through the open glottis.<br>
     * [ʔ] produced if the air is stopped completely at the glottis by tightly closed vocal cords: glottal stop.<br>
 
+![17 (2)](https://user-images.githubusercontent.com/66571533/216750988-0263d4cc-0644-4ef3-9c6c-d7ca06fab3e5.png)<br>
+
 8. Labio-velar (i.e., bilabial AND velar): <br>
     * Sounds produced by a combination of pursed lips and raising the back of the tongue to the velum.<br>
       > witch, and which<br>
       > [w] [w]<br>
+
+![18 (2)](https://user-images.githubusercontent.com/66571533/216750990-028cc2d6-6822-4966-95d1-903e1f258ac8.png)<br>
 
 <strong>Places of Articulation Reivew</strong><br>
 * **Bilabials:** **p**ie, **b**uy, **m**y <br>
@@ -179,6 +195,8 @@
 **s**u**p**er [supər]<br>
 * **Voiced:** Vocal folds/cords are **together**, air forces through, causing vibrations.<br>
 
+![22_img](https://user-images.githubusercontent.com/66571533/216751088-5e3c5467-27b9-4277-9529-5de0bdb8df10.png)
+
 <strong>Example:</strong><br>
 * [s] and [z] differ only in voicing.<br>
   * [s] is **voiceless**.<br>
@@ -205,10 +223,13 @@
 * The velum is raised to block the nasal cavity so that when the stop is released, the air flows out through the mouth.<br>
 * Sounds can only be heard when released into a vowel or another sound.<br>
 
+![26 (2)](https://user-images.githubusercontent.com/66571533/216751120-c01bf56f-b6cd-4852-8410-93fb7149aaf1.png)<br>
+
 * **Nasal stops:**<br>
   > [m] [n] [n]<br>
 * The velum is lowered to open the nasal cavity.<br>
 
+![27 (2)](https://user-images.githubusercontent.com/66571533/216751140-ee332015-a17e-47ff-a2a9-e2a23f18de52.png)<br>
 
 * What feature distinguishes the bold sounds on the left from the ones on the right?<br>
   > cab [kæb] (Oral) vs. cam [kæm] (Nasal)<br>
@@ -288,9 +309,9 @@ What do [**p**], [**t**], and [**k**] have in common?<br>
 
 ### Consonants Review
 * Consonants are distinguished using three features:<br>
-* **Place of Articulation**<br>
-* **Manner of Articulation**<br>
-* **Voicing**<br>
+  * **Place of Articulation**<br>
+  * **Manner of Articulation**<br>
+  * **Voicing**<br>
 * Make sure that you know the features for the consonants of English.v
 
 ### IPA Symbols Review
