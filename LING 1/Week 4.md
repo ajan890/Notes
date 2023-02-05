@@ -166,7 +166,7 @@
 * **Alveolars:** **t**ie, **d**ie, **n**ight, **s**ip, **z**ip, **l**ight, **r**ock <br>
   > [**t**] [**d**] [**n**] [**s**] [**z**] [**l**] [**r**]<br>
 * **Palatals:** mi**ss**ion, mea**s**ure, **ch**eap, ju**dg**e, **y**ou<br>
-  > [**S**] [**ʒ**] [**tʃ**] [**dʒ**] [**j**]<br>
+  > [**ʃ**] [**ʒ**] [**tʃ**] [**dʒ**] [**j**]<br>
 * **Velars:** bac**k**, ba**g**, ba**ng**<br>
   > [**k**] [**g**] [**ŋ**]<br>
 * **Glottals:** **h**igh, **u**h-oh<br>
