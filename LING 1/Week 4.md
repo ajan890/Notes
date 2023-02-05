@@ -236,6 +236,7 @@
   > raid [red] (Oral) VS. rain [ren] (Nasal)<br>
   > rug [rɅg] (Oral) VS. rung [rɅŋ] (Nasal)<br>
 
+## Voicing
 ### Aspiration
 * Put your hand in front of your mouth and pronounce the following:<br>
   > **P**it, **T**oe, **C**ot<br>
@@ -515,7 +516,165 @@ We can use the vowel features that we've looked at to see differences in vowel i
 * If you have a strong intuition that there is no vowel between [z] and [l] when you say "dazzle," transcribe it with a syllabic [l̩]:
   > [dæzl̩]
 
-## Summary
+## Phonetics Examples
+* Sounds can be decomposed into features.
+  * [**b**] in boy is a voiced, bilabial, oral stop.
+  * <strong>Phonetics</strong> can help us to characterize differences between dialects in the real world.
+
+### [j] Dropping - American vs. British English
+* Consider the following words.  Given this small data set, where does American English delete the [**j**]?
+  > "Tune", "Zeus", "Dew", "Puny", "News", "Beauty", "Suit", "Cute", "Hue"
+
+* [**j**] is dropped in:
+  > [t] 'Tune', [d] 'Dew', [s] 'Suit', [z] 'Zeus', [n] 'News'
+* [**j**] is retained in:
+  > [p] 'Puny', [b] 'Beauty', [k] 'Cute', [h] 'Hue'
+* What do these sounds have in common?
+* Generalization: the [j] is deleted in American English after a <strong>word-initial alveolar consonant.</strong>
+* The idea of <strong>natural class</strong> can be useful!
+* However, these words are pronounced the same in British and American English:
+  > [t] "Tool", [d] "Do", [s] "Soon", [z] "Zoo", [n] "Noose"
+* Why are these the same, since they have word-initial alveolars?
+* They didn't have a [j] in them in the first place!
+* We can understand that American English has a rule of jod deletion in certain environments.
+
+### [r] Dropping: Phonetics and Social Class
+<strong>Labov (1966) New York City.</strong>
+* Goal was to show systematic variation in [r] pronunciation, based on:
+  * <strong>Social class</strong>
+  * <strong>Attention paid to speech</strong>
+  * <strong>Linguistic context of a variant</strong>
+* The local dialect of New York City is an "r-less" dialect.
+* The [r] found in in SAE is dropped in certain cases.
+* Let's look at some examples in IPA.
+  * Where are the [r]'s dropped?
+  * It looks like the [r]'s get dropped in word-final position and when the [r] precedes another consonant.
+
+<strong>In New York City dialect, pronunciation of [r] is prestigious.</strong>
+* [r]-dropping is considered characteristic of the "lower classes."
+* In general in the US, dropped [r] in words like "car," "father," and "bark" are perceived as features of <strong>nonstandard speech</strong>.
+* Labov wanted to investigate the factors that influence the [r]-drop.
+  * Labov went to three different department stores:
+    * Saks Fifth Avenue (expensive)
+    * Macy's (mid-range)
+    * Klein's (low prices)
+  * At each store, Labov asked for the location of something for sale on the fourth floor.
+  * [forθ flor]
+    * Notice that there are two [r] sounds.
+
+![8_example_image](https://user-images.githubusercontent.com/66571533/216814952-6d3d2270-60ee-4306-be2b-ae4c40382b75.png)
+
+  * Labov asked the question, then said "Excuse me" at the response, to make the worker repeat the phrase "fourth floor," but the second time more carefully.
+  * Labov then collected the data:
+
+![8_image](https://user-images.githubusercontent.com/66571533/216814966-44eaadcf-3030-4545-86c2-0989d42cd7d5.png)
+
+  * Labov found out that at the more expensive stores, the workers there were less likely to drop the [r].
+* There is relation between the <strong>realization</strong> or <strong>pronunciation</strong> of [**r**] and <strong>social class</strong>.
+* The dropping of [**r**] is perceived as indicative of "bad grammar" or "bad speech."
+* In fact, it's a <strong>marker</strong> of the speech of people lower on the socio-economic ladder.
+* From a linguistic standpoint, dropping [r] is no better or worse than not dropping [r].
+* In another study, Labov looked at the realization of [r] when it occurs just before a consonant.
+  * This is when [r] would be dropped in the New York City dialect typically.
+  * Labov found out that the results from his department store study could be replicated.
+  * There is a relationship between <strong>social class</strong> and the pronunciation of [r].
+
+![10_image](https://user-images.githubusercontent.com/66571533/216815121-b1cc79a8-b58a-4057-93a5-a911d21ce5ee.png)
+
+<strong>Received Pronunciation</strong><br>
+* As in the department store study, the dropping of [r] is associated with lower social classes in NYC.
+* It's useful to think about this relationship and consider a different dialect. Think about the pronunciation of [r].
+* Do you notice anything "funny" about the pronunciation of [r] in the speech of these upper class British speakers?
+* They are speaking a dialect called "<strong>Received Pronunciation</strong>" (RP).
+  * In Received Pronunciation, the prestige dialect, [**r**] is dropped!
+  * It's an [r]-less dialect.
+* Peter Trudgill studied [**r**] in Reading, England.
+* Trudgill looked at how people from different socio-economic groups pronounced [r].
+
+<strong>[r]-deletion in New York City versus Reading, England:</strong>
+
+![13_image](https://user-images.githubusercontent.com/66571533/216816962-01b147cc-e38d-4657-83cf-54f4e747f1dc.png)
+![13_image2](https://user-images.githubusercontent.com/66571533/216816964-c9c4a510-8850-436a-baa4-55b6deeb9f49.png)
+* Since <em>not</em> pronouncing the [r] is the prestige dialect in England, the results are the opposite compared to what was found in New York.
+
+### Taking Stock
+* Dialect differences in phonetics are not random: British vs. American English and [j].
+* Linguistic differences between dialects may be related to <strong>non-linguistic factors</strong> like <strong>social class</strong>.
+* The phonetic markers of social class are arbitrary.
+* Is [r]-drop better or worse than not doing [r]-drop? 
+  * It depends on where you are!
+* The prestige or lack of prestige associated with particular phonetic markers is **not** random:
+  * The more marginalized the speakers, the more marginalized their speech forms.
+* By studying phonetic differences between dialects and how they correlate with social class, we can see how attitudes towards non-standard dialects are shaped.
+
+## What is Phonology? (Review)
+<strong>Phonology:</strong>
+* How speech sounds are organized in different languages.
+* Phonology is the linguistic knowledge a speaker has of the sound patterns that are possible in a language:
+  * "pan" [pæn]
+  * "pancake" [pæn kek]
+  * "pan bread" [pæm brεd]
+* Notice in the three above examples, "pan" is pronounced differently every time.
+* Your phonology lets you know which combinations of sounds are possible ("blik") versus the ones that aren't ("\*lbik").
+  > [tʰjun] vs [tʰun]
+* American English does not permit certain combinations of sounds in word initial position.
+* The phonological rule here is that when [j] follows word-initial alveolar sounds, it is dropped.
+* Not dropped from other words:
+  > "Puny", "Beauty", "Hue", "Cute"
+
+### Questions that Phonologists Ask
+* What is the <strong>organization of sounds</strong> in a given language?
+* Which sounds are <strong>predictable</strong> and which sounds are <strong>unpredictable</strong> based on the environment?
+* What is the <strong>phonetic context</strong> (environment) which allows us to predict the appearance or disappearance of one sound versus another?
+
+## Sign Language Phonetics
+* To what extent are signed languages like spoken languages?
+* It looks like you can express anything in a signed language that you can in a spoken language.
+  * You can even do a rap competition!
+* Signed language is not produced using the vocal tract.
+  * So can we find "phonetics" in signed languages?
+  * What about the signs used in signed languages?
+
+### American Sign Language Phonetics
+<strong>Handshapes:</strong>
+* Just like spoken languages differ in their phonetic inventories, signed languages differ in the handshapes that are permissible.
+* It's not the case that everything goes!
+* In spoken language, the individual sounds in a word are meaningless.
+  > "dog" = [dɔg] [d] = ? [p] = ? [g] = ?
+* ASL handshapes are, by themselves, meaningless.
+* When we think about sounds in language, we can now think in terms of features.
+  > [t] = voiceless, alveolar, oral, stop
+  > [n] = voiced, alveolar, nasal, stop
+
+<strong>Phonetics Parameters</strong>
+* It turns out that we can find the analog to phonetic features in signed languages!
+* <strong>Parameters</strong> (or <strong>primes</strong>): Discrete units of a sign, or discrete units.
+  * <strong>Handshape</strong>
+  * <strong>Place of articulation</strong>
+  * <strong>Movement</strong>
+  * <strong>Palm orientation</strong>
+* These are not all of the parameters of signs, but we'll focus on these.
+
+<strong>Back to English</strong>
+* Before looking at ASL handshape, let's think about English.
+* Consider two words:
+  > [nid] "need"
+  > [did] "deed"
+* In terms of features of the initial consonants, what is the only difference between these two words?
+  > [n] = voiced, alveolar, nasal, stop 
+  > [d] = voiced, alveolar, oral, stop
+* So if we change one feature of the initial consonant, we get a different word.
+* Of course, we could make other featural changes and also get different words:
+  > [sid] [s] = voiceless, alveolar, oral, fricative
+
+<strong>ASL Place, Movement, Palm Orientation</strong>
+* There are signs in ASL that have the same handshape (and motion), but differ only in the where the sign is articulated.
+* There are ASL signs that are distinguished only by the <strong>movement</strong> in the sign.
+* There are ASL signs that differ only in the <strong>orientation of the palm</strong>.
+* <strong>Phonology</strong>: sound systems in spoken language and how sounds can influence one another.
+* It turns out that there is also <strong>sign language phonology</strong>!
+
+# Summary
 * Your knowledge of language includes knowledge of:<br>
   * **Phonetic inventory** of your language.<br>
   * **Places of articulation** of sounds in your language.<br>
@@ -526,7 +685,16 @@ We can use the vowel features that we've looked at to see differences in vowel i
   * Dialects of English differ in "rules" they apply to sounds.<br>
   * Aspiration of word-initial voiceless stops exists in American English, but not in Indian English.<br>
 * We characterize vowels using a different set of features than for consonants.
-* Vowels:
+
+### Consonants:
+* Consonants are distinguished using three features:<br>
+  1. Place of Articulation<br>
+    * Bilabials, Labiodentals, Interdentals, Alveolars, Palatals, Velars, Glottals, Labio-Velars
+  2. Manner of Articulation<br>
+    * Stops, Oral Stops, Nasal Stops
+  3. Voicing<br>
+    * Aspiration, Fricatives, Affricates, Liquids, Glides, Trilled [R]
+### Vowels:
   * Tongue Position: frontness/backness
   * Tongue Height: high/mid/low
   * Tenseness: tense/lax
@@ -538,3 +706,12 @@ We can use the vowel features that we've looked at to see differences in vowel i
   * Canadian Raising.
     * Crucially, Canadian Raising is a rule-governed process and we determined when it occurs.
 * Part of the speaker's knowledge of language must include knowledge of phonetic features of consonants and vowels.
+
+### Phonetics
+* From our preliminary evidence, it looks like we can talk about sign language phonetics and sign language phonology.
+* Signs in signed languages are not unanalyzable gestures.
+* They can be broken down into features that make them similar to sounds.
+* This provides further support for the idea that sign language grammars have the same building blocks or components as spoken languages.
+* More generally, we've seen that phonetics is very useful for helping us understand ways that dialects and languages differ.
+* There is tight connection between dialect phonetic features and non-linguistic factors like social class, geography, etc.
+* The study of phonetics is very useful in helping us to understand certain aspects of signed languages.
