@@ -89,13 +89,13 @@
 * **Consonants:** produced with some closure in the vocal tract that impedes the flow of air from the lungs.<br>
 * In phonetics, consonants and vowels are different types of sounds; not just contrasted with  respect to the alphabet.<br>
 
-### Consonants:
+## Consonants:
 * Consonants are distinguished using three features:<br>
   1. Place of Articulation<br>
   2. Manner of Articulation<br>
   3. Voicing<br>
 
-#### Places of Articulation
+### Places of Articulation
 <strong>Where is the consonant produced?</strong><br>
 <strong>Articulation:</strong> part of the mouth (usually the tongue) touches or interacts with another area of the vocal tract.<br>
 <strong>There are seven places of articulation.</strong><br>
@@ -326,6 +326,195 @@ What do [**p**], [**t**], and [**k**] have in common?<br>
   > **j**u**dg**e [dʒ]<br>
   > **uh-oh** [ʔ]<br>
 
+## Vowels have four features
+* <strong>Tongue position (frontness/backness):</strong> How far back in your mouth is your tongue artculating?
+* <strong>Tongue height (high/mid/low):</strong> What is the height of the tongue?
+* <strong>Tenseness:</strong> Is your tongue more tense or lax?
+* <strong>Lip rounding:</strong> Are your lips rounded or unrounded?
+
+### Feature 1: Tongue Position
+* English vowels can be divided in three ways:
+* <strong>Front:</strong>
+  > [i] beet, [ɪ] bit, [e] bait, [ɛ] bet, [æ] bat
+* <strong>Central:</strong>
+  > [ə] about, [ʌ] but, [a] cot
+* <strong>Back:</strong>
+  > [u] boot, [ʊ] book, [o] boat, [ɔ] caught
+
+Magnetic Resonance Imaging of the tongue articulating front, central, and back vowels.
+
+![5_image](https://user-images.githubusercontent.com/66571533/216808270-3d916a40-0d9a-48c0-9152-51193ef2add0.png)
+
+### Feature 2: Tongue Height
+* One feature is not enough. Need to differentiate further:
+* <strong>High:</strong>
+  > [i] beet, [ɪ] bit, [u] boot, [ʊ] book
+
+![6_image](https://user-images.githubusercontent.com/66571533/216808278-18db09f1-00eb-4322-8bfe-616f4fbb087c.png)
+
+* <strong>Mid:</strong>
+  > [e] bait, [ɛ] bet, [ə] about, [ʌ] but, [o] boat, [ɔ] bought
+
+![7_image](https://user-images.githubusercontent.com/66571533/216808282-16f427e3-24fc-433d-a120-de448c9971ca.png)
+
+* <strong>Low:</strong>
+  > [æ] bat, [a] cot
+
+![8_image](https://user-images.githubusercontent.com/66571533/216808286-d6eddaa2-d0de-4791-afb2-e353171bac83.png)
+
+<strong>Tongue Height Summary:</strong>
+* High - [i] beet, [ɪ] bit, [u] boot, [ʊ] book
+* Mid - [e] bait, [ɛ] bet, [ǝ] about, [ʌ] but, [o] boat, [ɔ] bought 
+* Low - [a] bat, [a] cot
+
+![9_image](https://user-images.githubusercontent.com/66571533/216808288-6f38cce6-d3cf-4537-8ba6-7299b2d014e2.png)
+
+### Vowel Chart
+Using Vowel Backness and Vowel Height, we can create the following vowel chart:
+
+![10_image](https://user-images.githubusercontent.com/66571533/216808292-d7d4dd44-6ed4-44ba-8a8d-718fe9ed98b5.png)
+
+But we still need to be able to differentiate [i] & [ɪ] bit; [u] & [ʊ]; [e] & [ε], [o] & [ɔ].
+
+### Feature 3: Tenseness
+* Hints to remember the Tense / Lax distinction:
+* Tense vowels are slightly higher than lax vowels.
+* Tense vowels are slightly longer than lax vowels.
+* The IPA symbols (not sounds!) we use to represent the tense vowels are the standard "vowel letters" that we were taught in grade school!
+  > [a] [e] [i] [o] [u]
+
+### Feature 4: Lip Rounding
+* Which vowels in English are rounded, and wWhich vowels in English are unrounded?
+  * Rounded vowels include [u], [ʊ], [o], [ɔ] 
+  * Unrounded vowels include [i], [ɪ], [e], [ɛ], [æ], [ɑ], [ʌ], [ə].
+  
+<strong>Note on Vowel Sound [ɔ] - Cot-Caught Merger</strong>
+* What is [ɔ] in some dialects is [a] for other speakers. [a] and [ɔ] have been merged.
+* This is called the cot-caught merger.
+* If you're a native English speaker from west of the Mississippi, you probably have merged [a] and [2].
+* Do you pronounce "cot" and "caught" the same?
+
+![14_image](https://user-images.githubusercontent.com/66571533/216808308-9371ca0c-0501-4a60-96e1-fa0cbfa231c6.png)
+
+We can use the vowel features that we've looked at to see differences in vowel inventories across languages.
+
+* <strong>Unround Back Vowel</strong>
+  * English has the mid back round vowel [o].
+  * Estonian has both [o] and its unrounded counterpart [ɤ]:
+
+![16_image](https://user-images.githubusercontent.com/66571533/216808312-409a2b97-2387-4ac5-baeb-7f7ddd30888b.png)
+
+### Putting the Features Together
+* What is the difference between the vowels in these words? (backness, height, tenseness)
+  > beet vs. boot: [i] vs [u] Backness
+  > beet vs. bat: [i] vs [æ] Height and Tenseness
+  > beet vs. bit: [i] vs [ɪ] Tenseness
+
+* Use height, backness, rounding, and tenseness to describe the vowels in these words:
+  > fit = High, front, unrounded, lax vowel - [ɪ]
+  > could = High, back, rounded, lax vowel - [ʊ]
+  > at = Low, front, unrounded, lax vowel - [æ]
+  > said = Mid, front, unrounded, lax vowel - [ε]
+
+### Diphthongs
+* How would you identify the vowels in
+  > eye
+  > boy
+  > house
+* These vowel sounds are different than the sounds in beet or bet; they combine two vowels (or a vowel and a glide).
+* They are called diphthongs, and there are at least three of them in English.
+  * [aj] as in the word 'eye.'
+  * [ɔj] as in the word 'boy.'
+  * [aw] as in the word 'house.'
+
+* How would you transcribe these words in IPA?
+  > Coy = [kʰɔj]
+  > Scout = [skɑwt]
+  > Sight = [sajt]
+  > Cow = [kʰaw]
+
+## Natural Classes
+* <strong>Natural Classes:</strong> Groups of sounds can be identified by sharing particular features.
+* <strong>Example:</strong>
+  * [h] and [ʔ] share two features, they are both glottal and voiceless.
+  * When we group sounds according to natural class, we look for the feature or features they have in common.
+
+### Alveolar Stops
+* For example, if we want to define the natural class that includes [t], [d], and [n], we can list two features:
+  * All three sounds are <strong>alveolar stops</strong>.
+  * Now if we want to define a natural class that includes only [t] and [d], we need to be more specific to eliminate [n].
+  * What are the features that uniquely define [t] and [d]?
+
+* Let's group these sounds into their natural classes. What feature(s) does each group have in common?
+  > [b] [d] [g] (Voiced, oral stops)
+  > [m] [n] [ŋ] (Voiced, nasal stops)
+  > [f] [v] [θ] [ð] [s] [z] [ʃ] [ʒ] [h] (Fricatives)
+  > [p][t] [k] [f][θ][s] [ʃ] [h] [tʃ] (Voiceless)
+  > [f] [θ] [s] [ʃ] [h] (Voiceless fricatives)
+
+* We can group vowels according to natural class, as well. What feature do these vowels have in common?
+  > [i] [e] [u] [o] [a] (Tense vowels)
+  > [i] [ɪ] [e] [ε] [æ] (Front vowels)
+  > [i] [ɪ] [u] [ʊ] (High vowels)
+  > [u] [ʊ] [o] [ɔ] (Back vowels)
+
+### Vowel Differences Across Dialects
+* The concept of "natural class" is useful in helping us to understand differences between dialects.
+* Let's take a listen at Conor, who will give us some words in Canadian English.
+* In Canadian Raising, the diphthongs pronounced as [aj] and [aw] in Standard American English are raised to [ʌj] and [ʌw]. But notice that it does not happen in all cases.
+
+<strong>Canadian Raising</strong>
+* In Canadian English, the nucleus of the diphthongs /aj/ and /aw/ are raised to [ʌ] before voiceless consonants.
+
+![26_image](https://user-images.githubusercontent.com/66571533/216808325-13db2c5b-0d02-4183-88a2-38844d082ca8.png)
+
+## Transcription
+<strong>Transcription</strong> is rendering a word in IPA:
+
+![transcription](https://user-images.githubusercontent.com/66571533/216809344-b77b7656-d87d-461c-a1f1-eeb6d0f4125d.png)
+
+<strong>Reverse Transcription</strong> is going from IPA to English orthography.
+
+![rev_transcription](https://user-images.githubusercontent.com/66571533/216809387-29facc5e-6a44-45b6-89ec-097ea005fdf9.png)
+
+### Potential Stumbling Blocks
+* Sometimes there are more sounds in a word than there are letters in the English spelling: 
+  > spinal [spajnǝl]
+* Other times, there are far fewer sounds than there are letters: 
+  > through [θru]
+* The same letters can be used to represent different sounds:
+  > misses [mɪsɪz]
+* The same sound can be represented by different letters:
+  > tracked [trækt]
+
+* Transcribe this sentence
+  > [træskrɪpʃin kæn bi trɪki -- biwer ɪŋglɪʃ orθagrɅfi!]
+  > Transcription can be tricky -- beware English orthagraphy
+* <strong>Don't depend on spelling; do learn to trust your ears.</strong>
+* The aim of a transcription is to represent the actual speech sounds produced when someone says the word (phrase, sentence, etc.).
+* Standard orthography is notoriously unreliable.
+* You may find it helpful to close your eyes and say the word to yourself a few times before you begin transcribing it.
+
+### Syllabic Sounds
+* Every language has rules about which sounds can function as the center of a syllable.
+* Syllable nuclei in English: almost always vowels, but occasionally we allow liquids and nasals to act as the nucleus.
+* Syllabic consonants are marked with diacritics [ˌ]
+* English allows syllabic [I], [r], [m], and [n]:
+
+![34_image](https://user-images.githubusercontent.com/66571533/216809412-ad7c9372-64a7-4228-8e85-03ae93da3a00.png)
+
+<strong>Schwa [ə]</strong>
+* These sounds can also be represented with a schwa [ə] + [l/r/m/n].
+
+![35_image](https://user-images.githubusercontent.com/66571533/216809465-1c005151-b9a1-49cb-9901-4e729ed62d4b.png)
+
+<strong>Syllabic Sounds Transcription</strong>
+* Remember that transcription is an attempt to accurately indicate the speech sounds that you use when you say a word.
+* So, if you have a strong intuition that there is a vowel between [z] and [l] when you say "dazzle," transcribe it with a schwa:
+  > [dæzəl]
+* If you have a strong intuition that there is no vowel between [z] and [l] when you say "dazzle," transcribe it with a syllabic [l̩]:
+  > [dæzl̩]
+
 ## Summary
 * Your knowledge of language includes knowledge of:<br>
   * **Phonetic inventory** of your language.<br>
@@ -336,4 +525,16 @@ What do [**p**], [**t**], and [**k**] have in common?<br>
   * Dialects of English differ in their phonetic inventories.<br>
   * Dialects of English differ in "rules" they apply to sounds.<br>
   * Aspiration of word-initial voiceless stops exists in American English, but not in Indian English.<br>
-
+* We characterize vowels using a different set of features than for consonants.
+* Vowels:
+  * Tongue Position: frontness/backness
+  * Tongue Height: high/mid/low
+  * Tenseness: tense/lax
+  * Lip Rounding: rounded/unrounded
+* Using these features, we could get a handle on differences across dialects. For example, some English dialects do not have a low, back, round, lax vowel [ɔ].
+* Using these features, we could also understand exactly how to discuss vowel differences between languages, like English vs. Estonian.
+  * We also saw that using the phonetic features was central to the concept of natural class.
+  * We can use natural class to understand processes like
+  * Canadian Raising.
+    * Crucially, Canadian Raising is a rule-governed process and we determined when it occurs.
+* Part of the speaker's knowledge of language must include knowledge of phonetic features of consonants and vowels.
