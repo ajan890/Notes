@@ -226,7 +226,7 @@
 ![26 (2)](https://user-images.githubusercontent.com/66571533/216751120-c01bf56f-b6cd-4852-8410-93fb7149aaf1.png)<br>
 
 * **Nasal stops:**<br>
-  > [m] [n] [n]<br>
+  > [m] [n] [ŋ]<br>
 * The velum is lowered to open the nasal cavity.<br>
 
 ![27 (2)](https://user-images.githubusercontent.com/66571533/216751140-ee332015-a17e-47ff-a2a9-e2a23f18de52.png)<br>
