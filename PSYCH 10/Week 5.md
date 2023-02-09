@@ -61,7 +61,7 @@
   * How to behave: "I learned my lesson?"
 * Learning is: "Experience that results in a relatively permanent change in the state of the learner.
 
-### Classical Conditioning
+## Classical Conditioning
 * "Discovered" by Ivan Pavlov in 1996
   * He originally was interested in studying dog saliva.  He would feed the dog meat powder to collect their saliva for experiments.  However, he found out that they would begin to salivate whenever he walked into the room, whether or not he was carrying food.
   * Salivation was (eventually) triggered by what should have been <strong>neutral stimuli</strong> such as:
@@ -102,4 +102,100 @@
   * More likely to associate illness with food not lights, sounds
   * Experiments have been done with showing people pictures of objects, and giving a small electric shock whenever a certain image shows up.  Experimenters found out that people learned to show fear much faster when conditioned with an image of a snake compared to an image of a flower.  This may be due to evolution; humans were always scared of snakes
     * They also did this with images of guns, and found out that it takes longer to condition than a snake, but shorter than flower.  They inferred this occurred because humans know guns are harmful, but they were not always present in evolutionary history.  And most humans were never harmed by flowers.
-    
+
+### Special Case: Conditioned Taste Aversions
+ * Usually results from a single pairing
+ * Can be hours between eating and sickness
+ * **Example:**
+   * You have a plate with scallops (Neutral stimulus) that contain some bacteria (Unconditioned stimulus).
+   * You end up getting sick due to the bacteria on the scallops (Unconditioned response).
+   * Because you don't see the bacteria, you develop a taste aversion against scallops.  Scallops are now a conditioned stimulus and feeling sick is now a conditioned response.
+ * Familiarity/Expectations
+   * Explains why Pavlov himself did not become a conditioned stimulus
+   * Consider in the scallop scenario, you also had pizza in your meal, which was <em>actually</em> the food that made you sick.  Why did you assume the scallops did it?  It's because you probably had pizza a lot of times before, and it never caused issues before.  You decide the more novel food is the one that caused the illness.
+
+## Operant Conditioning
+* <strong>B.F. Skinner</strong>
+* <strong>Operant Conditioning</strong> is a type of learning in which an individual's behaviour is modified by its consequences
+* They learn to operate something
+* <strong>Thorndike's Puzzle Box</strong>
+![image](https://user-images.githubusercontent.com/66571533/217681789-da24f1c1-024c-4be6-8c7f-86b2cbaebbbf.png)
+  * Thorndike's Law of Effect
+    * Behaviours followed by <em>favorable</em> consequences become <em>more</em> likely
+    * Behaviours followed by <em>unfavorable</em> consequences become <em>less</em> likely
+* <strong>Skinner Box</strong>
+![image](https://user-images.githubusercontent.com/66571533/217682020-1a838de7-148c-4485-b25c-031d54548406.png)
+  * Skinner did many experiments in the skinner box.  In the first trial, if the rat presses the bar, they get food.  In some trials, the rat gets water, and in some trials, the rat gets an electric shock or a loud sound.
+  * In the experiments where the rat receives something favorable, it starts pressing the bar more often.  In those where the rat receives something unfavorable, it stops pressing the bar
+
+### Types of Consequences
+![image](https://user-images.githubusercontent.com/66571533/217682365-c64ec893-dc78-466e-a272-e694816fe826.png)
+* <strong>Positive</strong> means to <em>add</em> something to the scenario.
+* <strong>Negative</strong> means to <em>remove</em> something from the scenario.
+* Thus, positive reinforcement means adding something favorable and positive punishment means to add something unfavorable.
+* By similar logic, positive punishment means adding something unfavorable and negative punishment means removing something favorable.
+
+### Training More Complex Behaviors
+* Suppose you wanted to teach a dog to put their paws on the back wall of the room?
+  * If you waited for that to happen naturally, that will never happen.
+* To do this, you reward small parts at a time.
+  * For example, you reward the dog when it goes to the back of the room.
+  * Then, you only reward when the dog is close to the center of the back wall.
+  * Then, you only reward when the dog has lifted its front paws off the ground.
+  * Then, you only reward when the dog has its front paws on the wall.
+* Slowly, the dog will learn to do what you want it to do.
+  * This process is called <strong>Shaping</strong>.
+
+### Relations between Classical and Operant Conditioning
+* Discrimination and generalization exist in operant conditioning.
+  * Where/when are behaviors desired
+    * E.g., Children should be loud during recess and quiet during class..
+* Extinction
+  * What happens when you no longer reinforce behavior?
+  * Affected by initial schedule of reinforcement...
+    * Behaviours conditioned using partial/intermittent reinforcement <em>resist extinction</em> longer than those that were conditioned under continuous reinforcement.
+* Intermittent schedules can be:
+  * Fixed vs. Variable
+    * <strong>Fixed:</strong> Reinforcement after a given amount of time or responses
+    * <strong>Variable:</strong> You are reinforced after an <em>average</em> amount of time has passed or resopnses have been given, reinforcement <em>is less</em> 'predictable'.
+  * Interval vs. Ratio
+    * <strong>Interval:</strong> Based on <strong>time</strong> intervals
+    * <strong>Ratio:</strong> Based on <strong>number of behaviors</strong>, (i.e., ratio of responses to reinforcements)<br>
+
+![image](https://user-images.githubusercontent.com/66571533/217685243-1a514c45-bb56-4180-a3e4-4defa5c4009a.png)<br>
+
+<strong>Response rates for each schedule:</strong><br>
+![image](https://user-images.githubusercontent.com/66571533/217685530-bfbeedf1-a214-42b3-8f10-a1bb248e995f.png)<br>
+<strong>Notice that:</strong>
+* Ratio schedules have a much higher response rates than interval schedules<br>
+<strong>Which Schedule is Best?</strong><br>
+* "Best" = most resistant to extinction
+* Intermittent/partial reinforcement resists extinction more than continuous reinforcement
+  * Ex. Broken vending machine vs. broken slot machine
+  * (You are more likely to keep spending on a broken slot machine than a broken vending machine).
+* Variable ratio is most resistant to extinction
+
+### Why are rewards rewarding?
+* Nucleus accumbens is activated during the processing of rewards
+  * Dopamine is released when a behaviour is rewarded
+* Genetic variation in dopamine and dopamine circuits might play a role in individual differences.
+
+### Recap: Classical Vs. Operant Conditioning
+* <strong>Classical:</strong>
+  * Based on an involuntary response
+  * Pairing of neutral stimulus and unconditioned stimulus occurs "before" behaviour
+* <strong>Operant:</strong>
+  * Based on a voluntary behaviour
+  * Reward/punishment occurs "after" behaviour
+
+<strong>Learning can be both classical and operant:</strong>
+  * Ex. Casino
+    * Classical -> Light, Sounds
+    * Operant -> Monetary reward
+
+### Observational Learning
+* Can all behaviours really be explained by conditioning?
+* <strong>Observational learning:</strong> an organism learns from watching others
+  * Often very useful!
+  * How did you learn to tie your shoes?  How did your dentist learn how to extract wisdom teeth?
+  * etc.
