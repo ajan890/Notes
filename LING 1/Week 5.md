@@ -380,6 +380,7 @@ From this information, we can make some inferences:<br>
 > Hopobatok = he was hungry<br>
 > Hoohopobatok = they were hungry<br>
 > Sahopoba = I am hungry<br>
+
 Same as above:
 * -chaaha = to be tall
 * Sa- = I
@@ -394,9 +395,9 @@ Note: The <strong>absence</strong> of an affix can be significant:<br>
 * Example:
   * -tok marks past tense
   * ∅ (absence of other morphemes) marks present tense<br>
-From this information, we can also make inferences on how to say sentences that were not given.<br>
-> “He is cold.” = Chokwa
-> “I was cold” = Sachokwatok
+* From this information, we can also make inferences on how to say sentences that were not given.<br>
+  > “He is cold.” = Chokwa<br>
+  > “I was cold” = Sachokwatok<br>
 
 ## Allomorphy
 ### The English Plural Morpheme
