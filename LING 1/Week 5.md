@@ -348,6 +348,226 @@ How does our mental dictionary differ from printed dictionaries?
 * What two elements are associated with the negative morpheme in Chickasaw?
   > **ik-** and **-o**<br>
 
+## Morphological Analysis
+* Looking for recurring morphemes.
+* Compare and contrast partially similar forms.
+* Look at the meanings for consistently meaningful forms
+
+### Case Study: Kanuri
+<strong>Kanuri:</strong> a chadic language of Nigeria<br>
+> Karate = excellent<br>
+> Nәmkarte = excellence<br>
+> Kura = big<br>
+> Nәmkura = bigness<br>
+> Guna = small<br>
+> Nәmgana = smallness<br>
+From this information, we can make some inferences:<br>
+* What part of speech is excellent = Adjective
+* What part of speech is excellence = Noun
+* What is the morphine is Januri which can be used to derive nouns from adjectives
+  * Nәm-
+* If the word for length is nәmkurugu, then what is the word for long?
+  * Kurugu
+
+### Case Study: Chickasaw (Native American Language)
+> Sachaaha = I am tall<br>
+> Chaaha = he is tall<br>
+> Chichaaha = you are tall<br>
+> Hoochaaha = they are tall<br>
+> Satikahbi = I am tired<br>
+> Chitikahbitok = you were tired<br>
+> Chichokwa = you are cold (ass)<br>
+> Hopobatok = he was hungry<br>
+> Hoohopobatok = they were hungry<br>
+> Sahopoba = I am hungry<br>
+Same as above:
+* -chaaha = to be tall
+* Sa- = I
+* -tikahbi = to be tired
+* Chi- = you
+* -chokwa = to be cold (to be ass)
+* -hopoba- = to be hungry
+* Hoo- = they<br>
+Note: The <strong>absence</strong> of an affix can be significant:<br>
+* Use the symbol {\null set symbol} to show an unmarked morpheme
+* The morpheme which means “he” in Chickasaw is {the null set symbol}
+* Example:
+  * -tok marks past tense
+  * ∅ (absence of other morphemes) marks present tense<br>
+From this information, we can also make inferences on how to say sentences that were not given.<br>
+> “He is cold.” = Chokwa
+> “I was cold” = Sachokwatok
+
+## Allomorphy
+### The English Plural Morpheme
+* How do we pluraize regular nouns in English?<br>
+![image](https://user-images.githubusercontent.com/66571533/219984601-127ca146-5038-4c97-bdf5-f9eed761d81d.png)<br>
+* [s], [z], and [ɪz] are allomorphs of the plural morpheme, written as -s (or -es)
+* If the plural -s is realized in 3 different ways, then how do we know which one to use?
+
+### Wug Test
+<strong>Study by Jean Berko Gleason, 1958</strong>
+> Experimenter: “This is a wug.  Now there are two of them. Now there are two..."<br>
+> Child: "wug[z]!"<br>
+> Experimenter: “Two days ago I had only one shola, but yesterday I bought another one. Now I have two..."<br>
+> Child: "shola[z]!”<br>
+* etc.<br>
+* You know how to pluralize novel words
+* Although the plural -s can be realized in three different ways, you have clear intuitions about when to use each realization.
+* This is part of your knowledge of morphology.
+
+### Plurals
+* The behavior of the plural -s is predictable
+* We can predict which of the three forms will appear in any given phonetic environment.
+* Let’s look at our list of plurals to see if we can identify the relevant environment;<br>
+![image](https://user-images.githubusercontent.com/66571533/219984798-818c4af9-db96-45fb-851e-2cadc196d283.png)<br>
+* First, list the actual sounds that [z], [s], [ɪz] appear after:
+  * [-z] appears after [b], [g], [n], [d]
+  * [-s] appears after [t], [k], [f], [p]
+  * [-ɪz] appears after [ʃ], [z], [tʃ], [dʒ]
+* Next determining what each group of sounds has in common:<br>
+![image](https://user-images.githubusercontent.com/66571533/219984843-0fb0fec1-4ce0-4c23-b922-24572154572d.png)<br>
+* The sounds [z], [ʃ], [tʃ], [dʒ] belong to a special class of sounds called sibilants (also includes [s] and [ʒ])
+* Sibilants are sounds that have a buzzing, hissy quality.
+* [-ɪz] appears after:<br>
+![image](https://user-images.githubusercontent.com/66571533/219984866-dc110585-bd1a-4557-9fca-73fe0066ca30.png)<br>
+* We can represent it like this:<br>
+![image](https://user-images.githubusercontent.com/66571533/219984886-b62019d5-ef24-41e5-8189-282d372bfd95.png)<br>
+
+### Inflection
+* Inflection morphemes are purely grammatical - they mark tense, number, gender, case, etc.
+* They are often very productive
+* Inflectional morphemes typically come after derivational morphemes in a word.<br>
+![image](https://user-images.githubusercontent.com/66571533/219984924-7b4e6e29-2d45-4fc4-883c-66b2a71fe3e6.png)<br>
+* Inflectional morphemes can perform a great number of functions
+* English is an inflection poor language; it uses a limited set of eight inflection morphemes
+* Some languages make greater use of inflectional morphemes
+* Many languages (german and russian) have paradigms that mark “case”
+
+### Case Marking
+* Nouns have a particular form depending on their category (subject, object, etc)
+<strong>In Russian:</strong><br>
+> Victor+a = “Victor’s”<br>
+> Victor+u = “to Victor”<br>
+> Victor+om = “by Victor”<br>
+> Victor+ye = “about Victor”<br>
+
+<strong>In English:</strong><br>
+> I love them<br>
+> They love me<br>
+
+### Word Formation
+* There are many word formation strategies found in the world’s languages
+  * Affixiation
+  * Prefixiation
+  * Suffixiation
+  * Infixiation
+  * Circumfixiation
+
+### Reduplication
+* Forming new words by duplicating part or all of an existing word.
+* Partial reduplication (tagalog):
+  * “Bili” = buy
+  * “Bibili” = will buy
+  * “Pasok” = enter
+  * “Papasok” = will enter
+* Total reduplication (Indonesian)
+  * “Rumah” = house
+  * “rumahrumah” = houses
+  * “”Ibu” = mother
+  * “Ibuibu” = mothers
+* **Reduplication in English**
+  * English does use reduplication
+* Contrastive Focus reduplication (CF reduplication)
+  > “I’ll make the tuna salad and you make the salad-salad”<br>
+![image](https://user-images.githubusercontent.com/66571533/219986019-9a363052-9f94-46ff-bfc4-a26eac90f697.png)<br>
+  > “Oh we’re not living together-living together”<br>
+  > “We call him “psycho Marcus” in order to distinguish him from normal Marcus and Marcus-Marcus.”<br>
+  > “I talked to him last week, but I didn’t talk to him-talk to him”<br>
+* Contrastive Focus Reduplication in English puts focus on the most prototypical, stereotypical example of something.
+  * “You make the salad-salad” = “you make the real/normal salad.”
+  * “Should I wear a hat-hat?”
+    * As opposed to a yarmulke
+  * “Charley is no more like a dog-dog than he is like a cat” (John Steinbeck, “travels with Charley” 1962)
+    > Person A: “Are you nervous?”<br>
+    > Person B: “Yeah but you know, not nervous-nervous” (as in not “really” nervous)<br>
+* This kind of focusing reduplication is found in a number of other languages:
+* <strong>Spanish:</strong>
+  * "No es una <strong>casa</strong>-casa." = “this isn’t a real house” (Women on the Verge of  Nervous Breakdown, Pedro Almodovar, 1993)
+* <strong>Russian:</strong>
+  * “On <strong>zheltyj</strong>-zheltyj, a ne limonno-zheltyj.”
+  * "It’s <strong>yellow</strong>-yellow but not lemon-yellow.”
+
+#### Constraints on Reduplication in English
+* There are grammatical constraints on CS Reduplication.  Consider these examples:
+  > “He is out-of-his-mind-out-of-his-mind” (correct)<br>
+  > \*”He is out-out-of-his-mind.” (ungrammatical)<br>
+  > \*”He is out-of-his-mind-mind” (ungrammatical)<br>
+
+  > “They are sleeping together, but they’re not sleeping together-sleeping together.” (correct)<br>
+  > \*”they’re sleeping together, but they’re not sleeping together-together.” (ungrammatical)<br>
+  
+  > “Do I like you-like you?” No. You’re a little too neurotic for me.” (correct)<br>
+  > \*”Do I like Tom-like Tom? He’s a little too neurotic for me.” (ungrammatical)<br>
+  > “Do I like-like Tom? No. He’s a little too neurotic for me.” (correct)<br>
+
+  > “I wouldn’t date-date a linguist” (correct)<br>
+
+### Singlish Morphology
+* Let’s take a look at the use of reduplication in other non-standard varieties of English.
+* Native English dialect found in Singapore.
+* Singapore is located on the southern tip of the Malay Peninsula.
+* Singlish is a colloquial variety of English
+* It makes extensive use of reduplication
+* Singlish allows for reduplication of nouns, adjectives and verbs
+* Look at the following from Spanish.
+* Noun Reduplication:
+  > “Where is your boy-boy?” (Boyfriend, son)<br>
+  > “Sawy who told you mummy-mummy is a graduate” (Dear mom)<br>
+  > “I’m looking for Ry-Ry” (dear Henry)<br>
+  > Jeff-Jeff, come and see this. (Jeffrey sweetheart)<br>
+  > Su-Su, come-here (suzie, a dog)<br>
+* What meaning is associated with nominal reduplication?
+  * Nominal reduplication adds intimacy.
+
+#### Noun Reduplication
+* Nominal reduplication is constrained:
+  * Ry-ry but not *Henry-Henry
+  * Jeff-Jeff but not *Jeffrey-Jeffrey
+  * Su-Su but not *suzie-suzie
+* When a proper name is reduplication in Singlish, what is constraint?
+* Keep in mind: buddy-buddy (close male friend)
+* The proper name must have only one syllable
+* This rule does not apply to common nouns!
+
+#### Adjectival Reduplication
+* Look at the Singlish forms below:
+  * Adjectival reduplication:
+  * Don’t always eat sweet-sweet things. (very sweet)
+  * Make it smaller-smaller.
+* Come and see the lizard’s tail; black-clack one. (very black)
+* Plain adjectives and comparative can be reduplicated.
+* But superlative adjectives can not be reduplicated:
+  > \*"Make it smallest-smallest" (ungrammatical)
+
+#### Verb Reduplicaton
+* <strong>Data set 1:</strong>
+  > “Let her be. She cry-cry” (cry a little bit)<br>
+  > “I cough-cough then no more already” (minor coughing)<br>
+  > “No traffic polic…stop-stop a while” (Make a short stop)<br>
+* <strong>Data set 2:</strong>
+  > “Why you cough-cough-cough whole day long?” (keep coughing)<br>
+  > “I walk-walk-walk, then I fall down.” (In the act of walking)<br>
+  > “They choose-choose so long already.” (In the act of choosing)<br>
+* What is the difference in meaning between reduplicating once and twice?
+  * Reduplicating once or twice indicates how much an action is repeated.
+
+
+
+
+  
+
+
 
 
 
