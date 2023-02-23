@@ -428,6 +428,344 @@
   * **Head:** "pastures"
   * **Complement:** "greener"
 
+## Heads and Complements
+
+- The head of a phrase is the lexical item which determines its syntatic category (and name).
+- Complements give some added information about the head. Complements will be sisters to the head.
+- Head of VP = V, complement (and sister) to V = [(NP) a prize]:
+
+### Crosslinguistic Differences
+- In English, the head of a phrase precedes its complement.
+  - (it appears on a left branch, while the complement is on a right branch.)
+- English: [(S)[(NP) Taro][(VP) found[(NP) a dog]]].
+  - In English, the head of a phrase precedes its complement
+- Japanese: [(S) Taro-ga[(VP)[(NP) inu-o] mitsuketa]].
+  - In Japanese, the complement precedes the head
+- Why are English and Japanese different in this (syntatic) way?
+  - Different languages have different phrase structure rules.
+- In English VP rule is **VP → V NP**
+  > [(VP) found[(NP) a dog]]<br>
+- What should the Japanese VP rule be?
+  > [(VP)[(NP) a dog] found]<br>
+  - Thus, it is **VP → NP V**
+
+- English PS rules:
+  - **S → NP CP**
+  - **NP → DET N**
+  - **VP → V NP**
+  - “Tommy found a dog.”
+- Japanese PS rules:
+  - **S → NP VP**
+
+**Word order in Japanese (Subject-Object-Verb)**
+
+- How do we explain the following sentence?
+  > [(NP) Taro-ga][(VP) ringo-o tabeta]<br>
+  > Taro apple ate<br>
+  * “Taro ate an apple.”
+- Japanese has a Subject-Object-Verb (SOV) word order.
+- English has a Subject-Verb-object (SVO) word order.
+  - Phrase structure rule for **S: S → NP VP**
+  - Phrase structure rule for **VP: VP → NP V**
+- How would we draw the PS tree?<br>
+![image](https://user-images.githubusercontent.com/66571533/220981292-b4eb709b-d12a-4f47-b546-6e19a650a600.png)<br>
+
+- Now let’s add a propositional phrase.
+- What do PPs look like in Japanese, and where does this particular PP go?
+  > [(NP) Sono otokonoko-wa][(VP)[(PP) boo de] inu-o butta]<br>
+  > That boy stick with dog hit<br>
+  - “That boy hit the dog with a stick”
+- Phrase structure Rules:<br>
+  - What are teh rules, for S, VP, and PP in this sentence?
+    - **S→ NP VP**
+    - **VP → PP NP V**
+    - **PP → NP P**<br>
+![image](https://user-images.githubusercontent.com/66571533/220981421-9e74acc8-8a08-4eac-8509-c80275186391.png)<br>
+
+**Word Order in Malagasy (Verb Object Subject)**
+
+- Malagasy is spoken in Madagascar, a large island east of Africa (I’m sure I don’t need to copy paste the map of Africa at 13:02 right?)
+- It demonstrates a Verb-Object-Subject (VOS) word order.
+  > [(VP) Mamaky boky][(NP) ny mpianatra]<br>
+  > reads book the student<br>
+  * “The student reads the book.”
+
+- How can we account for this using phrase structure rules?
+  - PS rule for S:
+    - **S → VP NP**
+- We can draw a tree to represent this sentence<br>
+![image](https://user-images.githubusercontent.com/66571533/220981793-8d03470e-7b45-4d6f-a724-d403ce2d2270.png)<br>
+
+* Malagasy PS rules:
+  - **S → VP NP**
+  - **NP → N**
+  - **VP → V NP**
+    - “The student reads the book”
+
+### Summary of Phrase Structure rule differences
+
+- With our PS rules, we can get a handle on how different languages have different word orders:<br>
+![image](https://user-images.githubusercontent.com/66571533/220981966-8f69fee3-7b68-4501-904d-1ddff2fb10e0.png)<br>
+- Differences in PS rules are one reason that word orders differ across languages.
+- Part of a speaker’s knowledge of their native language is knowledge of the PS rules of their language.
+
+## Structural Ambiguity
+* Sentences with **Multiple Interpretations**
+  - Sometimes the meaning of a sentence is straightforward:
+    > “[The manatee [ate a rutabaga]]”<br>
+  - But sentences can often have multiple interpretations:<br>
+![image](https://user-images.githubusercontent.com/66571533/220984102-82980376-34c7-4de4-a545-eef2cb235536.png)<br>
+
+- The ambiguity may be lexical:<br>
+![image](https://user-images.githubusercontent.com/66571533/220984266-7a0aee44-8026-4720-be06-33ca75bbe25b.png)<br>
+
+- Other kinds of ambiguity seem to be relatable to word structure.
+- We saw this in morphology
+  > [un-[lock-able]]<br>
+  > [[un-lock]-able]<br>
+- Sometimes, ambiguity arises due to different possibilities for reference.
+  - “It” can refer to multiple things, depending on the context:<br>
+![image](https://user-images.githubusercontent.com/66571533/220984374-5062b440-9271-4bc9-9a37-479db7b15c7e.png)<br>
+
+- Ambiguity can also arise as a result of syntatic structure.
+  - “Sherlock saw the man with binoculars.”
+    - [Sherlock saw the man][with binoculars]
+    - [Sherlock saw][the man with binoculars]<br>
+![image](https://user-images.githubusercontent.com/66571533/220984629-8c889f29-3e1c-4f5c-87e4-f9d3289c3e10.png)<br>
+
+* Consider the phrase:
+  > “Old men and women”<br>
+  - [old men] and women
+  - Old [men and women]<br>
+![image](https://user-images.githubusercontent.com/66571533/220984758-1511929c-4510-453d-8ea6-cd663b655e1d.png)<br>
+- Creating syntatic trees can be very useful for understanding the nature of the ambiguity<br>
+![image](https://user-images.githubusercontent.com/66571533/220984807-5569c44c-0760-4947-ae79-9e1eaa765dca.png)<br>
+
+- Both structures are possible; each structure is associates with a distinct meaning. Constituency matters!
+- How are the following sentences different?
+  > The girl bought the donut with sprinkles<br>
+  > The girl bought the donut with cash<br>
+  > The girl bought the donut with Cash<br>
+- [with sprinkles], [with cash], and [with Cash (as in Johnny Cash)] are all PPs.
+- The question is, what does each PP modify?
+  - The first one tells me about the donut itself
+  - The second one is giving information about how the donut is purchased
+- [with sprinkles] describes the donut; that means that, structurally, it is the sister to the NP [the donut]
+  - **NP→ NP PP**<br>
+![image](https://user-images.githubusercontent.com/66571533/220985338-02127204-52aa-4d3a-b024-8d68ea0be1fd.png)<br>
+
+- [with cash] describes how the donut was bought; structurally, it is the sister to the VP [bought the donut]
+- **VP → VP PP**<br>
+![image](https://user-images.githubusercontent.com/66571533/220985548-1f7e3cfe-4ade-49d4-86f5-c1ab3a7e38c6.png)<br>
+
+> A. “The girl bought the donut with cash.”
+> B. “Yes, the girl did so.”
+  * VP1 → VP PP
+  * VP2 → N NP
+> C: “Yes, the girl did so with cash.”
+* Conclusion: “bought the donut” is a VP.
+
+- In the sentences we just looked at, the interpretation was fairly clear.
+- We can use meaning to determine the structure for:
+  > The girl bought the donut with sprinkles<br>
+  > The girl bought the donut with cash<br>
+  > The girl bought the donut with Cash<br>
+
+### Using Syntatic Trees:
+- Consider, for example, the following sentence:
+  > “The spy saw the man with a telescope”<br>
+- What are the different meanings of this sentence?
+  > “The spy used a telescope to see the man.”<br>
+  > “The spy saw the man who has a telescope.”<br>
+- The different meanings are determined by the placement of the modifying **PP** “with a telescope”
+
+- PP placement” PP attaches to/modifies VP.
+  > "The spy [(VP)[(VP) saw the man][(PP) with a telescope]].
+* Interpretation 1: Using a telescope, the spy saw the man<br>
+![image](https://user-images.githubusercontent.com/66571533/220987750-f53d1958-e4b9-47de-b6a6-5a1b8b6d4a98.png)<br>
+  > “The spy saw the man with a telescope.”<br>
+  > “Yes, the spy did so”<br>
+  > “Yes, the spy did so with a telescope.”<br>
+    * Conclusion: “Saw the man” = VP2
+
+* Interpretation 2: The spy saw the man who has a telescope
+![image](https://user-images.githubusercontent.com/66571533/220988005-ece6e272-5961-42d5-8549-42c32ebe7692.png)<br>
+
+### Ambiguous Sentences
+
+- Once again, we’ll need two trees to show the two meanings of the ambiguous sentence below:
+  - “The student texted a friend under the table”<br>
+![image](https://user-images.githubusercontent.com/66571533/220988151-1b4428ad-5c14-4c5c-b88b-780c010e5d4f.png)<br>
+- “Under the table” gives us information about where the friend is. The PP modifies “friend”
+![image](https://user-images.githubusercontent.com/66571533/220988277-c75f60e7-d1fb-44f3-8d37-edf9956eb7d2.png)<br>
+> Yes, the student texted him”
+
+- “The student texted a friend under the table”
+  - “Under the table” gives us information about where the texting happened
+    > “Yes, the student did so under the table
+
+## Syntax differences in English Dialects
+### African American Vernacular English (AAVE)
+* The verb **be** is found in both SAE and AAVE<br>
+![image](https://user-images.githubusercontent.com/66571533/220989258-8960af64-8a30-4098-abad-9c1b08708884.png)<br>
+**AAVE use of habitual BE**
+  * AAVE has an auxiliary verb, habitual be, that Standard English lacks.
+  * One way that dialects differ is the inventory of auxiliary verbs.
+  * Native speakers of AAVE know when it is possible to use habitual be and when it’s not:
+> "John working right now<br>
+> \*"John be working right now" (incorrect)<br>
+> "John tired now"<br>
+> \*"John be tired now" (incorrect)<br>
+* Scene: Elementary school, Los Angeles
+  > Teacher: “Bobby, what does your mother do everyday”<br>
+  > Bobby: “She be at home!” (student uses habitual be correctly)<br>
+  > Teacher: “You mean, she is at home?” (teacher attempts to “correct” student, who has not made a mistake)<br>
+  > Bobby: “No she ain’t, ‘cause she took my grandmoehter to the hospital this morning”<br>
+  > Teacher: “You know what I meant, you are not supposed to say ‘she by at home’ you are to say. ‘She is at home.’”<br>
+  > Bobby: “why you trying to make me lie? She ain’t at home.” (Student knows that be and is are different.)<br>
+* Habitual be is not just a ‘mistake’ or ‘broken English’<br>
+* It’s completely systematic
+* Scene: First grade classroom, Detroit
+  > Teacher: “Where is Mary?”
+  > Student: “She not here.” (student knows that Mary is not present, and says it)
+  > Teacher: “She is never here!”
+  > Student: “Yeah, she be here.” (Students knows that Mary is typically present, and says it)
+  > Teacher: “Where? You just said she wans’t here” (teacher does not seem to know that AAVE can have habitual be.)
+* Could knowledge of AAVE be useful for an educator?
+
+#### AAVE Auxilaries
+* AAVE has another auxiliary not found in SAE, ‘done’.
+* ‘Done’ refers to a completed action, recent or not:
+  > AAVE: "I done my homework today/yesterday"
+  > SAE: "I did/have done my homework"
+* With other verbs ‘done’ refers to a recently completed action:
+  > AAVE: "I done fed the dog 3 times this week"
+  > SAE: "I have fed the dog 3 times this week"
+AAVE:
+  > He bin married<br>
+  > He BIN married<br>
+  > He done ate<br>
+  > Be HIN done ate<br>
+  > I’m finna go<br>
+SAE:
+  > He has been married (at some point)<br>
+  > He has been married for a long time<br>
+  > He has eaten<br>
+  > He ate a while ago<br>
+  > I’m going to go (right now)<br>
+
+### Southern US English
+  * "Might would have"
+  * "Might could get done"
+* “Multiple modal” constructions from Southern US English that are ungrammatical in Standard American English:
+  > “You know, if you drank a half a drink, you might outta go home and sleep it off”<br>
+  > “You may should give that to Billy”<br>
+    * Maybe you should give that to Billy
+  > “We might can go up there next Saturday.”<br>
+    * It might be that we can go up there next Saturday
+* The use of these multiple modals is governed by rules.
+* You can’t just combine any modal in any order!
+  > \*"We can might go up there next Saturday" (incorrect)<br>
+  > \*"You should may give that to Billy" (incorrect)<br>
+* Unlike the case with AAVE, the modal/auxilar verbs used in multiple modals are the same as in Standard American English.
+* The difference is that Southern English allows for different combinations of these modals.
+* Across dialects, the inventory of auxiliary/modal verbs is different and the syntatic properties are different.
+
+### Subject Auxilary Inversion
+* We saw cases of “Subject Auxilary inversion when we discussed constirutency:
+  > I will eat a rutabaga.<br>
+  > Will I eat a rutabaga?<br>
+* To form a question from the statement above, the subject and auzxilary verb “inver” positions
+* The auxilary now appears at the beginning of the sentence
+* Consider the following:
+  * SAE:
+    > "Nobody can say anything to them.”<br>
+    > "No dog bit you"<br>
+  * AAVE
+    > "Can’t nobody say nothin’ to dem’"<br>
+    > "Didn’t no dog bite you"<br>
+* How are the AAVE sentences different from Standard English?
+* The auxiliary (can’t, didn’t, wouldn’t) precedes the subject
+* Have we seen other cases where auxiliary preced subject?
+  > "Will you clean the dishes"<br>
+
+#### Negative Inversion in AAVE
+* AAVE: Couldn’t nobody beat ‘em
+* SAE: Nobody could beat them
+* Standard English also has a restricted version of negative iversion
+  > “Rarely have I seen such a mess” <br>
+  * (I have rarely seen such a mess)
+  > \*"Rarely I have seen such a mess" (incorrect)<br>
+  > “Never would I be able to deny it”<br>
+  * (I would never be able to deny it)
+  > \*"Never I would be able to deny it" (incorrect)<br>
+
+#### Subject-Auxilary Inversion Across English
+* Are there any constraints on negative inversion in AAVE?
+* AAVE:
+  > "Can’t nobody beat ‘em"<br>
+  > \*"Can’t tom beat ‘em" (incorrect)<br>
+  > "Won’t no dogs eat kale"<br>
+  > \*"Won’t the dog eat kale" (incorrect)<br>
+* SAE:
+  > "Nobody could beat them<"br>
+  > "Tom can’t beat them"<br>
+  > "No dog will eat kale"<br>
+  > "The dog won’t eat kale"<br>
+* The availability of negative inversion has to do with kind of subject the sentence has (no dog vs. the dog)
+
+* More generally, where do we see Eubject-Aux inversion in English?:
+  * Question:
+    > “John will bake a cake"<br>
+    > "Will john bake a cake?"<br>
+  * AAVE negative inversion
+* Are other places where we see subject-Auxilary inversion in English
+
+* **WH-Questions**
+  > Mary will read that book<br>
+  > What will mary read? (wh-question)<br>
+  * Wh-questions involve wh-words (who, what when, where, why, how, how much, which, etc)
+  * Wh-words end up at the front of the sentence because of “wh-movement”
+  * What happens to auxiliary and subject in the wh-question?
+  * Subject-Auxilary inversion!
+  * What two processes happen in a wh-question (in English)?
+  * Wh-movement and Subject-Aux inversion
+
+* **Conditional inversion**
+  * Conditional inversion is optional in conditional clauses (if…then clauses):
+    > "Had you arrived on time, you would’ve seen the whole play"<br>
+    * Notice that this alternates with: 
+      > \*"You had arrived on time, you would’ve seen the whole play" (incorrect)<br>
+
+    > "If you had arrived on time, you would’ve seen the whole play"<br>
+    * What is different about this one?
+      > \*"If had you arrived on time, you would’ve seen the whole play" (incorrect)<br>
+
+* **Fuck Inversion in British English**
+  * British English has what we call fuck inversion
+    > John is a nice guy<br>
+    > Is he fuck a nice guy = He is NOT a nice guy<br>
+
+    > I am pretty sure Bill will buy jelly beans.<br>
+    > Will he fuck buy jelly beans! = He will NOT buy jelly beans.”<br>
+  * Fuck inversion is emphatically negative, but fuck is not the only element that triggers it
+
+* **Wh-questions in Malayisn English**
+  * Malaysian English has wh-question that look very different from SAE:
+  * Malaysian English:
+    > What john must buy<br>
+    > Where john can buy the durians<br>
+  * SAE:
+    > What must john buy<br>
+    > Where can john buy the durians<br>
+
+#### Summary of Cross-Dialect Differences
+* It looks like Subject-Aux inversion is employed in various dialects of English in different contexts:
+* SAE (subject-aux inversion in yes/no question, wh-questions)
+* AAVE (uses subject-aux inversion not present in SAE)
+* British English (fuck inversion, not present in SAE)
+* Malaysian English (no subject-aux inversion for wh-questions)
+
 # Summary
 * Words come in **syntactic categories**.
 * Traditional methods of determining nouns, verbs, and adjectives do **not** work, meaning alone is not sufficient to determine the category of a word.
@@ -438,3 +776,15 @@
     * Phrase structure rules
   * How to go from **constituency tests** to **phrase structure trees**
 * Some technical notions associated with phrase structure trees
+* You know that words come in syntatic categories
+  * These categories can be discovered through category tests
+* Words in a sentence are not just like beads on a string
+  * Sentences have structure, constituents, that we can identify using constituency tests
+  * Part of your language is knowledge of phrase structure rules of your language
+* PS rules are responsible for some syntatic differences across languages (as seen in English, Japanese and Malagasy)
+  * We can visualize the constituency using PS trees
+* Knowledge of the PS rules of your language is responsible for some types of ambiguity.
+* Dialects may differ in 
+  * the inventory of auxiliaries they have.
+  * how different word categories combine (multiple modals)
+  * when certain syntatic processes occur, like subject-auxilary inversion.
