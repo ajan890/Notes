@@ -214,20 +214,227 @@
       > \*"**Bluebirds tomorrow**, Jane might chase the." (incorrect)<br>
       > \*"**Chase the**, Jane might bluebirds tomorrow." (incorrect)<br>
 
+#### Clefting
+* **Clefting** involves breaking up a sentence and feeding it into the following formula:
+* "It is/was \_\_\_\_ that \_\_\_\_." 
+* Example:
+  > "The girl ran in the rain."<br>
+  > "It was in the rain that the girl ran."<br>
+  > "It was the girl that ran in the rain."<br>
+  > "It was girl ran that the in the rain."<br>
+
+## Constituency Tests to Trees
+* All English sentences must contain (minimally) a noun and a verb.
+* This generalization can describe the structure of very simple English sentence:
+  > "John slept" <br>
+* Most sentences, even very simple ones, are more complex:
+  > "The cat slept on the mat" (Det + N + V + P + Det + N)<br>
+* A + B + C + D + E is linear, it does not reflect constituency.
+* Both "John slept" and "The cat slept on the mat" can be divided into two parts:
+  * A constituent that acts like a **noun**. 
+  * A constituent that acts like a **verb**.
+    > **"The dog slept."**<br>
+  * Pronoun replacement:
+    > "It slept." (Replaces the dog)<br>
+
+    > **"The dog slept on the mat."**<br>
+  * Pronoun replacement:
+    > "It slept on the mat." (Replaces the dog)<br>
+    > "The dog slept there." (Replaces on the mat)<br>
+  * Do so replacement:
+    > "Yes, the dog did so." (Replace slept on the mat)<br>
+
+* These constituents can be mapped to a tree.
+* Pronoun replacement:
+  > "The young man bought **them**."<br>
+  > "**He** bought several large crabs."<br>
+* Do so replacement: 
+  > "Yes, the young man **did so**."<br>
+* Every sentence is a constituent.<br>
+![3_image](https://user-images.githubusercontent.com/66571533/220842648-a1318c01-e659-4208-a8df-2f06e63078b3.png)<br>
+
+* In the sentences "John slept" and "The cat slept on the mat":
+  * "John" and "the cat" takes the place of a noun; therefore, it is called a **noun phrase (NP)**.
+  * "slept" and "slept on the mat" takes the place of the verb; therefore, it is called a **verb phrase (VP)**.<br>
+![6_image](https://user-images.githubusercontent.com/66571533/220843418-ebe1be07-7050-4d1d-b57a-580b53029a62.png)<br>
+
+## Phrase Structure Rules
+* All English sentences follow a similar pattern.
+* We can express this generalization by writing what is known as a phrase structure rule:
+  > **S→ NP VP**<br>
+* This states that a sentence contain two distinct parts: a noun phrase (NP) and a verb phrase (VP).
+
+### Noun Phrase Rules
+* **Noun phrase (NP):**
+  * NP (DET) (Adj) N (PP) "The cute dog on the couch."
+  * An NP can be inserted into a sentence in a position which requires a noun.
+  * Examples of NPs:
+    > "Larry"<br>
+    > "the Alpo"<br>
+    > "a yellow butterfly"<br>
+    > "the tall woman by the pool"<br>
+* NPs are interchangeable in sentences. Where an NP appears in a sentence, you can put in another NP.
+* Example:
+  > "John ate a chocolate pie."<br>
+  > "He", "she" and "it" are all NPs. If you can replace a constituent with a pronoun, that constituent is an NP.<br>
+* Pronoun replacement targets NPs.
+* Successful pronoun replacement tests reveal a constituent, and tell you what kind of constituent you're dealing with.
+
+### Verb Phrase Rules
+* **Verb phrase (VP): → V (NP) (PP) (Adv) VP**
+* A VP can be inserted into a sentence in a position which requires a verb.
+* Examples of VPs:
+  > "ran"<br>
+  > "runs in the park"<br>
+  > "hit a ball"<br>
+  > "fell slowly into the bath"<br>
+  > "fell into the bath slowly"<br>
+* Check using your constituency tests:
+  > "The puppy ran in the park."<br>
+  > "Yes, the puppy did so."<br>
+* Conclusion:
+  * "Ran in the park" is a Verb Phrase constituent.
+* Like NPs, VPs are **interchangeable**. Do so/too is a VP.
+* If you can replace a constituent with do so/too or did so/too, that constituent is a VP!
+  * Do so/too replacement targets VPs.
+  * A successful do/did replacement test reveals a constituent, and tells you what kind of constituent you're dealing with.
+
+### Prepositional Phrases
+* **Prepositional Phrase (PP):**
+* **PP → Prep (NP)** (A preposition followed by an NP)
+* Examples of PPs:
+  > "to the store"<br>
+  > "with any luck"<br>
+  > "from Abby"<br>
+  > "looked up"<br>
+
+## Phrase Structure Trees
+* **Syntactic trees** allow us to see/encode the constituency of a sentence directly:<br>
+![14_image](https://user-images.githubusercontent.com/66571533/220844485-b446a7bb-7116-453f-ab08-9a2c500edf1e.png)<br>
+  > "Yes, the spider **did so**."<br>
+
+### How To Draw Them
+* When we use trees to represent sentence structure, we must do two things:
+  1. Accurately represent word order.
+  2. Identify constituents.
+  * Example: "up the stairs."
+    * Step 1: Determiner and noun join to form an NP.
+    * Step 2: The P and NP join to form the PP.<br>
+![15_image (2)](https://user-images.githubusercontent.com/66571533/220847811-39215cba-be6c-49f1-a707-3bc3867d57f6.png)<br>
+* Phrase structure trees are like blueprints for a sentence.
+* They can show us:
+  * How sentences are built.
+  * How they can be broken down into pieces.
+* **Phrase structure rules** determine how to break down those pieces.
+* We can use PS rules to help us figure out how our trees should look!<br>
+![16_image](https://user-images.githubusercontent.com/66571533/220844819-d60d8a47-3e6e-4622-8e86-657901d199e6.png)<br>
+* Where do these trees/constituent structures come from? 
+* How do speakers correctly structure their utterances?
+  * The leading hypothesis: speakers appeal to **unconscious/internalized** phrase structure rules.
+  * Part of your knowledge of your native language:
+    * You know phrase structure rules that enable you to make hierarchical constituent structures effortlessly.
+
+### Phrase Structure Rules - Recap
+* All English sentences must minimally contain: A noun phrase (subject) A verb phrase (predicate)
+* We can express this generalization by writing a phrase structure rule (or "PS rule", for short):
+* **S→ NP VP**
+  > [(S)[(NP) Mary] [(VP) laughed]]<br>
+  > Person A: "Mary laughed."<br>
+  > Person B: "Yes, Mary did so."<br>
+
+> ![18_example1_image](https://user-images.githubusercontent.com/66571533/220846404-1339f5d1-3c3d-4b5e-8306-8185dcb72692.png)<br>
+* Below are a few more example trees.
+> ![18_example2_image](https://user-images.githubusercontent.com/66571533/220846612-87102b89-6ced-4277-a5f7-cbba49777522.png)<br>
+
+> ![18_example3_image](https://user-images.githubusercontent.com/66571533/220846669-55a60a46-9555-454e-aaf3-1beea17f335f.png)<br>
+
+> ![18_example4_image](https://user-images.githubusercontent.com/66571533/220846716-e8f97835-2ba4-48f5-a874-651c42e99a40.png)<br>
+
+> ![18_example5_image](https://user-images.githubusercontent.com/66571533/220846756-e332567c-8b8a-482f-8c83-3f8714fbe837.png)<br>
+
+* **Phrase Structure Rules:**
+* **S → NP VP **
+  > "The cat slept."<br>
+* **NP → (DET) (Adj) N (PP)**
+  > "(The) (cute) dog (on the couch)."<br>
+* **VP → V (NP) (PP) (Adv)**
+  > "Read (the book) (quickly)."<br>
+* **PP → Prep (NP)**
+  > "at (home)"; "up"; "down"<br>
+
+### Terminology
+* There is a special terminology used to define relationships between elements in a phrase structure tree.
+* This terminology makes it easier to talk about how the elements in a tree are related to one another.
+#### Node:
+  * A labeled branch point, where the syntactic category is labeled.<br>
+![20_image](https://user-images.githubusercontent.com/66571533/220849397-0f0672ec-c45d-4dbf-b1fa-c785fbf409b6.png)<br>
+
+#### Domination: Every higher node dominates all the categories beneath it.
+  * When a continuous downward path can be traced from a node labeled X to a node labeled Y, then X dominates Y.
+  * In the tree below, **PP** dominates **Prep**, **NP**, **DET**, **N**.<br>
+![21_image](https://user-images.githubusercontent.com/66571533/220849533-3b1144ca-b85d-453c-a7f7-ae660f772bbb.png)<br>
+
+#### Sisters: Two categories that are directly under the same node are called sisters.
+  * In the above example, **DET** and **N** are sisters.
+
+* Example: <br>
+![23_image](https://user-images.githubusercontent.com/66571533/220849917-d68bb5c3-dc64-41d3-aab5-1e432ff1ad0e.png)<br>
+  * What are the nodes of this tree? 
+    * S, NP1, VP, DET, N, V, PP, P, NP2, DET2, N2
+  * What are the pairs of sisters in this tree? 
+    * (NP1, VP), (DET, N), (V, PP), (P, NP2), (DET2, N2)
+  * What does VP dominate?
+    * V, PP, P, NP2, DET2, N2
+* The head of a phrase is the lexical item which determines its syntactic category (and name):
+  * **NP:**
+    > "an extinct bird species of South America"<br>
+    > "Martha."<br>
+  * **PP:**
+    > "of all shapes and sizes" "before the end of the day"<br>
+  * **VP:**
+    > "bring buckets of water" "eliminate the losing team"<br>
+    > The head of an NP is always an N. The head of a VP is always a V.<br>
+  * Etc...
+
+
+#### Complement: Gives some added information about the head.
+  * Complements will be **sisters** to the head.
+  * What's the head of the VP below? What's the complement?<br>
+![25_image](https://user-images.githubusercontent.com/66571533/220850969-87a23b0f-c0d2-40a6-87e0-92ca8fde7f44.png)<br>
+* Every category can have a complement.
+* The complement may be another phrase with another head inside of it:
+* **PP:** 
+  > "before [the end [of the day]]"
+* NP:
+  > "The destruction [of Rome]"
+* VP:
+  > "bring [buckets [of water]]" "work [at home]"
+* **All phrases must have heads.**
+* **A head may or may not have complements.**
+  * "... the verb 'laughed' does not have a complement." -Harold Torrence (UCLA put this in their powerpoint so it's here now.) <br>
+
+![the_word_laughed_does_not_have_a_complement](https://user-images.githubusercontent.com/66571533/220853102-b3d67c47-05ac-4c53-843b-8f7b8dfeba9f.png)<br>
+###### Kazuha Shibasaki (柴崎 万葉) from 2016 anime <em>Gi(a)rlish Number</em> (ガーリッシュナンバー)
+
+* **Example:**<br>
+![27_image](https://user-images.githubusercontent.com/66571533/220851541-be48e44b-189d-465a-81d0-5d5265dc94a6.png)<br>
+* **VP:**
+  * **Head:** "move"
+  * **Complement:** "to greener pastures"
+* **PP:**
+  * **Head:** "to"
+  * **Complement:** "greener pastures"
+* **NP:**
+  * **Head:** "pastures"
+  * **Complement:** "greener"
+
 # Summary
 * Words come in **syntactic categories**.
 * Traditional methods of determining nouns, verbs, and adjectives do **not** work, meaning alone is not sufficient to determine the category of a word.
 * There are a number of tests we can do to determine each word's category.
 * Strings of words form chunks that are called **constituents**.
-* There are a number of tests we can use to determine constituency.
-
-
-
-
-
-
-
-
-
-
-
+  * There are a number of tests we can use to determine constituency.
+    * Constituency tests
+    * Phrase structure rules
+  * How to go from **constituency tests** to **phrase structure trees**
+* Some technical notions associated with phrase structure trees
