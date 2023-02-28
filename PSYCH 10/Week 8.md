@@ -55,5 +55,87 @@
   * Ask a participant to spin a roulette wheel, and then estimate how many countries are in the UN.
     * Those who scored a higher roll tend to guess higher
  
- ## Language and Thought
- 
+## Language and Thought
+### What is Language?
+* Language is a **system** that relates **sounds** (or gestures) to **meaning**
+  * Symbolism
+    * Connecting symbols to meaning
+  * Structured and meaningful
+    * Example
+      > "The cat sat on the fence" is not the same as "The fence sat on the cat."
+  * Displacement
+    * Indicating want
+  * Generativity
+    * You only learn some sentences but can generalize to create infinitely many others.
+
+### Components of Language
+1. **Phonemes**
+  * The smallest unit of sound
+    * /p/ vs /b/
+      * pit vs bit
+2. **Morphemes**
+  * The smallest unit of meaning
+    * Prefix 'Un' means not
+    * Suffix '-s' means more than 1
+      * 'sub' 'marine'
+
+3. **Syntax**
+  * Rules for word combinations
+    > The cat chased the dog. <br>
+    > The dog was chased by the cat. <br>
+
+### How do infants learn language?
+#### Theories of Language Development
+* **More Nurture?**
+  * Learn language from the environment
+  * E.g., Behaviorists
+* **More Nature?**
+  * Children are born with innate mental structures that guide their acquisition of language
+  * E.g., Noam Chomsky
+
+* **Support for Nativist Perspective:**
+  * Children apply rules of grammar to novel words (e.g., wug)
+  * There seem to be critical (or sensitive) periods to learn language
+  * Animals don't learn language as readily or successfully as humans
+
+#### Early Speech Production
+* Birth - Crying
+* 1 Month - Cooing (vowel sounds)
+* Middle of first Year - Babbling (consonant sounds)
+* End of first year - Patterned Speech (random sounds, but patterned)
+* 18 Months - Naming Explosion (children begin assigning words to meaning extremely quickly, 10-20 words per day)
+* 24 Months - Combining words (may not be grammatical)
+
+#### Early Speech Perception
+* **Categorical Speech Perception**
+  * Infants, like adults, perceive speech sounds categorically
+  * e.g., although the acoustic difference between /b/ and /p/ falls on a continuum - we perceive these consonants as two distinct categories
+* Infants take statistics on the sounds they hear.<br>
+![image](https://user-images.githubusercontent.com/66571533/221730458-ff190c3c-5357-4258-bf60-232d40b436e3.png)<br>
+* Infants learning Japanese would learn the Japanese /r/ sound, while those learning English would learn the distinction between the English /r/ sound and the English /l/ sound.
+* **Perceptual Narrowing for phonemes**
+  * 6- to 8- month old English learners can differentiate the Salish and Hindi contrasts. 
+  * By 10 - 12 months they lose this ability.
+  * Is this a bad thing?
+    * Studies have shown that the earlier infants do this, the larger their vocabularies by age 2.
+
+#### Language and Cognition
+* Sapir-Whorf Hypothesis
+  * Found that Inuit people had many words for "snow."
+    * **Kriplyana:** snow that looks blue in the early morning.
+    * **Hiryla:** snow in beards.
+    * **Ontla:** snow on objects.
+    * **Intla:** snow that has drifted indoors.
+  * Strong version:
+    * thoughts and behavior are <em>determined</em> by language
+    * the language you speak determines the concepts and categories that you use, and, as a result, shapes what you <em>can</em> think about.
+  * Weak version:
+    * thoughts and behavior are <em>influenced</em> by language
+    * language influences what we pay attention to and this shapes experience, which influences how we think
+* Do psychologists really believe the strong version is true?
+  * Not really. Some languages have very few words for color, but can still color match, etc.
+  * Most psychologists believe in a weaker hypothesis: languages <em>influences</em> our <em>habitual</em> thinking about the world
+
+
+
+
