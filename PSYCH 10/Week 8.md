@@ -135,7 +135,67 @@
 * Do psychologists really believe the strong version is true?
   * Not really. Some languages have very few words for color, but can still color match, etc.
   * Most psychologists believe in a weaker hypothesis: languages <em>influences</em> our <em>habitual</em> thinking about the world
+    * **Example:** The word "key" in Spanish is a feminine noun and in German is a masculine noun.  In an experiment, experimenters asked Spanish and German people to describe keys, and what they found was the Spanish people would describe it using more feminine-related adjectives such as "beautiful," "ornate," etc. while Germans would describe it using more masculine-related adjectives such as "jagged," "metal," etc.
+    * **Example:** Russian Blues - Russian has two words for blue.  Light blue in English is referred to as "goluboy", and dark blue is "siniy".  Experimenters asked Russian speakers and English speakers to identify which squares are identical and measured the reaction time.<br>
+  ![image](https://user-images.githubusercontent.com/66571533/222298303-96e485b5-7eaa-4b82-8997-8b79d95255c7.png)<br>
+    * Russians answered faster in the Cross-Category trials while English speakers showed no difference.
+## Developmental Psychology
+* **Developmental Psychology:** the scientific study of changes or continuities in an organism between initial conception and death
+### Perceptual Development
+* Perceptual experience begins in utero
+#### Auditory Development
+  * Mother's voice is most salient external stimulation that reaches the fetus
+    * Speech is low-pass filtered
+  * Newborns prefer to listen to
+    * their mother's voice over another woman's voice
+    * their mother's native language over another language
+  * The acoustics of a newborns' cry exhibits distinctive characteristics of the mother's native language
+  * Young infants recognize stories and music they were exposed to while still in the womb.
+#### Taste Development
+  * Amniotic fluid is flavored by what the mother has eaten
+  * Infants show preferences for flavors they were exposed to in utero
+  * Experimenters have tested this before: they told one group of mothers in their third trimester to drink a set amount of carrot juice every day on top of normal water consumption, and the other group to drink a set amount of water every day on top of normal water consumption.
+    * After the baby is born for ~5 months, they have the baby eat cereal in carrot juice.  Those that were exposed to carrot juice in utera responded more positively.
+### Infant Testing Methods
+  * Infants can't tell us about their perceptual experiences
+  * We must <em>infer</em> their perceptual abilities and preferences based on their behavior.
+  * Most infant testing methodologies are based on 3 assumptions:
+    1. Infants will attend/orient to stimuli they prefer or find interesting
+    2. Infants prefer to hear/see stimuli that they have heard/seen before (familiarization)
+    3. If they have been repeatedly exposed to a stimulus (to the point of boredom) then they should prefer novel stimuli (habituation)<br>
+![image](https://user-images.githubusercontent.com/66571533/222302458-aaa58af4-cad1-4463-8d9c-5edba3f026b5.png)<br>
+  * **High Amplitude Sucking Procedure (HASP)**
+    * Babies are given a sucker attached to a pressure sensor.  When they are given something novel or something they are interested in, the babies tend to suck harder.<br>
+    ![image](https://user-images.githubusercontent.com/66571533/222302610-a97ac576-2e58-492a-9250-d45503ed7f77.png)<br>
 
+#### Visual Development
+![image](https://user-images.githubusercontent.com/66571533/222302895-84d85792-29ae-4011-843b-cf4f7b8ef508.png)
+* Infants cannot see clearly when they are born; they have about 20/800 vision.  This means they can see at 20 feet someone with perfect vision can see at 800 feet.
+* This improves very fast.  By about 5 months of age, the babies have around the same vision as an adult.
+* **Fantz, 1961**
+  * Invented the Preferential Looking paradigm
+  * Premise: Infants will look longer at interesting stimuli than uninteresting stimuli<br>
+  * If infants show a preference for the striped stimuli over the solid color stimuli then they can **see** the difference!
+    * Stripes start big and gradually get smaller, and if the infant stops showing preference for one, it means the infant can no longer see the stripes because they are blurry enough to look like the solid color.<br>
+    ![image](https://user-images.githubusercontent.com/66571533/222304044-71f81e1d-d17e-4c87-924c-5702d8a125cf.png)<br>
+* **Preferences for Faces**
+  * 3-month-olds show preferences for faces their own race.
+    * They aren't racist!
+    * They do this because their caregivers tend to be people of their own race.
+### Cognitive Development
+* **Cognitive development:** the development of thinking across the lifespan.
+* Children can think but they may overgeneralize or may not notice certain things.
+  * For example, a child may see a butterfly and say it's a bird, since it flies.  Or, the child may ask Mom over the phone to look at the picture they drew, although Mom cannot see the picture.
+* Piaget's Theory of Cognitive Development
+  * Children are like "little scientists"
+    * They are naturally curious
+    * That plays an active role in acquiring knowledge
+  * **Schema:** an organized unit of knowledge that the child uses to try to understand a situation
+    * A "bird" schema may be associated with "fly," "alive," "wings."
+  * **Assimilation:** new experiences are readily incorporated into child's existing theories
+  * **Accommodation:** theories are modified based on experience<br>
+  ![image](https://user-images.githubusercontent.com/66571533/222305352-fcf5c10e-ebf4-452b-8ac4-769bca23789f.png)<br>
+  ![image](https://user-images.githubusercontent.com/66571533/222305372-a2c02b6b-db78-4871-b579-ab35bc16c31d.png)<br>
 
 
 
