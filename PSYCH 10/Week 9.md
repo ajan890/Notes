@@ -66,4 +66,36 @@
   * Stage model doesn't account for ariability in children's performance
   * Undervalues the influence of sociocultural environment
 
+## Social Psychology
+* **Social psychology:** concerned with the way individuals' *thoughts*, *feelings*, and *behaviours* are influenced by *others*
+* Social cognition
+  * How do we understand & evaluate others?
+* Group Behavior
+  * How do we behave around others?
 
+### Social Cognition
+#### Evaluating Others
+  * How skilled are we in evaluating others?
+  * How do we make these first impressions and what are the implications?
+  * Experiment: Evaluations of Professors
+    * Ambady and Rosenthal, 1993
+    * University students were given 10-second clips of a professor teaching without volume.  They are then tasked to rate the professor on 15 different dimensions.
+    * They found that the grades given from the 10-second clips do in fact correlate with student ratings of the professor in the course evaluations.
+  * Participants were surprisingly *accurate* in their evaluations of teachers based on *thin-slices* of behaviour
+    * Accurary = ability to predict end of year evaluations
+  * This can be done with many other factors
+    * Rule and Ambady, 2008, 2010, 2011
+    * Ambady, Hallahan, Conner, 1999
+    * Sexual Orientation
+      * Apparently members of the LGBTQ+ community are better at this
+    * Political Orientation
+    * Future success of lawyers based on college year book photos
+#### Stereotypes
+* Stereotypes can be:
+  * Inaccurate
+  * Overused
+    * Ex. Men generally can do more pull ups than women, only ON AVERAGE
+    * Crossing category boundaries makes things seem more different, and we underestimate variability within categories
+  * Can lead to bias
+  * Can lead to **Stereotype threat:** fear of confirming a negative stereotype about their social group
+  
