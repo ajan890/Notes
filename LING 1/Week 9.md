@@ -1,5 +1,4 @@
 # Week 9
-# Week 9
 ## Animal Language
 ### Introduction
 * Do animals have language?
