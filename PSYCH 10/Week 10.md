@@ -81,12 +81,98 @@
 #### What causes Mental Health Issues?
 ![image](https://user-images.githubusercontent.com/66571533/224857958-360ccec5-2e2c-4d42-9e34-d9e0f858a24b.png)<br>
 
+### Anxiety 
+* Negative mood state accompanied by bodily symptoms such as increased heart rate, muscle tension, a sense of unease, adn apprehension about the future.
+* Everyone can be anxious sometimes, but here fear is out of proportion to the risk involved and it interferes with everyday life
+![image](https://user-images.githubusercontent.com/66571533/224861542-b2208603-16d4-4fc0-8892-d43166050539.png)<br>
+#### Generalized Anxiety Disorder (GAD)
+* Excessive worry about everyday things that is out of proportion to the specific causes of worry
+* At *least 6 months* of excessive anxiety
+* May be accompanied by:
+  * Difficulty concentrating
+  * Muscle tension, fatigue
+  * Sleep problems
+* Worry can be **reinforced**.
 
+#### Panic Disorder and Agoraphobia
+* **Recurrent** unexpected panic attacks
+* Intense anxiety and avoidance related to the attack for at least 1 month
+  * Causing significant distress or interference with life
+* May also develop **agoraphobia**, a fear of public places
+* Many more people have had a panic attack than fit criteria for disorder.<br>
+![image](https://user-images.githubusercontent.com/66571533/224861972-13a15e2a-f213-4ad6-a5a0-f61f7d86ff25.png)<br>
 
+#### Specific Phobia
+* Irrational fear of a specific object or situation that substantially *interferes with the person's ability to function*
+* Most common anxiety disorder (12%)
+* 5 major subtypes
+  * Blood-injury-injection
+  * Situational type (planes, elevators, etc.)
+  * Natural environment (storms, heights, water)
+  * Animal type
+  * Other (choking, vomiting)
+* Why might phobias be so common?
+  * Most targets of phobias can pose real threats!
+  * *Preparedness theory*: people are predisposed toward certain fears
+    * Easier to condition fear (in humans and in monkeys) for snakes and spiders than flowers or toy rabbits
+  * Are phobias learned? (Remember Little Albert, the white rat experiment)
+    * Doesn't fully explain behavior - people with phobias are not necessarily more likely to recall negative experiences with feared objects/situation
+    * May relate to temperament and neurobiological factors
+    
+#### Social Anxiety Disorder
+* Fear of social situations which leads to worry and diminished day-to-day functioning
+  * 2nd most common anxiety disorder
+  
+### Post-Traumatic Stress Disorder (PTSD)
+* Exposure to a traumatic event
+* Chronic **psychological arousal, recurrent unwanted thoughts or images of the trauma and avoidance** of things that call the traumatic event to mind.
+  * More than 1 month
 
+### Obsessive Compulsive Disorder
+* Obsessive thoughts and/or compulsions that seem irrational or nonsensical
+  * Checking, ordering cleansing rituals, repeating
+* Take up a significant amount of time (at least 1h per day)
+* Cause *significant distress or impairment in function*
+* **Obssessions:** unwanted, inappropriate, and persistent thoughts
+* **Compulsions:** repetitive, often ritualistic behaviours
+![image](https://user-images.githubusercontent.com/66571533/224863090-6e0b8472-5993-4f4e-b0e3-de0404df2a0e.png)<br>
 
+### Unipolar Disorders (Depression)
+* Major Depressive disorder (MDD)
+  * **One or more Major depressive episodes** (MDE) but no history or manic or hypomanic episodes
+* A Major depressive episode consists of:
+  * **Depressed mood**\*
+  * **Anhedonia**\*
+  * Weight loss or increase in appetite
+  * Insomnia/hypersomnia
+  * Agitation/psychomotor retardation
+  * Fatigue/loss of energy
+  * Worthlessness, excessive or inappropriate guilt
+  * Diminished ability to concentrate or indecisiveness
+  * Recurrent thoughts of death, suicidal ideation or attempt
+* Symptoms occur for at **least 2 weeks** and cause significant **distress or impairment in function**.
+* What contributes to depression?
+  * Prevalence = 18%
+  * **Biological**
+    * Genetics - twin studies
+    * Neurotransmitters: serotonin
+  * **Psychological**
+    * Attribution style: pessimistic attribution style
+  * **Social**
+    * Stressful life events
+    * Interpersonal factors
+    * SES
+  * **\*Gene x Environment interactions**
+#### Bipolar Disorder
+* Characterized by cycles of abnormal, persistent high mood (mania) and low mood (depression)
+  * *Mania:* Must last at least 1 week
+    * Decreased need for sleep
+    * Talkativeness
+    * Racing thoughts
+    * Reckless behavior<br>
+![image](https://user-images.githubusercontent.com/66571533/224863945-9e4a0c2c-45d4-415a-8d34-18e65dacf63c.png)<br>
 
-
+  
 
 
 
