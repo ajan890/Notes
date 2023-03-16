@@ -190,9 +190,9 @@
   
 ### Schizophrenia
 * **Delusions:** False beliefs
-  * Persecutory
-  * Grandiose
-  * Referential
+  * Persecutory (person believes someone is after them)
+  * Grandiose (person has inflated sense of worth)
+  * Referential (person believes ordinary events or behavior has some special significance)
 * **Hallucinations:** perceptual experiences that occur even when there is no stimulus in outside world generating those experiences.
   * Can be **auditory**, visual, olfactory, gustatory, or somatic
 * **Disorganized speech:** speech that is difficult to follow because answers do not clearly follow questions or one sentence does not logically flow from another
@@ -209,4 +209,49 @@
 ![image](https://user-images.githubusercontent.com/66571533/225471594-10ea107f-5e5a-4118-aa36-0cc874383fbd.png)<br>
 * Schizophrenics also may have reduced overall brain volume (2% difference).
 
+#### Risk factors for developing schizophrenia
+* Prevalence = 1%
+* **Biological factors:**
+  * Genetics
+  * Neurotransmitter/dopamine abnormality
+* **Environmental factors:**
+  * Issues during pregnancy (stress, infection, malnutrition, hypoxia)
 
+### Psychological Treatment
+* Psychological treatments
+* Biological treatments
+* Can combine
+
+#### Psychoanalytic/psychodynamic therapy
+* Goals
+  * Reduce inner conflict by giving patients insight into their unconscious thoughts and feelings (Developed by Sigmund Freud)
+  * Reveal how childhood experiences have shaped the individual
+* **Cognitive Behavioral Therapy (CBT)**
+  * Goal: Teach people new, more constructive ways of thinking and acting (i.e., change the cognitions and the behaviors of a disorder)
+  * Homework to practice techniques learned in therapy
+  
+#### Biomedical Therapies
+* Psychopharmacology - the study of the effect of drugs on the mind and behavior
+* Antipsychotic medication:
+  * E.g., Chlorpromazine (Thorazine)
+    * Blocks **dopamine** receptor sites (some also affect serotonin systems)
+    * Treats some positive symptoms, not negative ones
+* Antidepressant medication
+  * Commonly: Selective serotonin reuptake inhibitors (SSRIs)
+  * Makes serotonin stay in the synaptic cleft for longer
+    * Fluoxetine (Prozac)
+  * Can also treat anxiety and eating disorders
+  
+#### Combining Therapies
+* Are psychological and biological treatments equally effective?
+* Do psychological versus biological treatments work in the same way?<br>
+![image](https://user-images.githubusercontent.com/66571533/225479012-8e75b347-61b6-45c3-8967-cadbcb16d472.png)<br>
+* Barriers to Treatment
+  * People don't know that they have a treatable disorder
+  * Problems finding/affording treatment
+  * Beliefs about treatment/stigma
+* Preventative Programs
+  * Programs that promote well-being and mental health
+    * Mindfulness Meditation
+    * Peer Support and education
+      * Goal setting groups
