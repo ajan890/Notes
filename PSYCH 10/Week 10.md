@@ -150,7 +150,7 @@
   * Worthlessness, excessive or inappropriate guilt
   * Diminished ability to concentrate or indecisiveness
   * Recurrent thoughts of death, suicidal ideation or attempt
-* Symptoms occur for at **least 2 weeks** and cause significant **distress or impairment in function**.
+* Symptoms occur for at **least 2 weeks** and cause significant **distress or impairment in function**.  Either depressed mood or anhedonia **must** be present every day.
 * What contributes to depression?
   * Prevalence = 18%
   * **Biological**
@@ -163,7 +163,15 @@
     * Interpersonal factors
     * SES
   * **\*Gene x Environment interactions**
-#### Bipolar Disorder
+    * The 5-HTT gene (Serotonin Transporter) is related to depression.  There are two alleles, a "long" and "short" allele.  They are named that way because of their physical length.
+    * This gene does not determine whether someone experiences depression, but if combined with whether a person has been maltreated, there is a correlation.<br>
+![image](https://user-images.githubusercontent.com/66571533/225466928-9c2cc40b-fd40-4559-b9c9-205bf1de81ba.png)<br>
+* Caspi et al., 2003
+* They found that those with the two long alleles are more resilent to depression, while those with two short alleles are more affected by maltreatment.
+* They also did the same study with the number of stressful life events.<br>
+![image](https://user-images.githubusercontent.com/66571533/225467040-9de8096c-4660-402c-aeb6-c20ced7d1bf2.png)<br>
+    
+### Bipolar Disorder
 * Characterized by cycles of abnormal, persistent high mood (mania) and low mood (depression)
   * *Mania:* Must last at least 1 week
     * Decreased need for sleep
@@ -172,7 +180,33 @@
     * Reckless behavior<br>
 ![image](https://user-images.githubusercontent.com/66571533/224863945-9e4a0c2c-45d4-415a-8d34-18e65dacf63c.png)<br>
 
+#### What contributes to Bipolar disorders?
+* **Prevalence = 2.5%**
+  * **Biological**
+    * Genetics - twin studies
+  * **Psychosocial**
+    * Life stressors
+    * Positive life events -> more manic episodes after life events in which goal is attained.
   
-
+### Schizophrenia
+* **Delusions:** False beliefs
+  * Persecutory
+  * Grandiose
+  * Referential
+* **Hallucinations:** perceptual experiences that occur even when there is no stimulus in outside world generating those experiences.
+  * Can be **auditory**, visual, olfactory, gustatory, or somatic
+* **Disorganized speech:** speech that is difficult to follow because answers do not clearly follow questions or one sentence does not logically flow from another
+* At least two of the following present for at least 1 month:
+  * **Delusions**\*
+  * **Hallucinations**\*
+  * **Disorganized speech**\*
+  * **Disorganized or catatonic behaviour**
+  * **Negative symptoms**
+* At least one of the first three symptoms must be included.<br>
+#### Symptoms of Schizophrenia
+![image](https://user-images.githubusercontent.com/66571533/225471110-1c1587b6-5854-4be7-b363-c2e262cdd9f9.png)<br>
+* People with schizophrenia also have larger ventricles in the brain.  Ventricles are the fluid-filled areas in the brain.<br>
+![image](https://user-images.githubusercontent.com/66571533/225471594-10ea107f-5e5a-4118-aa36-0cc874383fbd.png)<br>
+* Schizophrenics also may have reduced overall brain volume (2% difference).
 
 
