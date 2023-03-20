@@ -36,7 +36,7 @@
   * specific time, place
   * personally experienced
   * <em>Prospective memory:</em> future events
-* <strong>Implicit Memory</strong>
+* <strong>Semantic Memory</strong>
   * facts
   * general knowledge
 
