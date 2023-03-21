@@ -83,7 +83,7 @@
 #### Extinction
 * If the CS is repeatedly presented without the US the learned response will be eliminated.
   * Spontaneous recovery<br>
-<strong>Generalization and Discrimination</strong><br>
+#### Generalization and Discrimination
 * <strong>Generalization:</strong> Once a response has been conditioned, similar stimuli can elicit the same response
   * E.g. Different bell tones still produce salivation
 * <strong>Discrimination:</strong> Ability to distinguish between similar but distinct stimuli
@@ -96,7 +96,7 @@
     * Watson placed the white rat on Albert and clanged a steel bar in front of their face, producing a loud noise and scaring the baby.
     * After six trials, Little Albert exhibited fear upon seeing a white rat, and also generalized the fear to all other animals and furry objects.
     * This experiment was deemed highly unethical.<br>
-<strong>What affects classical conditioning?</strong><br>
+#### What affects classical conditioning?
 * <strong>Preparedness:</strong> an organism's evolutionary history can make it easier to learn particular associations
   * More likely to develop associations for particular classes of stimuli
   * More likely to associate illness with food not lights, sounds
