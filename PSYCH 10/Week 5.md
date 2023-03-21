@@ -69,7 +69,7 @@
     * seeing the dish.
     * seeing the person who brought the food.
     * just hearing that person's footsteps.<br>
-<strong>Acquisition</strong><br>
+#### Acquisition
 * Before conditioning: yummy dog food is a unconditioned stimulus (US).  The dog salivates which is a unconditioned response (UR).
 * During conditioning (acquisition): suppose a bell is rung every time the dog gets fed.
   * The neutral stimulus (NS), the bell is rung, the US is given, and the dog responds. (UR.
@@ -80,7 +80,7 @@
   * Bell -> Salivation
   * Bell + Square
   * Square -> Salivation<br>
-<strong>Extinction</strong><br>
+#### Extinction
 * If the CS is repeatedly presented without the US the learned response will be eliminated.
   * Spontaneous recovery<br>
 <strong>Generalization and Discrimination</strong><br>
