@@ -157,7 +157,7 @@
   * Many constituents can be replaced by pronouns such as **I**, **he**, **she**, **you**, **we**, **their**
   * When a group of words can be replaced by a pronoun, and...
     * ...the resulting sentence is **grammatical**,
-    * ...the resyktubg sebtebce has the **same meaning.**
+    * ...the resulting sentence has the **same meaning.**
   * ...then the **group of words being replaced is a constituent.**
   * Successful pronoun replacement:
     > "I found **the puppy** at the park."<br>
