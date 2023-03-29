@@ -187,6 +187,251 @@
     * Steven Pinker (The Language Instinct, 1994)
       * "Most of the experiments have tested banal "weak" versions of the Whorfian hypothesis, namely that words can have some effect on memory or categorization.  Some of these experiments have actually worked, but that is hardly surprising."
 
+## Profanity
+### Introduction
+* Profanity is at the interface of language and culture
+* As we’ll see, profanity also plays a role in how we think about language from a purely linguistic perspective
+* Debates concerning profanity have been at the forefront of issues about censorship.
+### Profanity and Censorship
+* We’ll start by listening to a monologue by the comedian George Carlin, broadcast on the radio on October 30, 1973, at 2 PM, by WBAI, a station in New York City
+  * In the monologue, he talks about profane words.
+* A man was in his car with his young son listening to the broadcast
+* He complained to the FCC
+* The FCC threatened the station with sanctions for having played this material
+* The station appealed. The case went up to the Supreme Court in 1978
+* Federal Communications Commission v. Pacifica Foundation
+* In a 5-4 decision, the Court decided that the material was not obscene.
+* But communities could now determine what was objectionable and the times of day when these materials could be played.
+
+### What Makes a Word Profane?
+* Is it the sound of a word? Most likely not.
+* We can easily find non-offensive words, which sound rather similar to swear words:
+  * Punt, runt, sit, wit, puck, buck, glitch, hitch, rock, bore, kits…
+* Consider the following words:
+  > Take a shit<br>
+  > Crap<br>
+  > Poop, poo<br>
+  > Go to the bathroom<br>
+  > Defecate<br>
+  > Cop a squat<br>
+  > Do some paperwork<br>
+  > Pinch off a load<br>
+  * They all describe the same thing
+* It’s not the concept that makes a word/phrase offensive
+* Social conventions determine which words are considered profane, obscene or abusive
+* A taboo is a social custom that prohibits certain kinds of behavior.
+* For example, there are certain things that you are not supposed to do in public:
+  * Sex, defecate, etc.
+* Profane or offensive words are taboo words.
+  * It’s usually not the words themselves that are unacceptable. It’s those words when used with a specific meaning or sense:
+    > Ass
+    > Cock
+    > Bitch
+  * These are ok when describing an animal, but taboo when referring to humans
+* <strong>The status of a word as obscene is determined by social custom</strong>
+  * There is actually little data in linguistics on which words are considered offensive and which are not.
+  * Across English dialects, there are disagreements over which words are obscene and the level of strength of obscene words.
+
+<p float="left">
+  <img src="https://user-images.githubusercontent.com/66571533/228367419-e49eace1-8227-4bbe-aafe-f73955c5b199.png"
+    style="float: left; margin-right: 10px;" 
+    width="300"/>
+  <img src="https://user-images.githubusercontent.com/66571533/228367497-5f1577eb-251f-40f3-97e3-74436ee0b0ff.png"
+    style="float: left; margin-right: 10px;" 
+    width="300"/><br>
+</p>
+
+<img src="https://user-images.githubusercontent.com/66571533/228367564-69631968-e2ec-466f-aaa5-1e04cb914f5d.png"
+style="float: left; margin-right: 10px;" 
+width="300"/><br>
+
+## Profanity Across Languages
+### English
+* **English draws its profanity from a few sources:**
+  * Profanity: from Latin “outside the temple”
+    * Words that desecrate the holy
+  * Religious figures:
+    > Jesus Christ<br>
+    > Jehovah<br>
+    > Mohammad<br>
+  * Aspects of religious dogma:
+    > holy <br>
+    > Hell<br>
+    > God<br>
+    > Damn<br>
+  * Some have fallen out of favor
+    > Zounds = god’s wounds<br>
+    > Gadzooks = god’s eyes<br>
+  * Sex, sex organs, and sexual acts - a great many words in English
+    > Fuck, dick, pussy, cock, prick, shank, jerk off, etc.<br>
+  * Body functions:
+    > Shit, piss, barf<br>
+  * Slurs: Deragotory reference to a person based on perceived group membership
+    > (where groups are defined by race, ethnicity, sexual orientation, religion, etc.)<br>
+    > N-word, etc.<br>
+### Cantonese
+* Most vulgar Cantonese words:
+  > Diu = fuck<br>
+  > Gau = cock<br>
+  > Lan = dick<br>
+  > Tsat = boner<br>
+  > Hai = cunt<br>
+* All drawn from the sex category
+### Quebec French
+* Most vulgar Quebec French words:
+  > Tabarnack = tabernacle<br>
+  > Calisse = chalice<br>
+  > Calvaire = Calvary<br>
+* These strong profanities are related to Catholicism and Catholic liturgical concepts.
+  > Foutre = fuck<br>
+  > Merde = shit<br>
+### German
+* There are profanities drawn from sex and religion categories, but fewer than English
+* German word ficken “fuck” is not commonly used in swearing.
+* Lots of swear words drawn from the excretion category:
+  > Scheisse = shit<br>
+  > Arschloch = asshole<br>
+  > Arschgeburt = born from an asshole<br>
+  > Arschgesicht = ass face<br>
+  > Scheisskopf = shithead<br>
+  > Etc.<br>
+### Russian
+* Russian Academy of Language defined the most offensive Russian words:
+  > Khuy = cock
+  > Pizda = cunt
+  > Yebat = to fuck
+  > Blyad = whore
+* These were banned in 2014 by the Russian government from films, concerts, theater performances, and books.
+* In fact, even derivatives of these words were also banned:
+  > Pizdets = deep shit
+  > Pizdet = to bullshit
+  > Ozpizdit = to beat the shit out of
+  > Etc.
+### Housa
+* Not offensive:
+  > Fitsarin tulu ba na mata ba ne.<br>
+  > "Pissing into a narrow-mouthed jug is not something women should try to do."<br>
+
+  > Wanda ya yi kashi a inuwa, ya bar ta.<br>
+  > "He who shits in the shade will have to leave it (the shade)."<br>
+* Words which *are* offensive:
+  > "Uwaka!" ("Your mother!")
+  > "Ubaka!" ("Your father!")
+  * *uwa* (mother) and *uba* (father) replaced by:
+    > "tsohuwarka" ("Your 'old lady'")
+    > "tsohonka" ("Your 'old man'")
+
+### Religious Curses
+* Similarities between Housa and English
+  * "God damnit!" -> "Allah wadai!"
+
+### Avoiding Bad Language
+* Pretty much all languages have abusive terms
+* Many languages also have terms which suggest abuse or swearing, but are not actually abusive
+* Euphemisms:
+  > Go to bed with = had sex<br>
+  > Private parts = genitals<br>
+  > Powder your nose = go to the bathroom<br>
+* Child words:
+  > Doo doo<br>
+  > Pee pee<br>
+* There are words which are similar in form/sound to swear words. These are the basis for euphemisms:
+  > Jesus = jeez<br>
+  > Shit = sheesh/shucks<br>
+  > Fuck = fudge<br>
+  > Shut the fuck up = shut the front door<br>
+  > Damn = dang/darn<br>
+  > Godamnit = gosh darn it<br>
+  > Etc.<br>
+
+## Profanity and the Brain - Vulgarity in Aphasias
+* Jacques Lordat (1773-1870)
+* Physician and medical professor in Montpellier, France
+* At age 52 suffers a stroke, lost ability to speak.
+* Recovered and kept a diary
+* Following recovery, he focused on other people with brain injuries that induced language deficits
+* Case study, 1843:
+  * A priest with severe aphasia
+  * Vocab limited to just two words:
+    * Je = I
+    * Fourte = fuck
+  * Global aphasia: left hemisphere damage resulting in complete or near complete loss of language
+  * Accompanied often by auditory deficits too
+
+### Language in a Global Aphasiac
+* **Patient R.N.:**
+  * Could not speak and severe comprehension deficits.
+  * Six word vocabulary:
+    > Well<br>
+    > Yeah<br>
+    > Yes<br>
+    > No<br>
+    > Goddamnit<br>
+    > Shit<br>
+  * These words produced with clear articulation and prosody
+  * Used spontaneously to answer questions and in attempts to talk.
+  * Unable to produce these utterances on command
+  * Unable to read these words aloud.
+* **British patient:**
+  * Swear words:
+    > Bloody hell<br>
+    > Fuck<br>
+    > Fuck fuck<br>
+    > Fuck off<br>
+    > Fucking fucking hell<br>
+    > Oh boy<br>
+    > Interections:<br>
+    > Yes<br>
+    > Well I know<br>
+    > Funny thing<br>
+    > Numerals, some proper names.<br>
+* **Other Global aphasics:**
+  * Counting, days of the week, months of the year, nursery rhymes, familiar phrases (“good morning”)
+
+### Hemispherectomy
+* Patient E.C.:
+  * 47 years only in 1965
+  * Had surgery to have tumor in left hemisphere removed
+  * Tumor in left hemisphere was malignant and symptoms didn’t improve
+  * Had a second surgery to remove entire left hemisphere (A left hemispherectomy)
+  * After surgery, attempts to speak unsuccessful, with onyl isolated words. No meaningful speech produced.
+  * But could use expletive (“Goddamnit” and “shit”)
+
+### Vulgarity in Aphasias
+* Broca’s aphasics often retain fixed phrases:
+  > “How do you do”<br>
+  > Go to hell<br>
+  > Etc<br>
+* Lordat’s observation (updated);
+  * Even with severe aphasia, certain kinds of speech are retained
+  * There is an asymmetry:
+    * Automatic speech is retained
+    * Intentional speech is impaired
+
+### Right Hemisphere Damage
+* Patient:
+  * 75 year old Hebrew/French bilingual man.
+  * Suffered a right hemisphere stroke.
+  * Speech remained relatively normal except:
+  * Could not recite familiar prayers or Hebrew spoken daily since childhood
+  * Could not count 1-20
+  * Couldn’t sing familiar songs
+  * Unable to curse, unable to provide correct expletive for a situation described to him, unable to complete a curse
+  * Mirror image of Broca’s aphasia!<br>
+![image](https://user-images.githubusercontent.com/66571533/228402355-035c818a-bf44-4da1-8aee-c168eee904ae.png)<br>
+  * The Basal ganglia are “subcortical” structures because they are beneath the brain cortex
+  * They are involved in selecting appropriate motor actions by inhibiting actions that we don’t want to perform
+  * They are closely tied to emotional centers of the brain
+  * In the patient with damage in the area, the capacity for blurting out emotionally charged language was impaired
+
+## Why Use Profanity?
+### Purpose of Offensive Language
+* Words by themselves are not offensive
+* Although we are told that we should not use offensive words, perhaps they do have value
+* Anger and aggression are innate
+* Abusive language gives us a way to express aggression without actually being aggressive (of course you can do both!)
+* Abusive language allows us to attack, without the consequences of an actual attack
+
 # Summary
 * Language is language, and thought is thought.
 * They are **not equivalent**.
@@ -194,7 +439,3 @@
 * When you hear a sentence of your language in your head, does that constitute a thought?
 * Thought language has some relation to thought, it is not equal to and does not determine thought.
 * In the cases where language influences thought, it only has a minor effect.
-
-
-
-
