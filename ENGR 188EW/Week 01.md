@@ -165,6 +165,103 @@ using negative body language
 9. Avoid discomforting or offending team members
 10. Treat your teammates as you would wish to be treated; do not treat them as you would not wish to be treated.
 
+## Engineering Responsibilities
+### Passive Responsibility
+* Monday morning quarterbacking
+* Review of past accidents, looking for failure modes (corporate or government agency)
+* Not always successful in achieving results
+* Accountability, blameworthiness, and liability
+### Active Responsibility
+* Looking towards the future for failure modes or other damages
+* May involve negativities
+* Examples
+  * Aircraft Component Testing
+  * Aircraft Engine Testing
+  * RAM Air Turbine
+  * Car Accident Testing
+#### Larger-scale types of Active Responsibility
+* Environmental Impact Reports
+* Risk Assessments
+
+## Codes
+### Corporate Codes
+#### Example - Deere and Company
+* Manufacturer of large farming and forestry machinery
+* Almost always on the list of the most ethical companies in the country.
+* Detailed Code of Business Conduct specifies responsible conduct for all employees.
+### Types of Codes
+* **Aspirational code:** A code that expresses the moral values of a profession or company
+* **Advisory codes:** A code of conduct that has the objective to help individual professionals or employees to exercise moral judgments in concrete situations
+* **Disciplinary code:** A code that has the objective to achieve that the behavior of all professionals or employees meets certain values and norms.
+* (from van de Poel and Royakkers, 2011, p. 34)
+
+### Examples of Codes
+#### Example - National Society of Professional Engineers
+* *Fundamental Canons:*
+* Engineers, in the fulfillment of their professional dutues, shall:
+1. Hold paramount the safety, health, and welfare of the public.<br>
+  **a.** If engineers’ judgment is overruled under circumstances that endanger life or property, they shall notify their employer or client and such other authority as may be appropriate.<br>
+  **b.** Engineers shall approve only those engineering documents that are in conformity with applicable standards.<br>
+  **c.** Engineers shall not reveal facts, data, or information without the prior consent of the client or employer except as authorized or required by law or this Code.<br>
+  **d.** Engineers shall not permit the use of their name or associate in business ventures with any person or firm that they believe is engaged in fraudulent or dishonest enterprise.<br>
+  **e.** Engineers shall not aid or abet the unlawful practice of engineering by a person or firm.<br>
+  **f.** Engineers having knowledge of any alleged violation of this Code shall report thereon to appropriate professional bodies and, when relevant, also to public authorities, and cooperate with the proper authorities in furnishing such information or assistance as may be required.<br>
+2. Perform services only in areas of their competence.
+    * Another list, etc.
+3. Issue public statements only in an objective and truthful manner.
+4. Act for each employer or client as faithful agents or trustees.
+5. Avoid deceptive acts.
+6. Conduct themselves honorably, responsibly, ethically, and lawfully so as to enhance the honor, reputation, and usefulness of the profession.
+
+#### Example - Royal Academy of Engineering
+* Honesty and integrity
+* Respect for life, law, the environment and public good
+* Accuracy and rigour
+* Leadership and communication
+
+#### Example - American Geosciences Institute's Guidelines for Ethical Professional Conduct
+* Geoscientists should strive to advance the integrity, honor, and dignity of their profession by undertaking the following:
+  * Use their knowledge and skill to enhance understanding of Earth
+  * Exhibit honesty in professional actions at all times
+  * Work to enhance the prestige of the geoscience profession
+  * Support the profession and technical societies of the profession
+* More specifically, the position of AGI is that geoscientists must acknowledge responsibility to:
+  * The public and Society
+  * The Environment
+  * The Geosciences
+  * The Profession
+  * The Employer
+  * Employees
+  * Clients
+  * Students
+  * Colleagues and Associates
+
+#### The Engineering Societies (Non-exhaustive)
+* American Society for Nondestructive Testing
+* American Welding Society
+* Audio Engineering Society
+* Institute of Industrial and Systems Engineers
+* Society of American Military Engineers
+* Society of Automotive Engineers
+* Society of Broadcast Engineers
+* Society of Fire Protection Engineers
+* Society of Manufacturing Engineers
+* Society of Petroleum Engineers
+* Etc, etc, etc
+
+#### A New Code? (from Robert McGinn, Stanford)
+* **Engineers, when functioning as engineers have fundamental ethical responsibilities...**
+  * ...not to cause harm or create an unreasonable risk of harmto others (or to public welfare or the public interest) through their engineering work.
+  * ...to try to prevent harm and any unreasonable risk of harmto others (and to public welfare or the public interest) that is caused by their engineering work, or by the engineering work of others in which they are involved, or about which they are technically knowledgeable.
+  * ...to try to alert and inform about the risk of harmthose individuals and segments of the public at unreasonable risk of being harmed by their engineering work, by the engineering work of others in which they are involved, or about which they are technically knowledgeable.
+* **Engineers employed by an organization or engaged by a client have a fourth fundamental ethical responsibility...**
+  * ...to work to the best of their ability to serve the legitimate interests of their employer or client
+
+#### A Possible Solution?
+* Separate engineering codes from corporate codes
+* Let engineering codes apply solely to those functions that can only be accomplished by engineers
+* Let corporate codes apply to all employees within an organization - from the bottom up to the CEO - and cover ethical issues that any individual within the company might encounter.
+
 # Summary
 #### Engineering is a team-based technical and social activity
 * Technical issues: complex problems, multiple possible solutions
