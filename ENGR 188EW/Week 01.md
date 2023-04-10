@@ -171,6 +171,7 @@ using negative body language
 * Review of past accidents, looking for failure modes (corporate or government agency)
 * Not always successful in achieving results
 * Accountability, blameworthiness, and liability
+* Often done after something (undesirable) has happened
 ### Active Responsibility
 * Looking towards the future for failure modes or other damages
 * May involve negativities
@@ -179,9 +180,19 @@ using negative body language
   * Aircraft Engine Testing
   * RAM Air Turbine
   * Car Accident Testing
+* Often done before something (undesirable) has happened, to prevent the scenario
+
 #### Larger-scale types of Active Responsibility
 * Environmental Impact Reports
 * Risk Assessments
+
+### Role Responsibilities
+* A person may have responsibilities based on what roles they have
+  * For example, as an employee, your responsibility may be to listen to your superiors and support them and the company.
+  * As an engineer, your responsibility may be to provide safety advice based on your knowledge of the areas you helped design.
+  * **It is possible for these to conflict!**
+  * **Example:**  On the Challenger case, Boisjoly was both an engineer and an employee of a company that helped fabricate the rocket thrusters.  Since he was an employee, he was expected to follow the word of his superiors, who advised the rocket should be launched, despite the cold weather.  However, as an engineer, he was also expected to provide information on the safety risks of flying in cold weather, which would advise against flying.
+* **Moral Responsibility** is another type of responsibility not defined based on roles, but rather by a person's moral considerations.  This will be discussed later.
 
 ## Codes
 ### Corporate Codes
