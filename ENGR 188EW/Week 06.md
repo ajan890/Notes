@@ -259,5 +259,44 @@
 * The next 25 to 50 years will be critical
 * Predicting the future outcome is difficult
 
+# Environmental Ethics
+* The environment affects:
+  * Lives today
+  * The future of humanity
+  * Future species
+  * The Earth itself
+* Many environmental problems are the result of society's technical advances, so engineers and scientists must solve them considering traditional ethical frameworks.
 
+## Major Environmental Problems
+* Urbanization and Industrialization
+  * Smog and air quality
+  * The Ozone Layer
+  * Climate Change
+  * Wastes and Contamination
+  * Natural Resource Utilization
+
+### Los Angeles Smog
+* Serious problems in the years after World War II, and peaked in the early 1950s
+* Los Angeles' Control of Smog:
+  * Recognition (~1953 - 1955)
+  * Regulation (~1955 - present)
+  * Removal of home incinerators (1957)
+  * Industrial control
+  * Automobile/gasoline regulation
+    * Catalytic converters (1975 - present; federal requirement)
+    * Filling shields
+    * Fuel consumption
+    * Fuel mileage
+  * Sources of early Los Angeles smog:
+    * The home incinerator
+    * Oil refineries
+    * Factories
+    * The automobile
+* Because of pollution, Southern California experienced an Ozone decrease after 1955.
+
+### The Ozone Hole
+* Ozone protects the Earth from ultraviolet rays from the sun.  However, it is an unstable molecule and can be broken down into oxygen gas very easily.
+* One of the most common pollutants was CFC (cloro-floro-carbon), which was used in aerosols, refrigerants, and solvents.  A CFC molecule is lighter than air, so it floats up, and eventually, it will react with a Ozone molecule and create carbon monoxide and oxygen.
+* Creation of carbon monoxide is also problematic because it reacts with oxygen to form carbon dioxide, a greenhouse gas that is often credited for causing global warming.
+* Global temperatures have increased by 1 degree celsius since 1850, and it continues climbing.
 
