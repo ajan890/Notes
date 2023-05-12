@@ -296,7 +296,156 @@
 
 ### The Ozone Hole
 * Ozone protects the Earth from ultraviolet rays from the sun.  However, it is an unstable molecule and can be broken down into oxygen gas very easily.
-* One of the most common pollutants was CFC (cloro-floro-carbon), which was used in aerosols, refrigerants, and solvents.  A CFC molecule is lighter than air, so it floats up, and eventually, it will react with a Ozone molecule and create carbon monoxide and oxygen.
+* One of the most common pollutants was CFC (chlorofluorocarbon), which was used in aerosols, refrigerants, and solvents.  A CFC molecule is lighter than air, so it floats up, and eventually, it will react with a Ozone molecule and create carbon monoxide and oxygen.
 * Creation of carbon monoxide is also problematic because it reacts with oxygen to form carbon dioxide, a greenhouse gas that is often credited for causing global warming.
 * Global temperatures have increased by 1 degree celsius since 1850, and it continues climbing.
+* Primary greenhouse gases:
+  * Carbon dioxide
+  * Methane
+  * Nitrous Oxide
+  * Chlorofluorocarbons
+  * Others
+
+### Potential Effects and Problems
+* **Oceans, Polar Ice, Glaciers:**
+  * Ocean levels
+  * Ground water levels
+  * Coastal lands
+* **Weather Events:**
+  * Floods
+  * Drought
+  * Storms
+  * Desertification
+  * Wildfires
+* **Societal changes**
+  * Abandonment of coastal areas
+  * Developed vs. underdeveloped, rich vs. poor, flooded vs. dry
+    * Flooding in South Florida, and along the east coast in general, ius occurring on a regular basis
+    * Southern California is not immune
+    * Nor the Bay Area
+
+#### Causes, Effects, and Possible Solutions
+* **Causes of Temperature Change**
+  * Natural or new... or a combination?
+  * Human contributions?
+
+### Waste Management
+* Pre-historic: Throw it out, build on it, use it for fertilizer
+* Greco-Roman: Rudimentary sewer systems, landfills, dumps
+* Medieval: Little or no improvement
+* Industrial Revolution: New wastes, bigger cities, waste collection, environmental science
+* 19th Century: Paradigm Shift - Germ theory, disease associated with waste, sanitation engineering
+* 20th Century: Growing populations, more urbanization, waste management technology (more efficient than old technology)
+* 21st Century: Time for another paradigm shift?
+
+#### Industrial Waste Sources
+* Energy Industries
+  * Coal mines
+  * Nuclear Reactors
+  * Oil and Gas Drilling
+  * Oil and Gas Refineries
+* Clothing Industries
+  * Textile Plants
+  * Tanneries
+* Material Industries
+  * Wood Fiber Industries
+  * Metal Industries
+  * Liquid Material Industries
+* Chemical Industries
+  * Organic Compounds
+  * Acids and Bases
+  * Explosives
+* Food Industries
+  * Animal Farming and Processing
+  * Fruit and Vegetable Farms
+  * Canneries
+  * Dairies
+  * Wineries and Distilleries
+  * Pharmaceutical Plants
+
+#### Effects of Waste Products
+* Ecological Effects
+  * Human Health
+  * Plants and Animal Species
+  * Food Chain Contamination
+* Contamination Pathways
+  * Rivers, Lakes, and Oceans
+  * Groundwater
+  * Air Pollution
+
+---
+
+* According to the U.S. Environmental Protection Agency:
+  * Average production of household waste is approximately 4.9 pounds per person per day
+  * Of this, only about one-third is recycled
+* **Sewage**
+  * Cities like Los Angeles have separate wastewater and stormwater systems
+  * Cities like Washington D.C. have a combined wastewater/stormwater drain
+    * Wastewater would be drained into the rivers if there is enough of it
+* **Animals**
+  * A confined animal feeding operation (like hogs) can have 10,000 animals under one roof
+  * There's a lot of waste every day
+    * Pigs, for example, produce 11 pounds of solid waste per day, compared to 0.25 pounds for humans
+    * Chickens, same thing
+  * Waste from animal feeding operations is fed into large liquid "lagoons" to evaporate
+  * Floodwaters can breach the waste lagoons, sending waste into local rivers, as well as drowning the animals
+
+#### Ethical Considerations
+* **Traditional**
+  * Rights of people
+  * Duty not to inflict harm
+    * Current populations
+    * Future generations
+  * Virtue of non-pollution
+  * Utilitarian balance
+    * Immediate costs
+    * Near and long term benefits
+* **Nontraditional**
+  * Rights of nature and other species
+  * Duties to ecosystem 
+
+* Problems with Traditional Strategies
+  * Regulation: Administration, waste producers
+  * Source reduction: Technologies, Industries
+  * Combustion/Incineration: Pollution, Greenhouse gases
+  * Physical containment: Biodegradation, leakage, space, Not-in-my-backyard
+
+#### Current Waste Management Strategies
+* **Conventional**
+  * Regulation
+  * Source Reduction
+  * Combustion/Incineration
+  * Containment
+* **Less Conventional**
+  * Recycling
+  * Eco-efficiency
+  * Changes in manufacturing processes
+
+---
+
+**Is it time for a paradigm change in waste management?**
+
+### Geoengineering
+* Mount Pinatubo, Luzon, 1991
+* 10 billion tons of pyroclastic particulates released into the atmosphere
+* 22 million tons of SO<sub>2</sub>
+* Global temperature dropped 0.9° Fahrenheit (0.5° Celsius) worldwide
+  * Tenoeratyre drio 1991-1993
+
+#### Geoengineering Methods
+* Reflective Aerosols
+  * Aerosols are sprayed to block sunlight
+* Cloud Seeding
+  * Makes clouds rain
+* Space Mirrors
+  * Reflects sunlight to different places
+* Ocean Iron Fertilization
+  * Encourages phytoplankton to grow, absorbing CO<sub>2</sub>
+* CO<sub>2</sub> Capture
+  * from fossil fuels
+  * from air
+* Forestation
+  * Grow more trees to absorb CO<sub>2</sub>
+* **Which solutions should be used?  Which is right, who will act?**
+
 
