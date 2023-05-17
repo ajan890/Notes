@@ -120,8 +120,8 @@
 
 #### Mineral Resources are Limited
 * Lithium resources are key to present-day battery technology
-* But lithium resources are limited, and may start declining ~ 2040
-![image](https://github.com/ajan890/Notes/assets/66571533/c941ec8b-dca4-4516-a6ba-c14ef245ddfc)
+* But lithium resources are limited, and may start declining ~ 2040<br>
+![image](https://github.com/ajan890/Notes/assets/66571533/c941ec8b-dca4-4516-a6ba-c14ef245ddfc)<br>
 * Recycling does not help much
 
 #### World Energy Sources
