@@ -95,3 +95,6 @@ clash. The term “conflict of interest” refers to situations where researcher
 * **Examples:**
   * University of Texas Oil and Gas Hydraulic Fracturing Study ("Fracking")
   * Pennsylvania State University Fracking Study
+
+* The National Academies of Science, Engineering, and Medicine have numerous committees formed every year to study societal problems. Virtually everyone on every committee has a conflict of interest of some sort.
+* The successful solution is at the first meeting of a committee, everyone at the table states clearly his or her own conflict(s) of interest. Once that is out of the way, everyone knows every other person’s conflicts, and the committee can then get down to business.
