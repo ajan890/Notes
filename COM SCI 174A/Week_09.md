@@ -111,3 +111,90 @@
   * If each voxel is converted to one pixel on the screen, you get aliasing.  Therefore, each voxel should cover multiple pixels (which would blend multiple voxels) to prevent aliasing.<br>
 ![image](https://github.com/ajan890/Notes/assets/66571533/912a8c34-d294-46b7-81ac-23d1d4e43b1b)<br>
 * If we are using parallel projection, we can generate a footprint for one voxel and use the same footprint for all the other voxels, since in parallel projection, every voxel will take up the same area.  The same does not apply in perspective projection.
+
+#### V-Buffer
+* Image based volume rendering technique
+* Ray casting through volume
+* Trilinear interpolation to determine RGBA at non-lattice point
+* Accumulate color and opacity
+* 3 levels of sampling:
+  * Voxel lattice: $x_{i, j, k}$
+  * Sampling along ray: $y_i$
+  * Image plane: $z_{i, j}$
+* 2 pipelines (color/opacity): $c = c_1 + c_2(1 - \alpha_1)$; $\alpha = \alpha_1 + \alpha_2(1 - \alpha_1)$
+* Parametric equation of ray: $p + t \cdot d$
+  * p: pixel location
+  * d: ray direction
+  * t: parameter along ray
+* Step through ray by incrementing t<br>
+
+![image](https://github.com/ajan890/Notes/assets/66571533/69426737-e18c-4fa8-a78a-7b02701af4b9)<br>
+**Algorithm**<br>
+![image](https://github.com/ajan890/Notes/assets/66571533/5f76b142-defc-4796-8489-0ed02e588247)<br>
+**V-Buffer Transfer Function**<br>
+* X-Ray density data for each voxel
+* Assign different color to each peak in histogram
+* Opacity values based on emphasis<br>
+![image](https://github.com/ajan890/Notes/assets/66571533/40e5e426-1d71-4ff3-ac83-2e4f9a25b783)<br>
+  * Top left: Example X-ray density and frequency
+  * Others: Color graphs; for every frequency on frequency graph, assign a color based on the X-ray density associated with it<br>
+**V-Buffer Speedups**<br>
+* Early ray termination
+  * Stop when opacity reaches 1
+  * Or when ray exits volume
+* Empty space skipping
+* Octree or BSP trees
+* Temporal use of voxels
+### Aliasing
+#### Rasterization
+* Spatial aliasing in CG
+  * Jagged lines while rasterization
+  * Going from continuous representation to a sampled approximation, which has limited resolution
+  * Pixels on screen have fixed number, size, shape and location
+  * Splatting during volume rendering<br>
+![image](https://github.com/ajan890/Notes/assets/66571533/f9d29677-8663-407a-ace0-f029d2cb316d)<br>
+* To anti-alias, instead of making each pixel either colored or not, use shades.  For example, (row 0, col 3) shouldn't be completely blue or completely white; rather a shade of light blue calculated from the area the blue triangle covers the pixel.
+
+#### Temporal
+* Temporal aliasing in CG<br>
+![image](https://github.com/ajan890/Notes/assets/66571533/d60d6b1d-0380-4028-9036-2145c6d100f3)<br>
+* Suppose you have a very small object flying in the scene. 
+  * If the object happens the be on one of the rays, it gets captured in one pixel.  However, on another frame, what if it misses two rays of two pixels?  Then it doesn't get captured.
+  * This causes the small flying object to flicker in and out of view, a phenomenon called temporal aliasing.
+* To prevent this:
+  * Use stochastic ray tracing (multiple rays per pixel)
+  * Increase frames per second (rays sample more often)
+  * Use smaller pixels (smaller gaps between rays)
+
+#### Mappings
+* Due to high-frequency patterns
+* Mip Mapping (as in A4)<br>
+![image](https://github.com/ajan890/Notes/assets/66571533/5a3c9282-f00c-42af-8c04-2f422479ff28)<br>
+* High frequency patterns may not display properly if the frequency is higher than the resolution.
+
+#### Shadows
+* Blocky shadow borders<br>
+![image](https://github.com/ajan890/Notes/assets/66571533/5f0ce26b-a5bf-4125-b8df-f5dc7867979c)<br>
+
+#### Splatting
+* Shape of splat<br>
+![image](https://github.com/ajan890/Notes/assets/66571533/912a8c34-d294-46b7-81ac-23d1d4e43b1b)<br>
+
+#### Anti-Aliasing
+* Area averaging<br>
+![image](https://github.com/ajan890/Notes/assets/66571533/fc13b742-2307-4181-890b-39ce213dfdf6)<br>
+* Super-sampling, then averaging or blending
+* Stochastic (or distributed) super-sampling
+* In h/w, use super-sampled offline buffer, then average to frame buffer
+
+### Incremental Calculations
+* Plane equation during z-buffering for depth
+  * $z_x = -\frac{Ax + By + D}{C}$
+  * $z_{x+1} = z_x - \frac{A}{C}$
+* Bilinear interpolations during shading for colors, normals, depth, texture, or anything else provided at the vertices
+  * $z_x = z_a + \frac{(x - x_a)}{(x_b - x_a)} \cdot (z_b - z_a)$
+  * $z_{x+1} = z_x + \frac{(z_b - z_a)}{(x_b - x_a)}$
+* Ray equation during ray casting for pixel location
+  * $x_i = -\tan(\theta) + (i + 0.5) \cdot \frac{2 \cdot \tan(\theta)}{X_{res}}$
+  * $x_{i+1} = x_i + \frac{2 \cdot \tan(\theta)}{X_{res}}$
+
