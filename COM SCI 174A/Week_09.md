@@ -64,14 +64,50 @@
 
 #### Voxels
 * **Volume dataset:** 3D regular grid of voxels
+  * Like a 2D grid is divided into pixels, a 3D grid is divided into cubes, or voxels.
 * **Voxel:** a small cube at i, j, k, with sides $\Delta x, \Delta y, \Delta z$
 * Each grid point has a scalar value f(x, y, z)
 * For example, density, intensity, CT scan, MRI
 * Voxelize more complex implicit surfaces
 * If $\Delta x = \Delta y = \Delta z \implies$ structured volume dataset
 * Transfer function: to map lattice scalar values to RGBA
-* Based on viewer location, there's a natural ordering of voxels
+* Based on viewer location, there's a natural ordering of voxels<br>
 
+![image](https://github.com/ajan890/Notes/assets/66571533/4c1b5966-b28a-49b2-9401-9fd5b2638fd9)<br>
+* If needed, you can *voxelize* 3D objects into voxels.  (Like building a sphere in Minecraft)
 
+#### Marching Cubes
+* Object based volume rendering technique
+* Create poly mesh by extracting iso-surfaces: $f_{i, j, k} = c$
+* Color vertices: if $f_{i, j, k} < c$, then white, else black<br><br>
+![image](https://github.com/ajan890/Notes/assets/66571533/c01d0cc4-7740-4600-bde2-10aa1a5f6492)<br>
+![image](https://github.com/ajan890/Notes/assets/66571533/38cf2746-b3be-4a9b-92d0-9e1b88ec522f)<br>
+**Aside: Marching Squares**
+* 16 cases of vertex labeling, but only 4 unique cases
+* Ambiguous cases
+![image](https://github.com/ajan890/Notes/assets/66571533/b388dac4-5d8b-4af2-8dbe-7a7b47b00d3a)
+  * Left: all 16 possible cases
+  * Right-Up: 4 unique cases
+  * Middle-Down: These two cases have two diagonal corners in the object.  You must decide which division is correct.  To do this, you use the information from neighboring squares/cubes. 
+  * Right-Down: Both these cases are possible with one corner in the object (you lose detail).  We assume (a) would be the case rather than (b).  To prevent this, use smaller voxels!
+* Can be extrapolated to cubes<br>
+![image](https://github.com/ajan890/Notes/assets/66571533/430c907c-182d-4fa1-a1fb-5a76bc53a230)<br>
+* There are 14 unique cases, but $2^8 = 256$ total cases.
+* The planes show possible ways the 3D object may pass through the cube.
+* This is called the "Marching Square/Cube" algorithm because you start from one square and go to neighboring squares.
+  * Can be used to generate triangle meshes from a function.
+  * Given the points, inside and outside an object defined by the implicit function, a triangle mesh to make up the surface can be created.
+* **The vertices need not be binary, they can be on a gradient**
+  * If we use for example an equation that gives every vertex a number between 0 and 16, then all the corners have some value between 0 and 16.  We then establish a threshold.  All values higher get set to 1 when using this algorithm, all values lower get set to 0.  Therefore, we can render a gradient of 3D meshes from different threshold values.
+  * This can also be thought of as a 4D mesh, where the fourth dimension is the continuous gradient of the threshold.
 
-
+#### Splatting
+* Object-resolution volume rendering technique
+* Each volume element (voxel) is splatted on screen as a snowball
+* Voxels splatted in BTF order wrt to the viewer
+* Splats are rendered and composited as disks on the screen
+* Circular, ellipsoidal or Gaussian splats
+* Aliasing
+  * If each voxel is converted to one pixel on the screen, you get aliasing.  Therefore, each voxel should cover multiple pixels (which would blend multiple voxels) to prevent aliasing.<br>
+![image](https://github.com/ajan890/Notes/assets/66571533/912a8c34-d294-46b7-81ac-23d1d4e43b1b)<br>
+* If we are using parallel projection, we can generate a footprint for one voxel and use the same footprint for all the other voxels, since in parallel projection, every voxel will take up the same area.  The same does not apply in perspective projection.
