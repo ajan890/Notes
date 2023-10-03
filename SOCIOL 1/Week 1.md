@@ -78,4 +78,64 @@
 * They "underscore the role of coercion and power in producing social order" (Giddens et al. 2020:21)
 * The fundamental question of conflict theory: 'Who benefits from the way social institutions and cultural systems are run?'
 
+## Culture
+* Culture encompasses a wide variety of symbolic mediums and material objects that allow a group of people to carry out their collective lives in a relative order and harmony (Ritzer 2015:109)
+  * **Symbolic** (or nonmaterial) culture refers to a society's values, beliefs, norms, symbols, and language
+  * **Material** culture consists of "the physical objects that a society creates" (Giddens et al. 2020:62)
+* "The first evdence of humanlike culture dates back 2 million years" (Giddens et al. 2020:68)
+* The origin or emergence of culture may be best explained by the advantages it provided humans for adapting to their physical environments
+* Human survival necessitated cultural invention
+* For example, the creation of symbolic and material resources - such as language and weaponry - assisted humans in hunting wild game
+  * Linguistic coordination and lethal instruments
+  * "Culture enabled early humans to compensate for their physical limitations..." (e.g., lack of claws)
+### Material Culture Then and Now
+* The first elements of material culture included tools, garments, blankets, baskets, pottery and shelters
+* Today's material culture includes "consumer goods, from clothes to cars to houses," along with "the tools and technologies used to make those goods" (66).
+* Material culture also changes symbolic culture.
+  * Modern 'digital culture' is sustained by smartphones.
+  * Computers have fundamentally altered how people communicate or interact with each other and society, to the point where the new norm to talking to someone is sending a text message.
+  * Cities like Los Angeles are completely built around the automobile.  There now exists "car culture."
+  * Fashion culture, music culture, etc. are entirely dependent on materials that exist.
+ ### Language
+ * Language plays an essential role in human cultures
+ * "Language is involved in virtually all our activities... it is the means by which we organize most of what we do" (Giddens et al. 2020:64)
+ * "There is no known culture without a grammatically complex language..." (61) (i.ie., "cultural universal")
+   * **"Cultural universal"** means every culture has it.  All groups of human beings has some language to communicate with.
+* "Languages... are representations of reality" (65)
+* Every language is composed of 'symbols' - expressed in speech (sound) and writing (text) - for this purpose of communicating meanings and ideas
+* Symbols refer to things that represent or stand for something else (e.g., words or a national flag)
+* Through the medium of language, people articulate common values, beliefs, and norms
 
+### Values
+* "Values are abstract ideals" (62)
+* They refer to the relative worth or importance that people assign to things (e.g., the value placed on individual achievement)
+* **Values are often closely associated with beliefs**
+* Beliefs refer to understandings or judgments that people accept as 'true' or 'real'
+* E.g., American culture "reflects a particular range of values shared by many... such as the **belief** in the merits of individual achievement..." (62)
+* Values and beliefs sustain the "normative order"
+  * "Norms are principles or rules of social life that everyone is expected to observe" (63).
+  * Communal living requires the presence of shared 'behavioral expectations' for directing and organizing social behavior (e.g., libraries are quiet places)
+
+### Conformity
+* "All cultures serve as an important source of conformity" (77).
+* "One of the challenges for all cultures is to instill in people a willingness to conform" (78)
+* This is accomplished through **social learning** (i.e., socialization) and social control (i.e., sanctioning)
+  * Socialization is the process in which you learn the culture of your society.
+### Q: Where do cultural realities come from?  Who decides what to value, what to believe, and what is acceptable behavior?
+  * Sociologists argue that culture is based on consensus.
+  * 'Shared agreements' determine what is factual, what is real and what is true.
+
+#### Example: Food culture
+* Food culture refers to "what we eat, when we eat, how we eat, and why we eat" (G&W 2008:5)
+* **Q:** How is what you eat and consume shaped by shared agreements regarding what is appropriate for human consumption?
+  * Example: Cultural variability in treatment of dogs:
+    * "In American culture, dogs are typically regarded as household pets and lavished with affection.  In Guatemalan Indian culture, however, dogs are more often seen as guards or scavengers and are treated with an indifference that might be seen as cruel to Americans.  Among the Ahka of northern Thailand, dogs are seen as food, and they are treated accordingly" (65).
+* "... Despite similar physiological needs in humans, food habits are not universal, natural, or inevitable.".
+* "They are social constructions" (G&W 2008:4)
+* "... Food habits are learnt through culturally determined notions of what constitutes appropriate and inappropriate food."
+
+---
+
+* "Things are true if we agree they are" (Babbie 1986)
+* For this reason, human cultures exhibit astonishing variation across time (history) and space (geography)
+* Religious cultures, political cultures, economic cultures, and 'food cultures' are sustained by people's acceptance of shared values, beliefs, and norms.
