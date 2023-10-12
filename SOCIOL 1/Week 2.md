@@ -80,3 +80,50 @@
     * What becomes valued through resocialization is *conformity, obedience, and loyalty to the military*
     * "The recruits' total identification with the other members of their unit is the most important lesson of all..." (166)
   * War: Anybody's Son Will Do (1983)
+### Theories of self-development
+* "One of the most distinctive features for human beings, compared with other animals, is that they are self-aware" (114).
+  * The self-aware individual is conscious of oneself as a distinct identity separate from others.
+  * They can answer the question: "Who am I?"
+  * By formulating a response that describes, defines and articulates oneself as a 'social object'
+  * In other words, they have a 'self-concept': "A set of beliefs we have about the characteristics we possess" (Barrett 2017)
+* **Q:** "How should we understand the emergence of a sense of self...?" (114)
+  * According to G.H. Mead, we become 'objects to ourselves' through social interaction with others
+  * Social interaction enables the acquisition of language and the acquisition of 'attitudes of others'
+### Mead's Self Development
+* Three stages
+  1. Language stage: Learning language
+    * Mastery of language is essential for children to distinguish themselves as social objects
+    * "Learning one's own name is one of the... most important steps in acquiring a self" (D&C 2019:121)
+    * Language acquisition makes 'naming' possible, along with the adoption of cultural attitudes
+  2. Play stage: Learning social roles
+    * "The second crucial step in the genesis of the self is role taking..." (D&C 2019:122).
+    * During the play stage, children assume the attitudes and actions that are associated with adult roles
+    * Social interactions are largely guided by expectations associated with people's social roles
+  3. Game stage: Learning the rules of play
+    * "A further stage of child development occurs when the child is eight or nine years old, the age at which children take part in organized games..." (115).
+    * The game stage includes participation in team sports with positions, rules, and objectives
+    * The child takes part in a larget 'social system'
+* Successful passage through these three stages results in the creation of an abstract unity: **"Generalized Other'**
+  * This concept refers to the attitudes and expectations held in common by members of one's community - which become 'taken toward oneself'
+* "Charles Horton Cooley was an earlyu twentieth century sociologist who studied the self-concept.
+* **Q:** How do we come to acquire the notions we have about ourselves?
+  * These self-understandings "reflect our interpretations of how others see us" (116)
+  * 'Looking-Glass self'
+  * Our self-image is based on the responses of others - how others respond to our actions
+  * "If our classmates and teachers praise us for our intelligent remarks in class, we may in turn start to view ourselves as smart" (116)
+  * "Reflected appraisals" are self-assessments informed by the responses of others
+  * Our self-worth is based on how much we think or imagine others value us
+  * "Our sense of who we are and our self-evaluations are formed in interaction with others" (O'Brien 2011:112).
+* George H. Mead and Charles H. Cooley
+  * The 'self' is fundamentally social in nature - it is an emergent property that arises out of social interaction
+  * Both the *self* as an 'object' *and* as an 'object of value' are products of social experience
+* "Final Note on a Case of Extreme Isolation," by Kingsley Davis
+  * Cases of Anna and Isabelle
+    * Both children were subjected to prolonged social isolation in early life and both suffered from cognitive disabilities (e.g., inability to speak)
+    * They both *progressed* mentally and linguistically with proper instruction
+    * *Anna*, 9 years old: "She had finally begun to develop speech" (76)
+    * *Isabelle*, 8 years old: "She had reached a normal level" and later passed the sixth grade (78, 79).
+  * Another case of extremem isolation
+    * Genie: Thirteen year old girl discovered by child welfare officials in Arcadia, CA in 1970
+    * She instantly became the subject of intense study in order to assess theories of linguistic and cognitive development
+    
