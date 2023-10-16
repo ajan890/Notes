@@ -33,11 +33,13 @@
 * The socialization process also includes 'agents' - the source for what is being learned
   * Families, schools, peer groups, mass media and work play essential roles as 'agents of socialization'
   * The *family*, *school* and *workplace* are three 'formal' agents - they are tasked with 'training'
-* The family is the most important initial socializi
-  * [FILL]
-*  The school is intentionally designed to socialize individuals, "whereby students pursue a defined curriculum of subjects..."
-  * [FILL]
-  * "Another key mechanism through which schools socialize hildren is the 'hidden curriculum'...".
+* The family is the most important initial socializing agent in the life of the individual
+  * Parents teach children how to talk, how to walk, how to behave, and how to interact with others
+  * Emotional attachment to family caregivers promotes the transmission of cultural knowledge
+*  The school is intentionally designed to socialize individuals, "whereby students pursue a defined curriculum of subjects..." (102).
+  * "The teacher determines what skills are taught and relies heavily on instrumental learning techniques...".
+  * Formal, standardized evaluation of performance
+* "Another key mechanism through which schools socialize hildren is the 'hidden curriculum'...".
   * "The hidden curriculum refers to the subtle ways that [students] are exposed to different messages and curricular materials from their teachers" (102).
   * For example, messaging about 'gender rules'
 #### Gender
@@ -47,7 +49,9 @@
   * **Formal Behaviors:** Girls were more likely to be encouraged to pursue formal behaviors (82%)
   * **Controlling Voice:** Girls were 3x more likely to be instructed to use 'quieter' and 'nicer' voices
   * **Bodily Instructions:** Girls were more likely to be issued substantive and directive instructions (116)
-* [FILL]
+* Gender is a 'social institution'
+  * A pattern of expected action of individuals enforced by instrumental conditioning; i.e., the use of positive and negative reinforcements
+  * Conformity to cultural expectations of femininity is *rewarded* while nonconformity is *disciplined*
 
 ---
 
@@ -58,7 +62,8 @@
 * Unlike parents, teachers, and bosses, peers and entertainers do not occupy formal positions of power
 * However, they relay consistent cultural messaging in terms of *how to think, look and act* (e.g., identity)
 * "The peer group consists of individuals of a similar age" - experiencing the stages of life concurrently
-* [FILL]
+  * Peer associations become very influential once children enter daycare centers and schools
+  * Some analysts argut that the peer group is the most important socializing agent during adolescence
 * "Media... has a powerful impact on our lives" (104).
   * Mass media messaging is isseminated through a dizzying array of electronic communications
   * With more Americans tethered to their smartphones, they are constantly exposed to advertisements, news, podcasts, videos, music, and social media.
