@@ -61,3 +61,77 @@
 * Presentation of 'cyber-self' in everyday life
   * The internet has created a new and distinctive social domain for human interaction
   * It is qualitatively different from traditional conditions of face-to-face interaction - e.g., *embodied copresence*, performative, synchronously situated with defined audiences
+
+### Cyber-self In Everyday Life
+* The internet has created a new and distinctive social domain for social interaction
+* It is qualitatively different from traditional conditions of face-to-face interaction - e.g., *embodied copresence*, perofrmative, synchronously situated with defined audiences
+* **Q:** How has cyberspace - as a type of social context - altered the conditions of self-presentation?
+* **Q:** Are Goffman's ideas still useful for understanding self-presentation in the virtual world?
+* **Q:** If so, how do individuals engage in the 'arts of impression management' in a virtual environment?
+* "Identity Construction on Facebook," by Shanyang Zhao, Sherri Grasmuch and Jason Martin
+  * 2023: 70% of adult Americans report using the social media platform Facebook 0 and globally, there are 2.9 billion monthly active Facebook users
+  * **Q:** What explains Facebook's popularity?
+  * *Facebook is a powerful resource for self-presentation*
+  * The "Facebook environment provides users with new leverage for selective self-presentation" (1821)
+  * It supplies individuals with a highly controllable or manageable digital context for constructing desirable online identities
+  * It enables indibiduals to exercise *far greater control* over the disclosure of personal information
+  * Since Facebook is considered a '*nonymous*' online world, in which social relationships are anchored in offline communities...
+  * Favorable displays can accrue rewards
+#### *Facebook empowers self-presentation*; i.e., the ability to convey a favorable image to others
+* Visual: Self as Social Actor
+  * [Fill]
+* Enumerate: Self as Consumer
+  * Users list cultural preferences and tastes, interests and hobbies that 'define the self'
+  * "Greatest enumeration came with *music* preferences with users listing an average of 8.3 songs, artists, or genres per person as their favorites' (1825).
+* Narrative: First Person Self
+  * "Explicit verbal descriptions of the self" were *least elaborated* by users, offering minimalist statements
+  * E.g., 'I'm laid back,' 'What you see is what you get, 50% of the time,' or 'Currently in Zen mode'
+* "'True selves,' 'real selves,' and 'hoped-for possible selves' are products of *different situations* rather than characteristics of different individuals" (1831)
+* "Identity is not an indiidual characteristic; it is not an expression of something innate in a person, it is rather a social product, the outcome of a given *social environment* and hence *performed* differently in varying contexts" (1831)
+
+#### "The Girl Hunt," by David Grazian
+* **Q:** What is the 'girl hunt'?  How does this activity involve the 'performance' of an identity?
+* The 'girl hunt' involves groups of single, heterosexual young men going out to public venues to pursue female sexual partners with the intent of 'hooking-up'
+* The 'pickup' is statistically improbable
+  * Only 5.5% of women actually 'hook-up' within two days of meeting a male partner
+* Instead, the 'girl hunt' is about *homosocial conduct*, or building camaraderie with male friends
+* **Ritualistic performance:**
+  * "It is a social drama through which young men *perform* their interpretation of manhood" (230) - in the company of other young men
+  * 'Pre-gaming' and 'hunting' performances promote male bonding and camaraderie.
+
+## Ethnomethodology
+* Refers to the "study of the ethnomethods - fold or lay methods - that people use to make sense of what others do and particularly of what they say."
+* 'Ethno' = people. 'method' = systematic procedure, 'ology' = study of
+* Garfinkel argues that sociologists must address how people *make* sense of their realities
+* Social order - the organization of collective activity - requires 'sense making' procedures
+* One of the most central features of the organization of social activity is 'intelligibility'
+* **Q:** "How do social actors come to know, and know in common, what they are doing and the circumstances in which they are doing it?" (Heritage 1984:76)
+  * According to Garfinkel, intelligibility is achieved through the use of various sense-making procedures
+  * One impotant procedure is called 'indexicality'
+  * Words are only approximate and indeterminate
+  * "The words used in ordinary talk do not always have precise meanings" (giddens et al. 2020:149).
+  * Garfinkel found that people draw upon their immediate 'social ontexts' to determine the specific meaning of descriptive utterances
+ 
+* "Indexicality" is a cooperative sense-making method
+* "Individuals must actively perform contextualizing work in order to see what the descriptions used in encounters mean" (Heritage 1984:363).
+* "It is by virtue of our contextualizing activities as *hearers* that, as *speakers*, we can make good sense."
+* We assume - in everyday life - that people will engage in such forms of 'accommodative work'
+* People 'trust' that others will try to make sense of their communications according to the "background expectancies" of daily life
+* Trust implies that 'intelligibility' is a moral matter.
+* 'Breaching experiments'
+  * These refer to demonstrations designed to 'disrupt normal procedures,' i.e., defy expectations of cooperative, accommodative sense-making work
+  * Without fail, these experiments led to 'righteous hostility' on behalf of the offended
+  * E.g., Conversation clarification experiment
+  * "Students were instructed to
+    * [FILL]
+    > S: "How are you?<br>
+    > E: "How am I in regard to what? My health, my finances, my school work, my peace of mind, my...?<br>
+    > S: (red in the face and suddenly out of control): Look! I was just trying to be polite.  Frankly, I don't give a damn how you are.<br>
+    * "If someone said, 'Have a nive day,' the student was to respond, 'Nice in what sense, exactly?' 'Which part of the day do you mean?'" (Giddens et al. 2020:149).
+* 'Boarder (or stranger) experiment'
+  * Students were instructed to interact with their family members as if they were boarders and not intimates
+  * "They were instructed to conduct themselves in a... polite fashion... to avoid getting personal, to use only formal address."
+    * Family members were first stupefied, before quickly becoming angry and upset, followed by withdrawal, denunciation or retaliation
+* **Q:** Why is this sociologically significant?
+  * The response of 'righteous hostility' reveals the moral foundation of the social order
+  * People trust that others will comply with the 'background expectancies' of everyday life - to cooperate in the production of intelligible action
