@@ -1,6 +1,4 @@
 # Week 3
-[FILL]
-
 ## Microsociology
 * The study of everyday behavior in situations of small-scale face-to-face interaction" (Giddens et al. 2020:25)
 * Erving Goffman and Harold Garfinkel developed two popular microsociological approaches
@@ -79,7 +77,8 @@
   * Favorable displays can accrue rewards
 #### *Facebook empowers self-presentation*; i.e., the ability to convey a favorable image to others
 * Visual: Self as Social Actor
-  * [Fill]
+  * Photos depict users in the company of friends, mostly smiling, having fun, and expressing affection (mean number of photos per user = 88.4)
+  * 'Watch me and know me by my friends,' is an effort to construct a group-oriented identity
 * Enumerate: Self as Consumer
   * Users list cultural preferences and tastes, interests and hobbies that 'define the self'
   * "Greatest enumeration came with *music* preferences with users listing an average of 8.3 songs, artists, or genres per person as their favorites' (1825).
@@ -122,12 +121,10 @@
   * These refer to demonstrations designed to 'disrupt normal procedures,' i.e., defy expectations of cooperative, accommodative sense-making work
   * Without fail, these experiments led to 'righteous hostility' on behalf of the offended
   * E.g., Conversation clarification experiment
-  * "Students were instructed to
-    * [FILL]
     > S: "How are you?<br>
     > E: "How am I in regard to what? My health, my finances, my school work, my peace of mind, my...?<br>
     > S: (red in the face and suddenly out of control): Look! I was just trying to be polite.  Frankly, I don't give a damn how you are.<br>
-    * "If someone said, 'Have a nive day,' the student was to respond, 'Nice in what sense, exactly?' 'Which part of the day do you mean?'" (Giddens et al. 2020:149).
+    * "If someone said, 'Have a nice day,' the student was to respond, 'Nice in what sense, exactly?' 'Which part of the day do you mean?'" (Giddens et al. 2020:149).
 * 'Boarder (or stranger) experiment'
   * Students were instructed to interact with their family members as if they were boarders and not intimates
   * "They were instructed to conduct themselves in a... polite fashion... to avoid getting personal, to use only formal address."
