@@ -72,4 +72,65 @@
 * In bureaucracies, "power resides with the at the top."
 * "Who says organization says oligarchy": Society's major organizations are 'ruled by the few'
 * "According to Michels, the flow of power toward the top is an inevitable part of an increasingly bureaucratized world - hence the 'iron law'" (188).
-* 
+
+### Obedience
+* "Behavioral Study of Obedience," by Stanley Milgram
+* The Milgram Experiment
+  * **Q:** Under what conditions would a person obey authority who commanded actions that went against conscience?"
+  * Experimenter involved an experimenter, a learner, and a *teacher* (research subject or 'naive' subject)
+  * "The experimenter told the participants that the purpose of the research was to study the effects of punishment (that is, electric shock) on learning" (332).
+  * Word-pair test: Wrong answers were 'punished'
+  * The teacher was instructed to administer an electric shock following each wrong answer provided by the learner...
+  * While continuing to *increase* the administered voltage with each wrong answer.
+    * Maximum shock administered = degree of obedience
+    * The instrument panel consisted of 30 lever switches set in a horizontal line - ranging from 15 to 450 volts
+  * Verbal designations: Slight shock, moderate shock, strong shock, very strong shock, intense shock, extreme intensity shock, danger severe shock, and the last two switches were simply marked 'XXX'
+    * At 75 volts = learner grunted loudly
+    * At 120 volts = learner shouted shocks were painful
+    * At 150 volts = learner demanded to be released
+    * At 270 volts = learner produced agonized scream
+    * At 300 volts = learner desperately pleaded to be released
+    * At 315 volts = learner gave out a violent scream
+    * Above 315 volts = learner was silent
+  * Experimenter feedback: "If the subject indicated his unwillingness to go on, the experimenter responded with a sequence of 'prods'...
+ (375)
+    * Prod 1: 'Please continue,' or 'Please go on'
+    * Prod 2: 'The experiment requires that you continue'
+    * Prod 3: 'It is absolutely essential that you continue'
+    * Prod 4: 'You have no other choice, you must go on'
+  * Results of the study:
+    * 65% (or 26 out of 40) of ordinary subjects were prepared to administer potentially fata electric shock when encouraged to do so by what they perceived as a legitimate authority figure - in this case, a man in a white coat.
+    * Signs of extreme tension
+      * "Subjects were observed to sweat, tremble, stutter, bit their lips, groan, and dig their fingernails into their flesh..."
+  * Before conducting his experiments, Milgram asked his students to "predict the behavior of 100 *hypothetical subjects* based on this experimental situation
+    * "The estimates ranged from 0 to 3%; i.e., the most "pessimistic" member of the class predicted that out of 100 persons, 3 would continue through to the most potent shock available on the shock generator - 450 volts.  The class mean was 1.2%." (376)
+      * This is why experiments like this should be conducted; 1.2% is very far from 65%.
+  * Replication of Milgram Experiment - ABC, "Basic Instincts: The Science of Evil"
+    * The Milgram Experiment Revisited (2007)
+    * Results: 65% of male subjects and 73% of female subjects "agreed to administer increasingly painful electric shocks when ordered by an authority figure."
+    * Jerry Burger's replication was carefully reviewed and approved by his university's IRB (Santa Clara Univ.)
+    * Additional procedures were implemented to reduce subjects' risk of exposure to extreme stress
+    * Finding:"Today people obey the experimenter... at about the same rate they did 45 years ago."
+
+### Relations Between Social Groups
+* Social groups: Bonds between group members are "sometimes strengthened by scorning other groups."
+* "In-groups are groups toward which one feels loyalty and respcet - the groups the 'we' belong to."
+* "Out-groups are groups toward which one feels antagonism and contempt - "those people" (175)
+* One source if intergroup conflict is competition
+* "Overt conflict may develop because groups have an underlying *opposition of interest* - a benefit of one must come at a cost to the other" (D&C 2019:490)
+* Groups compete with one another over desired resources like wealth, status, and power.
+* "Even when an underlying 'opposition of interest' is not present...
+  * Strong group identification can, by itself, produce biased behavior towards out-groups" (D&C 2019:452).
+  * "People have a fundamental tendency to like their own group and to dislike... opposing groups."
+* This is due to "ethnocentrism"
+* Ethnocentrism refers to the tendency to regard one's group as superior to other groups - and regard other groups as inferior
+* [FILL]
+* "Social Categorization and Intergroup Behavior," by Henri Tajfel et al. (1971)
+  * "Minimal group paradigm"
+  * Study found that even arbitrary or trivial distinctions between groups trigger in-group favoritism and out-group discrimination
+  * Experimental design eliminated (i) competitive self-interest and (ii) preconceived negative attitudes
+  * Boys were randomly assigned into two groups - 'under-estimators' and 'over-estimators' of dots...
+  * And this was sufficient to induce favoritism: *Subjects gave more money to in-group members...*
+* Social categorization - or grouping - produced favoritism and discriminatory behavior
+* Subjects were provided the choice of being fair or discriminating in the allocation of rewards.
+* "Their actions are unambiguously [FILL]
