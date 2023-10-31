@@ -11,7 +11,8 @@
 #### Primary groups and Secondary groups
 * "Primary groups are small groups characterized by face-to-face interaction, intimacy and a strong sense of commitment" (e.g., family and friends).
 * 'We': Mutual identification
-* C.H. Cooley "believed that they were the basic forms of association, exerting a [FILL]
+* C.H. Cooley "believed that they were the basic forms of association, exerting a long-lasting influence on the development of our social selves" (170).
+* Primary groups are characterized by strong sense of emotional involvement and attachment.
 
 #### Primary Groups
 * "The Importance of Primary Groups," by Dexter Dunphy
@@ -124,7 +125,7 @@
   * "People have a fundamental tendency to like their own group and to dislike... opposing groups."
 * This is due to "ethnocentrism"
 * Ethnocentrism refers to the tendency to regard one's group as superior to other groups - and regard other groups as inferior
-* [FILL]
+* This attitude often leads to prejudicial attitudes and discriminatory behaviors
 * "Social Categorization and Intergroup Behavior," by Henri Tajfel et al. (1971)
   * "Minimal group paradigm"
   * Study found that even arbitrary or trivial distinctions between groups trigger in-group favoritism and out-group discrimination
@@ -133,4 +134,4 @@
   * And this was sufficient to induce favoritism: *Subjects gave more money to in-group members...*
 * Social categorization - or grouping - produced favoritism and discriminatory behavior
 * Subjects were provided the choice of being fair or discriminating in the allocation of rewards.
-* "Their actions are unambiguously [FILL]
+* "Their actions are unambiguously directed at favoring the members of their in-group..." (172).
