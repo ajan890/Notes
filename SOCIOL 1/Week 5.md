@@ -17,7 +17,7 @@
 * Provides sociological explanations of the causes of deviance:
 #### 1. Strain Theory
 * "Functionalist theories argue that crime occurs when the aspirations of individuals and groups do not coincide witha vailable opportunities" (202).
-* Social inequality creates discrepancy between 'values' [FILL]
+* Social inequality creates discrepancy between 'values' and 'opportunities'
 * The lack of conventional means and opportunities for achieving cultural goals produces 'strain'
 * *It's this feeling of 'frustration' - due to structural pressure - that motivates nonconformist or deviant conduct.*
 * "Deviant or nonconformist behavior is 'called-forth' by social structural pressure.
@@ -30,23 +30,36 @@
   2. Legitimate Means - Accept or Reject
 ```
 Mode of Adaptation | Legitimate Means | Cultural Goals
-[FILL]
+Conformity         |  Accept          |  Accept
+Innovation         |  Reject          |  Accept
+Ritualism          |  Accept          |  Reject
+Retreatism         |  Reject          |  Reject
+Rebellion          |  New means       |  New Goals
 ```
 #### 2. Differential Association Theory
 * People *learn* to be deviant through their exposure to and associations with others involved in deviance
 * "The more we associate with people whose behavior is deviant, the greater the likelihood that our behavior will also be deviant" (Chambliss & Eglitis 2016:141).
 * "Becoming a Marihuana User," by Howard Becker
-  * **Q:** Why do some individuals - and not others - [FILL]
+  * **Q:** Why do some individuals - and not others - become 'users of marijuana for pleasure'?
+  * *Broader sociological question:* Why do some individuals - and not others - engage in 'deviant' behaviors (e.g., like smoking marijuana)?
 * Reigning explanation of the time:
-  * "The presence of a given kind of [deviant] behavior in an individual can best be explained as the result of some trait which predisposes or motivates him to engage in this behavior" (221).
+  * "The presence of a given kind of \[deviant] behavior in an individual can best be explained as the result of some trait which predisposes or motivates him to engage in this behavior" (221).
 * Becker's thesis:
   * Through social interaction, individuals learn how to become 'users of marijuana for pleasure'
   * Deviant behavior is learned in interaction with other persons in a process of communication - e.g., the techniques, effects, and motives of deviant behavior.
-* [FILL]
+* "An individual, will be able to use marihuana for pleasure *only when he goes through a process of learning* to conceive of it as an object which can be used in this way" (227).
+  1. Learning smoking technique
+  2. Learning to identify effects
+  3. Learning to define effects as pleasurable
 * Step 3: Learning to define effects as pleasurable
   * **Q:** Is 'getting high' necessarily enjoyable?
-    * Symptoms are "not automatically, nor necessarily pleasurable" - as some users described the experience as 'scary', 'frightening', and 'unpleasant' (e.g., "I felt I was goin insane...").
-    * [FILL]
+    * Symptoms are "not automatically, nor necessarily pleasurable" - as some users described the experience as 'scary', 'frightening', and 'unpleasant' (e.g., "I felt I was going insane...").
+    * The novice is 'coached' by seasoned users and taught to "find pleasure in this experience which \[was] at first so frightening."
+    * "You have to like reassure them..." (226)
+    * "He \[or she] has learned, in short, to answer 'Yes' to the question: 'Is it fun?'" (228).
+* White collar crime: Work-related criminal behavior committed by people of high social status
+* A new corporate executive learns from coworkers that embezzling company funds is the 'norm'
+* Sports: Athletes learn the 'informal norms' of the game - encouraged by teammates to violate official rules
 
 #### 3. Labeling Theory
 * Deviant behavior is a consequence of the 'labels' assigned to people
@@ -57,18 +70,20 @@ Mode of Adaptation | Legitimate Means | Cultural Goals
   * Design:
     * Eight 'sane' pseudo-patients were admitted to various mental hospitals across the country
     * They gained admission by complaining of 'hearing voices' - while often unclear, these voices said the words, 'empty', 'hollow', and 'thud'
-    * [FILL]
+    * As if to say, "my life is empty and hollow" (51)
     * While hospitalized, these subjects behaved normally and cooperatively
     * Upon admission, pseudo-patients "ceased simulating any symptoms of abnormality" (51).
     * "They were motivated not only to behave sanely, but to be paragons of cooperation" (52).
     * Yet, each was discharged with a diagnosis of schizophrenia in remission (hospitalized for 7-52 days)
     * The sanity of the pseudo-patients went *undetected*, despite the so-called 'objective' nature of mental illness
     * Does mental illness reside in the 'minds of patients' or in the 'mind of psychiatrists' (i.e., psychiatric diagnoses)
-    * [FILL]
+    * Rosenhan: Once the label of 'mental patient' is applied, all subsequent actions become *interpreted* within the context of this label
+    * Labels *bias* and *distort* perception
+    * "Given that the patient is in the hospital, he must be psychologically disturbed" (55).
     * Past biographical details and observed behaviors become *interpreted* as *symptoms* - taken as evidence of their mental illness
       * "As far as I can determine..." (54)
       * "All pseudopatients took extensive notes..." (55)
       * "One tacit characteristic..." (55)
-    * "The tag [of mentally ill] profoundly colors others' perceptions of him and his behavior" (54).
-    * 
+    * "The tag \[of mentally ill] profoundly colors others' perceptions of him and his behavior" (54).
+    * [FILL]
 #### 4. Control Theory
