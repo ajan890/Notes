@@ -85,5 +85,52 @@ Rebellion          |  New means       |  New Goals
       * "All pseudopatients took extensive notes..." (55)
       * "One tacit characteristic..." (55)
     * "The tag \[of mentally ill] profoundly colors others' perceptions of him and his behavior" (54).
-    * [FILL]
+  * "The Saints and the Roughnecks," by William Chambliss
+    * An ethnographic study of two groups of high school boys from the same community
+    * **Q:** Who are the Saints and the Roughnecks?
+      * How they're similar: They are two groups of high schoolers involved in similar delinquent activities
+      * The Saints cut school, cheated, vandalized, consumed alcohol, and drove recklessly...
+      * While the Roughnecks cut school, stole, drank alcohol, and got into fights
+    * **Q:** In what respect did these two groups differ?
+      * Saints were "eight promising young men - children of good, stable, white, upper middle-class families, active in school affairs, good pre-college students... who were well-dressed and well-mannered.
+      * The Roughnecks were "six lower class white boys" - "not-so-well-dressed, not-so-well-mannered, not-so-rich boys... who had a grade popint average just slightly above 'C'."
+    * **Q:** How did community members respond?
+      * **Saints:** They were considered 'good students' and 'good boys' by teachers, the police, and townspeople - *despite* their deviant activities.
+      * **Roughnecks:** They were considered a 'bunch of bad boys' and 'headed for trouble' by teachers, the police, and townspeople - *due to* their deviant activities.
+    * **Q:** What became of the Saints and the Roughnecks?
+      * Seven of the eight Saints graduated from college; one finished law school, one finished medical school, and one is pursuing a PhD.
+      * Two of the six Roughnecks never finished high school; both are serving sentences for murder; one is a small-time gambler, another a trucker.
+    * **Q:** According to Chambliss, what accounts for this divergence in adulthood?
+      * The Roughnecks came to *internalize* the attitudes of teachers, police, and the community
+      * "As that self-conception became more firmly entrenched, they also became willing to try new and more extreme deviances" (326).
+      * 'Secondary Deviance'
+    * Societal treatment - i.e., the reactions of significant others - facilitate the development of a devaint identity:
+      1. Application of a deviant label
+      2. Internalization of a deviant self-concept
+      3. Then act accordingly (i.e., secondary deviance)
+
+---
+
+**Primary deviance** occurs when an individual commits a non-patterned act of deviance (e.g., initial use of a controlled substance, initial act of theft, initial act of aggression, etc.)
+**Secondary deviance** "occurs when a person labeled as deviant accepts the label as part of their identity, and, as a result, begins to act in conformity with that label" (Chambliss and Eglitis 2016:141).
+
 #### 4. Control Theory
+* "Control theorists assert that human beings are basically antisocial and assume that deviance is a part of the natural order in society..."
+* "... Indiiduals are attracted to the idea of norm violation and thus motivated to deviate" (272).
+* Since all people feel an inclination to devaite...
+  * "... Concern for deviant motivation alone does not account for the forces leading people to deviate."
+  * "The important question is not 'why do people not obey the rules of society,' but 'why do people obey the rules of society'?" (Inderbitzen et al. 2017:272)
+* *Most deviant behavior is the result of insufficient control*
+  * "Control theories assume that delinquent acts result when an individual's bond to society is weak or broken" (172).
+  * The 'bond' can be measured by the *strength of one's attachment to conventional society*
+* "A Control Theory of Delinquency," by Travis Hirschi
+  * Strength of *attachment* to conventional significant others serves to 'control' an individual's impulse to behave in deviant - or non-conforming - ways
+  * The risk of losing the approval of rule-abiding significant others limits behavior to conventional lines
+  * Strength of *commitment* to conventional lines of action is a function of 'protecting assets'
+  * "Most people, simply in the process of living in organized society, acquire goods, reputations, prospects that they do not want to risk losing.  These accumulations are society's insurance that they will abide by the rules" (175).
+  * Strength of *involvement* in conventional activities limits the 'opportunity' to behave deviantly
+  * "A person may be simply too busy doing conventional things to find the time to engage in devian behavior."
+  * "Many persons undoubtably owe a life of virtue to a lack of opportunity to do otherwise." (175).
+  * Strength of *belief* in conventional rules and activities also 'controls' the impulse to act devaintly
+  * "There is variation in the extent to which people believe they should obey the rules of society" (178).
+  * "The less a person believes he should obey the rules, the more likely he is to violate them" (178).
