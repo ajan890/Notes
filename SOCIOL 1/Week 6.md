@@ -5,7 +5,7 @@
 * "Until the first few decades of the 19th century, most of the world's population had no schooling whatsoever.
 * Educational systems are very modern institutions
 * The instruction of pupils within schools accompanied the processes of industrialization and urbanization
-* "As the industrial economy rapidly expanded... there was a great demand for specialized schooling that could produce [FILL]"
+* "As the industrial economy rapidly expanded... there was a great demand for specialized schooling that could produce an educated, capable workforce" (Giddens et al. 2021:379)
 * "In modern societies, people have to be furnished with basic competencies - such as reading writing, and calculating..." (379)
 * These competences are cultivated by a basic curriculum of language, history, math, and science.
 * Endowing a population with standard literacies.
@@ -36,16 +36,15 @@
   * Making it difficult for low-status groups to improve their social position to higher-paying occupations
   * A third perspective on the role of schooling - also rooted in conflict theory...
   * Is referred to as 'social reproduction'
-  * [FILL]
+  * "Social reproduction refers to the ways in which schools help perpetuate social and economic inequalities across the generations" (619).
   * Conflict theorists argue "that the hidden curriculum is the mechanism through which social reproduction occurs" (619)
   * Mass education serves employers by producing the traits and personalities desired in workers:
     * Obedient, self-disciplined, dependable, punctual, etc.
-  * [FILL]
-  * Samuel Bowles and Herbert Gintis (1976) argue that "modern... [FILL]
+  * Samuel Bowles and Herbert Gintis (1976) argue that "modern education is a response to the economic needs of industrial capitalism" (619).
   * "Students from wealthier backgrounds take college-prep courses... while their classmates from more disadvantaged backgrounds are tracked into vocational programs."
   * "Schools... tend to teach students an uncritical acceptance of the existing social order" (620).
-  * [FILL]
-  * 'Tracking' divides students into groups based on [FILL]
+  * 'Tracking' divides students into groups based on ability - leading to differences in instruction
+  * "Sociologists have long believed that tracking is entirely negatively in its effects... and that its use partly explains why schooling seems to have little effect on existing inequalities" (627).
   * Indeed, research indicates that while "tracking does have positive benefits for 'advanced' students..."
   * It "reinforces previously existing inequalities for average or poor students" (627).
   * 'Cumulative advantage': "The most advanced individuals are awarded the best opportunities..." (292).
@@ -55,7 +54,7 @@
   * "Because school funding tends to come from local property taxes, wealthier areas generate mory funding for schools... while poorer neighborhoods with few lavish provate homes have far less money for schools" (626).
   * This leads to discrepancies in the quality of education.
   * According to the National Center for Education Statistics, "in school year 2019-20, elementary and secondary public school revenues totaled $871 billion, (in constant 2021-22 dollars)."
-  * [FILL]
+  * "Of this total, 8 percent, or $66 billion, were from federal sources.  Some 47 percent, or $414 billion, were from state sources and 45 percent, or $391 billion, were from local sources."
   * In 2019-2020, 92% of public school funding came from state and local revenues; 8% from federal revenue
   * Differences in property taxes create disparities in local revenues for public schools
   * Per pupil spending varies by district: $10987 versus $31491 per child across school districts in Chicago
@@ -106,7 +105,7 @@ Black              |  $52860
 * **Q:** What advantages do affluent families offer their children pursuing admission to elite colleges?
   * Affluent families have the resources "to make their children into ideal applicants" (571)
   * "Measurable accomplishment is the baseline criterion selective colleges now use to sort applications" (575).
-  * 'Admissibility' involves high GPAs, high test scores, athletic [FILL]
+  * 'Admissibility' involves high GPAs, high test scores, athletic ability, school reputation, letters of recommendation, etc.
   * "They pay for academically excellent high schools.  They shower their children with books and field trips and lots of adult attention."
   * "They nurture athletic talent through myriad youth sports programs.  They encourage and fund early glimmers of artistic interest.  They channel kids with empathetic hearts toward exotic and traceable forms of humanitarian service" (571).
   * "Keenly aware of the terms of elite admission...
@@ -117,7 +116,7 @@ Black              |  $52860
   * However, SES does not explain all group outcomes.
   * For example, "it cannot explain the high educational outcomes for the children of poor and working-class Chinese and Vietnamese immigrants" (118).
   * 'Achievement paradox'
-  * Lee and [FILL]
+  * Lee and Zhou describe how 'cultural' factors help explain this high academic achievement.
   * "Today, income inequality in the U.S. is greatest among Asians... While Asians overall rank as the highest earning racial and ethnic group in the U.S., it is not a status shared by all Asians." - Pew Research Center (7/12/18)
   * 'Success Frame'
     * There is considerable variation among social groups as to what constitutes 'success'
@@ -126,7 +125,8 @@ Black              |  $52860
       * Getting straight As, graduating at the top of one's class, gaining admission to an 'elite college' or 'top university,' earning a graduate degree and "working in one of four high-status professions..."
       * Medicine, law, science, or engineering" (113).
       * Educational achievement factors centrally into this strict success frame:
-        * It "reflects the parental belief that it is *only* through getting a good education and earning excellent grades that one is able to secure a [FILL]
+        * It "reflects the parental belief that it is *only* through getting a good education and earning excellent grades that one is able to secure a good job" (133).
+        * A singular pathway to a singular frame of success
     * **Q:** Why is this success frame so consistent among Chinese and Vietnamese interviewees?
       * Important changes in U.S. immigration law led to a "new socioeconomic profile of immigrants" (131).
       * After 1965, Asian immigrants were more highly educated than their predecessors (hyper-selectivity).
