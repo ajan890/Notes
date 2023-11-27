@@ -29,7 +29,8 @@ There are three sociological theories of political power:
       * "An interest group is any organization that attempts to persuade elected officials to consider its aims when deciding on legislation" (473)
       * Diverse interest groups compete in U.S. society.
 * Pluralists argue that democratic 'political culture' plays a critical role in the distribution of power
-* A common set of values [FILL]
+* A common set of values and beliefs serve to limit and check the concentration of political power
+* According to Lipset, there are five fundamental tenets of American political culture:
   1. Liberalism: Liberty, equality, and property
   2. Individualism: Independence and self-reliance
   3. Populism: Appeals to ordinary people
@@ -39,7 +40,8 @@ There are three sociological theories of political power:
   * 'Nation': "People with common identity that ideally includes a shared culture, language, and feelings of belonging."
   * 'State': "A political apparatus or government that rules over a territory" (457).
 * "Nation-states are associated with the rise of nationalism...
-* Which can be defined as a set of symbols and beliefs [FILL]
+* Which can be defined as a set of symbols and beliefs  that creates a sense of membership in a single political community" (458).
+* Nationalism is an expression of collective identity
 * A 'pluralist' view of the news media:
   * While not a political power per se, the press - or 'fourth estate' - has considerable influence shaping the public's views of social andpolitical issues
   * News media agencies operate within a 'free market' - they can *compete amongst each other for audiences*.
@@ -56,13 +58,13 @@ There are three sociological theories of political power:
       * Funding for policy institutes or 'think tanks'
 * Interest groups and 'lobbying'
   * "Lobbying is the act of persuading influential officials to vote in favor of a cause or otherwise lend support to the aims of the interest group" (473)
-  * All organizations employing lobbyists must register their lobbyists (... [FILL])
+  * All organizations employing lobbyists must register their lobbyists (... in 2019, 11000 were registered)
 * "To run as a political candidate is enormously expensive, and interest groups provide much of the funding at all levels of political office" (473-4).
   * Big tech, big pharma, mining, defense, agribusiness, oil, finance, as well as AARP and NRA
   * IGs fund campaigns to promote policy objectives
 * Citizens United v. Federal Election Commission
   * 2010: U.S. Supreme Court ruling (5-4)
-  * The court overturned [FILL]
+  * The court overturned restrictions on unlimited corporate and union spending expressly advocating the election or defeat of candidates
   * Supreme Court: "Corporate and labor unions have First Amendment right \[i.e., freedom of speech] to make independent expenditures that advocate election or defeat of candidates in certain federal elections."
   * The majority opinion reasoned that corporations - as associations of individuals - are afforded the same rights as regular citizens.
   * "Corporations, which have a strong stake in getting favorable legislation and government contracts... are the largest contributors to campaigns, outspending organized labor as much as 17 to 1" (475).
@@ -76,27 +78,28 @@ There are three sociological theories of political power:
 * "The top 50 donors have together supplied $571.1 million - 37% of the money raised to date."
 * The *top ten donors* supplied over $303 million to the 2016 presendential race - Tom Streyer, $66.3 million.
 * In 1895, Mark Hanna, a U.S. senator from Ohio, said:
-  * "There are two things that are important in politics.  The first is money, and I can't remember [FILL]
+  * "There are two things that are important in politics.  The first is money, and I can't remember what the second one is."
+  * Political scientists predicted that the 2020 U.S. presidential race would be the costliest in history... it was!
 * **Q:** Where is the money being spent?
   * "The candidates, national parties, and super PACs spend the bulk of their campaign cash on *advertising*, mail, staff, and fundraising." - The Washington Post
   * "Super PACs have no limitations on how much they can spend on influencing an election."
 * Wealth translates to 'media influence'
   * "A super PAC advocates for the election or defeat of candidates for public office by purchasing television, radio, and print advertisements and other media."
   * Conflict theorists: News media exercises ideological control by manupulating the public's perceptions
-* [FILL]
-* "... Ownership and control of the mass media" and their "capacity to manipulate electoral and legislative politics toward sought goals..." (262)
-* "Restricts the development of an open, dynamic public sphere" (263).
+* "The Dominance of the Corporation," by Karl Boggs
+  * "The immense growth of corporate power is probably the most fundamental development of the past 20 or 30 years."
+  * \[Corporate] elites now exercise far more control over the state than the state over the elites" (263).
+  * "... Ownership and control of the mass media" and their "capacity to manipulate electoral and legislative politics toward sought goals... restricts the development of an open, dynamic public sphere" (263).
 * Limiting political debates and policy choices.
 * "By employing sophisticated opinion-polling, telemarketing, and public relations..."
   * They can steer and manupulate public opinion
-  * "Multinational corporations... possess enough wealth to influence the [FILL]
+  * "Multinational corporations... possess enough wealth to influence the entire field of candidates in electoral campaigns" (263).
 * **Q:** How has the rise of corporations impacted the modern democratic state?
   * "The bourgeoisie has at last... conquered for itself, in the modern representative state, *exclusive political sway*.  The executive of the modern state is buy a committee for managing the common affairs of the whole bourgeoisie." - Karl Marx and Friedrich Engels
 
 #### Elite Theory of Power
 * *The Power Elite* (1956)
   * "During the 21st century, a process of institutional centralization occurred in the political order, the economy, and the military" (464).
-  * [FILL]
   * Mills argued that U.S. "political power had become tightly coordinated at the federal level."
   * The American economy had become dominated "by a cluster of very large corporations."
   * And after "World War II, the military... had grown to a giant establishment..." (464).
@@ -104,11 +107,16 @@ There are three sociological theories of political power:
   * "They are in command of the major heirarchies and organizations of modern society" (392).
   * "Big three," the 'triangle of power,' or the 'interlocking directorate': Political, economic, and military.
   * "This theory holds that power is *not* dispersed throughout a stable society..."
-  * Rather, power si concentrated among a small number of people who control the major [FILL]
-  * "These hierarchies of state and corporation and army constitute the means of power" (393).
+  * Rather, power is concentrated among a small number of people who control the major institutions of the state, the corporate economy, and the military."
+  * Pres. Eisenhower on the 'military-industrial complex'
+    * "These hierarchies of state and corporation and army constitute the means of power" (393).
   * **Q:** Based on this view, where does power reside?
     * Power resides in institutional positions - power has an *institutional* basis: "Power is not of a man" (397).
-    * "The higher circles... are often thought of in terms [FILL]
+    * "The higher circles... are often thought of in terms of what their members possess... But the elite are not simply those who have the most, for they could not 'have the most' were it not for their positions in the great institutions" (396).
+  * **Q:** How is power exercised by individuals who occupy the top positions of these 'great institutions'?
     * By the *decisions* they make: "Their decisions affect the everyday worlds of ordinary men and women" (391).
     * "By the power elite, we refer to those political, economic, and military circles which as an intricate set of overlapping cliques share decisions having at least national consequences.  In so far as national events are decided, *the power elite are those who decide them.*"
-    * 
+    * Robert McNamara (1916-2009)
+      * President of Ford Motor Company (1960)
+      * U.S. Secretary of Defense (1961-1968)
+      * President of the World Bank (1968-1981)
