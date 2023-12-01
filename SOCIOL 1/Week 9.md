@@ -51,4 +51,59 @@
 #### Debt
 * The opposite of wealth is debt
 * Households with lower incomes and less wealth are more likely to rely on credit cards or loands to pay for living expenses.
-* Many yound adults have gone increasingly into debt by relying on credit cards and student loans.
+* Many young adults have gone increasingly into debt by relying on credit cards and student loans.
+* Consumer Financial Protection Bureau:
+  * "CFPB Report Finds Credit Card Companies Charged Consumers Record-High $130 Billion in Interest and Fees in 2022" (10/25/23)
+    * "Consumers with revolving debts on average pay far more in interest and fees than get back in rewards."
+    * "Prices are rising faster than incomes"
+    * "In the past year, median household income has grown just 4%, while the overall cost of living has jumped 8%." -Nerdwallet (1/10/23)
+    * "Buy now, pay later services may mean deeper debt for millions."
+  * *Econimic Well-Being of U.S. Households in 2022* (Board of Governors of the Federal Reserve System)
+    * [FILL]
+* 'Educational attainment' is another important characteristic of class or socioeconomic standing...
+  * Since "education is one of the strongest predictors of occupation, income, and wealth" (247)
+  * In 2018, the median income of college grads was $54700, compared to $34900 of high school grads.
+* Lastly, 'occupational status' or 'occupational prestige' are also indictors of class standing
+  * Public opinion confers occupational prestige
+  * "The top-ranked occupations appear to share one of two characteristics: They require a fair amount of either education or public service" (248).
+* **Q:** Why are societies economically stratified?
+  * Surveys provide insight into the 'public's opinion' on the causes of poverty and affluence
+  * Sociological theories of class stratification offer much more theoretically sophisticated explanations based on systematically collected data.
+  * "Family Life and Economic Success," by Lisa Keister
+    * "Family background can be amont the most critical determinants of success in life" (294)
+    * [FILL]
+ #### Wealth
+ * Direct transfers of wealth from parent to child - 'inter vivos' and 'postmortem' transfers
+   * 'Inter vivos' transfers: Money for living expenses, higher education, automobiles, house down payments, etc.; and 'postmortem' transfers: Inheritance
+
+ #### Education
+ * "Successful parents also tend to provide relatively high quality education to their children..."
+ * Education is a critical component of the wealth accumulation process... \[it] translates into wealth via work experience, financial literacy..." (295).
+
+### Economic Stratification
+ * Karl Marx: 'Theory of labor exploitation'
+   * "The history of all hitherto existing society is the history of class struggle."
+   * All ruling classes own the 'means of production,' use this control to exploit laborers and claim the rewards of the productive process
+   * Exploitation in capitalism involves 'wage-labor'
+     * Workers are paid for their labor - but the market value of what they produce exceeds those wages
+     * "Surplus value is the difference between what workers earn for their labor and the value of the goods that they produce" (E&A 2015:73)
+ * **'Surplus Value'**
+   * "This surplus value is the source of profit, which capitalists put to their own use" (251).
+   * "Human labor is thus one commodity that is exchanged for its value \[i.e., wage] while being capable of producing more than its value" (E&A [FILL])
+ * While Marx *incorrectly* predicted that "the wages of the working class could never rise far above subsistence level..." (251)
+ * That the 'modern laborer' would sink only 'deeper and deeper into pauperism' and poverty
+ * He was right about the growing inequality of wealth
+ * Thomas Piketty (2013) argues that "unless an [capitalist] economy is growing rapidly... increases in wealth will exceed economic growth."
+ * This "will inevitably [FILL]
+#### Poverty
+ * 'Absolute poverty' means that a person or family does not have access to food, housing, or health care
+ * 'Relative poverty' "means being poor as compared with the standards of living of the majority" (266).
+ * 'Relative deprivation' refers to the lack of material resources compared with others in society.
+
+---
+
+* According to Max Weber, other factors contribute to economic stratification
+  * People's skills and credentials have variable 'market values' - leading to differences in compensation
+  * Further, 'pariah groups' can be excluded from select industries and occupations (i.e., discrimination)
+  * E.g., "Modern medicine is within the mental capacity of most individuals, but a medical education is so burdensome and expensive that virtually none would undertake it if the position of the M.D. did not carry a reward commensurate with the sacrifice."
+  * [FILL]
