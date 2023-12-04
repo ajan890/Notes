@@ -38,6 +38,8 @@
 * Critics of the 'binary' are disapproving of the social constraints it imposes on individuals
 * Feminists have long been critical of traditional norms of feminity for 'constraining' the range of roles and identities available to women
 * **Q:** On what two 'fronts' is the battle of the sexes being waged?
+
+### Gender and Pay
 #### Within the family: Conflict is over responsibilities associated with housework and childrearing
 * "Household duties" - housework and child rearing - "are disproportionately borne by women."
 * In 2018, women performed an average of 15 hours of housework, compared to men's 4-10 hours
@@ -76,4 +78,59 @@
   * Then we should expect these jobs to pay less than jobs associated with men.  They do." (298).
   * "More than two-thirds (16 of 23) of the lowest-paying occupations are disproportionately female."
 #### Why is there GJS?  'Socialization hypothesis'
-
+* "Men an women respond to gender stereotypes when planning, training, and applying for jobs."
+* Men and women's beliefs about their own competencies - 'competence bias' - may affect their decisions about what occupations to enter
+* 'Employer selection hypothesis'
+  * "Employers tend to prefer men for masculine jobs and women for feminine jobs, slotting applicants into gender consistent roles" (Wade and Ferree 2015:290).
+  * Employers often rely on gender stereotypes when making decisions related to hiring or job assignment
+#### The Accumulative Effect of the Gender Pay Gap:
+* Analysts estimate that "over a lifetime the average woman will make $434000 less in income than the average man" (Wade and Ferree 2015:286).
+* **Q:** How do sociologists account for economic inequality among men and women?
+  * 'Discrimination hypothesis'
+    * Women are treated unequally - they are denied equal opportunities and equal compensation
+    * **Sexism:** "The belief that one sex is innately superior - intellectually, emotionally and/or physically - to the other" (Chambliss and Eglitis 2016:251).
+  * Gender stereotyping:
+    * Prejudicial attitudes influence the decisions employers make related to hiring and promotion
+    * 'Glass ceiling': "A promotion barrier that prevents a woman's upward mobility within an organization" (Giddens et al. 2020:352).
+  * Washington Center for Equitable Growth (2018):
+    * "A portion of gender pay inequality - 38% - is unexplained by observable data...".
+    * "Most researchers attribute this portion to factors such as discruimination... socially constructed gender norms... and gender stereotyping."
+  * 'Devaluation hypothesis'
+    * "Women are paid less because the work they perform is socially defined as less valuable than the work men perform" (Mooney et al. 2015:322).
+    * "Pay rates are determined in part by cultural understandings regarding the worth of jobs."\
+  * Occupations that involve caring, nurturing and empathizing are undervalued in American society
+    * "The devaluation of feminized occupations is especially acute for care work" (298).
+    * It "involves face-to-face caretaking of the physical, emotional, and educational needs of others" (298).
+    * In 2012, the average yearly income of child care workers was only $21,310.
+    * "Only twenty-two of the 800 jobs listed by the Bureau of Labor Statistics had lower annual wages; 99.5 percent of jobs in American pay better" (299).
+    * People who worked to park cars were paid more
+  * 'Human capital hypothesis'
+    * Inequalities in pay occur due to differences in the kind and amount of human capital men and women acquire - e.q., levels of education, continuous work experience and job related skills.
+    * Work is interruptted by child birth and childrearing
+  * 'Motherhood penalty'
+    * Women feel pressure to choose 'family-friendly' occupations - jobs that permit flexible hours and career paths
+    * PRC: "Seven-in-ten or more \[Americans] say women face a lot of pressure to be an involved parent (77%)."
+#### "Falling Back on Plan B," by Kathleen Gerson
+* Most young Americans say they prefer an egalitarian family arrangement based on 'equal sharing' of paid labor (employment) and unpaid labor (household)
+* 80% of women and 70% of men: Partners should share in breadwinning, housekeeping, and child-rearing
+* Yet, while today's young women and men hope to "strike a flexible breadwinning and caretaking balance with an egalitarian partner..."
+* Skepticism about achieving this ideal is prompting them to support 'divergent fallback strategies'
+* Men and women have clashing 'plan Bs'
+* Self-reliant women
+  * "Most women prefer self-reliance over economic dependence within a traditional marriage" (161).
+  * "When the bonds of marriage are so fragile, relying on a husband for economic security seems foolhardy" (161).
+* According to Gerson:
+  * "66 percent of women between the ages of eighteen and thirty-four say that 'being successful in a high-paying career' is 'very important' or, even, 'one of the most important things' in their lives."
+  * 37 percent say that marriage is a 'top priority'
+* "In a reversal of traditional gender roles, young women now surpass young men in the importance they place on having a high-paying career or profession, according to survey findings from the *Pew Research Center*" (4/19/12).
+* Neo-traditional men
+  * "Most men... prefer a neo-traditional arrangement that allows them to put work first and rely on a partner for the lion's share of caregiving" (161).
+  * This modified traditionalism strategy "contrasts vividly with women's search for self-reliance" (162).
+#### 'New gender divide'
+* "Men's desire to protect work prerogatives collides with women's growing desire for equality and need for independence" (165).
+* 70 percent of men chose neo-traditionalism as their plan B, compared to only 25 percent of women.
+* "... If equal sharing proves too difficult, men overwhelmingly hope to convince their wives to de-prioritize their careers and focus on homemaking and raising children."
+* However, such a 'neo-traditional arrangement' may stimulate feelings of *resentment* - due to stalled careers, financial dependence and restricted autonomy
+* Most divorces are initiated by women
+  * "Faced with a husband who wants them to be a housewife or work part-time, almost three-quarters of women say they would choose divorce and raise their kids alone." - Lisa Wade
+  * Marriage often falls short of egalitarian expectations
