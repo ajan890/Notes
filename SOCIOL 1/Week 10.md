@@ -96,7 +96,8 @@
 * All of this occurred following critical legislative and political successes for Black Americans:
   * Civil Rights Act of 1964 outlawed racial discrimination; Equal Employment Opportunity Commission (EEOC) investigated claims of racial discrimination; National Voting Right Act of 1965 criminalized discriminatory voting practices (e.g., outlawing 'literacy texts'); and Executive Order No. 11246 established affirmative action programs
 * In recent years...
-  * Impersonal economic [FILL]
+  * Impersonal economic forces related to the 'great recession' and the 'covid pandemic' have differentially impacted racial and ethnic groups
+  * "Lower-income workers less likely to have option of teleworking," reports the Pew Research Center
 * "There's a clear class divide between workers who can and cannot telework.  Fully 62% of workers with a bachelor's degree or more education say their work can be done from home." - PRC (12/9/20)
 * "This compares with only 23% of those without a four-year college degree.  Similarly, while a majority of upper-income workers can do their work from home, most lower- and middle-income workers cannot."
 
