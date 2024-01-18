@@ -1,0 +1,251 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+\graphicspath{{./assets/images}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+
+\title{CHEM 20B Week 1}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+\section*{Gases}
+\begin{itemize}
+    \item Eleven elements are gases under normal conditions
+    \item Lower \textit{molar mass} compounds such as carbon dioxide, hydrogen chloride
+    \item A remarkable characteristics of gases is that many of their physical properties are very similar, particularly at low pressures, regardless of the identity of the gas.
+\end{itemize}   
+
+\subsection*{Characteristics of Gases}
+\begin{enumerate}
+    \item Compressibility: Gases are more compressible than solids and liquids; suggests that there is a lot of space between the molecules of gases
+    \item Motion: Gas expands rapidly to fill the space available to it.  Because balloons are spherical, we can infer that the motion of the molecules is chaotic, not favoring any single direction.
+\end{enumerate}
+
+\subsection*{Units}
+\begin{itemize}
+    \item There are two types of energy
+    \begin{enumerate}
+        \item \textbf{Kinetic Energy}: relating to how fast each atom moves.
+            \[\text{K.E.} = \frac{1}{2}mv^2\]
+        \item \textbf{Potential Energy}: energy that can turn into Kinetic Energy
+    \end{enumerate}
+\end{itemize}
+
+\subsection*{Force}
+\begin{itemize}
+    \item $F$ = Force = Energy/distance
+    \item Force is measured in $J/m = \text{kg} \cdot \frac{m}{s^2}$, or Newtons (N).
+\end{itemize}
+
+\subsection*{Pressure}
+\begin{itemize}
+    \item Pressure is $\frac{\text{force}}{\text{area}}$, or $P = \frac{F}{A}$.
+    \item Colliding gases exert a pressure on the sides of the container walls.
+    \item The more vigorous the motion, the stronger the force and hence the higher the pressure.
+    \item Pressure is measured in atm, bars, mmHg, and Pascals (Energy/Volume).
+    \begin{itemize}
+        \item Pascal ($Pa$) = $\frac{J}{m^3} = \frac{N}{m^2}$
+        \item 1 atm = $1.01325 \times 10^5$ Pa
+        \item 1 bar = $1 \times 10^5$ Pa
+        \item 1 atm = 760 torr (any temperature)
+        \item 1 atm = 760 mm Hg (at $0^\circ$C)
+    \end{itemize}
+\end{itemize}
+
+\section*{PV=nRT}
+\begin{itemize}
+    \item P = pressure
+    \item V = volume
+    \item T = temperature
+    \item n = number of moles
+    \item R = "gas constant" = $\frac{8.3 J}{K \times mol}$
+\end{itemize}
+\subsection*{Pressure and Boyle's Law}
+\begin{itemize}
+    \item T fixed.
+    \item The more mercury he added, the more the trapped air was compressed
+    \item PV will be proportional to the amount of material
+    \item $P \cdot V$ is unchanged if the amount of material is unchanged, and T is fixed.
+\end{itemize}
+
+\subsection*{Moles and Avogadro's Law}
+\begin{itemize}
+    \item For the same T and P, the ratios of the volumes between 2 different gases = ratio of the numbers of moles
+    \item H$_2$O $\rightarrow$ H$_2$ + $1/2$O$_2$
+    \item Under fixed P and T, $V_{H_2} = 2 \cdot V_{O_2}$ by experimental observation.
+    \begin{itemize}
+        \item This implies that 
+            \begin{align*}
+                \frac{PV_{H_2}}{n_{H_2}} &= \frac{PV_{O_2}}{n_{O_2}}\\
+                PV &= nf(T)
+            \end{align*}
+            where $f$(T) is universal.
+    \end{itemize}
+\end{itemize}
+\subsubsection*{Defining the Temperature in Kelvin}
+\begin{itemize}
+\item Fahrenheit and Celsius scale completely arbitrary designations
+\item We need a temperature that is based on a physical law.
+\item The simplest way to do that is to use the gas law.
+    \[\frac{PV}{n} = RT\]
+\end{itemize}
+\subsection*{Temperature and Charles' Law}
+Charles observed that all gases expand by the same relative amount between the same initial and final temperature under sufficient low pressure.
+\[t = C\left(\frac{V}{V_0} - 1\right)\]
+\begin{itemize}
+    \item $V_0$ is the volume of the freezing point of water
+    \item $C$ is a constant that is the same for all gases.
+\end{itemize}
+Experimentally: put a container (with a movable plug) with air in boiling water, at P = 1 bar, and find that V is, say, 50.000 L.  When the same container is then put into ice water, we'll find that V = 36.601 L.
+\begin{align*}
+\frac{PV \text{(at $T_{boil}$)}}{PV \text{(at $T_{freeze}$)}} = \frac{1\text{bar} \cdot 50.000 \text{L}}{1 \text{bar} \cdot 36.601 \text{L}} &= 1.36609\\
+\frac{nRT_{\text{boil}}}{nRT_{\text{freeze}}} = \frac{T_{\text{boil}}}{T_{\text{freeze}}} &= 1.36609\\
+T_{\text{freeze}} &= \frac{100K}{0.36609}\\
+\end{align*}
+\[\therefore T_{\text{freeze}} = 273.16\text{K}\sim273\text{K}, T_{\text{boil}} = 373.16\text{K}\]
+In the same experiment, suppose $n = 1.61$ mol.
+
+\[R = \frac{PV}{nT} = \frac{1 \text{bar} \cdot 50.00 \text{L}}{1.61 \text{mol} \cdot 373.16 \text{K}} = \frac{0.0831 \text{bar} \cdot \text{L}}{\text{mol} \cdot \text{K}}\]
+
+Simplifying, 
+\[R = 8.3 \frac{\text{J}}{\text{K} \cdot \text{mol}}\]
+
+\begin{itemize}
+    \item For a fixed amount of gas under constant pressure, volume is directly proportional to temperature.
+    \[V = V_0 (1 + \frac{t}{273.15^\circ \text{C}})\]
+    \item T (Kelvin) = t ($^\circ$C) + 273.15 (fixed pressure and fixed amount of gas)
+\end{itemize}
+
+\section*{The Ideal Gas Law}
+Combining all of the following:
+\begin{itemize}
+    \item Boyle's Law:
+    \[V \propto \frac{1}{p} \text{  (at constant temperature, fixed amount of gas)}\]
+    \item Charles' Law:
+    \[V \propto T \text{  (at constant pressure, fixed amount of gas)}\]
+    \item Avogadro's Law:
+    \[V \propto n \text{  (at constant temperature and pressure)}\]
+\end{itemize}
+We get...
+\[\boxed{PV = nRT}\]
+R = 8.3145 J mol$^{-1}$ K$^{-1}$
+
+\pagebreak
+\section*{Kinetic Theory of Gases}
+Assumptions: 
+\begin{enumerate}
+    \item A gas consists of a collection of molecules in ceaseless random motion.
+    \item Gas molecules are infinitesimally small points.
+    \item The molecules move in straight lines until they collide.
+    \item The molecules do not influence one another except during collisions.
+    \item The collisions are elastic.  No energy is lost during a collision.
+\end{enumerate}
+\[\text{Root-mean-square speed }v_{rms} = \sqrt{\bar v^2} = \sqrt{\frac{3RT}{M}}\]
+\[T = \frac{Mv^2_{rms}}{3R}\]
+
+\section*{Physical Derivation of the Ideal Gas Law}
+Gases always expand to fill all of the space they are given.  As a result, the pressure is the force exerted from gas particles hitting the walls of the container.\\\\
+Suppose that all the gas particles in a rectangular chamber (with side lengths $l_x$, $l_y$, and $l_z$) are identical, and have mass $m$.  The pressure exerted on the walls is 
+\[P = \frac{F}{A}\]
+where $P$ represents pressure, $F$ is the force exerted on the walls by particles, and $A$ is the surface area of the wall.\\\\
+For one gas molecule,
+\[F = ma = m \cdot \frac{\Delta v}{\Delta t} = \frac{\Delta(mv)}{\Delta t} = \frac{\Delta p}{\Delta t}\]
+Recall, $\Delta p$ is the change in momentum of a particle.\\
+The change in momentum can be calculated by 
+\[\Delta p = p_{\text{final}} - p_{\text{initial}}\]
+A particle heading to a wall with momentum $-mv_x$ would bounce off with momentum $mv_x$.  Therefore, the absolute change in momentum, $\Delta p = 2 \cdot mv_x$.\\\\
+By definition of velocity,
+\[v = \frac{d}{t}\]
+where $v$ represents velocity, $d$ represents distance, and $t$ represents time.\\\\
+Thus, if the particle travels from one wall of the rectangular box to the other, bounces off, and returns to its starting point, then $d = 2 \cdot l_x$ and $v = v_x$.  Solving for time, $t = 2 \cdot \frac{l_x}{v_x}$.
+\[\therefore F = \frac{\Delta p}{\Delta t} = \frac{2 \cdot mv_x}{2 \cdot \frac{l_x}{v_x}} = \frac{mv_x^2}{l_x}\]
+This is the force for one particle.  Since all of the particles have the same mass, then the total force would be 
+\[F_{\text{total}} = F_1 + F_2 + F_3 + \cdots + F_n\]
+where $F_i$ represents the contribution of force from the $i$-th particle.\\\\
+There are $N$ gas particles in the container.  Therefore, the average square of x-component of velocity for all the particles will be:
+\[v_x^2 = \frac{v_{x_1}^2 + v_{x_2}^2 + \cdots + v_{x_N}^2}{N}\]
+The total force is then:
+\[F = \frac{m}{l_x} \cdot N \cdot \bar v_x^2\]
+Since there are three dimensions to the cubic container, and the particles have random direction, it can be assumed that for an average particle, $\bar v_x = \bar v_y = \bar v_z$.  Therefore, the mean square speed $\bar v^2 = \bar v_x^2 + \bar v_y^2 + \bar v_z^2 = 3\bar v_x^2$
+\begin{align*}
+P = \frac{F}{A} &= \frac{m \cdot N \cdot \frac{1}{3}\bar v_x^2}{l_x \cdot l_y \cdot l_z}\\
+&= \frac{m \cdot N \cdot \bar v^2}{3V}
+\end{align*}
+Rearranging,
+\[PV = \frac{1}{3} \cdot N \cdot m \cdot \bar v^2\]
+On the side, find the energy of $N_A$ molecules.
+\[\bar E = N_A \cdot \frac{1}{2}m\bar v^2\]
+$N_A$ is equal to $\frac{N}{n}$
+Average kinetic energy for 1 molecule is then $\frac{\bar E}{N_A} = \bar \epsilon = \frac{3RT}{2N_A}.$
+Simplifying,
+\[\bar \epsilon = \frac{3}{2} K_B T\]
+where $K_B = \frac{R}{N_A}$.\\\\
+Additionally, $N_A \cdot m = M$, so $\bar E = \frac{1}{2}M \bar v^2 = \frac{3}{2}RT$.  Solving for velocity, 
+\begin{align*}
+    \frac{1}{2}Mv^2 &= \frac{3}{2}RT\\
+    M \bar v^2 &= 3RT\\
+    v^2 &= \frac{3RT}{M}
+\end{align*}
+Substituting into the $PV$ equation from earlier,
+\[PV = \frac{1}{3} \cdot N \cdot m \cdot (\frac{3RT}{M})\]
+Simplifying,
+\[PV = N \cdot m \cdot \frac{RT}{M}\]
+By definition earlier, $N_A \cdot n = N$.  Therefore,
+\[PV = N_A \cdot n \cdot m \cdot \frac{RT}{M}\]
+Also, $N_A \cdot m = M$, so
+\[PV = M \cdot n \cdot \frac{RT}{M}\]
+Simplifying,
+\[\boxed{PV=nRT}\]
+
+\section*{Real Gases: Intermolecular Forces}
+There are many differences between ideal and real gases, since the assumptions made when defining an ideal gas do not apply to real gases.
+
+\subsection*{Compressibility factor}
+\[z = \frac{PV}{nRT}\]
+Remember that in this case, $PV \neq nRT$!
+
+\subsection*{The van der Waals Equation of State}
+\[\left(P + a \cdot \frac{n^2}{V^2}\right)(V - nb) = nRT\]
+Rearranging,
+\[P = \frac{nRT}{V - nb} - a \cdot \frac{n^2}{V^2}\]
+This equation takes into account the intermolecular forces between the molecules.\\\\
+The attractive forces are represented by:
+\[P + a \cdot \frac{n^2}{V^2}\]
+while the repulsive forces are represented by:
+\[V_{\text{effective}} = V - nb\]
+\begin{itemize}
+    \item Attractive forces hold molecules together, which means there are fewer independent molecules, which in turn reduces the rate of collisions with the wall.  Therefore, $P_{real} < P_{ideal}$.
+    \item Repulsive forces decreases the available space for a molecule, which increases the rate of collision with the wall.  Therefore, $P_{real} > P_{ideal}$.
+\end{itemize}
+
+\subsection*{Molecule-Wall collisions}
+Rate of collisions of gas molecules with a section of wall of area A:
+\[Z_w \propto \frac{N}{V} \cdot \bar v \cdot A\]
+\[Z_w \propto \frac{1}{4} \cdot \frac{N}{V} \cdot \bar v \cdot A = \frac{1}{4} \cdot \frac{N}{V} \cdot \sqrt{\frac{8RT}{\pi M}} \cdot A\]
+
+The rate of effusion is represented by $Z_w$.
+
+
+
+
+\end{document}
