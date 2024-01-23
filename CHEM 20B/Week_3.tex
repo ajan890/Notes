@@ -1,0 +1,172 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+\graphicspath{{./assets/images/}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+
+\title{CHEM 20B Week 3}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+\section*{Intermolecular Forces (continued)}
+\subsection*{Repulsive Forces}
+\begin{itemize}
+    \item When two atoms or molecules are so close together that their respective core electrons repel each other, overwhelming the attractive forces.
+    \item Very short range
+    \item $\frac{1}{R^{12}}$
+\end{itemize}
+
+\subsection*{Hydrogen Bonding}
+\begin{itemize}
+    \item A special case of dipole-dipole
+    \item Molecule with N-H, O-H, or F-H wtih polar molecule with lone pair on N, O, or F.
+    \item N, O, and F are very electronegative and can almost steal electrons from hydrogen, leaving unshielded nucleus (p+), which can interact with lone pairs of N, O, or F.
+    \item It is weaker than ionic and covalent bonds but stronger than any intermolecular force.
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.5]{W3_1}
+\end{center}
+
+\pagebreak
+\subsection*{Intermolecular Forces in Liquids}
+Trends in the boiling points of hydrides of some main group elements and the noble gases
+\begin{center}
+    \includegraphics*[scale=0.5]{W3_2}
+\end{center}
+
+\subsection*{Review: Types of Intermolecular Forces}
+\begin{tabular}{|c|c|}
+    \hline
+    Ion-Ion Interaction & ion + ion \\
+    \hline
+    Ion-Dipole Interaction & ion + polar molecule \\
+    \hline
+    Hydrogen Bonding & Molecule with N-H, O-H, or F-H + polar molecule with lone pair on N, O, or F \\
+    \hline
+    Dipole-Dipole Interaction & polar + polar molecule \\
+    \hline
+    Ion-Induced Dipole Interaction & ion + nonpolar molecule \\
+    \hline
+    Dipole-Induced Dipole Interaction & polar molecule + nonpolar molecule \\
+    \hline
+    London Dispersion Forces & nonpolar molecule + nonpolar molecule\\
+    \hline
+\end{tabular}
+
+\subsection*{Steps for comparing properties of molecules}
+\begin{enumerate}
+    \item Identify the compound: ion vs. polar vs. nonpolar
+    \item Identify the types of intermolecular forces
+    \item If two molecules have the same types of intermolecular forces, compare \textbf{size (molecular weight)}, then shape
+\end{enumerate}
+
+\subsection*{Intermolecular Forces Affect Many Physical Properties}
+\begin{itemize}
+    \item \textbf{Melting point:} solid $\rightarrow$ liquid
+    \item \textbf{Boiling point:} liquid $\rightarrow$ gas
+    \item \textbf{Vapor pressure:} pressure caused by molecules that escape from liquid, (to escape from liquid, need to break all intermolecular forces)
+    \item Stronger intermolecular forces:
+        \begin{itemize}
+            \item Higher boiling points (need higher temperature to break intermolecular forces)
+            \item Higher melting points (need higher temperature to break intermolecular forces)
+            \item Lower vapor pressure (harder for molecules to escape from liquid)
+        \end{itemize}
+\end{itemize}
+
+\subsection*{Phase Transition}
+\begin{itemize}
+    \item Boiling point: temperature in which the vapor pressure of a liquid equals the external pressure.
+    \item Normal boiling point is the temperature at which the vapor pressure of the liquid equals 1 atm.
+\end{itemize}
+
+\subsection*{Phase Diagrams}
+\begin{itemize}
+    \item m.p. = normal melting point:
+        \begin{itemize}
+            \item T(solid $\rightarrow$ liquid) at 1atm
+        \end{itemize}    
+    \item b.p. = normal boiling point:
+        \begin{itemize}
+            \item T(liquid $\rightarrow$ gas) at 1atm, 373K (100$^\circ$ celsius)
+        \end{itemize}
+    \item t.p. = triple point:
+        \begin{itemize}
+            \item The pressure and temperature where the solid, liquid, and gas states coexist
+            \item (For H$_2$O: 0.01 Celsius, 0.006 atm)
+        \end{itemize}
+    \item T$_c$, P$_c$: above which where there are no liquid or gas phase transitions, just gradual transition; called "supercritical region"
+        \begin{itemize}
+            \item 
+        \end{itemize}
+\end{itemize}
+
+\begin{center}
+    \includegraphics*[scale=0.5]{W3_3}
+\end{center}
+
+\section*{Composition of Solutions}
+\begin{itemize}
+    \item Mole Fraction
+    \[X_1 = \frac{n_1}{n_1 + n_2}\]
+    \item Concentration: number of moles per unit volume
+    \begin{itemize}
+        \item SI Unit: mol/m$^3$ (large for chemical work)
+    \end{itemize}
+    \item Molarity:
+    \[molarity = \frac{moles \: solute}{liters \: solution} = mol L^{-1} = M = molar\]
+    \item Molality:
+    \[molality = \frac{moles \: solute}{kilograms \: solvent} = mol kg^{-1}\]
+\end{itemize}
+
+\section*{Solutions}
+\begin{itemize}
+    \item Solute + Solvent
+    \item Aqueous solution: solvent = water
+    \item Species that dissolve in water:
+        \begin{itemize}
+            \item Polar molecules:
+            \begin{itemize}
+                \item Glucose C$_6$H$_{12}$O$_6$
+                \item Sucrose C$_{12}$H$_{22}$O$_{11}$
+            \end{itemize}
+            \item Ionic solic: NaCl(aq)
+            \item NaCl(aq) $\rightarrow$ Na$^+$(aq) + Cl$^-$(aq)
+        \end{itemize}
+\end{itemize}
+
+\subsection*{Precipitation Reaction}
+\begin{itemize}
+    \item A \textbf{precipitate} is an insoluble solid formed by a reaction in solution.
+    \item Example:
+    \begin{itemize}
+        \item Molecular Equation:
+        \[\text{AgNO}_3(aq) + \text{KCl}(aq) \longrightarrow \text{AgCl}(s) + \text{KNO}_3(aq)\]
+        \item Complete Ionic Equation:
+        \[\text{Ag}^+(aq) + \text{NO}_3^-(aq) + \text{K}^+(aq) + \text{Cl}^-(aq) \longrightarrow \text{AgCl}(s) + \text{K}^+(aq) + \text{NO}_3^-(aq)\]
+        \item Net Ionic Equation:
+        \[\text{Ag}^+(aq) + \text{Cl}^-(aq) \longrightarrow \text{AgCl}(s)\]
+    \end{itemize}
+\end{itemize}
+
+
+\end{document}
