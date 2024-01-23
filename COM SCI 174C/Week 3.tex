@@ -1,0 +1,147 @@
+\documentclass{article}
+\usepackage{setspace}
+\usepackage[utf8]{inputenc}
+\usepackage[bb=boondox]{mathalfa}
+\usepackage{graphicx}
+
+%%Let's you change margins
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+
+%%Math symbols, proof environments
+\usepackage{amsmath,amsthm,amssymb, graphicx, tikz}
+
+%%Use this package for matrices
+\usepackage{array}
+
+%%Commands for common sets
+\newcommand{\R}{\mathbb{R}} %Real numbers
+\newcommand{\Z}{\mathbb{Z}} %Integers
+\newcommand{\dP}{\mathbb{P}}
+\newcommand{\example}{\textbf{Example: }}
+\newcommand{\E}{\mathbb{E}} %Expectation Value
+
+\graphicspath{{./assets/images/Week 3}}
+
+\title{CS 174C Week 3} 
+
+\author{Aidan Jan}
+
+\date{\today}
+\begin{document}
+\maketitle
+\section*{Motion Curves}
+\begin{itemize}
+    \item The most basic capability of an animation package is to let the user set animation variables in each frame
+    \begin{itemize}
+        \item Not so easy - major HCI challenges in designing an effective user interface
+        \item We will not consider HCI issues
+    \end{itemize}
+    \item The next is to support keyframing: Computer automatically interpolates in-between frames
+    \item A motion curve is what you get when you plot an animation variable against time
+    \begin{itemize}
+        \item The computer must come up with motion curves that interpolate your keyframe values
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Different Forms of Curve Functions}
+\begin{itemize}
+    \item Explicit: $y = f(x)$
+    \begin{itemize}
+        \item Cannot get multiple values for single x or infinite slopes
+    \end{itemize}
+    \item Implicit: $f(x, y) = 0$
+    \begin{itemize}
+        \item Cannot easily compare tangent vectors at joints
+        \item In/Out test, normals from gradient
+    \end{itemize}
+    \item Parametric: $x = f_x(t), y = f_y(t), z = f_z(t)$
+    \begin{itemize}
+        \item Most convenient for motion representation
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Describing Curves by Means of Polynomials}
+Reminder:
+\begin{itemize}
+    \item L$^{\text{th}}$ degree polynomial
+    \item $p(t) = a_0 + a_1 t + a_2 t^2 + \cdots + a_L t^L$
+    \item $a_0, \dots, a_L$ are the coefficients
+    \item $L$ is the degree
+    \item $(L + 1)$ is the "order" of the polynomial
+\end{itemize}
+
+\subsection*{Polynomial Curves of Degree 1}
+Parametric and implicit forms are linear
+\begin{align*}
+    x(t) &= at + b \\
+    y(t) &= ct + d
+\end{align*}
+\begin{center}
+    \includegraphics*[scale=0.8]{W3_1.png}
+\end{center}
+
+\subsection*{Polynomial Curves of Degree 2}
+\textbf{Parametric}
+\begin{itemize}
+    \item $x(t) = at^2 + 2bt + c$
+    \item $y(t) = dt^2 + 2et + f$
+    \item For any choice of constants
+    \begin{itemize}
+        \item $a, b, c, d, e, f \rightarrow$ parabola
+    \end{itemize}
+\end{itemize}
+\textbf{Rational Parametric}
+\begin{itemize}
+    \item $P(t) = \frac{P_0(1 - t)^2 + 2wP_1 t(1-t) + P_2 t^2}{(1-t)^2 + 2wt(1 - t) + t^2}$
+    \item $w<1$: ellipse
+    \item $w=1$: parabola
+    \item $w>1$: hyperbola
+\end{itemize}
+\subsection*{Curves From Geometric Constraints}
+\textbf{Geometric Approach}
+\begin{itemize}
+    \item Constraints $\rightarrow$ Polynomial $\rightarrow$ Curve
+    \item $P_0, \dots, P_L \rightarrow $ (Curve Generation) $\rightarrow P(t)$
+    \begin{itemize}
+        \item $P_i$: control points
+        \item $P_0, \dots, P_L$: control polygon
+    \end{itemize}
+\end{itemize}
+\textbf{Interpolation vs. Approximation}
+\begin{center}
+    \includegraphics*[scale=0.8]{W3_2.png}
+\end{center}
+
+\section*{Bezier Curves and the De Casteljau Algorithm}
+\subsection*{Tweening}
+When there are two points:
+\begin{itemize}
+    \item $A(t) = (1 - t) P_0 + tP_1$
+    \item $P(t) = A(t)$
+    \item Essentially, $A$ is a point on the line between $P_0$ and $P_1$
+\end{itemize}
+When there are three points:
+\begin{itemize}
+    \item $A(t) = (1 - t) P_0 + t P_1$
+    \item $B(t) = (1 - t) P_1 + t P_2$
+    \item $A(t)$ is a point between $P_0$ and $P_1$ and $B(t)$ is a point between $P_1$ and $P_2$.
+    \item Now, place another point, $P(t)$ on the line between $A(t)$ and $B(t)$.
+    \begin{itemize}
+        \item $P(t) = (1 - t)A + tB = (1 - t)^2 P_0 + 2t(1-t) P_1 + t^2 P_2$
+    \end{itemize}
+\end{itemize}
+When we move the value of $t$ from 0 to 1, $P(t)$ would move from $P_0$ to $P_2$ along a curved path, defined by the quadratic equation.
+\begin{center}
+    \includegraphics*[scale=1]{W3_3.png}
+\end{center}
+If we repeat the same process for $P(t)$ but instead of four points, then
+\[P(t) = (1 - t)^3 P_0 + 3(1 - t)^2 t P_1 + 3(1 - t) t^2 P_2 + t^3 P_3\]
+\begin{center}
+    \includegraphics*[scale=1]{W3_4.png}
+\end{center}
+
+\section*{Cubic Berstein Polynomials}
+
+
+
+\end{document}
