@@ -1,0 +1,231 @@
+\documentclass{article}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage[utf8]{inputenc}
+\usepackage[bb=boondox]{mathalfa}
+\usepackage{graphicx}
+
+%%Let's you change margins
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+
+%%Math symbols, proof environments
+\usepackage{amsmath,amsthm,amssymb, graphicx, tikz}
+
+%%Use this package for matrices
+\usepackage{array}
+
+%%Commands for common sets
+\newcommand{\R}{\mathbb{R}} %Real numbers
+\newcommand{\Z}{\mathbb{Z}} %Integers
+\newcommand{\dP}{\mathbb{P}}
+\newcommand{\example}{\textbf{Example: }}
+\newcommand{\E}{\mathbb{E}} %Expectation Value
+
+\title{CS 174C Week 1} 
+
+\author{Aidan Jan}
+
+\date{\today}
+
+\begin{document}
+\maketitle
+\section*{Animation Basics}
+\begin{itemize}
+    \item Vision
+        \begin{itemize}
+            \item Foveal vs. Peripheral vision
+        \end{itemize}
+    \item Persistence of Vision
+        \begin{itemize}
+            \item We see a bright flash for a while after it's gone
+            \item A sequence of images shown fast enough is hard to distinguish from continuous motion
+                \begin{itemize}
+                    \item What is fast enough?
+                    \item However fast the eye is able to see with fine acuity
+                \end{itemize}
+        \end{itemize}
+    \item Frame rate (fps = frames per second)
+        \begin{itemize}
+            \item Legacy Film: 24
+                \begin{itemize}
+                    \item Often shown at 48, each frame twice, to reduce flicker
+                    \item Sometimes animated "on twos" = 12fps, "on threes" = 8fps, or even slower
+                \end{itemize}
+            \item Legacy TV: ~30 for NTSC, 25, for PAL (European, Asian)
+                \begin{itemize}
+                    \item Interlaced - double the speed to reduce flicker
+                \end{itemize}
+            \item Computers: 60Hz or more, gamers prefer 60fps, 120fps, ...
+        \end{itemize}
+\end{itemize}
+
+\section*{Motion Blur}
+Since light persists in our vision for a while, fast moving objects leave a blurred streak.  Similarly, film/video cameras leave "shutter" open for a while.
+\begin{itemize}
+    \item Moving objects blurred from position a start of shutter time to position at end.
+\end{itemize}
+Without motion blur (or tricks to simulate it) we get strobing effect
+\begin{itemize}
+    \item Temporal aliasing, akin to "jaggies"
+    \item Spinning wheels rotate backwards
+    \item Movie Camera vs Stop-Motion
+    \begin{itemize}
+        \item At the start, stop-motion was used for all movies since it was the best you could do.  (Ex. King Kong)
+    \end{itemize}
+\end{itemize}
+Motion blur is required for "realism".  We use motion blur to "fool" the eye, to make the image as real as possible.
+
+\section*{Animation Principles}
+\subsection*{Squash and Stretch}
+\textbf{Rigid objects look robotic, so let them deform to make the motion more natural and fluid.}\\
+Accounts for the physics of deformation
+\begin{itemize}
+    \item Think of a tennis ball...
+    \item Communicates to viewer what the object is made of, how heavy it is, etc.
+    \item Usually large deformations conserve volume: if you squash in one dimension, stretch in another to keep volume constant
+\end{itemize}
+Also accounts for the persistence of vision
+\begin{itemize}
+    \item Fast moving objects leave an elongated streak on our retinas
+\end{itemize}
+
+\subsection*{Timing}
+\begin{itemize}
+    \item Pay careful attention to how long an action takes - how many frames
+    \item How something moves defines its weight and mood to the audience.
+    \item Also think dramatically: give the audience time to understand one event before going to the next, but don't bore them
+\end{itemize}
+
+\subsection*{Anticipation}
+The preparation before a motion.
+\begin{itemize}
+    \item E.g., crouching before jumping, pitcher winding up to throw a ball
+\end{itemize}
+Often physically necessary, and indicates how much effort a character is making.\\\\
+Also essential for controlling the audience's attention, to make sure they don't miss the action.
+\begin{itemize}
+    \item Signals something is about to happen, and where it is going to happen
+\end{itemize}
+
+\subsection*{Staging}
+\begin{itemize}
+    \item Make the action clear
+    \item Avoid confusing the audience by having two or more things happen at the same time
+    \item Select a camera viewpoint, and pose the characters, so that visually you can't mistake what is going on
+    \begin{itemize}
+        \item Clear enough so you can tell what's happening just from the silhouettes (highest contrast)
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Follow-through and Secondary Motion}
+Again, physics demands follow-through - the inertia that is carried over after an action
+\begin{itemize}
+    \item E.g., knees bending after a jump
+    \item Also helps define weight, rigidity, etc.
+\end{itemize}
+Secondary motion is movement that's not part of the main action, but is physically necessary to support it.
+\begin{itemize}
+    \item E.g., arms swinging in a jump
+\end{itemize}
+Just about everything should always be in motion.
+\begin{itemize}
+    \item Animator has to give the audience an impression of reality, or things look stilted and rigid.
+\end{itemize}
+
+\subsection*{Overlapping Actions and Asymmetry}
+\textbf{Overlapping action:} start the next action before the current one finishes
+\begin{itemize}
+    \item Otherwise looks scripted and robotic instead of natural and fluid
+\end{itemize}
+\textbf{Asymmetry:} natural motion is rarely exactly the same on both sides of the body, or for 2 or more characters
+\begin{itemize}
+    \item People very good at spotting "twins", synchronization, etc.
+    \item Break up symmetries to avoid scripted or robotic feel
+\end{itemize}
+
+\subsection*{Slow In and Out}
+Also called "Easing in" and "Easing out"
+\begin{itemize}
+    \item More physics: objects generally smoothly accelerate and decelerate, depending on mass and forces
+\end{itemize}
+
+\subsection*{Arcs}
+Natural motions tend not to be in straight lines, instead should be curved arcs
+\begin{itemize}
+    \item Just doing straight-line interpolation gives weird, robotic movement
+\end{itemize}
+Also part of physics
+\begin{itemize}
+    \item gravity causes parabolic trajectories
+\end{itemize}
+
+\subsection*{Exaggeration}
+Obvious in the old Loony Tunes cartoons - "cartoon physics"
+\begin{itemize}
+    \item Not so obvious, but necessary ingredient in photo-realistic special effects
+    \item If you're too subtle, even if that is accurate, the audience will miss it: confusing and boring
+    \item Think of stage make-up, movie lighting, and other "photo surrealistic" techniques
+\end{itemize}
+Don't worry about being physically accurate: convey the correct psychological impression as effectively as possible.
+
+\subsection*{Appeal}
+\begin{itemize}
+    \item Make animations that people enjoy watching
+    \item Appealing characters aren't necessarily attractive, just well designed and rendered
+    \begin{itemize}
+        \item All the principles of art still apply to each still frame
+        \item E.g., controlling symmetry - avoid "twins", avoid needless complexity
+    \end{itemize}
+    \item Present scenes that are clear and communicate the story effectively.
+\end{itemize}
+
+\subsection*{Straight-Ahead vs. Pose-to-Pose}
+\begin{itemize}
+    \item "Straight Ahead" means making one frame after the other
+    \begin{itemize}
+        \item Especially suited for rapid, unpredictable motion
+    \end{itemize}
+    \item "Pose-to-Pose" means planning it out, making "key frames" of the most important poses, then interpolating in between the key frames later
+    \begin{itemize}
+        \item The typical approach for most scenes
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Extremes}
+Keyframes are also called "Extremes", since they usually define the extremes positions of a character.
+\begin{itemize}
+    \item The frames in between (or "inbetweens") introduce relatively little new - watching the keyframes should reveal the action
+    \item May add additional keyframes to add some interest and/or better control the interpolated motion
+    \item E.g., for a sit-to-stand animation:
+    \begin{itemize}
+        \item Sitting
+        \item Pushing off
+        \item Straighten up
+    \end{itemize}
+\end{itemize}
+ 
+\subsection*{Layering}
+\begin{itemize}
+    \item Work out the big picture first 
+    \begin{itemize}
+        \item e.g., where the characters need to be and when
+    \end{itemize}
+    \item Then layer by layer add more details
+    \begin{itemize}
+        \item Which way the characters face
+        \item Move their limbs and heads
+        \item Move their fingers and faces
+        \item Add small details like wrinkles in clothing, hair, etc.
+    \end{itemize}
+\end{itemize}
+    
+
+\section*{Computer Animation}
+\begin{itemize}
+    \item The task boils down to setting various animation parameters in each frame
+    \item Can mix the straight-ahead and pose-to-pose methods
+    \begin{itemize}
+        \item Keyframe some variables, do others straight-ahead.
+    \end{itemize}
+\end{itemize}
+\end{document}

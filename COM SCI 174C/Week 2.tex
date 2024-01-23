@@ -1,0 +1,544 @@
+\documentclass{article}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage[utf8]{inputenc}
+\usepackage[bb=boondox]{mathalfa}
+\usepackage{graphicx}
+
+%%Let's you change margins
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+
+%%Math symbols, proof environments
+\usepackage{amsmath,amsthm,amssymb, graphicx, tikz}
+
+%%Use this package for matrices
+\usepackage{array}
+
+%%Commands for common sets
+\newcommand{\R}{\mathbb{R}} %Real numbers
+\newcommand{\Z}{\mathbb{Z}} %Integers
+\newcommand{\dP}{\mathbb{P}}
+\newcommand{\example}{\textbf{Example: }}
+\newcommand{\E}{\mathbb{E}} %Expectation Value
+
+\graphicspath{{./assets/images}}
+
+\title{CS 174C Week 2} 
+
+\author{Aidan Jan}
+
+\date{\today}
+\begin{document}
+\maketitle
+\section*{Vectors}
+\begin{itemize}
+    \item Vectors are n-tuples of scalar elements.  
+    \begin{itemize}
+        \item $\vec v = (x_1, x_2, \dots, x_n)$, $x_i \in \R$
+        \item Magnitude: $\vert v \vert = \sqrt{x_1^2 + \cdots + x_n^2}$
+        \item Unit Vectors: $v\::\: \vert v \vert = 1$
+        \item Normalizing a vector: $\hat v = \frac{v}{\vert v \vert}$
+    \end{itemize}
+    
+    \item \textbf{Addition}
+    \[\vec x + \vec y = (x_1 + y_1, x_2 + y_2, \dots, x_n + y_n)\]
+    \item \textbf{Multiplication with scalar (scaling)}
+    \[ax = (ax_1, \dots, ax_n), a \in \R \]
+    \item \textbf{Properties}
+        \[u + v = v + u\]
+        \[(u + v) + w = u + (v + w)\]
+        \[a(u + v) = au + av, a \in \R\]
+        \[u - u = 0\]    
+\end{itemize}
+
+\subsection*{Linear Combination of Vectors}
+A linear combination of the $m$ vectors $v_1, \dots, v_m$ is a vector of the form:
+\[w = a_1v_1 + \cdots + a_m v_m, a_1, \dots a_m \in \R\]
+\textbf{Special Cases:}
+\begin{itemize}
+    \item Linear Combination
+    \[w = a_1v_1 + \cdots + a_m v_m, a_1, \dots a_m \in \R\]
+    \item Affine Combination
+        \begin{itemize}
+            \item A linear combination for which $a_1 + \cdots + a_m = 1$ 
+        \end{itemize}
+    \item Convex Combination
+        \begin{itemize}
+            \item An affine combination for which $a_i \geq 0 \forall i = 1, \dots, m$
+        \end{itemize}
+\end{itemize}
+
+\subsection*{Linear Independence}
+For vectors $v_1, \dots, v_m$, if $a_1 v_1 + \cdots + a_m v_m = 0$ if and only if $a_1 = a_2 = \cdots = a_m = 0$, then the vectors are linearly independent.
+
+\subsection*{Generators and Base Vectors}
+How many vectors are needed to generate a vector space?
+\begin{itemize}
+    \item Any set of vectors that generate a vector space is called a generator set
+    \item Given a vector space $\R^n$ we can prove that we need a minimum of $n$ vectors to generate all vectors v in $\R^n$
+    \item A generator set of minimum size is called a basis for the given vector space
+\end{itemize}
+
+\subsection*{Standard Unit Vectors}
+\[v = (x_1, \dots x_n), x_i \in \mathfrak{R}\]
+\begin{align*}
+    (x_1, x_2, \dots, x_n) &= x_1(1, 0, 0, \dots, 0, 0) \\
+    &+ x_2(0, 1, 0, \dots, 0, 0)\\
+    &\dots\\
+    &+ x_n(0, 0, 0, \dots, 0, 1)
+\end{align*}
+For any vector space $\mathfrak{R}^n$:
+\begin{align*}
+    i_1 &= (1, 0, 0, \dots, 0, 0)\\
+    i_2 &= (0, 1, 0, \dots, 0, 0)\\
+    \dots &\:\\
+    i_n &= (0, 0, 0, \dots, 0, 1)
+\end{align*}
+
+\subsection*{Standard Unit Vectors}
+In 2D, the standard vectors are:
+\begin{itemize}
+    \item $i = (1, 0)$
+    \item $j = (0, 1)$
+\end{itemize}
+In 3D, the standard vectors are:
+\begin{itemize}
+    \item $i = (1, 0, 0)$
+    \item $j = (0, 1, 0)$
+    \item $k = (0, 0, 1)$
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.8]{W2_1.png}
+\end{center}
+
+\subsection*{Representation of Vectors Through Basis Vectors}
+Given a vector space $R^n$, a set $B$ of basis vectors $\{b_i \in R^n, i = 1, \dots, n\}$, and a vector $v$ in $R^n$ we can always find scalar coefficients such that:
+\[v = a_1 b_1 + \cdots a_n b_n\]
+So, vector v expressed with respect to B is:
+\[v_B = (a_1, \dots, a_n)\]
+That is, the elements of a vector v in $R^n$ are the scalar coefficients of the linear combination of the base vectors that equals v
+
+\subsection*{Dot Product}
+Definition:
+\begin{align*}
+    \vec w, \vec v &\in \mathfrak{R}^n\\
+    \vec w \cdot \vec v &= \sum_{i = 1}^n w_i v_i = w_0 \cdot v_0 + w_1 \cdot v_1 + \dots w_n \cdot v_n
+\end{align*}
+Properties:
+\begin{enumerate}
+    \item Symmetry: $a \cdot b = b \cdot a$
+    \item Linearity: $(a + b) \cdot c = a \cdot c + b \cdot c$
+    \item Homogeneity: $(sa) \cdot b = s(a \cdot b)$
+    \item $\vert b \vert^2 = b \cdot b$
+    \item $a \cdot b = \vert a \vert \cdot \vert b \vert \cos(\theta)$
+\end{enumerate}
+\begin{itemize}
+    \item Two vectors are \textbf{perpendicular} if their dot product equals 0.
+        \begin{itemize}
+            \item Acute if their dot products are greater than 0
+            \item Obtuse if their dot products are less than 0
+        \end{itemize}
+    \item A vector $\vec v$ dot product'ed with itself would produce the same vector, but with a magnitude of $\Vert v \Vert^2$
+\end{itemize}
+
+\subsubsection*{Orthogonal Projection:}
+\[u_v = \frac{(u \cdot v) \cdot v}{ (v \cdot v)}\]
+
+\subsubsection*{Perpendicular Vectors}
+Vectors $a$ and $b$ are perpendicular if and only if $a \cdot b = 0$.
+\begin{itemize}
+    \item Also called normal or orthogonal vectors
+    \item The standard unit vectors form an orthogonal basis:
+        \begin{itemize}
+            \item $i \cdot j = 0$
+            \item $j \cdot k = 0$
+            \item $i \cdot k = 0$
+        \end{itemize}
+\end{itemize}
+
+\subsection*{Cross Product}
+Defined only for 3D vectors and with respect to the standard unit vectors
+\begin{align*}
+    a \times b &= (a_y b_z - a_z b_y)i + (a_z b_x - a_x b_z)j + (a_x b_y - a_y b_x)k\\
+    a \times b &= \begin{vmatrix} \textbf{i} & \textbf{j} & \textbf{k} \\ a_x & a_y & a_z \\ b_x & b_y & b_z \end{vmatrix}
+\end{align*}
+\subsubsection*{Properties of the Cross Product}
+\begin{enumerate}
+    \item $i \times j = k$, $i \times k = -j$, $j \times k = i$
+    \item Antisymmetry: $a \times b = -b \times a$
+    \item Linearity: $a \times (b + c) = a \times b + a \times c$
+    \item Homogeneity: $(sa) \times b = s(a \times b)$
+    \item The cross product is normal to both vectors: $(a \times b) \cdot a = (a \times b) \cdot b = 0$
+    \item $\vert a \times b \vert = \vert a \vert \vert b \vert \sin(\theta)$
+\end{enumerate}
+\begin{center}
+    \includegraphics*[scale=0.5]{W2_2.png}
+\end{center}
+
+\subsection*{Recap of Vectors}
+\begin{itemize}
+    \item Vector Spaces
+    \begin{itemize}
+        \item Operations with vectors
+    \end{itemize}
+    \item Representing vectors through a basis
+    \[v = a_1 b_1 + \cdots + a_n b_n; v_b = (a_1, \dots, a_n)\]
+    \item Standard unit vectors
+    \item Dot product
+    \begin{itemize}
+        \item Perpendicularity
+    \end{itemize}
+    \item Cross product
+    \begin{itemize}
+        \item Normal to both vectors of the product
+    \end{itemize}
+\end{itemize}
+
+
+\section*{Matrices}
+Definition: Rectangular arrangement of scalar elements
+\[A_{3 \times 3} = \left(\begin{matrix} -1 & 2.0 & 0.5 \\ 0.2 & -4.0 & 2.1 \\ 3 & 0.4 & 8.2\end{matrix}\right)\]
+\[A = (A_{ij})\]
+
+\subsection*{Special Square Matrices}
+\begin{itemize}
+    \item Zero: $A_{ij} = 0 \forall i, j$
+    \item Identity: $I_n = \begin{cases} I_{ii} = 1 \forall i & I_{ij} = 0 \forall i \neq j \end{cases}$
+    \item Symmetric: $(A_{ij})_{n \times n} = (A_{ji})_{n \times n}$ or $A = A^T$
+\end{itemize}  
+
+\subsection*{Operations with Matrices}
+\subsubsection*{Addition}
+\[A_{m \times n} + B_{m \times n} = (a_{ij} + b_{ij})\]
+Properties:
+\begin{enumerate}
+    \item $A + B = B + A$
+    \item $A + (B + C) = (A + B) + C$
+    \item $f(A + B) = fA + fB$
+    \item Transpose: $A^T = (a+{ij})^T = (a_{ji})$
+\end{enumerate}
+
+\subsubsection*{Multiplication}
+\[C_{m \times r} = A_{m \times n} B_{n \times r}\]
+\[(C_{ij} =(\sum_{k = 1}^n a_{ik} b_{kj}))\]
+Properties:
+\begin{enumerate}
+    \item $AB \neq BA$
+    \item $A(BC) = (AB)C$
+    \item $f(AB) = (fA)B$
+    \item $A(B + C) = AB + AC$, $(B + C)A = BA + CA$
+    \item $(AB)^T = B^T A^T$
+\end{enumerate}
+
+\subsection*{Inverse of a Square Matrix}
+\[MM^{-1} = M^{-1}M = I\]
+Important property:
+\[(AB)^{-1} = B^{-1}A^{-1}\]
+
+\subsection*{Dot Product as a Matrix Multiplication}
+A vector is a column matrix
+\begin{align*}
+    a \cdot b &= a^Tb\\
+    &= (a_1, a_2, a_3) \cdot \begin{pmatrix}b_1 \\ b_2 \\ b_3 \end{pmatrix}\\
+    &= a_1 b_1 + a_2 b_2 + a_3 b_3
+\end{align*}
+
+\subsection*{Vectors vs Points}
+\begin{itemize}
+    \item Vectors have size and direction but no location
+    \item Points have location but no size or direction
+    \item Problem: We represent both as triplets!
+\end{itemize}
+\subsubsection*{Relationship Between Points and Vectors}
+\begin{itemize}
+    \item A difference between two points is a vector
+    \item A point plus an offset vector is a point
+\end{itemize}
+This leads to the convention of representing points and vectors as column matrices:
+\begin{align*}
+    v = \begin{pmatrix} v_1 \\ v_2 \\ v_3 \\ 0\end{pmatrix}
+    \hspace{1.5cm}
+    P = \begin{pmatrix} p_1 \\ p_2 \\ p_3 \\ 1\end{pmatrix}
+\end{align*}
+
+\section*{Coordinate Systems}
+Defined by: $a, b, c, O$
+\begin{align*}
+    v &= v_1 a + v_2 b + v_3 c \\
+    P - O &= p_1 a + p_2 b + p_3 c \\
+    P &= O + p_1 a + p_2 b + p_3 c
+\end{align*}
+
+\section*{Affine Transformations in 3D}
+General Form:
+\begin{center}
+    \includegraphics*[scale=0.7]{W2_3.png}
+\end{center}
+
+\subsection*{Translations}
+\[\begin{pmatrix}Q_x \\ Q_y \\ Q_z \\ 1\end{pmatrix} = \begin{pmatrix}1 & 0 & 0 & T_x \\ 0 & 1 & 0 & T_y \\ 0 & 0 & 1 & T_z \\ 0 & 0 & 0 & 1\end{pmatrix}\begin{pmatrix}P_x \\ P_y \\ P_z \\ 1\end{pmatrix}\]
+
+\subsection*{Scale Around the Origin}
+\[\begin{pmatrix}Q_x \\ Q_y \\ Q_z \\ 1\end{pmatrix} = \begin{pmatrix}s_x & 0 & 0 & 0 \\ 0 & s_y & 0 & 0 \\ 0 & 0 & s_z & 0 \\ 0 & 0 & 0 & 1\end{pmatrix}\begin{pmatrix}P_x \\ P_y \\ P_z \\ 1\end{pmatrix}\]
+
+\subsection*{Shear Around the Origin}
+Along x-axis:
+\[\begin{pmatrix}Q_x \\ Q_y \\ Q_z \\ 1\end{pmatrix} = \begin{pmatrix}1 & a & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1\end{pmatrix}\begin{pmatrix}P_x \\ P_y \\ P_z \\ 1\end{pmatrix}\]
+
+\subsection*{Rotation Around the Origin}
+There are three axes to rotate around.
+\begin{align*}
+R_x(\theta) = \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & \cos(\theta) & -\sin(\theta) & 0 \\ 0 & \sin(\theta) & \cos(\theta) & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix}
+\hspace{0.5cm}
+R_y(\theta) = \begin{bmatrix} \cos(\theta) & 0 & \sin(\theta) & 0 \\ 0 & 1 & 0 & 0 \\ -\sin(\theta) & 0 & \cos(\theta) & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix}
+\hspace{0.5cm}
+R_z(\theta) = \begin{bmatrix} \cos(\theta) & -\sin(\theta) & 0 & 0 \\ \sin(\theta) & \cos(\theta) & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix}
+\end{align*}
+
+\section*{Rigid Body Transformations}
+\begin{itemize}
+    \item Includes \textbf{translations and rotations}
+    \item Preserves angles and distances
+\end{itemize}
+
+\section*{Inversion of Transformations}
+\begin{itemize}
+    \item Translation: $T^{-1}(t_x, t_y, t_z) = T(-t_x, -t_y, -t_z)$
+    \item Rotation: $R^{-1}_{axis}(\theta) = R_{axis}(-\theta)$
+    \item Scaling: $S^{-1}(s_x, s_y, s_z) = S(\frac{1}{s_x}, \frac{1}{s_y}, \frac{1}{s_z})$
+    \item Shearing: $Sh^{-1}(a) = Sh(-a)$
+\end{itemize}
+
+\subsection*{Inverse of Rotations}
+Pure rotation only, no scaling or shear
+\[M = \begin{bmatrix}
+    m_{11} & m_{12} & m_{13} \\
+    m_{21} & m_{22} & m_{23} \\
+    m_{31} & m_{32} & m_{33}
+\end{bmatrix}\]
+Then,
+\[M^{-1} = M^T\]
+Since the rotation matrix M is an orthonormal matrix
+\section*{Transformations as a Change of Basis}
+\[P_{C_1} = \begin{bmatrix} x \\ y \\ z \\ 1\end{bmatrix} = \begin{bmatrix} i'_x & j'_x & k'_x & O'_x \\ i'_y & j'_y & k'_y & O'_y \\ i'_z & j'_z & k'_z & O'_z \\ 0 & 0 & 0 & 1\end{bmatrix} \begin{bmatrix}x' \\ y' \\ z' \\ 1\end{bmatrix} = \text{M}P_{C_2}\]
+Note:
+\begin{itemize}
+    \item $O = O_{C_1} = [0, 0, 0]^T$
+    \item $\textbf{M}O = O' = [O'_x, O'_y, O'_z]^T$
+    \item $i = i_{C1} = [1, 0, 0]^T$
+    \item $\textbf{M}i = i' = [i'_x, i'_y, i'_z]^T$
+    \item $j = j_{C1} = [0, 1, 0]^T$
+    \item $\textbf{M}j = j' = [j'_x, j'_y, j'_z]^T$
+    \item $k = k_{C1} = [0, 0, 1]^T$
+    \item $\textbf{M}k = k' = [k'_x, k'_y, k'_z]^T$   
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=1]{W2_4.png}
+\end{center}
+
+\subsection*{Composition of 3D Affine Transformations}
+The composition of affine transformations is an affine transformation.
+Any 3D affine transformation can be performed as a series of elementary affine transformations
+
+\subsection*{Rotation Representation Revisited}
+There are several possible representations
+\begin{itemize}
+    \item Rotation matrix
+    \item Fixed angle
+    \item Euler angle
+    \item Axis-angle
+    \item Quaternion
+    \item Exponential map
+\end{itemize}
+Composition and interpolation are desirable properties.
+
+\subsubsection*{Rotation Matrix Representation}
+\begin{itemize}
+\item Extracting pure rotational component
+\item 3x3 matrix - 9 elements
+\item 3 orthogonality constraints
+\item 3 normalization constraints
+\end{itemize}
+
+\[R = \begin{bmatrix}
+    m_{00} & m_{01} & m_{02} \\
+    m_{10} & m_{11} & m_{12} \\
+    m_{20} & m_{21} & m_{22} \\
+\end{bmatrix} = \begin{bmatrix}a & b & c\end{bmatrix}\]
+\begin{align*}
+a \cdot b &= 0, \vert a \vert = 1,\\
+b \cdot c &= 0, \vert b \vert = 1,\\
+c \cdot a &= 0, \vert c \vert = 1\\
+\end{align*}
+\[R^{-1} = R^T, \det(R) = +1\]
+
+\subsubsection*{Fixed Angle vs Euler Angle Representations}
+\begin{center}
+    \includegraphics*[scale=0.8]{W2_5.png}
+\end{center}
+\begin{itemize}
+    \item Many possible choices: x-y-z, y-x-z, z-x-y, etc.
+    \item $R = R_z(\theta_3)R_y(\theta_2)R_x(\theta_1)$
+\end{itemize}
+Any Euler angle choice is equivalent to a reverse fixed angle formulation.
+\begin{itemize}
+    \item Example:
+    \begin{itemize}
+        \item Euler angles: z-x-y = Fixed angles: y-x-z
+    \end{itemize}
+\end{itemize}
+\textbf{Serious Problems with Euler Angles}
+\begin{itemize}
+    \item Gimbal Lock (loss of a rotational degree of freedom when interpolating using Euler angles)
+    \begin{itemize}
+        \item Can create weird paths (swinging out of plane)
+        \item We would like minimum length path
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Axis-Angle Representation}
+Vector(axis): u\\
+Rotation angle: $\beta$\\
+Method:
+\begin{enumerate}
+    \item Two rotations to align \textbf{u} with the x-axis: $R_z(-\phi)R_y(\theta)$
+    \item Do x-roll by $\beta$: $\textbf{R}_x(\beta)$
+    \item Undo the alignment: $R_y(-\theta)R_z(\phi)$
+\end{enumerate}
+All together:
+\[R_u(\beta) = R_y(-\theta)R_z(\phi)R_x(\beta)R_z(-\phi)R_y(\theta)\]
+\begin{center}
+    \includegraphics*[scale=0.7]{W2_6.png}
+\end{center}
+
+\subsection*{Complex Numbers and Rotation}
+Complex numbers can represent 2D rotations
+\[z = a + ib = \vert z \vert(\cos(\theta) + i \sin(\theta)) = \vert z \vert e^{i \theta}\]
+Multiplication is equivalent to rotation around the origin
+\[zw = \vert z \vert \vert w \vert e^{i(\theta + \phi)}\]
+
+\section*{Quaternions}
+Extension of complex numbers using three imaginary quantities $i, j, k$.
+\[q = a + bi + cj + dk, a, b, c, d \in \mathfrak{R}\]
+Where:
+\begin{itemize}
+    \item $i^2 = j^2 = k^2 = -1$
+    \item $ij = -ji = k$
+    \item $jk = -kj = i$
+    \item $ki = -ik = j$
+\end{itemize}
+
+\subsection*{Properties and Definitions}
+\begin{itemize}
+    \item $q = [s, x, y, z] = [s, v]$
+    \item $[s_1, v_1] + [s_2, v_2] = [s_1 + s_2, v_1 + v_2]$
+    \item $[s_1, v_1][s_2, v_2] = [s_1s_2 - v_1v_2, s_1v_2 + s_2v_1 + v_1 \times v_2]$
+    \item $(q_1 q_2)q_3 = q_1 (q_2 q_3)$
+    \item $q_1 q_2 \neq q_2 q_1$
+    \item $\vert q \vert = \sqrt{s^2 + x^2 + y^2 + z^2}$
+\end{itemize}
+Other Properties and Definitions
+\begin{itemize}
+    \item Identity: $q[1, 0, 0, 0] = q$
+    \item Inverse: $q^{-1} = (\frac{1}{\vert q \vert})^2(s, -v)$ and $q^{-1}q = qq^{-1} = (1, 0, 0, 0)$
+    \item Conjugate: $\bar q = (s, -v)$
+    \item $(pq)^{-1} = q^{-1}p^{-1}$
+\end{itemize}
+
+\subsection*{Unit Quaternions}
+\begin{itemize}
+    \item Unit quaternions have unit norms 
+    \item Isomorphic to orientations
+    \item General form:
+    \[q = (\cos(\theta), \sin(\theta)v), v \in \R^3, \vert v \vert = 1\]
+    \begin{itemize}
+        \item Equivalent to rotation by angle $2\theta$ around the axis defined by \textbf{v}
+        \item q and -q are equivalent when interpreted as orientation
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Rotations with Quaternions}
+\textbf{Definition:}
+\begin{itemize}
+    \item Quaternion $q = (s, x, y, z) = (s, v)$
+    \item Point(vector) $u = (x, y, z) \rightarrow \hat u = (0, x, y, z)$
+    \item $u' = \text{Rot}(u) = q\hat uq^{-1}$
+    \item For unit quaternions the inverse is equivalent to the conjugate
+\end{itemize}
+
+\subsection*{Successive Rotations}
+Rotate first by p, and then by q.
+\begin{align*}
+    \text{Rot}_q(\text{Rot}_p(\hat u)) &= q(p\hat u p^{-1})q^{-1}\\
+    &=(qp)\hat u(p^{-1} q^{-1}) \\
+    &=(qp) \hat u (qp)^{-1} \\
+    &= \text{Rot}_{qp}(\hat u)
+\end{align*}
+
+\subsection*{What Rotation Does $-q$ Represent?}
+That is, what angle and what axis?
+\[\text{Rot}(\theta, v) \rightarrow q = [\cos(\frac{\theta}{2}), \sin(\frac{\theta}{2})v]\]
+Now, for $-\theta$ around $-v$, or $2\pi - \theta$ around $-v$
+\begin{align*}
+    q' &= [\cos(\frac{2\pi - \theta}{2}), \sin(\frac{2\pi - \theta}{2})(-v)]\\
+    &= [\cos(\pi - \frac{\theta}{2}), -\sin(\pi - \frac{\theta}{2})v]\\
+    &= [-\cos(\frac{\theta}{2}), -\sin(\frac{\theta}{2})v]\\
+    &= -q
+\end{align*}
+Thus, $\text{Rot}_{-q} = \text{Rot}_q$
+
+\subsection*{Quaternions vs Axis-Angle Representation}
+Rotate by $\theta$ around $v$
+\begin{center}
+    \includegraphics*[scale=1]{W2_7.png}
+\end{center}
+Equivalent quaternion
+\[\text{Rot}(\theta, v) \rightarrow q = [\cos(\frac{\theta}{2}), \sin(\frac{\theta}{2})v]\]
+
+\subsection*{Exponential Map Representation}
+Three parameters: $(v_1, v_2, v_3)$
+\begin{itemize}
+    \item Vector direction: axis of rotation
+    \item Vector magnitude: amount of rotation
+    \begin{align*}
+        v &= [0, 0, 0] \rightarrow e^{[0, 0, 0]^T} = [1, 0, 0, 0]\\
+        v &\neq 0 \rightarrow e^v = \sum_{m = 0}^\infty \left(\frac{1}{2}\hat v\right)^m = (\cos(\frac{1}{2}\theta), \sin(\frac{1}{2}\theta)\bar v)
+    \end{align*}
+    where $\vert v \vert = \theta$ and $\bar v = \frac{v}{\vert v \vert}$
+    \item Singularities for $2n\pi$
+    \item Numerically unstable when $\vert v \vert$ is close to zero
+\end{itemize}
+
+\section*{Which Representation Should We Use?}
+More than one, and there is no panacea!
+\begin{itemize}
+    \item Interface based on Euler angles
+    \item Internal representation using quaternions
+    \item Drawing using matrices
+\end{itemize}
+Depends on the application.
+
+\subsection*{Interpolating Quaternions}
+\textbf{Linear interpolation:} non-linear change in orientation
+\[q = lerp(q_1, q_2, t)m t \in [0, 1]\]
+\begin{center}
+    \includegraphics*[scale=0.8]{W2_8.png}
+\end{center}
+\textbf{Spherical linear interpolation:} Interpolate along a sphere (angles instead of trigonometric values)
+\[\theta = q_1 \cdot q_2\]
+\[slerp(q_1, q_2, t) = \frac{\sin((1-t)\theta)}{\sin(\theta)}q_1 + \frac{\sin(t\theta)}{\sin(\theta)}q_2\]
+\begin{center}
+    \includegraphics*[scale=0.8]{W2_9.png}
+\end{center}
+
+
+\subsubsection*{Issues With Slerp}
+\begin{itemize}
+    \item Not necessarily unit result, needs renormalization
+    \item First order discontinuity at keyframes
+    \begin{itemize}
+        \item Need polynomial interpolation for smooth results
+        \item Polynomials on a sphere
+    \end{itemize}
+\end{itemize}
+\end{document}
