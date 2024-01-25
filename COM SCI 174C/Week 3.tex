@@ -594,6 +594,64 @@ Kochanek-Bartels Splines
 \begin{center}
     \includegraphics*[scale=0.8]{W3_15.png}
 \end{center}
+\begin{itemize}
+    \item Assume two points.  Each point is weighted by a function that is a tent:
+    \begin{align*}
+        \includegraphics*[scale=0.6]{W3_18.png}
+        \hspace{2cm}
+        \includegraphics*[scale=0.6]{W3_19.png}
+    \end{align*}
+    \item To create the line segment we need to evaluate the spline for $t$ in $[1, 2]$
+    \item Outside of this interval we are using either one or zero points to constrain a line which doesn't work well.
+\end{itemize}
 
 
+\subsection*{Quadratic B-Splines (Order m = 3)}
+\begin{itemize}
+    \item With knots $t_0 = 0, t_1 = 1, \dots$
+    \begin{align*}
+        N_{0, 3}(t) &= \frac{t}{2} N_{0, 2} + \frac{3 - t}{2}N_{1, 2}\\
+        N_{0, 3}(t) &= \begin{cases} \frac{1}{2}t^2 & \text{for } 0 \leq t \leq 1 \\ \frac{3}{4} - (t - \frac{3}{2})^2 & \text{for } 1 \leq t \leq 2 \\ \frac{1}{2}(3 - t^2) & \text{for } 2 \leq t \leq 3 \\ 0 & \text{otherwise}\end{cases}
+    \end{align*}
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.8]{W3_16.png}
+\end{center}
+
+\subsection*{Cubic B-Splines (Order m = 4)}
+\begin{itemize}
+    \item With knots $t_0 = 0, t_1 = 1, \dots$
+    \item Compact form:
+    \begin{align*}
+        u(t) &= \frac{1}{6}(1 - t)^3\\
+        v(t) &= \frac{1}{6}(3t^3 - 6t^2 + 4)\\
+        N_{0, 4}(4) &= \begin{cases}u(1 - t) & \text{for } 0 \leq t \leq 1 \\ v(2 - t) & \text{for } 1\leq t \leq 2 \\ v(t - 2) & \text{for } 2 \leq t \leq 3 \\ u(t - 3) & \text{for } 3 \leq t \leq 4\end{cases}
+    \end{align*}
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.8]{W3_17.png}
+\end{center}
+
+\subsection*{Cubic Case - Uniform Knots}
+Looking only at the $[3, 4]$ interval, and translating it to $[0, 1]$,
+\begin{align*}
+    \includegraphics*[scale=0.6]{W3_20.png}
+    \hspace{0.5cm}
+    \includegraphics*[scale=0.7]{W3_21.png}
+\end{align*}
+\begin{itemize}
+    \item Cubic spline is drawn between $P_1$ and $P_2$.
+    \item For $t$ in $[3, 4]$, control points $P_0$ and $P_3$ affect mostly the tangents.
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.8]{W3_22.png}
+\end{center}
+\textbf{However:}
+\begin{itemize}
+    \item Nothing stops us from evaluating the spline for any value of $t$ if it serves our purposes
+    \begin{itemize}
+        \item The math works
+        \item Some of the properties of the spline may be lost, but we will get a curve
+    \end{itemize}
+\end{itemize}
 \end{document}
