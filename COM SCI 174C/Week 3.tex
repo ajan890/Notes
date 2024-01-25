@@ -553,5 +553,47 @@ Kochanek-Bartels Splines
     \item Now basis functions overlap more than one know interval
 \end{itemize}
 
+\subsection*{General Form of B-Splines}
+\begin{itemize}
+    \item Let's make the order $m$ explicit
+    \[P(t) = \sum_{k = 0}^L P_k N_{k, m}(t)\]
+    \item Fundamental formula
+    \begin{itemize}
+        \item generalization of successive linear Interpolation
+        \[N_{k, m}(t) = \left(\frac{t - t_k}{t_{k + m - 1} - t_k}\right) N_{k, m - 1}(t) + \left(\frac{t_{k + m} - t}{t_{k + m} - t_{k + 1}}\right)N_{k + 1, m - 1}(t)\]
+        \[t \in [t_k, t_{k + m}]\]
+    \end{itemize}
+    \item For equispaced knots $0, \dots, L$
+    \[P(t) = \sum_{k = 0}^L P_k N_{k, m}(t) = \sum_{k = 0}^L P_k N_{k, m} (t - k)\]
+\end{itemize}
+
+\subsection*{Constant B-Splines (Order m = 1)}
+\begin{itemize}
+    \item With knots $t_0 = 0$, $t_1 = 1$
+    \item Constant (a.k.a. Haar) function,
+    \begin{align*}
+        N_1(t) &= \begin{cases}1 & \text{if } 0 \leq t < 1 \\ 0 & \text{otherwise}\end{cases}\\
+        N_{k, 1}(t) &= N_{0, 1}(t - k)
+    \end{align*}
+    \item For non-equispaced knots
+    \[N_{k, 1}(t) = \begin{cases}1 & \text{if } t_k \leq t < t_{k + 1} \\ 0 & \text{otherwise}\end{cases}\]
+    \item Each function has support over $[t_k, t_{k + 1})$
+\end{itemize}
+
+\subsection*{Linear B-Splines (Order m = 2)}
+\begin{itemize}
+    \item With knots $t_0 = 0, t_1 = 1, \dots$
+\end{itemize}
+\begin{align*}
+    N_{0, 2}(t) &= \frac{t}{1} N_{0, 1} + \frac{2 - t}{1}N_{1, 1}\\
+    &= \begin{cases}t \times 1 + (2 - t) \times 0 & \text{if } t \in [0, 1] \\ (2 - t) \times 0 + (2 - t) \times 1 & \text{if } t \in [1, 2] \\ 0 & \text{otherwise}\end{cases}\\
+    &= \begin{cases} t & \text{if } t \in [0, 1) \\ 2 - t & \text{if } t \in [1, 2] \\ 0 & \text{otherwise}\end{cases}
+    & \\
+    N_{k, 2}(t) &= N_{0, 2}(t - t_k)
+\end{align*}    
+\begin{center}
+    \includegraphics*[scale=0.8]{W3_15.png}
+\end{center}
+
 
 \end{document}
