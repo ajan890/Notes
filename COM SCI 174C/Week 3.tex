@@ -141,7 +141,417 @@ If we repeat the same process for $P(t)$ but instead of four points, then
 \end{center}
 
 \section*{Cubic Berstein Polynomials}
+\[P(t) = (1 - t)^3 P_0 + 3(1-t)^2 t P_1 + 3(1 - t) t^2 P_2 + t^3 P_3\]
+\begin{align*}
+B^3_0 (t) &= (1-t)^3\\
+B^3_1 (t) &= 3(1-t)^2 t\\
+B^3_2 (t) &= 3(1-t) t^2\\
+B^3_3 (t) &= t^3
+\end{align*}
+Expansion of $[(1-t) + t]^3 = (1-t)^3 + 3(1 - t)^2 t + 3(1-t) t^2 + t^3 \rightarrow \sum_k B^3_k (t) = 1, k = 0, 1, 2, 3$\\
+An affine combination of points
 
+\subsection*{Berstein Polynomials of Degree L}
+Degree $L$ implies $L + 1$ control points.
+\[P(t) = \sum_{k=0}^L B_k^L (t) P_k\]
+where:
+\begin{itemize}
+    \item $B_k^L(t) = {L \choose k} (1-t)^{L - k} t^k$
+    \item ${L \choose k} = \frac{L!}{k!(L - k)!}$, for $L > k$
+    \item $\sum_{k = 0}^L B^L_k (t) = 1$, for all $t$
+\end{itemize}
+Expansion of $[(1 - t) + t]^L$\\\\
+\textbf{Common Berstein Polynomials}
+\begin{center}
+    \includegraphics*[scale=1]{W3_5.png}
+\end{center}
+\begin{itemize}
+    \item Always positive
+    \item Zero only at $t = 0$ or $t = 1$
+    \item Berstein polynomials can also be defined recursively
+    \begin{align*}
+        B_i^n(t) &= (1-t) B_i^{n-1}(t) + t B_{i - 1}^{n-1} (u)\\
+        B_0^0 (t) &= 1
+    \end{align*}
+\end{itemize}
+
+\subsection*{Properties of Bezier Curves}
+\begin{itemize}
+    \item End point Interpolation
+    \item Affine Invariance: $T(P(t)) = \sum_{k = 0}^L B_k^L(t) T(P)_k$
+    \item Invariance under affine transformation of the parameter
+    \item Convex Hull property for t in [0, 1]: $P = \sum_{k = 0}^L a_k P_k$ where $\sum_{k = 0}^L a_k = 1$ and $a_k > 0$
+    \item Linear precision by collapsing convex hull
+    \item Variation Diminishing property: No straight line cuts the curve more times than it cuts the control polygon
+\end{itemize}
+
+\subsection*{Derivatives of Bezier Curves}
+It can be shown that:
+\begin{itemize}
+    \item Velocity is also a Bezier curve of lower degree
+    \[P'(t) = L \sum_{k = 0}^{L - 1} B_k^{L - 1}(t) \Delta P_k\text{, where } \Delta P_k = P_{k + 1} - P_k\]
+    \item Acceleration
+    \[P''(t) = L(L - 1) \sum_{k = 0}^{L - 2} B_k^{L - 2}(t) \Delta^2 P_k \text{, where } \Delta^2 P_k = \Delta P_{k + 1} - \Delta P_k\]
+\end{itemize}
+
+\subsection*{Cubic Parametric Curves}
+\begin{align*}
+    x(t) &= a_3 t^3 + a_2 t^2 + a_1 t + a_0\\
+    y(t) &= b_3 t^3 + b_2 t^2 + b_1 t + b_0\\
+    z(t) &= c_3 t^3 + c+2 t^2 + c_1 t + c_0\\
+    t &\in [0, 1]
+\end{align*}
+As a matrix,
+\[x(t) = \begin{bmatrix}t^3 & t^2 & t^1 & 1\end{bmatrix} \begin{bmatrix} a_3 \\ a_2 \\ a_1 \\ a_0 \end{bmatrix}\]
+\begin{align*}
+    x(t) &= TA\\
+    y(t) &= TB\\
+    z(t) &= TC
+\end{align*}
+
+\subsection*{Derivative of Cubic Parameter Curves}
+Simply take the derivative of the matrix in terms of t.
+\begin{align*}
+    x(t) &= \begin{bmatrix}t^3 & t^2 & t^1 & 1\end{bmatrix} \begin{bmatrix} a_3 \\ a_2 \\ a_1 \\ a_0 \end{bmatrix}\\
+    x'(t) &= \begin{bmatrix}3t^2 & 2t & 1 & 0\end{bmatrix} \begin{bmatrix} a_3 \\ a_2 \\ a_1 \\ a_0 \end{bmatrix}
+\end{align*}
+
+\subsection*{How does the magnitude of the tangent affect the curve?}
+\begin{itemize}
+    \item Same lower tangent direction but different magnitude.
+    \item The magnitude defines how fast the curve assumes the tangent direction
+    \item (remember: tangent $\rightarrow$ velocity in parametric space)
+\end{itemize}
+
+\subsection*{Parametric Cubic Curves From Constraints}
+\textbf{Example:} Endpoints and a tangent at midpoint\\
+Constraints:
+\begin{itemize}
+    \item $x(t) = \begin{bmatrix}t^3 & t^2 & t^1 & 1\end{bmatrix}A$
+    \item $x'(t) = \begin{bmatrix}3t^2 & 2t & 1 & 0\end{bmatrix}A$
+    \item $x(0) = \begin{bmatrix} 0 & 0 & 0 & 1 \end{bmatrix}A$
+    \item $x(0.5) = \begin{bmatrix} 0.5^3 & 0.5^2 & 0.5 & 1 \end{bmatrix}A$
+    \item $x'(0.5) = \begin{bmatrix} 3(0.5^2) & 2(0.5) & 1 & 0 \end{bmatrix}A$
+    \item $x(1) = \begin{bmatrix} 1 & 1 & 1 & 1 \end{bmatrix} A$
+    \item $G_x = BA$
+\end{itemize}
+This can be written as:
+\begin{align*}
+    x(t) &= \begin{bmatrix}t^3 & t^2 & t^1 & 1\end{bmatrix}A = TA\\
+    x'(t) &= \begin{bmatrix}3t^2 & 2t & 1 & 0\end{bmatrix}A = T'A\\
+    \begin{bmatrix}x_0 \\ x_{0.5} \\ x'_{0.5} \\ x_1\end{bmatrix} &= \begin{bmatrix}0 & 0 & 0 & 1 \\ 0.5^3 & 0.5^2 & 0.5  & 1 \\ 3(0.5)^2 & 2(0.5) & 1 & 0 \\ 1 & 1 & 1 & 1\end{bmatrix}A\\
+    G_x &= BA \Rightarrow A = B^{-1} G_x\\
+    x(t) = TA \Rightarrow \boxed{x(t) = TB^{-1} G_x}
+\end{align*}
+Final form:
+\begin{itemize}
+    \item Basis matrix
+        \begin{align*}
+            x(t) &= TB^{-1} G_x \\
+            \text{Set }&M = B^{-1}\\
+            & x(t) = TMG_x\\
+            & y(t) = TMG_y\\
+            & z(t) = TMG_z\\
+            P(t) &= TMG
+        \end{align*}
+    \item For the example
+        \[M = \begin{bmatrix}-4 & 0 & -4 & 4 \\ 8 & -4 & 6 & -4 \\ -5 & 5 & -2 & 1 \\ 1 & 0 & 0 & 0\end{bmatrix}\]
+\end{itemize}
+
+\subsection*{Blending Functions}
+Given by TM:
+\begin{itemize}
+    \item $x(t) = TMG_x \Rightarrow x(t) = \begin{bmatrix}f_1(t) & f_2(t) & f_3(t) & f_4(t)\end{bmatrix} G_x$
+\end{itemize}
+For the example:
+\begin{itemize}
+    \item $f_1(t) = -4t^3 + 8t^2 - 5t + 1$
+    \item $f_2(t) = -4t^2 + 4t$
+    \item $f_3(t) = -4t^3 + 6t^2 - 2t$
+    \item $f_4(t) = 4t^3 - 4t^2 + t$
+\end{itemize}
+Each blending function weights the contribution of one of the constraints.
+\begin{center}
+    \includegraphics*[scale=1]{W3_6.png}
+\end{center}
+\section*{Hermite Curves}
+\textbf{Constraints:} Two endpoints and two tangents
+\begin{center}
+    \includegraphics*[scale=0.8]{W3_7.png}
+\end{center}
+\begin{flalign*}
+    G_h &= \begin{bmatrix} P_1 & P_4 & R_1 & R_4\end{bmatrix}&&\\
+    x(t) &= T A_h = T M_h G_h&&\\
+    &&\\
+    x(0) &= P_1 = \begin{bmatrix} 0 & 0 & 0 & 1 \end{bmatrix}A_h&&\\
+    x(1) &= P_4 = \begin{bmatrix} 1 & 1 & 1 & 1 \end{bmatrix}A_h&&\\
+    x'(0) &= R_1 = \begin{bmatrix} 0 & 0 & 1 & 0 \end{bmatrix}A_h&&\\
+    x'(1) &= R_4 = \begin{bmatrix} 3 & 2 & 1 & 0 \end{bmatrix}A_h&&\\
+    G_h &= B_h A_h&&\\
+    A_h &= B_h^{-1} G_h&&\\
+    x(t) &= T A_h
+\end{flalign*}
+\subsection*{Blending Functions}
+\begin{center}
+    \includegraphics*[scale=0.7]{W3_8.png}
+\end{center}
+\begin{align*}
+M_h &= B_h ^{-1} = \begin{bmatrix} 2 & -2 & 1 & 1 \\ -3 & 3 & -2 & -1 \\ 0 & 0 & 1 & 0 \\ 1 & 0 & 0 & 0\end{bmatrix}\\
+x(t) &= T M_h G_h \Rightarrow x(t) = \begin{bmatrix} f_1 (t) & f_2 (t) & f_3 (t) & f_4 (t) \end{bmatrix} G_h\\
+& \\
+f_1(t) &= 2t^3 - 3t^2 + 1\\
+f_2(t) &= -2t^3 + 3t^2\\
+f_3(t) &= t^3 - 2t^2 + t\\
+f_4(t) &= t^3 - t^2
+\end{align*}
+\section*{Bezier Curves}
+Bezier curves are a special case of Hermite curves.
+\begin{align*}
+    P_{1, h} &= P_1\\
+    P_{4, h} &= P_4\\
+    R_{1, h} &= 3(P_2 - P_1)\\
+    R_{4, h} &= 3(P_4 - P_3)\\
+\end{align*}
+As a matrix:
+\[\begin{bmatrix}P_{1, h} \\ P_{4, h} \\ R_{1, h} \\ R_{4, h}\end{bmatrix} = \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 0 & 0 & 1 \\ -3 & 3 & 0 & 0 \\ 0 & 0 & -3 & 3 \end{bmatrix}\begin{bmatrix}P_1 \\ P_2 \\ P_3 \\ P_4 \end{bmatrix}\]
+\[G_h = M_{bh}G_b\]
+\[P(t) = TM_h G_h \Rightarrow P(t) = TM_h M_{bh} G_b \Rightarrow P(t) = TM_b G_b\]
+We can verify that $TM_b$ are the Berstein Polynomials.\\
+Recall that:
+\begin{itemize}
+    \item $f_1(t) = (1 - t)^3$
+    \item $f_2(t) = 3t(1-t)^2$
+    \item $f_3(t) = 3t^2(1-t)$
+    \item $f_4(t) = t^3$
+\end{itemize}
+\section*{Splines}
+\begin{itemize}
+    \item Splines are the standard way to generate a smooth curve which interpolates given values
+    \item A spline function is just a piecewise polynomial function
+    \begin{itemize}
+        \item Split up the real line into intervals
+        \item Over each interval, pick a different polynomial
+    \end{itemize}
+    \item If the polynomials are small degree (Typically at most cubics) the curve is easy and fast to compute
+\end{itemize}
+\subsection*{Connecting piecewise curves to splines:}
+\begin{center}
+    \includegraphics*[scale=0.9]{W3_9.png}
+\end{center}
+\subsection*{Continuity}
+\begin{itemize}
+    \item Parametric $C^k$ Continuity
+    \begin{itemize}
+        \item Derivatives $P^{(i)}$ for $i = 0, \dots, k$ exist and are continuous for $t$ in $[a, b]$
+        \item Terminology:
+            \begin{itemize}
+                \item $P$ is $k$-smooth
+                \item $P$ has $k^{th}$-order continuity
+            \end{itemize}
+    \end{itemize}
+    \item Geometric $G^k$ Continuity
+    \begin{itemize}
+        \item $P^{(i)}(t-) = c_i P^{(i)} (t+)$
+            \begin{itemize}
+                \item for i = 0, $\dots$, k and
+                \item for some constants $c_i$
+                \item for $t$ in $[a, b]$
+            \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Knots and Control Points}
+\begin{itemize}
+    \item The ends of the intervals, where one polynomial ends and another one starts, are called "knots"
+    \item A control point is a knot together with associated shape control variables
+    \item The spline either interpolates (goes through) or approximates (goes near) the control points    
+\end{itemize}
+
+\subsection*{Spline Curve}
+Different definitions exist.\\
+\textbf{Ours:}
+\begin{itemize}
+    \item A spline curve is an affine blend of points weighted by piecewise polynomial functions.  It must be continuous at the knots, but may have discontinuous derivatives.
+\end{itemize}
+
+\subsubsection*{Hermite Splines}
+\begin{itemize}
+    \item Hermite splines have even richer control points:
+    \item In addition to a function value, a slope (derivative) is specified.
+    \begin{itemize}
+        \item So the Hermite spline interpolates the control values and must match the control slopes at the knots
+    \end{itemize}
+    \item Particularly useful for animation - more control over slow in/out, etc.
+\end{itemize}
+
+\subsection*{Smoothness}
+\begin{itemize}
+    \item Each polynomial in a spline is infinitely differentiable (very smooth)
+    \item But at the junction between two polynomials, the spline isn't necessarily even continuous!
+    \item We need to enforce constraints on the polynomials to get the degree of smoothness we want
+    \begin{itemize}
+        \item Values match: $C^0$ continuous
+        \item Slopes (first derivatives) match: $C^1$ continuous
+        \item Second derivatives match: $C^2$ continuous
+        \item Etc.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Example: Piecewise Linear Spline}
+\begin{itemize}
+    \item Restrict all polynomials to be linear
+    \begin{itemize}
+        \item $f(t) = a_i (t - t_i) + b_i$ in $[t_i, t_{i + 1}]$
+    \end{itemize}
+    \item Enforce continuity: make each line segment interpolate the control point on either specified
+    \begin{itemize}
+        \item $a_i (t - t_i) + b_i = y_i$ and $a_i (t_{i + 1} - t_i) + b_i = y_{i + 1}$
+    \end{itemize}
+    \item Solve to get
+    \begin{itemize}
+        \item $a_i = \frac{y_{i + 1} - y_i}{t_{i + 1} - t_i}$; $b_i = y_i$
+    \end{itemize}
+    \item End result:
+    \begin{itemize}
+        \item straight line segments connecting the control points
+    \end{itemize}
+    \item $C^0$ but not $C^1$
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=1]{W3_10.png}
+\end{center}
+To do better than this, we need higher degree polynomials.\\
+For motion curves, cubic splines are almost always used.\\
+We now have three main choices:
+\begin{itemize}
+    \item Hermite splines: Interpolating, up to $C^1$
+    \item Catmull-Rom: Interpolating, $C^1$
+    \item B-Splines: Approximating, $C^2$
+\end{itemize}
+\subsection*{Cubic Hermite Splines}
+\begin{itemize}
+    \item Our generic cubic in an interval $[t_i, t_{i + 1}]$ is:
+    \begin{itemize}
+        \item $q_i(t) = a_i(t - t_i)^3 + b_i (t - t_i)62 + c_i (t - t_i) + d_i$ with $t - t_i$ in $[0, 1]$
+    \end{itemize}
+    \item Make it interpolate endpoints:
+    \begin{itemize}
+        \item $q_i(t_i) = y_i$ and $q_i(t_{i + 1}) = y_{i + 1}$
+    \end{itemize}
+    \item And make it match given slopes:
+    \begin{itemize}
+        \item $q_i'(t_i) = s_i$ and $q_i'(t_{i + 1}) = s_{i + 1}$
+    \end{itemize}
+    \item Work it out to get
+    \begin{align*}
+        a_i &= \frac{-2(y_{i + 1} - y_i)}{(t_{i + 1} - t_i)^3} + \frac{s_i + s_{i + 1}}{(t_{i + 1} - t_i)^2} \hspace{1cm} c_i = s_i\\
+        b_i &= \frac{3(y_{i + 1} - y_i)}{(t_{i + 1} - t_i)^2} - \frac{2s_i + s_{i + 1}}{t_{i + 1} - t_i} \hspace{1cm} d_i = y_i
+    \end{align*}
+\end{itemize}
+\subsection*{Hermite Basis}
+Rearrange the solution to get:
+\begin{align*}
+    y(t) = &y_i\left(\frac{2(t - t_i)^3}{(t_{i + 1} - t_i)^3} - \frac{3(t - t_i)^2}{(t_{i + 1} - t_i)^2} + 1 \right) + y_{i + 1}\left(\frac{-2(t - t_i)^3}{(t_{i + 1} - t_i)^3} - \frac{3(t - t_i)^2}{(t_{i + 1} - t_i)^2}\right) \\
+    &+ s_i \left(\frac{(t - t_i)^3}{(t_{i + 1} - t_i)^2} - \frac{2(t - t_i)^2}{t_{i + 1} - t_i} + (t - t_i)\right) + s_{i + 1} \left(\frac{(t - t_i)^3}{(t_{i + 1} - t_i)^2} - \frac{(t - t_i)^2}{t_{i + 1} - t_i}\right)
+\end{align*}
+for $i \in [t_0, t_n]$\\
+That is, we're taking a linear combination of four basis functions
+\begin{itemize}
+    \item Note the functions and their slopes are either 0 or 1 at the start and end of the interval
+\end{itemize}
+
+\subsection*{Breaking Hermite Splines}
+\begin{itemize}
+    \item Usually just specify one slope at each knot
+    \item But a useful capability: use a different slope on each side of a knot
+    \begin{itemize}
+        \item We break $C^1$ smoothness, but gain control
+        \item Can create motions that abruptly change, like collisions
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Catmull-Rom Splines}
+\begin{itemize}
+    \item Given a set of points in space, suppose we want a spline that:
+    \begin{itemize}
+        \item Interpolates the points (rules out Bezier)
+        \item With $C^1$ continuity (Hermite: Lots of tweaking)
+    \end{itemize}
+    \item This is a common situation in animation
+    \item We start with the given set of points $P_0, \dots, P_n$
+    \item Define tangents $r_i = s(P_{i + 1} - P_{i - 1})$
+    \begin{center}
+        \includegraphics*[scale=0.5]{W3_11.png}
+    \end{center}
+    \item This is really just a $C^1$ Hermite spline with an automati choice of slopes
+    \begin{itemize}
+        \item Use a 2nd order finite difference formula to estimate slope from values
+        \[s_i = \left(\frac{t_i - t_{i - 1}}{t_{i + 1} - t_{i - 1}}\right) \div \frac{y_{i + 1} - y_i}{t_{i + 1} - t_i} - \left(\frac{t_{i + 1} - t_i}{t_{i + 1} - t_{i - 1}}\right) \div \frac{y_i - y_{i - 1}}{t_i - t_{i - 1}}\]
+        \item For equally spaced knots, it simplifies to:
+        \[s_i = \frac{y_{i + 1} - y_{i - 1}}{t_{i + 1} - t_{i - 1}}\]
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Catmull-Rom Boundaries}
+\begin{itemize}
+    \item Need to use slightly different formulas for the Boundaries
+    \item For example, 2nd order accurate finite difference at the start of the interval:
+    \[s_0 = \left(\frac{t_2 - t_0}{t_2 - t_1}\right)\div \frac{y_1 - y_0}{t_1 - t_0} - \left(\frac{t_1 - t_0}{t_2 - t_1}\right) \div \frac{y_2 - y_0}{t_2 - t_0}\]
+    \begin{itemize}
+        \item Symmetric formula for end of interval
+    \end{itemize}
+    \item Which simplifies for equally spaced knots:
+    \[s_0 = 2\frac{y_1 - y_0}{\Delta t} - \frac{y_2 - y_0}{2\Delta t}\]
+\end{itemize}
+
+\subsection*{Adding Tension Control}
+\[P'(t_k) = \frac{1}{2}(1 - v_k)(P_{k + 1} - P_{k - 1})\]
+\begin{center}
+    \includegraphics*[scale=0.7]{W3_12.png}
+\end{center}
+
+\subsection*{Adding Bias Control}
+Kochanek-Bartels Splines
+\begin{align*}
+    P'(t_k) &= \frac{1}{2}(P_k - P_{k - 1}) + \frac{1}{2}(P_{k + 1} - P_k)\\
+    P'(t_k) &= \frac{1}{2}(1 - b_k)(P_k - P_{k - 1}) + \frac{1}{2}(1 + b_k)(P_{k + 1} - P_k)
+\end{align*}
+\begin{center}
+    \includegraphics*[scale=0.7]{W3_13.png}
+\end{center}
+
+\subsection*{Adding Continuity Control}
+Kochanek-Bartels Splines
+\begin{align*}
+    R'_{k - 1}(1) &= \frac{1}{2}(1 - c_k)(P_k - P_{k - 1}) + \frac{1}{2}(1 + c_k)(P_{k + 1} - P_k)\\
+    R'_k(0) &= \frac{1}{2}(1 + c_k)(P_k - P_{k - 1}) + \frac{1}{2}(1 - c_k)(P_{k + 1} - P_k)
+\end{align*}
+\begin{center}
+    \includegraphics*[scale=0.7]{W3_14.png}
+\end{center}
+
+\section*{Splines Summary}
+\begin{itemize}
+    \item General form of the splines we have segment
+    \[P(t) = \sum_{k = 0}^L P_k f_k(t),\:t \in \Re\]
+    \item Often f is a translated version of a single function
+    \begin{align*}
+        P(t) =& \sum_{k = 0}^L P_k f(t - t_k)\\
+        \text{knots} :& \:[t_0, \dots, t_L]
+    \end{align*}
+    \item For Hermite splines, the knots coincided with the control points
+\end{itemize}
+
+\section*{B-Splines}
+\begin{itemize}
+    \item Like Catmull-Rom splines, start with sequence of control points $P_0, \dots, P_n$
+    \item Drop the interpolating condition and instead design a spline curve that is $C^{m - 2}$ smooth, where $m$ is the order
+    \begin{itemize}
+        \item Curve segments meet at knots
+        \item For Hermite and others, the knots were always at control points
+    \end{itemize}
+    \item Now basis functions overlap more than one know interval
+\end{itemize}
 
 
 \end{document}
