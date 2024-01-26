@@ -249,7 +249,116 @@ Therefore,
 \[\text{d}w = -F \:\text{d}z = -P_{ext}A \:\text{d}z\]
 which implies:
 \[\text{d}w = -P_{ext} \:\text{d}V\]
+\section*{Heat}
+\begin{itemize}
+    \item Energy transfer by thermal contact
+    \item Heat is transferred between two objects initially at different temperatures.  
+    \item Heat is transferred from the hotter object to the colder object
+\end{itemize}
 
+\subsection*{The First Law of Thermodynamics}
+\[\Delta U = q + w\]
+\begin{itemize}
+    \item $\Delta U$: Internal energy change of system
+    \item $q$: heat involved in process
+    \item $w$: work involved in process
+    \item The first law of thermodynamics is the law of conservation of energy.
+    \item Energy can be neither created nor destroyed
+    \item Any energy lost by a system must be gained by the surroundings, and vice versa.
+    \item $\Delta U_{univ} = 0$.  The universe cannot gain or lose energy.
+\end{itemize}
+
+\subsection*{Heat Capacity}
+\begin{itemize}
+    \item \textbf{Heat capacity} is the amount of energy required to raise the temperature of an object by $1^\circ C$ (1 K).
+    \[c = \frac{q}{\Delta T}\]
+    \item Constant P:
+    \begin{itemize}
+        \item $C_p$ is the heat capacity at constant pressure.
+        \[C_p \equiv \frac{q_p}{\Delta T}\]
+    \end{itemize}
+    \item Constant V:
+    \begin{itemize}
+        \item $C_V$ is the heat capacity at constant volume.
+        \[C_v \equiv \frac{q_V}{\Delta T}\]
+    \end{itemize}
+    \item The specific heat of water: 4.184 J/(kg K)
+\end{itemize}
+
+\subsection*{Molar Heat and Specific Heat Capacity}
+\textbf{Molar heat capacity:} the heat capacity of one mole of a substance.
+\begin{itemize}
+    \item $c_V = \frac{q_V}{n \Delta T}$ constant volume
+    \item $c_P = \frac{q_P}{n \Delta T}$ constant pressure
+\end{itemize}
+\textbf{Specific Heat capacity:} $c_S$: The heat capacity of one gram of a substance.
+\begin{itemize}
+    \item $c_S = \frac{q}{m \Delta T}$
+\end{itemize}
+
+\section*{Specific Heat}
+\[q = C_s m \Delta T\]
+mass is measured in grams.
+
+\subsubsection*{Example: Calorimetry}
+The heat $q_2$ taken up by the cooler body is $-q_1$, the heat given up by the warmer body.
+\[q_1 = -q_2\]
+\[q_1 + q_2 = 0\]
+\[m_1 c_{s1}(T_f - T_1) = -m_2 c_{s2}(T_f-T_2)\]
+Solve for $T_f$ to find the final temperature.
+
+\subsection*{Heat Transfer at Constant Pressure:}
+Work is \textbf{pressure-volume work} and the \textbf{external pressure is constant.}
+\begin{align*}
+    \Delta U &= q_p + w\\
+    \Delta U &= q_p - P_{ext} \Delta V
+\end{align*}
+If the external pressure is equal to the internal pressure of the system P, then:
+\[\Delta U = q_p - P\Delta V\]
+P is constant, then $P \Delta V = \Delta (PV)$
+\[q_p = \Delta U + \Delta(PV) = \Delta(U + PV)\]
+Enthalpy, $H$, is defined as $U + PV$.
+Therefore, \textbf{at constant pressure}, 
+\[\Delta H = q_p = \Delta U + P\Delta V\]
+
+\subsection*{Enthalpy Change}
+$\Delta H = \Delta U + P \Delta V$ at constant pressure.\\
+$\Delta U = q + w$ (always true.)\\
+$w = -P\Delta V$ (work involved in expansion and compression of a gas at constant pressure)
+From the above formulas, we can derive the following:
+\begin{align*}
+    \Delta H &= q + w + P \Delta V\\
+    &= q - P \Delta V + P \Delta V\\
+    &= q_p \text{ (heat gained or lost at constant pressure)}
+\end{align*}
+\begin{itemize}
+    \item $\Delta H (q_p > 0) \Rightarrow$ endothermic
+    \item $\Delta H (q_p < 0) \Rightarrow$ exothermic
+\end{itemize}
+
+$\Delta H = q_p$\\
+\begin{itemize}
+    \item H is a state function
+    \item It depends on the initial and final states of the system, not on how the change occurs.
+    \item Therefore, $\Delta H = q_p$
+    \item \textbf{Only P-V work is involved and the pressure is constant}
+\end{itemize}
+
+\subsection*{Derivation of $\Delta H = nc_p \Delta T$}
+The average kinetic energy of $N_A$ molecules (1 mole) is $\bar E = \frac{3}{2} RT$\\
+The average translational kinetic energy of $n$ moles of an ideal gas = $\frac{3}{2}nRT$ (kinetic theory)
+\[\Delta U = \frac{3}{2}nR\Delta T\]
+\textbf{Molar Heat capacities of monatomic ideal gases:}
+\[c_V = \frac{3}{2}R\]
+\textbf{Molar Heat capacities of any ideal gases:}
+$c_p = c_v + R$, where $R = 8.3145 J\:K^{-1}mol^{-1}$
+\begin{align*}
+    \Delta U &= \frac{3}{2}nRT = n(\frac{3}{2}R)T = n c_v \Delta T \text{ (any ideal gas)}\\
+    \Delta U &= n c_v \Delta T \text{ (any ideal gas)}\\
+    \Delta H &= \Delta U + \Delta(PV)\\
+    \Delta H &= n c_V \Delta T + n R\Delta T\\
+    \Delta H &= n c_p \Delta T \text{ (any ideal gas)}\\
+\end{align*}
 
 
 
