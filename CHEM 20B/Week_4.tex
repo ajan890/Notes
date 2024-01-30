@@ -1,0 +1,92 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+\graphicspath{{./assets/images/Week 4}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+
+\title{CHEM 20B Week 4}
+
+\author{Aidan Jan}
+\date{\today}
+\begin{document}
+\maketitle
+\section*{Thermochemistry}
+\textbf{Thermochemistry:} study of heat transfer during chemical reactions.
+\begin{itemize}
+    \item Chemical reactions are usually studied at constant pressure, heat transfers in reactions are measured at constant pressure
+    \[q_p = \Delta H = H_f - H_i = H_{products} - H_{reactants} = \Delta H_{reaction}\]
+    \item $\Delta H_{reaction}$ is called the \textbf{reaction enthalpy}
+    \begin{itemize}
+        \item $\Delta H_{reaction} > 0$: endothermic
+        \item $\Delta H_{reaction} < 0$: exothermic
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Hess's Law}
+\begin{itemize}
+    \item If a reaction is carried out in a series of steps, $\Delta H$ for the reaction is the sum of $\Delta H$ for each of the steps.
+    \item Enthalpy is a state function:
+    \begin{itemize}
+        \item $\Delta H$ is sensitive to the states of the reactants and products
+        \item Depends on the amount of matter
+    \end{itemize}
+    \item If a reaction is carried out in a series of steps, $\Delta H$ for the overall reaction equals the sum of the enthalpy changes for the individual steps
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.6]{W4_1.png}
+\end{center} 
+
+\subsection*{Standard Enthalpy of Formation $\Delta H^0_f$}
+\begin{itemize}
+    \item The most useful thermochemical data are tables of the standard enthalpy of formation $\Delta H_f^0$ for compounds, defined as the enthalpy of formation of a compound in its standard state from the elements in their standard states at \textbf{1 atm} and \textbf{298.15 K}.
+    \item The enthalpy of each element at the standard state, in its most stable form at the standard state, is assigned to be zero.
+    \item For example:
+    \begin{itemize}
+        \item $\Delta H^0_f$ (O$_2$ gas, 298K, 1atm) = 0
+        \item $\Delta H^0_f$ (C, graphite, 298K, 1atm) = 0
+    \end{itemize}
+    \item \underline{Enthalpy of formation of molecules} is then defined as the enthalpy of reaction to make the molecules from their atomic ingredients in their stable form.
+    \item For example:
+    \[\Delta H^0_f(H_2O(l)) \equiv \Delta H_{reaction}\left(H_2(g) + \frac{1}{2}O_2(g) \rightarrow H_2O(l)\text{, T = 298.15 K}\right) = -285.8 \frac{kJ}{mol}\]
+    \item The change in standard state enthalpy for any reaction can be calculated from the standard state enthalpy of formation of its proucts and reactants as
+    \[\Delta H^0 = \sum_{i = 1}^{prod} n_i \Delta H_i^0 - \sum_{j = 1}^{react} n_j \Delta H_j^0\]
+    \item For the general reaction of the form $aA + bB \rightarrow cC + dD$, the standadrd enthalpy change is:
+    \[\Delta H^0 = c\Delta H_f^0(C) + d\Delta H_f^0(D) - a\Delta H_f^0(A) - b\Delta H_f^0(B)\]
+\end{itemize}
+\subsection*{Reversible Processes in Ideal Gases - Isothermal processes:}
+\begin{itemize}
+    \item In this case, heat will flow (in either direction) to offset the cost of PV work, whereas T remains constant.
+    \begin{align*}
+        dw &= -P\text{d}V \\
+        w &= -\int_{V_1}^{V_2} P\text{d}V
+    \end{align*}
+    \item For an ideal gas, P = nRT/V.  Because T is constant it comes outside the integral to give:
+    \begin{align*}
+        w &= -nRT\in_{V_1}^{V_2}\frac{1}{V} \text{d}V \\
+        w &= -nRT\ln\left(\frac{V_2}{V_1}\right)\\
+        q &= +nRT\ln\left(\frac{V_2}{V_1}\right)\\
+    \end{align*}
+    \[\Delta U = 0\]
+    \[\Delta H = 0\]
+\end{itemize}
+
+
+
+\end{document}
