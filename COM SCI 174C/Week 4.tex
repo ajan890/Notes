@@ -1,0 +1,490 @@
+\documentclass{article}
+\usepackage{setspace}
+\usepackage[utf8]{inputenc}
+\usepackage[bb=boondox]{mathalfa}
+\usepackage{graphicx}
+
+%%Let's you change margins
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+
+%%Math symbols, proof environments
+\usepackage{amsmath,amsthm,amssymb, graphicx, tikz}
+
+%%Use this package for matrices
+\usepackage{array}
+
+%%Commands for common sets
+\newcommand{\R}{\mathbb{R}} %Real numbers
+\newcommand{\Z}{\mathbb{Z}} %Integers
+\newcommand{\dP}{\mathbb{P}}
+\newcommand{\example}{\textbf{Example: }}
+\newcommand{\E}{\mathbb{E}} %Expectation Value
+
+\graphicspath{{./assets/images/Week 4}}
+
+\title{CS 174C Week 4} 
+
+\author{Aidan Jan}
+
+\date{\today}
+\begin{document}
+\maketitle
+\section*{Motion Curves}
+\textbf{Examples:}
+\begin{itemize}
+    \item The position of an object: $x(t), y(t), z(t)$
+    \begin{itemize}
+        \item 3 separate splines
+    \end{itemize}
+    \item The angle of a simple joint (e.g., elbow)
+    \begin{itemize}
+        \item 1 spline
+    \end{itemize}
+    \item The angles of a complex joint (e.g., hip)
+    \begin{itemize}
+        \item 2 or more splines
+    \end{itemize}
+    \item The size of an object
+    \begin{itemize}
+        \item 1 spline, or maybe a spline for each of 3 different axes
+    \end{itemize}
+    \item The color of an object
+    \begin{itemize}
+        \item 3 splines for R, G, B
+    \end{itemize}
+    \item Etc.
+\end{itemize}
+
+\subsection*{Using Motion Curves}
+\begin{itemize}
+    \item Simplest usage:
+    \begin{itemize}
+        \item Look at every parameter that changes during the animation
+        \item Use Hermite interpolation (initialized as a Catmull-Rom spline) in time
+        \item Allow animator to adjust values, adjust slopes, break continuity, add knots, move knots. ...
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Problem}
+\begin{itemize}
+    \item Re-timing animations is not so simple
+    \begin{itemize}
+        \item If you adjust a knot position, it changes the shape of the spline, not just the speed
+        \item Particularly for Hermite splines, slopes will be off
+    \end{itemize}
+    \item Partial solution: Separate the shape of the motion curve fro the timing of the motion along the curve
+\end{itemize}
+
+\subsection*{Time as a Motion Curve}
+\begin{itemize}
+    \item Rename parameter of motion curves to "u"
+    \item Then make a motion curve for time: $u(t)$
+    \item Could have one global timing curve $u(t)$ or separately adjust timing for each variable, or group of variables.
+\end{itemize}
+
+\subsection*{Parameterization}
+\begin{itemize}
+    \item Unsatisfactory still: $u$ doesn't really have a good meaning
+    \item For example, to make an object move with constant speed along an arc, $u(t)$ may need to be complicated
+    \item Solution: We will introduce a new map based on arc length $s$
+    \begin{itemize}
+        \item Can easily control the speed of an object\
+        \item Timing curve will now be $s(t)$, where $s$ means distance traveled along the curve
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Arc Length of a Curve}
+\begin{itemize}
+    \item Arc length is just the length of a curve
+    \begin{itemize}
+        \item Think of laying a tape measure along the curve $P(u)$
+        \item Where $P(u)$ is the 3D position of the curve at parameter value $u$
+        \begin{itemize}
+            \item Really three curves: $X(u), Y(u), Z(u)$
+        \end{itemize}
+    \end{itemize}
+    \item Parametric Definition:
+    \[s(u) = \int_{u_1}^{u_2} \left\vert \frac{\text{d}P}{\text{d}u}\right\vert\text{d}u\]
+    \begin{itemize}
+        \item Recall how to measure vector norm:
+        \[\left\vert \frac{\text{d}P}{\text{d}u}\right\vert = \sqrt{\left(\frac{\text{d}X}{\text{d}u}\right)^2 + \left(\frac{\text{d}Y}{\text{d}u}\right)^2 + \left(\frac{\text{d}Z}{\text{d}u}\right)^2}\]
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2D Example}
+\begin{itemize}
+    \item Compute a differential length
+    \begin{center}
+        \includegraphics*[scale=0.8]{W4_1.png}
+    \end{center}
+    \item Integrate to compute the total arc length
+\end{itemize} 
+
+\subsection*{Parametric Circle}
+\begin{itemize}
+    \item Parametric equation of a circle:
+    \[[x(t), y(t)] = [R \cos(t), R\sin(t)], \hspace{1cm} t \in [0, 2\pi]\]
+    \item Differential arc length:
+    \[\text{d}s = \sqrt{\left(\frac{\text{d}x}{\text{d}t}\right)^2 + \left(\frac{\text{d}y}{\text{d}t}\right)^2} \text{d}t\]
+    \item Substituting and differentiating:
+    \[\text{d}s = \sqrt{R^2 \sin^2(t) + R^2 \cos^2(t)} \text{d}t = R \text{d}t\]
+    \item Integrating: 
+    \[S(t) = \int_0^t R\text{d}t = tR \vert_0^{2\pi}\]
+\end{itemize}
+
+\subsection*{Cubic Polynomial Splines}
+\begin{align*}
+    P(u) &= \begin{bmatrix} x(u) \\ y(u) \\ z(u) \end{bmatrix} = \begin{bmatrix}a_x u^3 + b_x u^2 + c_x u + d_x \\ a_y u^3 + b_y u^2 + c_y u + d_y \\ a_z u^3 + b_z u^2 + c_z u + d_z \end{bmatrix}  
+    S(u) &= \int_{u_1}^{u_2} \sqrt{\left(\frac{x(u)}{\text{d}u}\right)^2 + \left(\frac{y(u)}{\text{d}u}\right)^2 + \left(\frac{z(u)}{\text{d}u}\right)^2} \text{d}u\\
+    &= \int_{u_1}^{u_2} \sqrt{Au^4 + Bu^3 + Cu^2 + Du + E}\text{d}u
+\end{align*}
+
+\subsection*{Numerical Computation}
+\begin{itemize}
+    \item Analytic approach is hopeless
+    \begin{itemize}
+        \item Even analytically solving the integral $s(u)$ is hard, solving for $u$ in terms of $s$ is worse.
+    \end{itemize}
+    \item Numerical approach
+    \item Use approximate evaluation of $s(u)$ to get a table of values
+    \begin{itemize}
+        \item Cut up curve into small line segments and add up their lengths
+    \end{itemize}
+    \item Then interpolate a smooth curve through the values (Catmull-Rom)
+    \begin{itemize}
+        \item Use table of $s$ values as knots and associated $u$ values as control points
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Forward Differencing}
+\begin{center}
+    \includegraphics*[scale=0.8]{W4_2.png}
+\end{center}
+
+Typically $t_0 = 0$, $t_{i + 1} - t_i = \Delta t$\\
+\begin{itemize}
+    \item Red line is a linear approximation of the blue curve.
+    \item To do this, you would find the position at for example, 30 points, and linearly interpolate them.  The connected line segments approximate the curve.
+    \begin{itemize}
+        \item Once this is done, create a table that maps the parametric entry $u$ to the arc length on the line, $s$.  Then, when animating, interpolate between the arc lengths.
+        \item Example:
+            [INSERT TABLE]
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Calculate $s$ With Rounding}
+\begin{itemize}
+    \item Given parametric entry find arc length
+    \[i = (int)\left(\frac{parametric\:\:entry\:\:(u)}{distance\:\:between\:\:entries} + 0.5\right)\]
+    \item For $u = 0.73$
+    \[i = (int) \left(\frac{0.73}{0.05}+ 0.5\right) = 15\]
+    \item So, arc length = s[i] = s[15] = 0.959
+    \item Instead of rounding, interpolate:
+    \[i = (int)\left(\frac{parametric\:\:entry\:\:(u)}{distance\:\:between\:\:entries}\right) = 14\]
+    \[i + 1 = 15\]
+    \begin{center}
+        That is $u \in [u[i], u[i + 1]]$
+    \end{center}
+    \begin{align*}
+        S(u) &= S[i] + \frac{u - u[i]}{u[i + 1] - u[i]}(S[i + 1] - S[i])\\
+        &= 0.944 + \frac{0.73 - 0.70}{0.75 - 0.70} (0.959 - 0.944)
+    \end{align*}
+\end{itemize}
+
+\subsection*{How Can We Control the Sampling Error?}
+\begin{itemize}
+    \item Adaptively subdivide
+    \item First compare:
+    \begin{itemize}
+        \item length(start, middle) + length(middle, end) to length (start, end)
+        \item Essentially, sample the points more finely when the line has higher curvature.
+    \end{itemize}
+    \item If the difference is too large, subdivide
+    \item Use linked list to store data
+    \item Finally, copy to a fixed-size table
+\end{itemize}
+
+\subsection*{Numerical Computation}
+\begin{itemize}
+    \item Numerical methods exist to approximate the integral of a curve given sample points and derivatives
+    \item Instead of using the sum of linear segments, use a numerical method to compute the sum of curved segments
+\end{itemize}
+
+\subsection*{Gaussian Quadrature}
+\begin{itemize}
+    \item Commonly used to integrate a function between -1 and +1
+    \begin{itemize}
+        \item Function to be integrated is evaluated at specific points within [-1, +1] and is multiplied by pre-calculated weights
+        \[\int_{-1}^1 f(u) = \sum_i w_i f(u_i)\]
+        \item More sample points lead to better accuracy
+    \end{itemize}
+    \item Compute arc length of cubic curve
+    \begin{itemize}
+        \item Adaptive Gaussian integration monitors errors to subsample
+        \item Build a table that maps parameter values to arc length values
+        \item To solve arc length at $u$, find $u_i$, and $u_{i + 1}$ that bound $u$
+        \item Use Gaussian quadrature to compute intermediate arc length between those at $u_i$ and $u_{i + 1}$
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Inverse Map}
+\begin{itemize}
+    \item However, the question we really want to answer is what value of $u$ gives us a specific arc length $s$ along the curve $P(u)$?
+    \begin{itemize}
+        \item i.e., we want to invert the arc length function $s(u)$
+        \item Let's call this $u(s)$
+    \end{itemize}
+    \item Then the timing curve is $s(t)$, which feeds into $u(s)$, which feeds into motion curve $P(u)$:
+    \begin{itemize}
+        \item Position at time $t$ is $P(u(s(t)))$
+    \end{itemize}
+    \item Question remains: How to calculate $u(s)$?
+\end{itemize}
+
+\subsection*{First Approach}
+\begin{itemize}
+    \item Use the previous table of samples
+    \item Problem?
+    \item Arc Length $s$ is not a linear function of $u$
+    \begin{itemize}
+        \item Given $s$, we must search to find the value of $t$ (index) in the table
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Computs $u$ Given $s$}
+\begin{itemize}
+    \item Compute $u$ such that $f(u) = s - \text{length}(u_0, u) = 0$.
+    \item This is a classic problem of root finding
+    \item Methods?
+    \begin{itemize}
+        \item Bisection
+        \item Newton-Raphson
+        \item Secant
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Bisection Method}
+\begin{itemize}
+    \item Need two initial guesses that bracket the root
+    \begin{itemize}
+        \item let $x_c = \frac{1}{2}(x_a + x_b)$
+        \item if $f_c = f(x_c) = 0$ then $x = x_c$ is an exact solution: return $x_c$
+        \item else, if $f_a \cdot f_c < 0$ then the root lies in the interval $(x_a, x_c)$,
+        \item else the root lies in the interval $(x_c, x_b)$.
+        \item replace the interval $(x_a, x_b)$ with either $(x_a, x_c)$ or $(x_c, x_b)$, whichever brackets the root
+        \item repeat until $f(x_c) < $ threshold
+        \item return $x_c$
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.8]{W4_3.png}
+\end{center}
+
+\subsection*{Newton-Raphson Method}
+\begin{itemize}
+    \item Based on Taylor expansion:
+    \begin{align*}
+        f(x) &= f(x_0) + (x - x_0) f'(x_0) + \frac{(x-x_0)^2}{2} f''(x_0) + \cdots + \frac{(x - x_0)^n}{n!} f^{(n)}(x_0)\\
+        f(x) \approx f(x_0) + (x - x_0) f'(x_0) + O(\vert x - x_0 \vert ^3)
+    \end{align*}
+    \item Set $f(x) = 0$ and solve for $x = x_r$
+    \begin{align*}
+        0 = f(x_r) &\approx f(x_0) + (x_r - x_0) f'(x_0)\\
+        \rightarrow 0 &\approx f(x_0) + (x_r - x_0) f'(x_0)\\
+        \rightarrow x_r &\approx x_0 - f(x_0) / f'(x_0)
+    \end{align*}
+    \item Iteratively converge to the root
+    \[x_{n + 1} = x_n - f(x_n) / f'(x_n)\]
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.8]{W4_4.png}
+\end{center}
+
+\subsection*{Secant (Chord)}
+\begin{itemize}
+    \item Same as Newton-Raphson except that the derivative is approximated assets
+    \[f'(x_n) = \frac{f(x_n) - f(x_{n - 1})}{x_n - x_{n - 1}}\]
+    \begin{itemize}
+        \item Substituted in Newton-Raphson, this gives
+        \[x_{n + 1} = x_n - \frac{(x_n - x_{n - 1})}{f(x_n) - f(x_{n - 1})} f(x_n)\]
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Controlling the Speed Along a Curve}
+\begin{center}
+    \includegraphics*[scale=0.8]{W4_5.png}
+\end{center}
+\begin{itemize}
+    \item \textbf{Arc length is not proportional to time.}
+    \item Equal Arc lengths
+    \begin{itemize}
+        \item Constant speed
+    \end{itemize}
+    \item Smooth motion
+    \begin{itemize}
+        \item Easy in - Easy out
+        \item Acceleration - Deceleration
+    \end{itemize}
+    \item Relate time to arc length: easy(t)
+\end{itemize}
+\subsubsection*{Speed Control}
+\begin{itemize}
+    \item Given arc-length parameterized curve
+    \item Let $s(t)$ be the distance along the curve at time $t$
+    \begin{itemize}
+        \item Normalize total distance to 1.0
+        \item Monotonically increasing and continuous
+    \end{itemize}
+    \item To ease in/out, make $s(t) = easy(t)$ that looks like this:
+    \begin{center}
+        \includegraphics*[scale=0.7]{W4_6.png}
+    \end{center}
+\end{itemize}
+\subsection*{Approach 1 for Easy-In/Easy-Out}
+\begin{itemize}
+    \item Let's use the sine function
+    \item Scale so $s$ and $t$ in $[0, 1]$
+    \[s(t) = ease(t) = \frac{\sin(\pi t - \frac{\pi}{2}) + 1}{2}\]
+\end{itemize}
+\subsection*{Approach 2: Slow in, Constant Middle, Slow Out}
+\begin{itemize}
+    \item Let's use 2 sinusoidal segments and a line
+    \begin{itemize}
+        \item First part: Sine from $-\pi/2$ to $0$
+        \item Second part: line (45 deg. slope)
+        \item Third part: Sine from $0$ to $\pi/2$
+    \end{itemize}
+    \item We can actually use the previous easy-in/easy-out function between $[0, 0.5]$ and $[0.5, 1]$
+    \begin{center}
+        \includegraphics*[scale=0.7]{W4_7.png}
+    \end{center}
+    \item We need to scale the timing and the values to ensure continuous first derivatives!
+\end{itemize}
+\subsubsection*{Ensuring Continuous Derivatives}
+\begin{itemize}
+    \item Constraints
+    \begin{align*}
+        S(k_1) &= k_1\\
+        S(k_2) &= k_2\\
+        S'(k_1+) &= S'(k_1-)\\
+        S'(k_2+) = S'(k_2-)
+    \end{align*}
+\end{itemize}
+\subsection*{Approach 3: Parabolic Ease-in/Ease-out}
+\begin{itemize}
+    \item Sine functions are expensive, so\dots
+    \begin{itemize}
+        \item Constant Acceleration
+        \item Constant intermediate velocity
+        \item Constant deceleration
+        \begin{center}
+            \includegraphics*[scale=0.7]{W4_8.png}
+        \end{center}
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Velocity and Distance}
+\begin{itemize}
+    \item Velocity:
+    \begin{center}
+        \includegraphics*[scale=0.8]{W4_9.png}
+    \end{center}
+    \begin{itemize}
+        \item $v = v_0 \frac{t}{t_1}$               $0.0 < t < t_1$
+        \item $v = v_0$                          $t_1 < t < t_2$
+        \item $v = v_0 (1.0 - \frac{t - t_2}{1 - t_2})$                $t_2 < t < 1$
+    \end{itemize}
+    \item Distance:
+    \begin{itemize}
+        \item The distance traveled is the area under the velocity curve
+        \[1. = \frac{1}{2} v_0 t_1 + v_0 (t_2 - t_1) + \frac{1}{2} v_0 (1 - t_2)\]
+        \item Integrate the velocity to find the distance at time $t$
+        \begin{align*}
+            d(t) &= v_0 \frac{t^2}{2t_1},\hspace{4.8cm} 0 < t < t_1\\
+            d(t) &= v_0 \frac{t_1}{2} + v_0(t - t_1), \hspace{3.1cm} t_1 < t < t_2\\
+            d(t) &= v_0 \frac{t_1}{2} + \left(v_0 - \frac{v_0 \frac{t - t_2}{1 - t_2}}{2}\right)(t - t_2), \hspace{0.95cm} t_2 < t < 1
+        \end{align*}
+    \end{itemize}
+\end{itemize}
+
+\subsection*{General Velocity Curves}
+\begin{itemize}
+    \item Velocity curves can have arbitrary shapes; for example, Splines
+    \item If the animator works with velocity Curves
+    \begin{itemize}
+        \item The curve must maintain the average velocity otherwise the distance changes
+    \end{itemize}
+\end{itemize}
+
+\section*{Path Following}
+\begin{itemize}
+    \item What's wrong with this?
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.7]{W4_10.png}
+\end{center}
+\subsection*{Frenet Frame}
+\begin{itemize}
+    \item Partial solution: Moving right-handed system along path: $(u, v, w)$
+    \begin{center}
+        \includegraphics*[scale=0.7]{W4_11.png}
+    \end{center}
+\end{itemize}
+\subsection*{How Do WE Compute $u, v, w$?}
+\begin{align*}
+    w &= P'(t)                             &\text{tangent along the derivative}\hspace{4.45cm}\\
+    u &= P'(t) \times P''(t)               &\text{perpendicular to both tangent }P'(t) \text{ and curvature } P''(t)\\
+    v &= w \times u                        &\text{perpendicular to both }w \text{ and }u\hspace{4cm}
+\end{align*}
+\begin{itemize}
+    \item Normalize the vectors!
+\end{itemize}
+
+\subsection*{Discontinuous Curvature}
+\begin{itemize}
+    \item Example: Two semi-circles
+    \begin{itemize}
+        \item Curvature discontinuous at P
+        \begin{center}
+            \includegraphics*[scale=0.7]{W4_12.png}
+        \end{center}
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Straight Segments}
+\begin{center}
+    \includegraphics*[scale=0.7]{W4_13.png}
+\end{center}
+\begin{itemize}
+    \item $P''(t) = 0$
+    \item Solution: Interpolate frames before and after straight segments
+    \begin{itemize}
+        \item They only differ by a rotation around $w$
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Other Limitations}
+\begin{itemize}
+    \item Camera motion
+    \begin{itemize}
+        \item Bumpy ride makes the camera look up / down
+        \item Often people look ahead and not along the tangent; e.g., driving along a curve
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Adding a Center of Interest}
+\begin{center}
+    \includegraphics*[scale=0.5]{W4_14.png}
+    \hspace{1cm}
+    \includegraphics*[scale=0.5]{W4_15.png}
+\end{center}
+$w = COI - P(t)$\\
+$u = y-axis \times w$\\
+$v = w \times u (\text{parallel to $y$-axis})$
+\begin{itemize}
+    \item (The textbook has the formulas for negative $w$)
+\end{itemize}
+
+
+
+\end{document}
