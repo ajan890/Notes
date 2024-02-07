@@ -1,0 +1,170 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+\graphicspath{{./assets/images/Week 5}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+
+\title{CHEM 20B Week 5}
+
+\author{Aidan Jan}
+\date{\today}
+\begin{document}
+\maketitle
+\section*{Spontaneous Processes}
+The first law of thermodynamics states that \textbf{if} a reaction takes place, the total energy of the universe remains unchanged.\\
+However, the first law does not address the questions that lies behind the "\textbf{if}".
+\begin{itemize}
+    \item Why do some reactions have a \textit{tendency} to occur?
+    \item Why does a reaction even happen?
+\end{itemize}
+
+\subsection*{Spontaneous Change}
+If \textbf{no external influence drives a change} (e.g., no work done on the system) the change is \textbf{spontaneous}.\\
+Examples:
+\begin{itemize}
+    \item A hot block of metal spontaneously cools to the temperature of its surroundings, while the reverse process does not occur.
+    \item A gas expands spontaneously into another evacuated flask, but the reverse process does not occur.
+\end{itemize}
+
+\subsection*{Nonspontaneous Change}
+Changes can be \textit{made to happen} in an "unnatural" direction.
+\begin{itemize}
+    \item We can force an electric current through a block of metal to heat it to a higher temperature
+    \item We can drive a gas into a smaller volume by pushing it with a piston.
+\end{itemize}
+These are examples of a \textit{nonspontaneous change}: we have to force them to happen; a nonspontaneous change is done with \textbf{work}.
+
+\rule{\paperwidth}{0.4pt}
+
+\begin{itemize}
+    \item We can conclude that a spontaneous process has a direction.
+    \item A process that is spontaneous in one direction is \textit{nonspontaneous} in the opposite direction.
+    \item Temperature may also affect the spontaneity of a process.
+\end{itemize}
+
+\subsection*{Reverisble Processes}
+A \textbf{reversible process} is one that can go back and forth between states along the same path.
+\begin{itemize}
+    \item The reverse process restores the system to its original state.
+    \item The path taken back to the original state is \textit{exactly} the reverse of the forward process.
+    \item There is no net change in the system or the surroundings when this cycle is completed.
+    \item Completely reversible processes are too slow to be attained in practice.
+    \item For a system at equilibrium, reactants and products can interconvert \textit{reversibly}.
+\end{itemize}
+Consider the interconversion of ice and water at 1 atm, 0 $^\circ$C.
+\begin{itemize}
+    \item We now add heat to the system from the surroundings.
+    \begin{itemize}
+        \item We melt 1 mole of ice to form 1 mole of liquid water.
+        \begin{itemize}
+            \item $q = \Delta H_{fus}$
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+To return to the original state, we reverse the procedure.
+\begin{itemize}
+    \item We remove the same amount of heat from the system to the surroundings.
+    \item Ice and water are in equilibrium
+\end{itemize}
+
+\subsection*{Irreversible Processes}
+A \textbf{irreversible process} cannot be reversed to restore the system and surroundings back to their original state.
+\begin{itemize}
+    \item A different path (with different values of $q$ and $w$) must be taken.
+    \item Consider a gas in a cylinder with a piston.
+    \begin{itemize}
+        \item Remove the partition, and the gas expands to fill the space.
+        \item No P-V work is done on the surroundings.
+        \begin{itemize}
+            \item $w = 0$
+        \end{itemize}
+        \item Now use the piston to compress the gas back to the original state.
+        \item The surroundings must do work on the system.
+        \begin{itemize}
+            \item $w > 0$
+        \end{itemize}
+    \end{itemize}
+    \item A different path is required to get the system back to its original state.
+    \item Note that the surroundings are NOT returned to their original conditions.
+    \item For a spontaneous process, the path between reactants and products is \textit{irreversible}.
+\end{itemize}
+
+\section*{Entropy and Disorder}
+The \textbf{natural progression} of a system and its surroundings is from \textbf{order to disorder, from lower to higher entropy}.\\
+To quantify entropy we take a thermally insulated, sealed flask or a calorimeter, to measure and make precise predictions about disorder.\\
+A entropy change in a system is calculated as:
+\[\Delta S = \frac{q_{rev}}{T}\]
+$q$ is energy transferred, "rev" means energy must be transferred reversibly, \textbf{infinitesimal change}, T is the absolute temperature, and the typical units for entropy are $J \cdot K^{-1}$.
+
+\subsection*{A Molecular Statistical Interpretation of Entropy}
+\begin{itemize}
+    \item \textit{Statistical thermodynamics} is a field that uses statistics and probability to link the microscopic and macroscopic worlds.
+    \begin{itemize}
+        \item Entropy may be connected to the behavior of atoms and molecules.
+        \item Envision a \textbf{microstate}: a snapshot of the positions and speeds of all molecules in a sample of a particular macroscopic state at a given point in time.
+        \item Consider a molecule of ideal gas at a given temperature and volume.
+        \begin{itemize}
+            \item A microstate is a single possible arrangement of the positions and kinetic energies of the gas molecules.
+            \item Other snapshots are possible (different microstates).
+        \end{itemize}
+        \item Each thermodynamic state has a characteristic number of microstates ($\Omega$)
+    \end{itemize}
+\end{itemize}
+The Boltzmann equation shows how entropy ($S$) relates to $\Omega$.
+\[S = k_B \ln \Omega\]
+where $k_B$ is Boltzmann's constant ($1.38 \times 10^{-23} J/K$).\\
+Entropy is thus a measure of how many microstates are associated with a particular macroscopic state.
+\begin{itemize}
+    \item Any change in the system that increases the number of microstates gives a positive value of $\Delta S$ and vice versa.
+    \item In general, the number of microstates will increase with an increase in volume, and increase in temperature, or an increase in the number of molecules because any of these changes increases the possible positions and energies of the molecules.
+\end{itemize}
+\subsection*{Making Qualitative Predictions About $\Delta S$}
+\begin{itemize}
+    \item In most cases, an increase in the microstates (and thus entropy) parallels an increase in:
+    \begin{itemize}
+        \item temperature
+        \item volume
+        \item number of independently moving particles.
+    \end{itemize}
+    \item Consider the melting of ice.
+    \begin{itemize}
+        \item In ice, the molecules are held rigidly in a lattice.
+        \item When it melts, the molecules will have more freedom to move (increases the number of degrees of freedom).
+        \item The molecules are more randomly distributed.
+    \end{itemize}
+    \item Consider a KCl crystal dissolving in water.
+    \begin{itemize}
+        \item The solid KCl has ions in a highly ordered arrangement.
+        \item When the crystal dissolves, the ions have more freedom.
+        \item They are more randomly distributed.
+        \item However, now the water molecules are more ordered.
+        \item Some must be used to hydrate the ions.
+        \begin{itemize}
+            \item Thus this example involves both ordering and disordering.
+            \item The disordering usually predominates (for most salts).
+            \item Some salts do not dissolve in water (e.g., AgCl$_2$) because the ordering dominates.
+        \end{itemize}
+    \end{itemize}
+
+\end{itemize}
+
+
+
+\end{document}
