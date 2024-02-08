@@ -1,0 +1,390 @@
+\documentclass{article}
+\usepackage{setspace}
+\usepackage[utf8]{inputenc}
+\usepackage[bb=boondox]{mathalfa}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+%%Let's you change margins
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+
+%%Math symbols, proof environments
+\usepackage{amsmath,amsthm,amssymb, graphicx, tikz}
+
+%%Use this package for matrices
+\usepackage{array}
+
+%%Commands for common sets
+\newcommand{\R}{\mathbb{R}} %Real numbers
+\newcommand{\Z}{\mathbb{Z}} %Integers
+\newcommand{\dP}{\mathbb{P}}
+\newcommand{\example}{\textbf{Example: }}
+\newcommand{\E}{\mathbb{E}} %Expectation Value
+
+\newcommand{\der}{\text{d}}
+
+\graphicspath{{./assets/images/Week 5}}
+
+\title{CS 174C Week 5} 
+
+\author{Aidan Jan}
+
+\date{\today}
+\begin{document}
+\maketitle
+\section*{Physically Based Animation}
+\subsection*{What is a Particle}
+The most basic particle has a position $x$ in space.\\
+There may be other attributes, such as:
+\begin{itemize}
+    \item Velocity $v$
+    \item Acceleration $a$
+    \item Mass $m$
+    \item Orientation 
+    \item Radius
+    \item Temperature
+    \item averageColor
+    \item Type
+\end{itemize}
+The sky is the limit - e.g., AI agent models of behavior
+
+\subsection*{Basic Particle Animation}
+\begin{itemize}
+    \item Specify a velocity field $v(x, t)$ for any point in space $x$ at any time $t$
+    \item Break time $t$ into discrete steps $\Delta t$
+    \begin{itemize}
+        \item E.g., one step per frame - $\Delta t$ = 1/30th second
+        \item Or several steps per frame
+    \end{itemize}
+    \item Change the particle's current position $x(t)$ by integrating over the time step
+    \begin{itemize}
+        \item Forward Euler Integration:
+        \begin{itemize}
+            \item Since velocity $v(t) = \frac{\der x}{\der t} = \lim_{\Delta t \rightarrow 0} \frac{x(t + \Delta t) - x(t)}{\Delta t}$,
+            \[x(t + \Delta t) \approx x(t) + \Delta t \cdot v(x(t), t)\]
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Velocity Fields}
+\begin{itemize}
+    \item Velocity field can be a combination of pre-designed velocity elements
+    \begin{itemize}
+        \item E.g., explosions, vortices, \dots
+    \end{itemize}
+    \item Or from "noise"
+    \begin{itemize}
+        \item Smooth random number field
+    \end{itemize}
+    \item Or from a simulation
+    \begin{itemize}
+        \item Interpolate velocity from a computed grid
+        \item E.g., smoke simulation
+    \end{itemize}
+\end{itemize}
+\subsection*{Seeding Particles}
+\begin{itemize}
+    \item Need to add (or seed) particles to the scene.
+    \item Where?
+    \begin{itemize}
+        \item At a point source
+        \item Randomly on a surface or within a shaped volume
+        \item Where there currently are insufficient particles
+    \end{itemize}
+    \item When?
+    \begin{itemize}
+        \item At the start
+        \item Several per frame
+        \item Whenever there are insufficient particles somewhere
+    \end{itemize}
+    \item Need to figure out other attributes, not just position
+    \begin{itemize}
+        \item E.g., velocity pointing outwards in an explosion
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Basic Particle Rendering}
+\begin{itemize}
+    \item Draw a dot for each particle
+    \item But what do you do with several particles per pixel?
+    \begin{itemize}
+        \item Add: models each point emitting (but not absorbing light)
+        \begin{itemize}
+            \item Good for sparks, fire, \dots
+        \end{itemize}
+        \item More generally, compute depth order, do alpha-compositing
+        \begin{itemize}
+            \item and worry about shadows, etc.
+        \end{itemize}
+    \end{itemize}
+    \item Anti-aliasing
+    \begin{itemize}
+        \item Blur edges of particle; make sure they are blurred to cover at least a pixel
+    \end{itemize}
+    \item Particle with radius: Kernel function
+\end{itemize}
+
+\subsection*{Motion Blur}
+Easy for simple particles
+\begin{itemize}
+    \item Instead of a dot, draw a line from old position to new position
+    \begin{itemize}
+        \item During the "open shutter" time
+    \end{itemize}
+    \item May involve decrease in alpha
+    \item More accurately, draw a spline curve
+    \item May also need to take particle radius into account
+\end{itemize}
+
+\section*{Physics-Based Motion of a Particle}
+Second-order dynamic motion of mass particles
+\begin{itemize}
+    \item Newton's law $f = ma$
+    \item Need to specify force(s) f
+    \begin{itemize}
+        \item gravity, collisions, ...
+    \end{itemize}
+    \item Divide net force by particle mass $m$ to obtain acceleration $a$
+    \item Update velocity $v$ using acceleration
+    \item Update position $x$ using velocity
+\end{itemize}
+
+\subsection*{Integrating the Equations of Motion}
+\begin{itemize}
+    \item Newtons law:
+    \[a(t) = \frac{1}{m} f(x(t), v(t), t)\]
+    \item We solve this by numerical simulation
+    \begin{itemize}
+        \item Integrate second-order ODE forward in time
+        \begin{itemize}
+            \item Compute $v(t)$, $x(t)$, at $t = t_0, t_0 + \Delta t, t_0 + 2\Delta t, \dots, t_0 + n\Delta t, \dots$
+            \item Symplectic Euler integration step at each time t:
+            \begin{align*}
+            v(t + \Delta t) &= v(t) + \Delta t a(t)\\
+            x(t + \Delta t) &= x(t) + \Delta t v(t + \Delta t)
+            \end{align*}
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Mass-Spring-Damper Systems}
+\begin{itemize}
+    \item Particles interconnected by springs and dampers
+    \begin{itemize}
+        \item Simplest mass-spring-damper system:
+        \begin{center}
+            \includegraphics*[scale=0.8]{W5_1.png}
+        \end{center}
+        \begin{itemize}
+            \item Parallel spring and dampler: Voigt visco-elastic (v-e) element
+        \end{itemize}
+        \item Equations of motion with $f_{ij}^e = f_{ij}^s + f_{ij}^d$
+        \begin{align*}
+            m_i a_i &= f_i + f_{ij}^e\\
+            m_j a_j &= f_j + f_{ji}^e
+        \end{align*}
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Viscoelastic Forces}
+\begin{center}
+    \includegraphics*[scale=0.8]{W5_2.png}
+\end{center}
+\begin{align*}
+    d_{ij} &= x_j - x_i\\
+    d_{ij_m} &= \vert\vert d_{ij} \vert \vert\\
+    \hat d_{ij} &= d_{ij} / d_{ij_m}\\
+    v_{ij} &= v_j - v_i
+\end{align*}
+
+
+\begin{itemize}
+    \item Spring force (elastic)
+    \begin{itemize}
+        \item With spring constant $k_{ij}^s$ and natural length $l_{ij}$
+        \[f_{ij}^s = k_{ij}^s(d_{ij_m} - l_{ij}) \hat d_{ij}; \hspace{1.5cm} f_{ji}^s = -f_{ij}^s\]
+    \end{itemize}
+    \item Damper force (viscous)
+    \begin{itemize}
+        \item With damping constant $k_{ij}^d$
+        \[f_{ij}^d = -k_{ij}^d(v_{ij} \cdot \hat d_{ij}) \hat d_{ij}; \hspace{1.5cm} f_{ji}^d = -f_{ij}^d\]
+    \end{itemize}
+    \item Visco-elastic element force: $f_{ij}^e = f_{ij}^s + f_{ij}^d$
+\end{itemize}
+
+\pagebreak
+
+\subsubsection*{Bigger Systems}
+Each line represents a viscoelastic element
+\begin{center}
+    \includegraphics*[scale=0.8]{W5_3.png}
+\end{center}
+
+\subsection*{Putting Everything Together}
+\begin{itemize}
+    \item Particle system parameters
+    \begin{itemize}
+        \item An array $P[i]$ of particle data structures, each structure containing
+        \begin{itemize}
+            \item particle mass $m$
+            \item particle position $x$
+            \item particle velocity $v$
+            \item net force $f$ acting on particle
+        \end{itemize}
+        \item An array $S[k]$ of v-e element data structures, each structure containing
+        \begin{itemize}
+            \item pointer to particle $i$
+            \item pointer to particle $j$
+            \item spring constant $k^s$ and natural length $l_{ij}$
+            \item damper constant $k^d$
+        \end{itemize}
+    \end{itemize}
+    \item Emvironmental parameters
+    \begin{itemize}
+        \item Perhaps gravity $g$, other external forces $f_i$ and/or force fields, etc.
+    \end{itemize}
+    \item Initial conditions: $P[i].x = x_i(0); P[i].v = v_i(0);$
+\end{itemize}
+\textbf{Simulation loop} (starting from $t = 0$ and initial particle positions and velocities)
+\begin{enumerate}
+    \item For all particles $i$, initialize force variables $P[i].f = 0$
+    \item For all v-e elements $k$, using particles $P[i]$ and $P[j]$ connected by $S[k]$, compute visco-elastic force $f_{ij}^e$; accumulate $f_{ij}^e$ on $P[i]$ and $-f_{ij}^e$ on $P[j]$
+    \item For all particles $i$, accumulate all external forces acting on particle $P[i]$
+    \item For all particles $i$, update
+    \begin{align*}
+        P[i].v &:= P[i].v + \Delta t \frac{P[i].f}{P[i].m}\\
+        P[i].x &:= P[i].x + \Delta t P[i].v
+    \end{align*}
+    \item Update $t \leftarrow t + \Delta t$ and go to (1).
+\end{enumerate}
+
+\section*{Particle-Based Fluid Flow Simulation}
+\subsection*{Lenard-Jones Force Profile}
+\begin{center}
+    \includegraphics*[scale=0.8]{W5_4.png}
+\end{center}
+
+\subsection*{Discrete Fluid Model}
+The total force on a particle $i$ due to all other particles:
+\[g_i(t) = \sum_{j \neq i} g_{ij}(t)\]
+where
+\[g_{ij}(t) = m_i m_j \left(\frac{\alpha}{(d_{ij} + \varepsilon)^a} - \frac{\beta}{d_{ij}^b}\right) d_{ij}\]
+\begin{itemize}
+    \item Factors $\alpha$ and $\beta$ scale the strength of the attraction and repulsion ofrces
+    \item Exponents often set to $a = 2$ and $b = 4$
+    \item $\varepsilon$ is minimum required separation of particles
+\end{itemize}
+
+\subsection*{Heat (Diffusion) Equation}
+Diffusion of heat in materials
+\[\frac{\partial}{\partial t}(\mu \sigma \theta) - \nabla \cdot (C \nabla \theta) = q\]
+\begin{itemize}
+    \item $q$: rate of heat generation/loss per unit volume
+    \item $\mu$: mass density, kg/m$^3$
+    \item $\sigma$: specific heat, Joule/(kg $\cdot$ Kelvin), material property
+    \item $\theta$: temperature, Kelvin
+    \item $C$: thermal conductivity matrix, material property
+    \item $\nabla = \left[\frac{\partial}{\partial u}, \frac{\partial}{\partial v}, \frac{\partial}{\partial w}\right]$
+\end{itemize}
+
+\subsection*{Thermoelasticity}
+\begin{center}
+    \includegraphics*[scale=1]{W5_5.png}    
+\end{center}
+\begin{itemize}
+    \item Spring constant $k_{ij}$ is inversely related to $(\theta_i + \theta_j) / 2$
+    \item In the molten state, we can use Lenard-Jones inter-particle forces.
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.8]{W5_6.png}
+\end{center}
+
+\subsection*{Time Integration Methods}
+\begin{itemize}
+    \item Issues
+    \begin{itemize}
+        \item Stability
+        \item Accuracy 
+        \item Efficiency
+    \end{itemize}
+    \item Two main categories
+    \begin{itemize}
+        \item Explicit Methods
+        \item Implicit Methods
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Explicit (Forward) Euler Method}
+\begin{itemize}
+    \item Simple and fast for integrating First-order ODE
+    \[\frac{\der x(t)}{\der t} = v(x(t), t)\]
+    \[x(t + \Delta t) = x(t) + \Delta t \cdot v(x(t), t)\]
+    \item However,
+    \begin{itemize}
+        \item Only modest accuracy
+        \item Relatively unstable
+        \begin{itemize}
+            \item If $\Delta t$ is too large, accumulating error makes successive approximations spiral away
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Midpoint Method}
+\begin{itemize}
+    \item Better accuracy and stability
+    \begin{itemize}
+        \item Use more accurate central approximations
+        \[v\left(t +\frac{\Delta t}{2}\right)\approx \frac{x(t + \Delta t) - x(t)}{\Delta t}\]
+        \item Obtain update step
+        \[x(t + \Delta t) = x(t) + \Delta t \cdot v \left(x\left(t + \frac{\Delta t}{2}\right), t + \frac{\Delta t}{2}\right)\]
+        \item where from 1$^{\text{st}}$-order Taylor expansion
+        \[x\left(t + \frac{\Delta t}{2}\right) \approx x(t) + \frac{\Delta t}{2} v(t) = x(t) + \frac{\Delta t}{2} v(x(t), t)\]
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Symplectic Euler Method}
+\begin{itemize}
+    \item For 2$^{\text{nd}}$-order dynamical systems
+    \begin{itemize}
+        \item Forward Euler:
+        \begin{align*}
+            v(t + \Delta t) &= v(t) + \Delta t \frac{1}{m} f(x(t), v(t), t)\\
+            x(t + \Delta t) &= x(t) + \Delta t \cdot v(t)
+        \end{align*}
+        \item Better, Symplectic Euler
+        \begin{align*}
+            v(t + \Delta t) &= v(t) + \Delta t \frac{1}{m} f(x(t), v(t), t)\\
+            x(t + \Delta t) &= x(t) + \Delta t \cdot v(t + \Delta t)
+        \end{align*}
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Verlet Integration Method}
+\begin{itemize}
+    \item Commonly used for 2$^{\text{nd}}$-order dynamical systems
+    \begin{itemize}
+        \item Forward 1$^{\text{st}}$ difference
+        \[v(t) \approx \frac{ x(t + \Delta t) - x(t)}{\Delta t}\]
+        \item Backward 1$^{\text{st}}$ difference
+        \[v(t - \Delta t) \approx \frac{ x(t) - x(t - \Delta t)}{\Delta t}\]
+        \item Centered 2$^{\text{nd}}$ difference
+        \[a(t) \approx \frac{v(t) - v(t - \Delta t)}{\Delta t} = \frac{1}{\Delta t^2}(x(t + \Delta t) - 2x(t) + x(t - \Delta t))\]
+    \end{itemize}
+    \item Rearranging terms:
+    \[x(t + \Delta t) = 2x(t) - x(t - \Delta t) + \frac{\Delta t^2}{m} f(x(t), v(t), t)\]
+\end{itemize}
+
+\subsection*{Velocity Verlet Method}
+\begin{itemize}
+    \item (see \url{https://en.wikipedia.org/wiki/Verlet_integration})
+    \item Rather than two position vectors, need to store position and velocity vectors
+    \begin{itemize}
+        \item Assuming $a(t) = \frac{1}{m} f(x(t))$, iterate as follows:
+        \begin{align*}
+            x(t + \Delta t) &= x(t) + \Delta t v(t) + \frac{\Delta t^2}{2} a(t)\\
+            v(t + \Delta t) &= v(t) + \Delta t \frac{a(t) + a(t + \Delta t)}{2}
+        \end{align*}
+    \end{itemize}
+\end{itemize}
+
+\end{document}
