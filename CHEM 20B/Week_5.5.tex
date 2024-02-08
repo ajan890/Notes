@@ -20,6 +20,7 @@
 \graphicspath{{./assets/images/Week 5}}
 
 \newcommand{\solution}{\textbf{Solution:}} 
+\newcommand{\der}{\text{d}}
 
 \title{CHEM 20B Week 5}
 
@@ -51,7 +52,7 @@ Changes can be \textit{made to happen} in an "unnatural" direction.
 \end{itemize}
 These are examples of a \textit{nonspontaneous change}: we have to force them to happen; a nonspontaneous change is done with \textbf{work}.
 
-\rule{\paperwidth}{0.4pt}
+\noindent\rule{6.5in}{0.4pt}
 
 \begin{itemize}
     \item We can conclude that a spontaneous process has a direction.
@@ -162,9 +163,134 @@ Entropy is thus a measure of how many microstates are associated with a particul
             \item Some salts do not dissolve in water (e.g., AgCl$_2$) because the ordering dominates.
         \end{itemize}
     \end{itemize}
-
+    \item Consider the raction of NO($g$) with O$_2(g)$ to form NO$_2(g)$:
+    \[\text{2NO}(g) + \text{O}_2(g) \rightarrow \text{2 NO}_2(g)\]
+    \begin{itemize}
+        \item The total number of gas molecules decreases.
+        \begin{itemize}
+            \item Therefore, the entropy decreases.
+        \end{itemize}
+    \end{itemize}
+    \item How can we relate changes in entropy to changes at the molecular level?
+    \begin{itemize}
+        \item Formation of the new N-O bonds "tie up" more of the atoms in the products than in the reactants.
+        \item The \textit{degrees of freedom} associated with the atoms have changed.
+        \item The greater the freedom of movement and degrees of freedom, the greater the entropy of the system.
+        \item Individual molecules have degrees of freedom associated with motions within the molecule.
+    \end{itemize}
+    \item In general, entropy will increase when:
+    \begin{itemize}
+        \item Liquids or solutions are formed from solids
+        \item Gases are formed from solids or liquids
+        \item The number of gas molecules increases.
+    \end{itemize}
 \end{itemize}
 
+\section*{The Second Law of Thermodynamics}
+The Entropy of the universe (i.e., the disorder in the world), never decreases; more precisely: entropy increases if there are irreversible processes and stays constant for reversible processes.
+\begin{itemize}
+    \item Entropy can be created but not destroyed.
+    \item Entropy need not be conserved.
+\end{itemize}
+
+\subsection*{Definition of Entropy}
+\[\Delta S = S_f - S_i = \int_i^f \frac{\der q_{rev}}{T}\]
+\begin{itemize}
+    \item Identify initial and final states
+    \item Select any convenient reversible path
+    \item Evaluate the integral
+\end{itemize}
+
+\subsection*{Entropy Changes of Reversible Processes}
+\begin{enumerate}
+    \item $\Delta S_{sys}$ for Isothermal Processes: \textbf{T is constant}.
+    \begin{align*}
+        \Delta S = \int_i^f \frac{\der q_{rev}}{T} = \frac{1}{T} \int_i^f \der q_{rev} &= \frac{q_{rev}}{T}\\
+        \Delta S &= \frac{q_{rev}}{T}
+    \end{align*}
+    \begin{enumerate}
+        \item \textbf{Compression/Expansion} of an Ideal Gas:
+        \[q_{rev} = nRT \ln \left(\frac{V_2}{V_1}\right)\]
+        \[\Delta S = nR \ln \left(\frac{V_2}{V_1}\right)\hspace{1.5cm}\text{(with constant T)}\]
+        \begin{itemize}
+            \item Entropy of a gas increases during isothermal expansion $V_2 > V_1$
+        \end{itemize}
+        \item \textbf{Phase Transition:} melting a solid at constant pressure
+        \[q_{rev} = q_p = \Delta H_{fus}\]
+        \[\Delta S = \frac{q_{rev}}{T_{fus}} = \frac{\Delta H_{fus}}{T_{fus}}\]
+        \begin{itemize}
+            \item The entropy increases when a solid melts.
+        \end{itemize}
+    \end{enumerate}
+    \item $\Delta S_{sys}$ for Processes with Changing Temperature
+    \[\Delta S = \int_i^f \frac{\der q_{rev}}{T}\]
+    \begin{enumerate}
+        \item Reverse Isochoric Process: Constant Volume
+        \[\der q_{rev} = n \cdot c_v \der T\]
+        \[\Delta S = \int_{T_1}^{T_2} \frac{\der q_{rev}}{T} = \int_{T_1}^{T_2} \frac{n \cdot c_v \der T}{T} = n \cdot c_v \int_{T_1}^{T_2} \frac{\der T}{T} = n \cdot c_v \ln \left(\frac{T_2}{T_1}\right)\]
+        \item Reverse Isobaric Process: Constant Pressure
+        \[\der q_{rev} = n \cdot c_p \der T\]
+        \[\Delta S = \int_{T_1}^{T_2} \frac{\der q_{rev}}{T} = \int_{T_1}^{T_2} \frac{n \cdot c_p \der T}{T} = n \cdot c_p \int_{T_1}^{T_2} \frac{\der T}{T} = n \cdot c_p \ln \left(\frac{T_2}{T_1}\right)\]
+    \end{enumerate}
+    \item $\Delta S$ for Surrounding: Heat gained by surruondings is the heat lost by the system.
+    \[q_{surr} = -q_{sys}\]
+    \begin{itemize}
+        \item At constant P:
+        \begin{align*}
+            q_{surr} &= -\Delta H_{sys} \\
+            \Delta S_{surr} &= \frac{-\Delta H_{sys}}{T_{surr}}
+        \end{align*}
+        \item The heat capacity of the surroundings is large: Heat transferred doesn't change \textbf{temperature}.
+    \end{itemize}
+\end{enumerate}
+\subsection*{Entropy Changes and Spontaneity}
+A process can occur \textbf{spontaneously} if the total entropy change for the thermodynamic universe of the process if positive:
+\[\Delta S_{univ} = \Delta S_{sys} + \Delta S_{surr} > 0\]
+For reversible processes:
+\[\Delta S_{univ} = \Delta S_{sys} + \Delta S_{surr} = 0\]
+Entropy is not conserved: $\Delta S_{univ}$ is continually increasing.
+
+\section*{The Third Law of Thermodynamics}
+The entropy of any pure substance (element or compound) in its equilibrium state approaches zero at the absolute zero of temperature.
+
+\subsection*{Standard-State Entropies}
+\[\Delta S = n \int_{T_1}^{T_2} \frac{c_p}{T}\der T\]
+$S_T$, absolute entropy of 1 mole of substance at temperature T
+\[S_T = \int_0^T \frac{c_p}{T}\der T\]
+Standard molar entropy
+\[S^\circ = \int_0^{298.15} \frac{c_p}{T}\der T + \Delta S \hspace{1cm}\text{(phase changes between 0 and 298.15K)}\]
+
+\section*{The Gibbs Free Energy}
+\[\Delta S_{tot} = \Delta S_{sys} + \Delta S_{surr}\]
+\begin{itemize}
+    \item $\Delta S_{tot} > 0$: spontaneous
+    \item $\Delta S_{tot} = 0$: reversible
+    \item $\Delta S_{tot} < 0$: nonspontaneous
+\end{itemize}
+
+\subsection*{The Nature of Spontaneous Processes at Fixed T and P}
+\[\Delta S_{surr} = \frac{- \Delta H_{sys}}{T_{surr}}\]
+\[\Delta S_{tot} = \Delta S_{sys} + \Delta S_{surr} = \Delta S_{sys} - \frac{\Delta H_{sys}}{T_{surr}} = \frac{-(\Delta H_{sys} - T_{surr}\Delta S_{sys})}{T_{surr}}\]
+\[T_{surr} = T_{sys} = T\]
+\[\Delta S_{tot} = \frac{-(\Delta H_{sys} - T\Delta S_{sys})}{T}\]
+
+\subsection*{Gibbs Free Energy Formula}
+We define the Gibbs Free Energy $G$:
+\[G = H - TS\]
+\[\Delta S_{tot} = \frac{-\Delta G_{sys}}{T}\]
+\begin{itemize}
+    \item $\Delta G_{sys} > 0$: nonspontaneous processes
+    \item $\Delta G_{sys} = 0$: reversible processes
+    \item $\Delta G_{sys} < 0$: spontaneous processes
+\end{itemize}
+
+\subsection*{Gibbs Free Energy and Phase Transitions}
+The standard molar Gibbs free energy of formation: $\Delta G_f^\circ$ is the change in Gibbs free energy for the reaction in which 1 mole of the compound in its standard state is formed from its elements in their standard states.
+\[\Delta G = \Delta H - T\Delta S\]
+
+\subsection*{Effects of Temperature on $\Delta G$}
+\[\Delta G^\circ = \Delta H^\circ - T \Delta S^\circ\]
+\[T^\circ = \frac{\Delta H^\circ}{\Delta S^\circ}\]
 
 
 \end{document}
