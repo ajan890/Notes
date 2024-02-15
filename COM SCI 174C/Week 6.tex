@@ -1,0 +1,320 @@
+\documentclass{article}
+\usepackage{setspace}
+\usepackage[utf8]{inputenc}
+\usepackage[bb=boondox]{mathalfa}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+%%Let's you change margins
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+
+%%Math symbols, proof environments
+\usepackage{amsmath,amsthm,amssymb, graphicx, tikz}
+
+%%Use this package for matrices
+\usepackage{array}
+
+%%Commands for common sets
+\newcommand{\R}{\mathbb{R}} %Real numbers
+\newcommand{\Z}{\mathbb{Z}} %Integers
+\newcommand{\dP}{\mathbb{P}}
+\newcommand{\example}{\textbf{Example: }}
+\newcommand{\E}{\mathbb{E}} %Expectation Value
+
+\newcommand{\der}{\text{d}}
+
+\graphicspath{{./assets/images/Week 6}}
+
+\title{CS 174C Week 6} 
+
+\author{Aidan Jan}
+
+\date{\today}
+\begin{document}
+\maketitle
+\section*{Collision Detection and Response}
+\subsection*{Aside: Object Geometry}
+\textbf{When considering particles colliding with objects, we need to know how to represent objects, and how to answer:}
+\begin{itemize}
+    \item Is a particle inside/outside an object?
+    \item Does the particle trajectory cross into the object?
+    \item What is the normal vector at some point on the object's surface?
+    \item What is the distance/direction to the surface in space?
+\end{itemize}
+\textbf{Standard geometric representations:}
+\begin{itemize}
+    \item Special geometries: plane, sphere, cylinder, prism, \dots
+    \item Height fields: $z = h(x, y)$
+    \item Triangle meshes - closed or open
+    \item Implicit functions: $f(x, y, z) = 0$
+\end{itemize}
+\subsection*{Ground Collisions}
+\subsubsection*{Collisions With a Plane}
+\textbf{Represent the plane with a point $P$ on the plane, and the (outward) normal $n$ of the plane}
+\begin{itemize}
+    \item Often simply $P = [0, 0, 0]^T$, $n = [0, 1, 0]^T$ - the ground plane
+    \item Particle at position $x$ is "inside" plane if $(x - P) \cdot n < 0$
+    \item Trajectory crosses if $(x - P) \cdot n$ changes sign
+    \item Distance to surface:
+    \begin{itemize}
+        \item if $n$ is unit length, $(x - P) \cdot n$ is the "signed distance"
+        \begin{itemize}
+            \item $vert ( - P) \cdot n \vert$ is the regular distance
+        \end{itemize}
+        \item $n$ or $-n$ is direction to the closest point on the surface
+        \begin{itemize}
+            \item $-n$ if $x$ is "outside"
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Collisions With a Sphere}
+\textbf{Represent the sphere with a center point $C$ and a radius $r$}
+\begin{itemize}
+    \item Particle at position $x$ is inside if $\Vert x - C \Vert - r < 0$
+    \item Trajectory cross is complicated
+    \begin{itemize}
+        \item Need to solve quadratic equation for intersection of straight line trajectory\dots
+    \end{itemize}
+    \item Outward object normal is $(x - C) / r$
+    \item Signed distance is $\vert x - C \vert - r$
+    \item Direction to closest point on surface is $\pm(x - C) / \vert x - C \vert$
+    \begin{itemize}
+        \item Sign depends on whether inside or outside
+        \item Beware of divide by zero at $x = C$
+        \item Note: matches up with object normal again!
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Collisions With Height Fields}
+\textbf{Especially good for terrain - a 2D array of heights}
+\begin{itemize}
+    \item Maybe stored as an image
+    \begin{itemize}
+        \item i.e., a displacement map from a plane
+    \end{itemize}
+\end{itemize}
+\textbf{Split up plane into triangles}
+\begin{itemize}
+    \item Particle inside:
+    \begin{itemize}
+        \item Figure out which triangle $(x, y)$ belongs to, check $z$ against equation of triangle's plane
+    \end{itemize}
+    \item Trajectory cross (for a stationary height field):
+    \begin{itemize}
+        \item Check all triangles along path (use 2D line-drawing algorithm to figure out which cells to check)
+    \end{itemize}
+    \item Object normal: get from the triangle
+    \item Distance, etc.: not so easy, but vertical distance is easy for shallow height fields
+\end{itemize}
+
+\subsubsection*{Collisions With Triangle Meshes}
+\textbf{For any decent sized mesh, will need to use an acceleration structure}
+\begin{itemize}
+    \item Could use background (hash-)grid, octree, kd-tree
+    \item Can also use bounding volume (BV) hierarchy
+    \begin{itemize}
+        \item Spheres, axis-aligned bounding boxes, oriented bounding boxes, polytopes, \dots
+    \end{itemize}
+    \item More exotic structures exist
+\end{itemize}
+\textbf{Particle inside (for a closed mesh):}
+\begin{itemize}
+    \item Shoot a ray out to infinity and count the number of crossings
+\end{itemize}
+\textbf{Trajectory cross (for a stationary mesh):}
+\begin{itemize}
+    \item For each candidate triangle (from acceleration structure), check a sequence of determinants
+\end{itemize}
+
+\section*{Collision Resolution}
+\begin{itemize}
+    \item We can now detect collisions.  Now what?
+\end{itemize}
+\subsection*{Repulsion Velocity Fields}
+\textbf{How do we create a repulsion velocity field?}
+\begin{itemize}
+    \item $v(x) = f(\text{distance}(x))n(x)$
+    \begin{itemize}
+        \item $n(x)$ is the outward unit normal to surface at $x$
+        \item $f$ is some function that monotonically decreases to zero
+        \begin{itemize}
+            \item Exponential $f(d) = e^{-kd}$
+            \item Linear drop, truncated to zero: $f(d) = \text{max}(0, m - kd)$
+            \item Or more complicated
+        \end{itemize}
+        \item Outward direction is plus/minus direction to closest point
+    \end{itemize}
+\end{itemize}
+\textbf{Aside: useful for more than just collisions}
+\begin{itemize}
+    \item e.g., firing particles streaming out of an object
+\end{itemize}
+
+\subsection*{Repulsion Force Fields}
+\textbf{Can do exactly the same trick for force-based motion}
+\begin{itemize}
+    \item Add repulsion field to $f(x)$
+\end{itemize}
+\textbf{Simple, often works, but there are sometimes problems}
+\begin{itemize}
+    \item What are you trying to model?
+    \item Robustness - high velocity impacts can penetrate arbitrarily far
+    \begin{itemize}
+        \item High velocity impacts may go straight through thin objects!
+    \end{itemize}
+    \item How much of a rebound do you want?
+\end{itemize}
+
+\subsection*{Penalty Methods}
+\textbf{Penalize Penetration:}
+\begin{center}
+    \includegraphics*[scale=0.85]{W6_1.png}
+\end{center}
+\begin{itemize}
+    \item Springs and damers to the rescue!
+    \begin{itemize}
+        \item Attach a zero-length "virtual" viscoelastic element at the point of entry
+    \end{itemize}
+\end{itemize}
+\textbf{For a Plane:}
+\begin{center}
+    \includegraphics*[scale=0.8]{W6_2.png}
+\end{center}
+\begin{itemize}
+    \item Normal force:
+    \[f_n = k_s \left((P_g - x(t)) \cdot \hat n\right) \hat n - k_d(v(t) \cdot \hat n) \hat n\]
+    \[f_n \cdot \hat n > 0\]
+\end{itemize}
+
+\subsection*{Spring and Damping Constants}
+\textbf{How do you come up with reasonable values for spring constants and damping constants?}
+\begin{itemize}
+    \item And how do you pick good step sizes for differential equation solver (Symplectic Euler, etc.)
+\end{itemize}
+\textbf{Look at 1-dimensional, simplified model}
+\begin{itemize}
+    \item $ma = F = -Kx - Dv$
+    \item where\dots
+    \begin{itemize}
+        \item $m$ is the mass, $a$ is the acceleration, $F$ is the force
+        \item $K$ is the spring constant, $D$ is the damping constant
+    \end{itemize}
+    \item Can solve it analytically.
+\end{itemize}
+
+\subsubsection*{Aside: Underdamped}
+\[D^2 - 4MK < 0\]
+\begin{itemize}
+    \item Oscillation with frequency:
+    \[\omega \sim \frac{1}{2\pi} \sqrt{\frac{K}{M}}\]
+    \item Characteristic time:
+    \[t \sim 2\pi \sqrt{\frac{M}{K}}\]
+    \item Exponentially decays at rate:
+    \[r = - \frac{D}{2M}\]
+    \item Characteristic time:
+    \[t \sim \frac{2M}{D}\]
+\end{itemize}
+
+\subsubsection*{Aside: Overdamped}
+\[D^2 - 4MK > 0\hspace{1.5cm}D = 2\sqrt{MK}\]
+\begin{itemize}
+    \item No continued oscillation
+    \item Fastest decay possible at rate:
+    \[r = -\frac{D}{2M}\]
+    \item Characteristic time:
+    \[t \sim \frac{2M}{D}\]
+\end{itemize}
+
+\subsubsection*{Aside: Critically Damped}
+\[D^2 - 4MK = 0\]
+\begin{itemize}
+    \item No continued oscillation
+    \item Exponentially decays at rates: 
+    \[r \sim -\frac{K}{D}, -\frac{D}{M}\]
+    \item Characteristic times:
+    \[t \sim \frac{D}{K}, \frac{M}{D}\]
+\end{itemize}
+
+\subsection*{Numerical Time Steps}
+\textbf{Should be proportional to minimum characteristic time}
+\begin{itemize}
+    \item Implicit time integration methods like Backward Euler actually let you take larger steps with stability, but kill all hope of accuracy for systems with small charateristic time
+\end{itemize}
+\textbf{For nonlinear multi-dimensional forces, what are $K$ and $D$?}
+\begin{itemize}
+    \item Estimate them by figuring out what is the fastest $\vert F \vert$ can change if you modify $x$ or $v$ respectively
+    \item This is all very approximate, so don't get hung up on getting the "right" answer
+    \item Anyhow, will ultimately need a "fudge factor" (from trial-and-error experiments)
+\end{itemize}
+
+\pagebreak
+\section*{Friction}
+\textbf{Coulomb friction:} $f_\text{f} \leq \mu f_\text{n}$
+\begin{center}
+    \includegraphics*[scale=0.8]{W6_3.png}
+\end{center}
+\begin{itemize}
+    \item Coefficient of friction $\mu$
+    \item $f_f$ opposes $f_a$:
+    \[f_f \leq -\mu \Vert f_n\Vert \frac{f_a}{\Vert f_a \Vert}\]
+    \item Traction: $f_f = -f_a$ until $f_f > f_T$\dots, then motion occurs
+\end{itemize}
+
+\subsection*{Friction Models}
+\textbf{Static (Coulomb) friction:} $\Vert f_s \Vert = \mu_s \Vert f_n \Vert$
+\begin{itemize}
+    \item $f_n = -(f \cdot n) n$ is the normal component of the force f
+    \item Must exceed static friction for object to start moving
+\end{itemize}
+\textbf{For object in motion,}
+\begin{itemize}
+    \item Kinetic (constant) friction model: $f_k = -\mu_k \Vert f_n\Vert \frac{v_t}{\Vert v_t \Vert}$
+    \begin{itemize}
+        \item Tangential component of velocity: $v_t = v - v_n$
+        \item Normal component of velocity: $v_n = (v \cdot n)n$
+    \end{itemize}
+    \item Viscous (linear) friction model: $f_v = -\mu_k \Vert f_n \Vert v_t$
+    \begin{itemize}
+        \item i.e., a drag force that acts tangentially with magnitude proportional to the tangential velocity and normal force
+    \end{itemize}
+\end{itemize}
+\pagebreak
+\section*{Collisions}
+\subsection*{Impulsive Collisions}
+\textbf{Model collision as a discrete event - a bounce}
+\begin{itemize}
+    \item Input: incoming velocity, object normal
+    \item Output: outgoing velocity
+\end{itemize}
+\textbf{Need some idea of how "elastic" the collision}
+\begin{itemize}
+    \item Fully elastic - reflection
+    \item Fully inelastic - sticks (or slides)
+\end{itemize}
+
+\subsection*{Newtonian Collisions}
+\textbf{For normal vector $n$, compute the components of the velocity $v$}
+\begin{itemize}
+    \item Normal component $v_N = (v \cdot n)n$
+    \item Tangential component $v_T = v - v_N$
+    \item Reflect normal component to obtain rebound velocity with coefficient of restitution $r$
+    \[v_{new} = v_t - r v_n\]
+\end{itemize}
+
+\subsection*{Relative Velocity in Collisions}
+\textbf{What if the particle hits a moving object?}
+\begin{itemize}
+    \item Now process collisions in terms of the relative velocity
+    \begin{itemize}
+        \item $v_{\text{ref}} = v_{\text{particle}} - v_{\text{object}}$
+        \item Resolve normal and tangential components of the relative velocity
+        \item Reflect normal part appropriately to get new $v_{\text{rel}}$
+        \item Then new $v_{\text{particle}} = v_{\text{object}} + v_{\text{rel}}^{\text{new}}$
+    \end{itemize}
+\end{itemize}
+
+
+\end{document}
+
+
