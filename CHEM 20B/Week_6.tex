@@ -1,0 +1,163 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+\graphicspath{{./assets/images/Week 6}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+\newcommand{\der}{\text{d}}
+
+\title{CHEM 20B Week 6}
+
+\author{Aidan Jan}
+\date{\today}
+\begin{document}
+\maketitle
+\section*{Chemical Equilibrium}
+\begin{itemize}
+    \item In principle, every chemical reaction is reversible... capable of moving in the forward of backward reaction
+    \item At equilibrium the two opposing reactions occur at the same rate.
+    \item Concentrations of chemical species do not change once equilibrium is established.
+    \item Example: N$_2(g)$ + 3 H$_2(g) \leftrightharpoons$ 2 NH$_3(g)$
+    \begin{center}
+        \includegraphics*[scale=0.8]{W6_1.png}
+    \end{center}
+\end{itemize}
+
+\subsection*{The Empirical Law of Mass Action}
+\[aA + bB \leftrightharpoons cC + dD\]
+\begin{itemize}
+    \item A and B are reactants, C and D are products.
+    \item K, the ratio at equilibrium, is always the same.  It is a constant and depends only on the temperature.
+    \[K_C = \frac{[C]_{eq}^c [D]_{eq}^d}{[A]_{eq}^a [B]_{eq}^b}\]
+    \[K_P = \frac{(P_C)_{eq}^c (P_D)_{eq}^d}{(P_A)_{eq}^a (P_B)_{eq}^b}\]
+    \item $K_C$ is for concentration in aqueous reactions, $K_P$ is for pressure in gaseous reactions.
+    \item Essentially,
+    \[K = \frac{\text{Products}}{\text{Reactants}}\]
+\end{itemize}
+
+\subsubsection*{Example}
+\[\text{3 H}_2(g) + \text{N}_2(g) \leftrightharpoons \text{2 NH}_3(g)\]
+\[K_P = \frac{(P_{\text{NH}_3}^2)_{eq}}{(P_{\text{H}_2}^3)(P_{\text{N}_2})}\]
+
+\subsection*{Law of Mass Action for Reactions involving Pure Substances and Multiple Phases}
+For example: Zn$(s)$ + 2 H$_2$O$^+ (aq) \leftrightharpoons$ Zn$^{2+}(aq)$ + H$_2(g)$ + 2 H$_2$O$(l)$
+\[K = \frac{([\text{Zn}^{2+}])_{eq}(P_{\text{H}_2})_{eq}}{([\text{H}_3\text{O}^+])^2_{eq}}\]
+\begin{itemize}
+    \item (s) = pure solid
+    \item (aq) = dissolved species (aqueous)
+    \item (g) = gas
+    \item (l) = pure liquid
+\end{itemize}
+\textbf{General Rules for writing the mass action law:}
+\begin{enumerate}
+    \item Gases enter the equilibrium expression as partial pressures, measured in atm.
+    \item Dissolved species enter as concentrations, in Molarity.
+    \item Pure solids and pure liquids do not appear in equilibrium expressions.
+    \item Products appear in the numerator and reactants appear in the denominator; each raised to a power equal its coefficient in the balanced chemical equation.
+    \item K is dimensionless.
+\end{enumerate}
+\section*{Thermodynamics Description of the Equilibrium State}
+In a reaction among ideal gases, the gas pressure is changing $P_1 \rightarrow P_2$ at a constant temperature.
+\begin{itemize}
+    \item $\Delta T = 0$
+\end{itemize}
+\[\Delta S = nR \ln \left(\frac{V_2}{V_1}\right) \hspace{1cm} \text{isothermal, ideal gas}\]
+\[G = H - TS\]
+\[\Delta G = \Delta (H - TS) = \Delta H - T \Delta S = -T \Delta S = -nRT\ln\left(\frac{V_2}{V_1}\right) = nRT\ln\left(\frac{P_2}{P_1}\right)\]
+Importantly,
+\[\Delta G = nRT\ln\left(\frac{P_2}{P_1}\right) = nRT\ln\left(\frac{P}{P_{ref}}\right)\]
+Since usually the beginning pressure $P_1 = 1$ atm, $P_{ref} = 1$ atm.  Thus,
+\[\Delta G = nRT\ln P\]
+
+\subsection*{The Equilibrium Expression for Reactions in the Gas Phase:}
+\[3 \text{NO}(g) \leftrightharpoons \text{N}_2\text{O}(g) + \text{NO}_2(g)\]
+\textbf{Derive $\Delta G$}
+\begin{center}
+    \includegraphics*[scale=0.8]{W6_2.png}
+\end{center}
+\begin{align*}
+    \Delta G_1 &= nRT\ln\left(\frac{P_2}{P_1}\right) = 3RT\ln\left(\frac{P_{ref}}{P_{NO}}\right) = RT\ln\left(\frac{P_{ref}}{P_{NO}}\right)^3\\
+    \Delta G_2 &= \Delta G^0\\
+    \Delta G_3 &= RT\ln\left(\frac{P_{N_2 O}}{P_{ref}}\right) + RT\ln\left(\frac{P_{NO_2}}{P_{ref}}\right) = RT\ln \left[\left(\frac{P_{N_2 O}}{P_{ref}}\right)\left(\frac{P_{NO_2}}{P_{ref}}\right)\right]\\
+\\
+\\
+    \Delta G &= \Delta G_1 + \Delta G_2 + \Delta G_3\\
+    &= RT\ln \left(\frac{P_{ref}}{P_{NO}}\right)^3 + \Delta G^0 + RT\ln\left[ \left(\frac{P_{N_2 O}}{P_{ref}}\right)\left(\frac{P_{NO_2}}{P_{ref}}\right)\right]\\
+    &= -RT\ln \left(\frac{P_{NO}}{P_{ref}}\right)^3 + \Delta G^0 + RT\ln\left[ \left(\frac{P_{N_2 O}}{P_{ref}}\right)\left(\frac{P_{NO_2}}{P_{ref}}\right)\right]\\
+    &= \Delta G^0 + RT\ln\left[\frac{\left(\frac{P_{N_2 O}}{P_{ref}}\right)\left(\frac{P_{NO_2}}{P_{ref}}\right)}{\left(\frac{P_{NO}}{P_{ref}}\right)^3}\right]
+    &= \Delta G^0 + RT \ln Q
+\end{align*}
+When the reaction arrives at equilibrium, $\Delta G = 0$ and $Q = K$
+$\Delta G^0 = -RT \ln K$
+
+\subsection*{Reactions in Idea Solutions}
+$\Delta G$ for $n$ moles of solute, as ideal (dilute) solution changes in concentration form $c_!$ to $c_2$ mol/L, is
+\[\Delta G = nRT \ln \left(\frac{c_2}{c_1} =\right) = nRT \ln \left( \frac{c}{c_{ref}}\right) = nRT \ln c\]
+\[c_{ref} = 1 M\]
+\[\Delta G = \Delta G^0 + RT \ln \left[\frac{\left(\frac{[C]}{c_{ref}}\right)^c\left(\frac{[D]}{c_{ref}}\right)^d}{\left(\frac{[A]}{c_{ref}}\right)^a \left(\frac{[B]}{c_{ref}}\right)^b}\right]\]
+\[\Delta G = \Delta G^0 + RT \ln Q\]
+When the reaction arrives at equilibrium, $\Delta G = 0$ and $Q = K$.
+\[\Delta G^0 = -RT \ln K\]
+\[K = \left[\frac{[C]^c[D]^d}{[A]^a[B]^b}\right]\]
+
+\subsection*{Properties of K}
+Consider the reaction:
+\[aA + bB \leftrightharpoons cC\]
+\begin{itemize}
+    \item The reverse reaction: Invert K.  $K' = 1 / K$
+    \item A balanced chemical equation is multiplied by a constant: Raise K to a power equal to that constant. $K' = K^C$, where $C$ is the constant multiplied.
+    \item When two reactions are added, the $K$-values multiply.  $K' = K_A \cdot K_B$, where $K_A$ and $K_B$ are the $K$-values of the two reactions.
+\end{itemize}
+
+\section*{The Reaction Quotient:}
+\[Q = \frac{(P_C)^c (P_D)^d}{(P_A)^a (P_B)^b}\]
+Where the partial pressures are the actual values measured at any point during the reactions, not just at equilibrium.
+\begin{itemize}
+    \item $Q < K$: reaction moves to the right
+    \item $Q = K$: system at equilibrium, no reaction
+    \item $Q > K$: reaction moves to the left
+\end{itemize}
+
+\begin{center}
+    \includegraphics*[scale=0.8]{W6_3.png}
+\end{center}
+
+\section*{Le Chatelier's Principle}
+\begin{itemize}
+    \item A system in equilibrium that is subjected to a stress will react in a way that tends to counteract the stress.  \textbf{System rearranges to mitigate change.}
+    \item Effects of changing the concentration of a reactant or product:
+    \begin{itemize}
+        \item Stress: Increase the concentration or pressure of species A
+        \item Response: The reaction will move in the appropriate direction to decrease A
+    \end{itemize}
+    \item Effects of Changing the Volume
+    \begin{itemize}
+        \item Stress: Increase pressure or decrease Volume
+        \item Response: The reaction will move in the direction to produce fewer gaseous molecules to decrease the pressure
+    \end{itemize}
+    \item Effects of Changing the temperature
+    \begin{itemize}
+        \item Stress: Increase temperature
+        \item Response: The reaction will move in the appropriate direction to absorb heat and decrease the temperature.
+    \end{itemize}
+\end{itemize}
+
+
+
+\end{document}
