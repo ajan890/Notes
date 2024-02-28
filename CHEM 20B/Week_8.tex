@@ -1,0 +1,149 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+\graphicspath{{./assets/images/Week 8}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+\newcommand{\der}{\text{d}}
+
+\title{CHEM 20B Week 8}
+
+\author{Aidan Jan}
+\date{\today}
+\begin{document}
+\maketitle
+\section*{Acid-Base Equilibria}
+\subsection*{Arrhenius Definition of Acids and Bases}
+\begin{itemize}
+    \item Acids: when dissolved in water increases the concentration of H$_3$O$^+$
+    \item Bases: when dissolved in water increases the concentration of OH$^-$
+\end{itemize}
+
+\subsection*{Brønsted-Lowry Definition of Acids and Bases}
+\begin{itemize}
+    \item Acids: Proton donor
+    \item Bases: Proton acceptor
+\end{itemize}
+
+\subsection*{Lewis Definition of Acids and Bases}
+\begin{itemize}
+    \item Electron pair acceptor
+    \item Electron pair donor
+\end{itemize}
+
+\subsection*{Properties of Acids and Bases in Aqueous Solutions: The Brønsted-Lowry Scheme}
+\textbf{Autoionization of Water}
+\[H_2 O(l) + H_2 O(l) \leftrightharpoons H_3O^+(aq) + OH^- (aq)\]
+
+$K_w$, the acid-base constant of water is determined by 
+\[K_w[H_3O^+][OH^-]\]
+This constant varies by temperature.
+
+\begin{center}
+\textbf{Temperature Dependence of $K_w$}\\
+\begin{tabular}{| c | c | c |}
+    \hline
+    \textbf{Temperature ($^\circ$ C)} & \textbf{$K_w$} & \textbf{pH of Water} \\
+    \hline
+    $0$ & $0.114 \times 10^{-14}$ & $7.47$ \\
+    $10$ & $0.292 \times 10^{-14}$ & $7.27$ \\
+    $20$ & $0.681 \times 10^{-14}$ & $7.08$ \\
+    $25$ & $1.01 \times 10^{-14}$ & $7.00$ \\
+    $30$ & $1.47 \times 10^{-14}$ & $6.92$ \\
+    $40$ & $2.92 \times 10^{-14}$ & $6.77$ \\
+    $50$ & $5.47 \times 10^{-14}$ & $6.63$ \\
+    $60$ & $9.61 \times 10^{-14}$ & $6.51$ \\
+    \hline
+\end{tabular}
+\end{center}
+
+\subsection*{Strong Acids}
+Strong Acids ionize completely in aqueous solution.
+\[H_2 O(l) + HA(aq) \rightarrow H_3O^+(aq) + A^-(aq)\]
+\textbf{Common Strong Acids}
+\begin{itemize}
+    \item HBr (aq)
+    \item HCl (aq)
+    \item HI (aq)
+    \item HNO$_3$ (aq)
+    \item HClO$_4$ (aq)
+    \item HClO$_3$ (aq)
+    \item H$_2$SO$_4$ (aq)
+\end{itemize}
+
+\subsection*{Strong Bases}
+Strong Bases react completely to give $OH^-$ when put in water.
+\[H_2O(l) + NH_2^-(aq) \rightarrow OH^-(aq) + H_2(aq)\]
+\[H_2O(l) + H^-(aq) \rightarrow OH^-(aq) + H_2(aq)\]
+
+\textbf{Common Strong Bases}
+\begin{itemize}
+    \item Group 1 hydroxides
+    \item Alkaline earth metal hydroxides
+    \item Group 1 and Group 2 oxides
+\end{itemize}
+
+\section*{The pH Function}
+\[pH = -\log_{10}[H_3O^+]\]
+At 25$^\circ$C,
+\begin{itemize}
+    \item pH < 7 = Acidic solution
+    \item pH = 7 = Neutral solution
+    \item pH > 7 = Basic solution
+\end{itemize}
+
+Similar to how $[H_3O^+][OH^-] = K_w$, $pH + pOH = pK_w$.\\
+As a consequence,
+\begin{itemize}
+    \item $[H^+] = 10^{-pH}$
+    \item $[OH^-] = 10^{-pOH}$
+\end{itemize}
+
+\subsection*{Acid and Base Strength}
+Acid strength is based on the extent to which they are ionized in solution.
+\[HA (aq) \leftrightharpoons H^+ (aq) + A^- (aq)\]
+The Acid Ionization Constant, $K_a$ is a quantitative measure of the strength of the acid.
+\[K \equiv K_a = \frac{[H^+][A^-]}{[HA]}\]
+If:
+\begin{itemize}
+    \item $K_a \gg 1 \rightarrow$ HA is a strong acid.
+    \item $K_a \ll 1 \rightarrow$ HA is a weak acid.
+\end{itemize}
+Convenient characterization of strength of acid is $pK_a$.
+\[pK_a = -\log_{10}(K_a)\]
+\textbf{For Example:}\\
+$K_a = 10^7 \rightarrow pK_a = -7$ (strong acid)\\
+$K_a = 10^-5 \rightarrow pK_a = 5$ (weak acid) \\
+
+\noindent Similarly to acids, base strength is represented by $K_b$, which is inversely related to the strength of its conjugate acid.
+\[H_2O(l) + B(aq) \leftrightharpoons OH^- (aq) + BH^+ (aq)\]
+\[K \equiv K_b = \frac{[OH^-][BH^+]}{[B]}\]
+Similarly, a convenient characterization of strength of base is $pK_b$.
+\[pK_b = -\log_{10}(K_b)\]
+If:
+\begin{itemize}
+    \item $K_b \gg 1 \rightarrow$ strong base, many $OH^-$ produced, little $[B]$ left.
+    \item $K_b \ll 1 \rightarrow$ weak base, most $[B]$ remains.
+\end{itemize}
+Importantly, 
+\[K_b K_a = K_w\]
+\[pK_b + pK_a = pK_w\]
+
+
+\end{document}
