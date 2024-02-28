@@ -1,0 +1,453 @@
+\documentclass{article}
+\usepackage{setspace}
+\usepackage[utf8]{inputenc}
+\usepackage[bb=boondox]{mathalfa}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+
+%%Let's you change margins
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+
+%%Math symbols, proof environments
+\usepackage{amsmath,amsthm,amssymb, graphicx, tikz}
+
+%%Use this package for matrices
+\usepackage{array}
+
+%%Commands for common sets
+\newcommand{\R}{\mathbb{R}} %Real numbers
+\newcommand{\Z}{\mathbb{Z}} %Integers
+\newcommand{\dP}{\mathbb{P}}
+\newcommand{\example}{\textbf{Example: }}
+\newcommand{\E}{\mathbb{E}} %Expectation Value
+
+\newcommand{\der}{\text{d}}
+
+\graphicspath{{./assets/images/Week 7}}
+
+\title{CS 174C Week 7} 
+
+\author{Aidan Jan}
+
+\date{\today}
+\begin{document}
+\maketitle
+\section*{Articulated-Body Kinematics}
+\begin{itemize}
+    \item When animating characters, their movements should look realistic.  Joints must bend in the correct directions, and all the parts should be animated together, not separately.
+\end{itemize}
+
+\subsection*{Hierarchies}
+\begin{itemize}
+    \item Hierarchies are used in order to determine how objects are linked together.
+    \item Each individual object is referred to as a node, and one object is designated as a root node.
+    \item From here, how objects are linked can be drawn as a graph, similar to a file directory.
+\end{itemize}
+Example: \href{https://www.youtube.com/watch?v=q54fbMvl3GE}{Building a Robot}
+\begin{center}
+    \includegraphics*[scale=0.3]{W7_1.png}
+\end{center}
+\section*{Joints}
+\begin{itemize}
+    \item A 2-rigid-body system has $2 \cdot 6 = 12$ degrees of freedom (DOF)
+    \item Joints are essentially constraints that remove degrees of freedom
+    \begin{itemize}
+        \item Implicitly (through forces)
+        \item Explicitly (through parameterization)
+    \end{itemize}
+\end{itemize}
+\subsection*{Slider Joints}
+\begin{itemize}
+    \item 1 Degree of freedom
+    \begin{itemize}
+        \item One translational, defined by the axis
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.8]{W7_2.png}
+\end{center}
+
+\subsection*{Hinge Joints}
+\begin{itemize}
+    \item 1 Degree of freedom
+    \begin{itemize}
+        \item One rotational, defined by axis and anchor point
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.8]{W7_3.png}
+\end{center}
+
+\subsection*{Hinge2 Joints}
+\begin{itemize}
+    \item 2 Degrees of freedom
+    \begin{itemize}
+        \item Two rotational, defined by axis 1, axis 2, and anchor
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.8]{W7_4.png}
+\end{center}
+
+\subsection*{Universal Joints}
+\begin{itemize}
+    \item 2 Degrees of freedom
+    \begin{itemize}
+        \item Two rotational, defined by axis 1, axis 2, and anchor
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.8]{W7_5.png}
+\end{center}
+
+\subsection*{Ball and Socket Joints}
+\begin{itemize}
+    \item 3 Degrees of freedom
+    \begin{itemize}
+        \item Three rotational, defined by anchor point
+        \item Usually represented as a quaternion or exponential map
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.8]{W7_6.png}
+\end{center}
+
+\subsection*{Planar Joints}
+\begin{itemize}
+    \item Point confined to move on a plane
+    \begin{itemize}
+        \item Can be used to model non-penetration constraints
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.8]{W7_7.png}
+\end{center}
+
+\subsection*{Free Joints}
+\begin{itemize}
+    \item 6 Degrees of freedom
+    \begin{itemize}
+        \item Three translational
+        \item Three rotational
+    \end{itemize}
+    \item Example: Free joint between root object and ground
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.8]{W7_8.png}
+\end{center}
+
+\subsection*{Example - SCARA Robotic Arm}
+\begin{center}
+    \includegraphics*[scale=0.8]{W7_9.png}
+\end{center}
+
+\section*{Parametric Representation of a Human Character}
+\begin{itemize}
+    \item Local Coordinate systems
+    \begin{itemize}
+        \item Frames
+    \end{itemize}
+    \item Child links can move with respect to their parent links
+    \begin{itemize}
+        \item Links are jointed by transformation matrices
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.6]{W7_10.png}
+    \includegraphics*[scale=0.6]{W7_11.png}
+\end{center}
+
+
+\section*{Forward Kinematics (FK) - Determine coordinates of a point $P$}
+In 2D: From Link 2 Frame to the "World Frame"
+\begin{align*}
+    v_w &= T_0 R(\theta_0) v_0\\
+    v_w &= T_0 R(\theta_0) T_1 R (\theta_1) v_1\\
+    v_w &= T_0 R(\theta_0) T_1 R (\theta_1) T_2 R (\theta_2) v_2
+\end{align*}
+\begin{center}
+    \includegraphics*[scale=0.5]{W7_12.png}
+\end{center}
+
+In 3D: 4x4 Rotation matrices:
+\begin{itemize}
+    \item $R_i = R(\theta_x, \theta_y, \theta_z)$ or $R_i = F(quaternion)$
+\end{itemize}
+\begin{align*}
+    v_w &= T_0 R_0 v_0\\
+    v_w &= T_0 R_0 T_1 R_1 v_1\\
+    v_w &= T_0 R_0 T_1 R_1 T_2 R_2 v_2
+\end{align*}
+
+Let $_{i - 1}M_i = T_i R_i$.  Then, $v_w = _w M_0 \:_0M_1 \:_1M_2 v_2$.
+
+\textbf{In general, for a chain of n links:}
+\begin{align*}
+    &P_{i - 1} = _{i - 1}M_i P_i &P_i = \:_{i - 1}M^{-1}_i P_{i - 1} &\:\\
+    &P_w = \left(\prod_{i = 0}^n \:_{i - 1} M_i\right) P_n &P_n = \left(\prod_{i = 0}^n \:_{i - 1} M_i\right)^{-1} P_w &\:
+\end{align*}
+where $i - 1 = w$ for $i = 0$.\\
+If there is no scaling and shearing:
+\[M = \begin{bmatrix}R_{3 \times 3} & T_{3 \times 1} \\ 0_{1 \times 3} & 1\end{bmatrix}\]
+
+\section*{Articulated Model Data Structures}
+\begin{itemize}
+    \item Node:
+    \begin{itemize}
+        \item dataPtr: Data (possibly shared by other nodes) that represent the geometry of this part of the figure
+        \item Tmatrix: Matrix to transform the node data into position to be articulated (e.g., put the point of rotation at the origin)
+        \item arcPtr: Pointer to a single child Arc
+    \end{itemize}
+    \item Arc
+    \begin{itemize}
+        \item nodePtr: Pointer to a node holding data to be articulated by the arcPtr
+        \item Lmatrix: Matrix that locates the following (child) node relative to the previous (parent) node
+        \item Amatrix: Matrix that articulates the node data; this is the matrix that is changed in order to (animate) articulate the linkage
+        \item arcPtr: Pointer to a sibling arc (another child of this arc's parent node; this is NULL if there are no more siblings)
+    \end{itemize}
+\end{itemize}
+
+\section*{Evaluation of an Articulated Model}
+\begin{itemize}
+    \item By a depth-first traversal from root to leaf nodes of the model hierarchy tree
+    \begin{itemize}
+        \item Traverse from root node to leaf nodes
+        \item Backtrack up the tree until unexplored arc
+        \item Traversing arc down: Concatenate transform to that of parent node
+        \item Traversing arc up: Restore transform
+    \end{itemize}
+    \item Implemented as a stack of transformations with push (down) and pop (up) operations
+\end{itemize}
+
+Example code:
+\begin{center}
+    \includegraphics*[scale=0.9]{W7_13.png}
+\end{center}
+
+\section*{Inverse Kinematics (IK)}
+Given the DOFs, e.g., $q = [T\:\: R\:\: \theta]$, compute the position of any point of interest (e.g., the end effector)
+\begin{itemize}
+    \item $x = f(q)$
+    \item \texttt{traverse(rootArcPtr, I);}, where \texttt{I} is the identity matrix
+\end{itemize}
+
+\subsection*{A Simple (Analytic) Example}
+Direction IK solution, given $p = (p_x, p_y)$
+\begin{itemize}
+    \item Solve for $\theta = (\theta_1, \theta_2)$
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.6]{W7_14.png}
+\end{center}
+
+\textbf{Problems:}
+\begin{itemize}
+    \item Multiple Solutions
+    \item Unreachable goals
+    \item Most structures are too complex to solve analytically
+\end{itemize}
+
+\section*{Aside: The Jacobian}
+\begin{itemize}
+    \item Derivative of a one-variable scalar function
+    \[y = f(x) \rightarrow \frac{\der f}{\der x} = \lim_{x \rightarrow 0} \frac{\Delta y}{\Delta x} = \frac{\delta y}{\delta x} \rightarrow \delta y = \frac{\partial f}{\partial x} \delta x\]
+    \item Extension to multivariable vector functions
+    \[y = F(x) = \begin{pmatrix}y_1 \\ y_2 \\ y_3 \end{pmatrix} = \begin{pmatrix}f_1(x_1, x_2, x_3, x_4) \\ f_2 (x_1, x_2, x_3, x_4) \\ f_3 (x_1, x_2, x_3, x_4)\end{pmatrix}\]
+    \[\delta y_i = \frac{\partial f_i}{\partial x_1} \delta x_1 + \frac{\partial f_i}{\partial x_2} \delta x_2 + \frac{\partial f_i}{\partial x_3} \delta x_3 + \frac{\partial f_i}{\partial x_4} \delta x_4, \quad i = 1, 2, 3\]
+    \item Jacobian Matrix
+    \[J = \frac{\partial F}{\partial x} = \begin{bmatrix} 
+        \frac{\partial f_1}{\partial x_1} & \frac{\partial f_1}{\partial x_2} & \frac{\partial f_1}{\partial x_3} & \frac{\partial f_1}{\partial x_4} \\
+        \\
+        \frac{\partial f_2}{\partial x_1} & \frac{\partial f_2}{\partial x_2} & \frac{\partial f_2}{\partial x_3} & \frac{\partial f_2}{\partial x_4} \\
+        \\
+        \frac{\partial f_3}{\partial x_1} & \frac{\partial f_3}{\partial x_2} & \frac{\partial f_3}{\partial x_3} & \frac{\partial f_3}{\partial x_4}
+    \end{bmatrix}\]
+    \item This gives a linear mapping between instantaneous velocities
+    \item At any instant in time, the Jacobian provides a linear mapping between the velocities in the neighborhood of x: $y' = J(x) \cdot x'$
+    \item The Jacobian is a function of x.
+    \item It enables us to linearize $y(x)$ with respect to $x$ around the neighborhood of $x$.
+    \[\delta y = J(x) \delta x \Rightarrow \Delta y \approx J\Delta x\]
+    \[y(x) \approx y(x_0) + J(x_0)(x - x_0)\]
+\end{itemize}
+
+\section*{Back to Inverse Kinematics}
+\begin{itemize}
+    \item Move end effector to a given goal position $P_g$
+    \item Error vector: $E = P - P_g$
+    \begin{center}
+        \includegraphics*[scale=0.8]{W7_15.png}
+    \end{center}
+    \item We want the error $E(\theta) = P - P_g$ to be 0.
+\end{itemize}
+
+\subsection*{Newton's Method}
+\begin{center}
+    \includegraphics*[scale=0.8]{W7_16.png}
+\end{center}
+
+\subsection*{For the Simple (Analytic) Example}
+Two-link planar arm:
+\begin{center} 
+    \includegraphics*[scale=0.8]{W7_17.png}
+\end{center}
+
+\section*{The More General Formulation}
+\begin{itemize}
+    \item End effector position and orientation
+    \begin{itemize}
+        \item $x = f(\theta)$ where:
+        \begin{itemize}
+            \item $x = [p_x, p_y, p_z, \theta_x, \theta_y, \theta_z]^T$
+            \item $\theta = [\theta_1, \dots, \theta_n]^T$
+        \end{itemize}
+    \end{itemize}
+    \item End effector velocity
+    \begin{itemize}
+        \item $x' = [v_x, v_y, v_z, \omega_x, \omega_y, \omega_z]$
+    \end{itemize}
+    \item Joint velocities
+    \begin{itemize}
+        \item $\theta' = [\theta_1', \dots, \theta_n']^T$
+    \end{itemize}
+    \item Velocity relationship
+    \begin{itemize}
+        \item $x' = J(\theta) \theta'$, where $J = \frac{\partial f}{\partial x}$ is a $6 \times n$ matrix.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Inverting the Jacobian}
+For inverse kinematics, we ideally need $\theta' = J^{-1}(\theta)x'$.  However, for $m$ functions and $n$ DOFs, $J_{m \times n}$ is not square
+\begin{itemize}
+    \item $J^{-1}$ is not defined
+    \item We use the pseudoinverse $J^+$
+\end{itemize}
+For full rank matrices:
+\begin{itemize}
+    \item $m > n$: $J^+_ = (J^T J)^{-1} J^T$  Overconstrained, minimizes $\Vert J\theta' - x'\Vert$ 
+    \item $m < n$: $J^+ = J^T(JJ^T)^{-1}$  Underconstrained, minimuzes $\Vert \theta' \Vert$
+    \begin{itemize}
+        \item For rank deficient matrices, use the SVD or other methods
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Secondary Tasks}
+\begin{itemize}
+    \item Obstacle Avoidance
+    \item Joint limit constraints
+    \item Singularity Avoidance
+    \begin{itemize}
+        \item Pseudoinverse is unstable around singularities: $\det(J) = 0$
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Adding Control}
+How can we bias the angular velocities without affecting the end effector velocity?
+\begin{itemize}
+    \item Consider the control expression
+    \[\theta' = (J^+ J - I)z\]
+    \item Since $x' = J\theta'$
+    \[x' = J(J^+ J - I) z = (JJ^+J - J)z = (J - J)z = 0\]
+    \item Therefore, $z$ does not change the end effector velocity
+\end{itemize}
+What is $z$?
+\begin{itemize}
+    \item Let $\theta_i^c$ be preferred angles at each joint
+\end{itemize}
+\[H = \frac{1}{2} \sum_{i = 1}^n \alpha_i(\theta_i - \theta_i^c)^2\]
+\[z = \nabla_\theta H = [\alpha_1(\theta_1 - \theta_1^c), \dots, \alpha_n(\theta_n - \theta_n^c)]^T\]
+\begin{itemize}
+    \item Where $\alpha_i$ are the gains
+\end{itemize}
+How is $z$ used?
+\begin{itemize}
+    \item System
+    \begin{align*}
+        \theta' &= J^+ x' + (J^+J - I) \nabla_\theta H\cdots\\
+        \theta' &= J^T[(JJ^T)^{-1}(x' + J\nabla_\theta H)] - \nabla_\theta H
+    \end{align*}
+    \item Set
+        \[\beta = (JJ^T)^{-1}(x' + J\nabla_\theta H)\]
+    \item Solve for $\beta$
+    \item Then, controlled angle velocities are:
+    \begin{align*}
+        \theta' &= J^T\beta - \nabla_\theta H\\
+        x' &= (JJ^T)\beta - J\nabla_\theta H
+    \end{align*}
+\end{itemize}
+
+\subsection*{Jacobian Transpose Method}
+\begin{itemize}
+    \item Use the transpose of the Jacobian matrix rather than the pseudoinverse
+    \begin{itemize}
+        \item Rather than: $\Delta \theta = J^+ \Delta x$
+        \item Find $\Delta \theta$ by: $\Delta \theta = J^T \Delta x$
+    \end{itemize}
+    \item Avoids expensive inversion
+    \item Avoids singularity problems
+\end{itemize}
+But why does it work?\\\\
+
+\textbf{Principal of Virtual Work}
+\begin{itemize}
+    \item Virtual because amount is infinitesimal
+    \item Work = force $\times$ distance
+    \item Work = torque $\times$ angle
+    \begin{center}
+        \includegraphics*[scale=0.9]{W7_18.png}
+    \end{center}
+\end{itemize}
+
+\subsection*{Jacobian Transpose Method}
+\begin{itemize}
+    \item The good and bad of $J^T$
+    \item Pros:
+    \begin{itemize}
+        \item Cheaper evaluation step than computing pseudoinverse
+        \item No singularities
+    \end{itemize}
+    \item Cons:
+    \begin{itemize}
+        \item Slower to converge than $J^+$
+        \item Scaling problems
+        \begin{itemize}
+            \item J' has nice property that the solution has minimal norm at every step
+            \item $J^T$ doesn't have this property.  Joints far from the end effector experience larger torques, hence take larger steps
+            \item Can introduce a constant diagonal scaling matrix to counteract some scaling problems: $\der\theta/\der t = KJ^TF(\theta)$
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Cyclic Coordinate Descent}
+A simple idea:
+\begin{itemize}
+    \item Solve 1-DOF IK problems repeatedly up the chain
+    \item 1-DOF problems are simple and have analytical solutions
+    \begin{center}
+        \includegraphics*[scale=0.8]{W7_19.png}
+    \end{center}
+\end{itemize}
+The good and bad of CCD:
+\begin{itemize}
+    \item Pros:
+    \begin{itemize}
+        \item Simple to implement
+        \item Often effective
+        \item Stable around singular configuration
+        \item Computationally cheap
+        \item Can combine withother more accurate optimization methods (such as Broyden-Fletcher-Shanno (BFS) when close enough)
+    \end{itemize}
+    \item Cons:
+    \begin{itemize}
+        \item Can lead to odd solutions if per-step deltas are not limited, making the method slow to converge
+        \item Doesn't necessarily lead to smooth motion
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Comparison of the IK Methods}
+\begin{center}
+    \includegraphics*[scale=0.9]{W7_20.png}
+\end{center}
+\end{document}
+
+
