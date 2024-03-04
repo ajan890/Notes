@@ -1,0 +1,133 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+\graphicspath{{./assets/images/Week 9}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+\newcommand{\der}{\text{d}}
+
+\title{CHEM 20B Week 9}
+
+\author{Aidan Jan}
+\date{\today}
+\begin{document}
+\maketitle
+\section*{Electrochemistry}
+\textbf{General Rules to Balance Oxidation-Reduction Equation:}\
+\begin{enumerate}
+    \item Write the two unbalanced half-reactions.
+    \item Balance both half-reactions for all atoms except O and H.
+    \item Balance each half-reaction for O by adding H$_2$O, and then balance for H by adding H$^+$.
+    \item Balance each half-reaction for charge by adding elecrons to the side with greater positive charge.
+    \item Multiply each half-reaction by a factor to make the electron count the same in both half-reactions.
+    \item Add the two balanced reactions together and cancel species that appear on both sides of the equation.
+    \begin{itemize}
+        \item Stop here for acidic solutions
+    \end{itemize}
+    \item For a basic solution, "neutralize" the excess H$^+$ by adding OH$^-$ and cancel any water (if possible).
+\end{enumerate}
+\subsection*{Example: Balancing Reaction of MnO$_4^-$ and Br$^-$ in Basic Solution}
+\begin{enumerate}
+    \item Write the two unbalanced half-reactions
+    \begin{eqnarray*}
+        Br^- &\rightarrow& BrO_3^- \\
+        MnO_4^- &\rightarrow& MnO_2 
+    \end{eqnarray*}
+    \item Balance both half-reactions for all atoms except $O$ and $H$.
+    \begin{eqnarray*}
+        Br^- &\rightarrow& BrO_3^- \\
+        MnO_4^- &\rightarrow& MnO_2 
+    \end{eqnarray*}
+    \item Balance each half-reaction for $O$ by adding $H_2 O$, and then balance for $H$ by adding $H^+$.
+    \begin{eqnarray*}
+        Br^- + 3 H_2O&\rightarrow& BrO_3^- + 6 H^+\\
+        4 H^+ + MnO_4^- &\rightarrow& MnO_2 + 2H_2O
+    \end{eqnarray*}
+    \item Balance each half-reaction for charge by adding electrons to the side with greater positive charge.
+    \begin{eqnarray*}
+        Br^- + 3 H_2O&\rightarrow& BrO_3^- + 6 H^+ + 6e^-\\
+        4 H^+ + MnO_4^- + 3e^- &\rightarrow& MnO_2 + 2H_2O
+    \end{eqnarray*}
+    \item Multiply each half-reaction by a factor to make the electron count the same in both half-reactions.
+    \begin{eqnarray*}
+        Br^- + 3 H_2O&\rightarrow& BrO_3^- + 6 H^+ + 6e^-\\
+        8 H^+ + 2MnO_4^- + 6e^- &\rightarrow& 2MnO_2 + 4H_2O
+    \end{eqnarray*}
+    \item Add the two balanced reactions together and cancel species that appear on both sides of the equation.
+    \begin{align*}
+        Br^- + 3 H_2O + 8 H^+ + 2MnO_4^- + 6e^-&\rightarrow BrO_3^- + 6 H^+ + 6e^- + 2MnO_2 + 4H_2O\\
+        2 H^+ + 2MnO_4^- + Br^- &\rightarrow BrO_3^- + 2MnO_2 + H_2O
+    \end{align*}
+    \item Since the reaction occurs in a basic solution, "neutralize" the excess $H^+$ by adding $OH^-$ and cancel any water (if possible).
+    \begin{align*}
+        2 H^+ + 2 OH^- + 2MnO_4^- + Br^- &\rightarrow BrO_3^- + 2MnO_2 + H_2O + 2 OH^- \\
+        2MnO_4^- + Br^- + H_2O &\rightarrow BrO_3^- + 2MnO_2 + 2 OH^- \\
+    \end{align*}
+\end{enumerate} 
+
+
+
+\pagebreak
+\section*{Electrochemical cells}
+An \textbf{electrochemical cell} is a device in which an electric current is either produced by a spontaneous chemical reaction or used to bring about a nonspontaneous reaction.
+\begin{itemize}
+    \item \textbf{Galvanic cell:} electrochemical cell in which a spontaneous chemical reaction is used to generate an electric current.
+    \item For example, batteries
+    \begin{itemize}
+        \item If we simply mix two species that undergo a redox reaction, energy is released as heat, but no electricity is generated.  However, if we separate the reactants and provide a pathway for the electrons to travel, the electrons can do work, generating an electric current.
+    \end{itemize}
+    \item A galvanic cell consists of \textbf{two electrodes:}
+    \begin{itemize}
+        \item \textbf{Anode:} the electrode at which oxidation (Loss of electrons) occurs.
+        \item \textbf{Cathode:} the electrode at which reduction (gain of electrons) occurs.
+        \item Electrons flow from the anode to cathode.
+    \end{itemize}
+    \begin{center}
+        \includegraphics*[scale=0.9]{W9_1.png}
+    \end{center}
+\end{itemize}
+
+\section*{Voltage}
+\begin{itemize}
+    \item Electrostatic Potential: $\Phi$ (V)
+    \item Electrostatic Potential Energy: $E_p$ (J)
+    \item The SI unit for potential in the volt:
+    \[1 V = 1 J \cdot C^{-1}\]
+    \[\Delta E_p = q \Delta \Phi\]
+\end{itemize}
+
+\section*{Faraday's Laws}
+\begin{itemize}
+    \item The mass of a given substance that is produced or consumed in an electrochemical reaction is proportional to the quantity of electric charge passed.
+    \item The magnitude of the charge on a single electron:
+    \[\vert -e \vert = e = 1.60 \times 10^{-19} C\]
+    \item The magnitude of the charge of one mole of electrons:
+    \[Q = (6.022 \times 10^{23})(1.60 \times 10^{-19} C) = 96485.34 C\]
+    \[Q = e \cdot N\]
+    \item Faraday constant: Denoted as $F$, the magnitude of the charge per mole of electrons:
+    \[F = 96,485.34 \:C \cdot mol^{-1}\]
+    \item Electric Current: is the amount of charge that flows through a circuit per second, measured in the SI unit, the ampere (A):
+    \[1\:C = (1\:A) (1\:s)\]
+    \item \textit{The amount of charge that has passed when a current of 1 amperes has flowed for t seconds is}
+    \[Q = I \cdot t\]
+    \item The number of moles of electrons $n$ transferred:
+    \[n = \frac{I \cdot t}{96485.34}\]
+\end{itemize}
+
+\end{document}
