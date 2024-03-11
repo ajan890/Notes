@@ -1,0 +1,96 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+\graphicspath{{./assets/images/Week 10}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+\newcommand{\der}{\text{d}}
+
+\title{CHEM 20B Week 10}
+
+\author{Aidan Jan}
+\date{\today}
+\begin{document}
+\maketitle
+
+\section*{Measuring Reaction Rates}
+\[\text{average reaction rate} = \frac{\text{change in concentration of product}}{\text{change in time}}\]
+Consider the example:
+\[NO_2(g) + CO(g) \rightarrow NO(g) + CO_2(g)\]
+Average rate = $\frac{\Delta [NO]}{\Delta t} = \frac{[NO]_f - [NO]_i}{t_f - t_i}$\\
+Instantaneous rate = $\lim_{\Delta t \rightarrow 0} \frac{[NO]_{t + \Delta t} - [NO]_t}{\Delta t} = \frac{\der [NO]}{\der t}$\\
+\[\text{rate} = \frac{\der[NO]}{\der t} = \frac{\der [CO_2]}{\der t} = -\frac{\der [CO]}{\der t} = -\frac{\der[NO_2]}{\der t}\]
+\\\textbf{In general}, for reaction in form $aA + bB \rightarrow cC + dD$,
+\[\text{rate} = -\frac{1}{a}\frac{\der [A]}{dt} = -\frac{1}{b}\frac{\der [B]}{\der t} = \frac{1}{c}\frac{\der[C]}{\der t} = \frac{1}{d}\frac{\der[D]}{\der t}\]
+The \textbf{net rate} of a reaction is the forward rate minus the reverse rate.
+
+\subsection*{Order of a Reaction}
+\[rate = k[A][B]\dots\]
+\begin{itemize}
+    \item This relation is called rate law and $k$ is called the \textbf{rate constant}.
+    \item $k$ is independent of concentration but depends on \textbf{temperature}.
+\end{itemize}
+\textbf{Example:}\\
+For a reaction in form $aA \rightarrow \text{products}$, then the rate equation is:
+\[rate = k[A]^n\]
+\begin{itemize}
+    \item The power $n$ in the rate expression has no direct relation to the coefficient of $a$ in the balanced chemical equation.
+    \item This constant is determined experimentally
+    \item Therefore, the reaction order is an experimentally determined property.
+\end{itemize}
+
+\subsubsection*{Example: Rate of Decomposition of Ethane}
+\[C_2 H_6(g) \rightarrow 2CH_3(g)\]
+\[rate = k[C_2H_6]^2\]
+The power $n$ is the order of the reaction with respect to the reactant.
+
+\subsection*{Determining Order of a Reaction}
+\begin{itemize}
+    \item Zeroth-order reaction:
+    \[rate = k\]
+    \item First-order reaction:
+    \[rate = k[N_2O_5]\]
+    \item Second-order reaction:
+    \[rate = k[C_2H_6]^2\]
+    \[rate = k[CH_3CHO]^{3/2}\]
+\end{itemize}
+In general, to find the order of a reaction, look at the experimental data and find the relationship between the change in rate and change in concentration.  For example,
+\[2 HI(g) \rightarrow H_2(g) + I_2(g)\]
+At $443^\circ$C, the rate of reaction increases with concentration of $HI$ as follows:\\
+\begin{center}
+\begin{tabular}{|c|c|}
+    \hline
+    [HI] (mol $\cdot$ L$^{-1}$) & Rate (mol $\cdot$ L$^{-1}$s$^{-1}$) \\
+    \hline
+    $0.0050$ & $7.5 \times 10^{-4}$ \\
+    \hline
+    $0.010$ & $3.0 \times 10^{-3}$ \\
+    \hline
+    $0.020$ & $1.2 \times 10^{-2}$ \\
+    \hline
+\end{tabular}
+\end{center}
+Looking at the data, when the concentration of [HI] doubled (from 0.0050M to 0.010M), the rate increased by 4 times.\\
+When the concentration of [HI] quadrupled (from 0.0050M to 0.020M), the rate increased by 16 times.\\
+Therefore, the rate with respect to [HI] must be second order.
+\[rate = k[HI]^2\]
+With the exponent found, $k$ can be determined with some algebra.
+
+
+\end{document}

@@ -130,4 +130,49 @@ An \textbf{electrochemical cell} is a device in which an electric current is eit
     \[n = \frac{I \cdot t}{96485.34}\]
 \end{itemize}
 
+\section*{Cell Potentials and the Gibbs Free Energy}
+Change in the potential energy associated with the transfer of $N$ electrons:
+\[\Delta E_p = -N \cdot e\Delta \Phi\]
+\[Q = N \cdot e\]
+\[\Delta E_p = -Q\Delta \Phi = -n F \Delta \Phi\]
+\[\Delta E_p = -Q\Delta E_{cell} = -nF\Delta E_{cell}\]
+Where $\Delta E_{cell}$ is the cell potential difference measured in volts.\\
+\textbf{Note: } $E$ in electrochemistry represents \textit{potential}, not \textit{energy}.\\
+$\Delta E_p$ is the change in potential energy of the electrons.  It is defined as the electrical work, $w_{elec}$ is measured in Joules.
+\[w_{elec} = \Delta E_p = -Q\Delta E_{cell} = -nF\Delta E_{cell}\]
+In summary, \textbf{work is equal to the change in potential}.
+
+There are two types of cells:
+\begin{enumerate}
+    \item Electrolytic cells
+    \begin{itemize}
+        \item \textbf{Work done on the system by external power supply:} electrons move from regions of more positive potentials to regions of more negative potential (increasing their potential energy)
+    \end{itemize}
+    \item Galvanic cells
+    \begin{itemize}
+        \item \textbf{Work done by the system:} electrons move from regions of more negative potentials to regions of more positive potential (decreasing their potential energy)
+    \end{itemize}
+\end{enumerate}
+
+
+\[\Delta E_{cell} = E_{cathode} - E_{anode}\]
+At constant pressure and temperature, the following is true:
+\[w_{elec, rev} = \Delta G = -nF\Delta E_{cell}\]
+
+\subsection*{Standard States and Standard Cell Potentials}
+\[\Delta G^\circ = -nF\Delta E_{cell}^\circ\]
+$n$ is the number of moles of electrons transferred in the reduction-oxidation reaction.
+
+
+\section*{Concentration Effects and the Nernst Equation}
+The Nernst equation allows us to calculate the electric potential of a cell in non-standard conditions
+\[\Delta G = \Delta G^\circ + RT \ln Q\]
+When combined with the Faraday relation:
+\[\Delta G = -n F\Delta E_{cell}\]
+\[\Delta G^\circ = -nF\Delta E_{cell}^\circ\]
+we get:
+\[\Delta E_{cell} = -\frac{\Delta G}{nF} = \frac{\Delta G^\circ + RT\ln Q}{nF} = -\frac{\Delta G^\circ}{nF} - \frac{RT}{nF} \ln Q\]
+i.e.,
+\[\Delta E_{cell} = \Delta E_{cell}^\circ - \frac{RT}{nF}\ln Q\]
+
 \end{document}
