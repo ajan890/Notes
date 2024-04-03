@@ -1,0 +1,468 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+\graphicspath{{./assets/images}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+
+\title{COM SCI 132 Week 1}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+\section*{Compilers vs Interpreters}
+\begin{itemize}
+    \item Compilers compile all the code into an executable file, and later, the OS can run the program straight through
+    \item Interpreters read and execute code at the same time.
+\end{itemize}
+\section*{Compilers}
+\subsection*{Qualities}
+What are some important qualities of a compiler?
+\begin{enumerate}
+    \item Correct code
+    \item Output runs fast
+    \item Compiler runs fast
+    \item Compile time proportional to program size
+    \item Support for separate compilation
+    \item Good diagnostics for syntax errors
+    \item Works well with the debugger
+    \item Good diagnostics for flow anomalies
+    \item Cross language calls
+    \item Consistent, predictable optimzation
+\end{enumerate}
+\subsection*{Abstract view}
+\begin{itemize}
+    \item Implications:
+    \begin{itemize}
+        \item recognize legal (and illegal) programs
+        \item generate correct code
+        \item manage storage of all variables and code
+        \item agreement on format for object (or assembly) code
+        \item Big step up from assembler to higher level notations
+    \end{itemize}
+    \begin{center}
+        \includegraphics*[scale=1]{W1_1.png}
+    \end{center}
+\end{itemize}
+\subsection*{Two-pass compilers}
+\begin{itemize}
+    \item Two pass compilers feature an *intermediate representation* (IR).
+    \begin{center}
+        \includegraphics*[scale=1]{W1_2.png}
+    \end{center}
+    \item Implications
+    \begin{itemize}
+        \item Intermediate representation (IR)
+        \item Front end maps legal code into IR
+        \item Back end maps IR onto target machine
+        \item Simplify retargeting
+        \item Allows multiple front ends
+        \item Multiple passes $\Rightarrow$ better code
+    \end{itemize}
+\end{itemize}
+\subsubsection*{Front end}
+Responsibilities:
+\begin{itemize}
+    \item Recognize legal procedure
+    \item Report errors
+    \item Produce IR
+    \item Preliminary storage map
+    \item Shape the code for the back end
+\end{itemize}
+Much of front end construction can be automated.
+\begin{center}
+    \includegraphics*[scale=1]{W1_3.png}
+\end{center}
+\textbf{Scanner:}
+\begin{itemize}
+    \item Maps characters into \textit{tokens} - the basic unit of syntax
+        \begin{verbatim} 
+            x = x + y; 
+        \end{verbatim} 
+        becomes 
+        \begin{verbatim}
+            <id, x> = <id, x> + <id, y>;
+        \end{verbatim}
+    \item character string value for a \textit{token} is a \textit{lexeme}
+    \item typical tokens: \textit{number}, \textit{id}, +, -, *, /, \texttt{do}, \texttt{end}
+    \item eliminates white space (tabs, blanks, comments)
+    \item a key issue is speed $\Rightarrow$ use specialized recognizer (as opposed to \texttt{lex})
+\end{itemize}
+\textbf{Parser:}
+\begin{itemize}
+    \item recognize context-free syntax
+    \item guide context-sensitive analysis
+    \item construct IR(s)
+    \item produce meaningful error messages
+    \item attempt error correction
+\end{itemize}
+Parser generators mechanize much of the work.
+\subsubsection*{Back end}
+\begin{itemize}
+    \item translate IR into target machine code
+    \item choose instructions for each IR operation
+    \item decide what to keep in registers at each point
+    \item ensure conformance with system interfaces
+\end{itemize}
+Automation has been less successful here.
+\begin{center}
+    \includegraphics*[scale=1]{W1_4.png}
+\end{center}
+\textbf{Instruction Selection:}
+\begin{itemize}
+    \item produce compact, fast code
+    \item use available addressing modes
+    \item pattern matching problem
+    \begin{itemize}
+        \item \textit{ad hoc} techniques
+        \item tree pattern matching
+        \item string pattern matching
+        \item dynamic programming
+    \end{itemize}
+\end{itemize}
+\textbf{Register Allocation:}
+\begin{itemize}
+    \item have value in a register when used
+    \item limited resources
+    \item changes instruction choices
+    \item can move loads and stores
+    \item optimal allocation is difficult
+\end{itemize}
+Modern allocators often use an analogy to graph coloring
+\subsection*{Optimizing compiler}
+Code improvement:
+\begin{itemize}
+    \item analyzes and changes IR
+    \item goal is to reduce runtime
+    \item must preserve values
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=1]{W1_5.png}
+\end{center}
+\subsubsection*{Optimizer (middle end)}
+Modern optimizers are usually built as a set of passes.
+Typical passes:
+\begin{itemize}
+    \item constant propagation and folding
+    \item code motion
+    \item reduction of operator strength
+    \item common subexpression elimination
+    \item redundant store elimination
+    \item dead code elimination
+\end{itemize}
+\section*{Compiler Example and Phases}
+\begin{center}
+    \includegraphics*[scale=0.8]{W1_7.png}
+\end{center}
+\begin{tabular}{| p{3.5cm} | p{12cm} |}
+    \hline
+    Lex & Break source file into individual words, or tokens \\
+    \hline
+    Parse & Analyse the phrase structure of program \\
+    \hline
+    Parsing Actions & Build a piece of \textit{abstract syntax tree} for each phrase \\
+    \hline
+    Semantic Analysis & Determine what each phrase means, relate uses of variables to their definitions, check types of expressions, request translation of each phrase\\
+    \hline
+    Frame Layout & Place variables, function parameters, etc., into activation records (stack frames) in a machine-dependent way\\
+    \hline
+    Translate & Produce \textit{intermediate representation trees} (IR trees), a notation that is not tied to any particular source language or target machine\\
+    \hline
+    Canonicalize & Hoist side effects out of expressions, and clean up conditional branches, for convenience of later phases\\
+    \hline
+    Instruction Selection & Group IR-tree nodes into clumps that correspond to actions of target-machine instructions\\
+    \hline
+    Control Flow Analysis & Analyse sequence of instructions into \textit{control flow graph} showing all possible flows of control program might follow when it runs\\
+    \hline
+    Data Flow Analysis & Gather information about flow of data through variables of program; e.g., \textit{liveness analysis} calculates places where each variable holds a still-needed (\textit{live}) value\\
+    \hline
+    Register Allocation & Choose registers for variables and temporary values; variables not simultaneously live can share same register\\
+    \hline
+    Code Emission & Replace temporary names in each machine instruction with registers\\
+    \hline
+\end{tabular}
+\section*{Lexical Analysis}
+\subsection*{Patterns for the Scanner}
+Recall the scanner in the front end compiler.\\
+\textit{A scanner must recognize various parts of the language's syntax}
+For example, the easy parts:
+\textit{white space}:
+\begin{verbatim}
+    <ws> ::= <ws> ' '
+          |  <ws> '\t'
+          |  ' '
+          |  '\t'
+\end{verbatim}
+\textit{keywords and operators}
+\begin{verbatim}
+    do, end, etc.
+\end{verbatim}
+\textit{comments}:
+\begin{verbatim}
+    //, /* ... */
+\end{verbatim}
+Other parts are much harder:\\
+\textit{identifiers}
+\begin{itemize}
+    \item alphabetic followed by $k$ alphanumerics (\_, \$, \&, \dots)
+\end{itemize}
+\textit{numbers}
+\begin{itemize}
+    \item integers: 0 or digit from 1-9 followed by digits from 0-9
+    \item decimals: integer '.' digits from 0-9
+    \item reals: (integer or decimal) 'E' (+ or -) digits from 0-9
+    \item complex: '(' real ',' real ')'
+\end{itemize}
+These can be done easily with REGEX.
+
+\section*{Recognizers}
+From a regular expression we can construct a \textit{deterministic finite automaton} (DFA).
+\begin{center}
+    \includegraphics*[scale=1]{W1_8.png}
+\end{center}
+\begin{itemize}
+    \item letter $\rightarrow (a \vert b \vert c \vert \dots \vert z \vert A \vert B \vert \dots \vert Z)$
+    \item digit $\rightarrow (0 \vert 1 \vert 2 \vert \dots \vert 9)$
+    \item id $\rightarrow letter ( letter \vert digit)^*$
+\end{itemize}
+
+\subsection*{Tables for the Recognizer}
+\begin{center}
+    \includegraphics*[scale=1]{W1_9.png}
+\end{center}
+To change languages, we can just change tables.
+
+\subsection*{Automatic Construction}
+Scanner generators automatically construct code from regular-expression-like descriptions
+\begin{itemize}
+    \item construct a \textit{dfa}
+    \item use state minimization techniques
+    \item emit code for the scanner (table driven or direct code)
+\end{itemize}
+A key issue in automation is an interface to the parser\\
+For example, \texttt{lex} is a scanner generator supplied with UNIX.
+\begin{itemize}
+    \item emits C code for scanner
+    \item provides macro definitions for each token (used in the parser)
+\end{itemize}
+
+\section*{LL Parsing}
+Recall, the role of the Parser, the second part of the front-end compiler.
+
+\subsection*{Syntax Analysis}
+Context-free syntax is specified with a context-free grammar.\\
+Formally, a CFG \textit{G} is a 4-tuple $(V_t, V_n, S, P)$, where
+\begin{itemize}
+    \item $V_t$ is the set of \textit{terminal} symbols in the grammar.  For our purposes, $V_t$ is the set of tokens returned by the scanner.
+    \item $V_n$, the \textit{nonterminals}, is the set of syntactic variables that denote sets of (sub)strings occurring in the language.  These are used to impose a structure on the grammar.
+    \item $S$ is the distinguished nonterminal ($S \in V_n$) denoting the entire set of strings in $L(G)$.  This is sometimes called a \textit{goal symbol}.
+    \item $P$ is a finite set of \textit{productions} specifying how terminals and non-terminals can be combined to form strings in the language.  Each production must have a single non-terminal on its left hand side.
+\end{itemize}
+The set $V = V_t \cup V_n$ is called the \textit{vocabulary} of $G$.\\\\
+Grammars are often written in Backus-Naur form (BNF).  For example:
+\begin{verbatim}
+    <goal> ::= <expr>
+    <expr> ::= <expr><op><expr>
+            |  num
+            |  id
+    <op>   ::= +
+            |  -
+            |  *
+            |  /
+\end{verbatim}
+This describes simple expressions over numbers and identifiers.  In a BNF for a grammar, we represent
+\begin{enumerate}
+    \item non-temrinals with angle brackets or capital letters
+    \item terminals with \texttt{typewriter} font or \underline{underline}
+    \item productions as in the example
+\end{enumerate}
+
+\subsection*{Scanning vs. Parsing - where do we draw the line?}
+\begin{verbatim}
+    term ::= [a-zA-Z]([a-zA-Z=]|[0-9])*
+          |  0|[1-9][0-9]*
+    op   ::= +|-|*|/
+    expr ::= (term op)*term
+\end{verbatim}  
+Regular expressions are used to classify:
+\begin{itemize}
+    \item identifiers, numbers, keywords
+    \item REs are more concise and simpler for tokens than a grammar
+    \item more efficient scanners can be built from REs (DFAs) than grammars
+\end{itemize}
+Context-free grammars are used to count:
+\begin{itemize}
+    \item brackets: \texttt{(), begin...end, if...then...else}
+    \item imparting structure: expressions
+\end{itemize}
+Syntactic analysis is complicated enough: grammar for C has around 200 productions.  Factoring out lexical analysis as a separate phase makes the compiler more manageable.
+
+\section*{Derivations}
+We can view the productions of a CFG as rewriting rules.  Using our exmple CFG:
+\begin{verbatim}
+    <goal> => <expr>
+           => <expr><op><expr>
+           => <expr><op><expr><op><expr>
+           => <id,x><op><expr><op><expr>
+           => <id,x> + <expr><op><expr>
+           => <id,x> + <num,2><op><expr>
+           => <id,x> + <num,2> * <expr>
+           => <id,x> + <num,2> * <id,y>
+\end{verbatim}
+\begin{itemize}
+    \item We have derived the sentence \texttt{x + 2 * y}.\
+    \item We denote this \texttt{<goal>=>* id + num * id}.
+    \item Such a sequence of rewrites is a \textit{derivation} or a \textit{parse}.
+    \item The process of discovering a derivation is called \textit{parsing}.
+    \item At each step, we chose a non-terminal to replace.
+    \item This choice can lead to different derivations.
+    \item Two are of particular interest:
+    \begin{itemize}
+        \item leftmost derivation: the leftmost non-terminal is replaced at each step
+        \item rightmost derivation: the rightmost non-terminal is replaced at each step
+    \end{itemize}
+    \item \textit{The previous example was a leftmost derivation.}
+\end{itemize}
+
+\subsection*{Precedence}
+\begin{center}
+    \includegraphics*[scale=1]{W1_10.png}
+\end{center}
+A tree can be generated using the CFG.  However, for the tree shown here, the \textit{treewalk evaluation} computes \texttt{(x + 2) * y} - the wrong answer!\\
+The two derivations point out a problem with the grammar: it has no notion of precedence, or \textit{implied order} or evaluation.  To add precedence takes additional machinery:
+\begin{verbatim}
+    <goal>   ::= <expr>
+    <expr>   ::= <expr> + <term>
+              |  <expr> - <term>
+              |  <term>
+    <term>   ::= <term> * <factor>
+              |  <term> / <factor>
+              |  <factor>
+    <factor> ::= num
+              |  id
+\end{verbatim} 
+This grammar enforces a precedence on the derivation:
+\begin{itemize}
+    \item terms \textit{must} be derived from expressions
+    \item forces the "correct" tree
+\end{itemize}
+
+\subsection*{Ambiguity}
+If a grammar has more than one derivation for a single sentential form, then it is \textbf{ambiguous}.\\
+Example:
+\begin{verbatim}
+    <stmt> ::= if <expr> then <stmt>
+            |  if <expr> then <stmt> else <stmt>
+            |  other stmts
+\end{verbatim}
+Consider deriving the sentential form:
+\[\texttt{if } E_1 \texttt{ then if } E_2 \texttt{ then } S_1 \texttt{ else } S_2 \]
+This has two derivations, which leads to ambiguity that is purely grammatical.\\
+It is a \textit{context-free} ambiguity.\\
+
+\subsubsection*{Eliminating Ambiguity} 
+It may be possible to eliminate ambiguities by rearranging the grammar:
+\begin{verbatim}
+    <stmt>      ::= <matched>
+                 |  <unmatched>
+    <matched>   ::= if <expr> then <matched> else <matched>
+                 |  other stmts
+    <unmatched> ::= if <expr> then <stmt>
+                 |  if <expr> then <matched> else <unmatched>
+\end{verbatim}
+This generates the same language as the ambiguous grammar, but applies the common sense rule:
+\[\text{match each \texttt{else} with the closest unmatched \texttt{then}}\]
+This is most likely the language designer's intent.
+
+\subsubsection*{Overloading}
+Ambiguity is often due to confusion in the context-free specification.  Context-sensitive confusions can arise from \textit{overloading}.
+For example:
+\begin{verbatim}
+    a = f(17)
+\end{verbatim}
+In many Algol-like languages, \texttt{f} could be a function or subscripted variable.  Disambiguating this statement requires context:
+\begin{itemize}
+    \item need \textit{values} of declarations
+    \item not \textit{context-free}
+    \item really an issue of \textit{type}
+\end{itemize}   
+Rather than complicate parsing, we will handle this separately.
+
+\subsection*{Parsing: the big picture}
+\begin{center}
+    \includegraphics*[scale=1]{W1_11.png}
+\end{center}
+Our goal is a flexible parser generator system.
+
+\section*{Top-Down vs. Bottom-Up Parsing}
+Top-down parsers:
+\begin{itemize}
+    \item start at the root of derivation tree and fill in
+    \item picks a production and tries to match the input
+    \item may require backtracking
+    \item some grammars are backtrack-free (predictive)
+\end{itemize}
+Bottom-up parsers:
+\begin{itemize}
+    \item start at the leaves and fill in
+    \item start in a state valid for legal first tokens
+    \item as input is consumed, change state to encode possibilities (recognize valid prefixes)
+    \item use a stack to store both state and sentential forms
+\end{itemize}
+\subsection*{Top-down Parsing}
+A top-down parser starts with the root of the parse tree, labelled with the start or goal symbol of the grammar.  To build a parse, it repeats the following steps until the fringe of the parse tree matches the input string
+\begin{enumerate}
+    \item At a node labelled $A$, select a production $A \rightarrow \alpha$ and construct the appropriate child for each symbol of $\alpha$
+    \item When a terminal is added to the fringe that doesn't match the input string, backtrack.
+    \item Find the next node to be expanded (must have a label in $V_n$)
+\end{enumerate}
+The key in selecting the right production in step 1 $\Rightarrow$ should be guided by input string\\
+Example using $x - 2 * y$:
+\begin{center}
+    \includegraphics*[scale=1]{W1_12.png}
+\end{center}
+Another possible parse for $x - 2 * y$
+\begin{center}
+    \includegraphics*[scale=1]{W1_13.png}
+\end{center}
+If the parser makes the worng choices, expansion doesn't terminate.  This isn't a good property for a parser to have.  (Parsers should terminate!)
+\section*{Left-recursion}
+Top-down parsers cannot handle left-recursion in a grammar.  Formally, a grammar is \textit{left-recursive} if:
+\[\exists A \in V_n \text{ such that } A \Rightarrow^+ A\alpha \text{ for some string } \alpha\]
+Our simple expression grammar is left-recursive.
+\subsection*{Eliminating left-recursion}
+To remove left-recursion, we can transform the grammar.  Consider the grammar fragment:
+\begin{verbatim}
+    <foo> ::= <foo> alpha
+           |  beta
+\end{verbatim}
+where alpha and beta do not start with <foo>\\
+We can rewrite this as:
+\begin{verbatim}
+    <foo> ::= beta <bar>
+    <bar> ::= alpha <bar>
+           | epsilon
+\end{verbatim}
+where <bar> is a new non-terminal.  This fragment contains no left-recursion.
+
+
+
+\end{document}

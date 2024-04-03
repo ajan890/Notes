@@ -1,0 +1,96 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+\graphicspath{{./assets/images}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+
+\title{COM SCI C121 Week 1}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+\section*{Biology Review}
+\subsection*{Central Dogma of Biology}
+\begin{itemize}
+    \item DNA is transcribed to RNA, which is then translated to proteins.
+    \item During transcription, splicing may occur, so one section of DNA can produce multiple different strands of RNA, which is then translated into different proteins.
+    \begin{itemize}
+        \item Occurs often in more complex humans (e.g., not bacteria)
+    \end{itemize}
+    \item The definition of a gene is complicated, since one gene may have multiple exons, which may be spliced into different RNAs.  (How do you quantify the isoforms?)
+    \item Difference in splicing, translation, and regulation are part of what defines cell types.
+    \begin{itemize}
+        \item This means that molecular smapling needs to be done for all different contexts
+        \item Computationally, we \textit{need} fast, accurate, and space-efficient algorithms.
+    \end{itemize}
+\end{itemize}
+\subsection*{21st Century Biology Revolution}
+\begin{itemize}
+    \item High throughput DNA sequencing has revolutionized modern biology
+    \item Can sequence billions of DNA fragments for relatively cheap ($\sim$\$1000)
+    \item May biological questions can be reduced to sequencing experiments
+    \begin{itemize}
+        \item e.g., RNA-Seq, ChIP-Seq, Methyl-Seq, RIP-Seq, CNV-Seq
+    \end{itemize}
+    \item Currently, hundreds (thousands?) of experiments (since $\sim$2008)
+    \item If you can reduce your experiment to a sequencing experiment, you can essentially do \textbf{thousands} of experiments at once.
+\end{itemize}
+\section*{What is DNA?}
+There are many types of biomolecules.  (e.g., carbohydrates, lipids, proteins, and nucleic acids).
+\begin{itemize}
+    \item DNA is a type of nucleic acid.
+    \item DNA stores all the genetic information that a particular organism needs to live.
+    \item DNA is stored in nearly every human cell.  DNA inside chromosomes, inside nuclei, in cells.
+\end{itemize}
+\subsection*{DNA, genes, RNA, and proteins}
+\begin{itemize}
+    \item DNA contains coding and non-coding regions.
+    \begin{itemize}
+        \item Coding regions are referred to as \textit{exons}.
+        \item Non-coding regions are referred to as \textit{introns}.
+        \item There are non-coding regions outside of these two groups, but are not discussed in this class.
+    \end{itemize}
+    \item Introns exist to allow the same DNA section to code for multiple different proteins
+    \begin{itemize}
+        \item Introns of some proteins may be exons of a different protein.
+    \end{itemize}
+\end{itemize}
+\subsubsection*{DNA Strands}
+DNA has two strands - the forward and reverse strands.  Which one is forward strand is arbitrary - someone just picked it.
+\begin{itemize}
+    \item The forward strand goes from 5' to 3' (these are names for the ends); the numbers represent the direction transcription occurs - transcription always occurs from 5' to 3'.
+    \item 5' and 3' are named based on how the carbons are bonded.
+\end{itemize}
+\subsection*{Random Useful Facts about DNA}
+\begin{itemize}
+    \item A human "genome" stores about 3.1Gb (just one side of a double helix)
+    \item Humans are 99.9\% genetically identical
+    \item A great overestimate of a person's variability is 3M genetic variants
+    \item If we take the union of all single nuleotide variants, it's only $\sim$8M (> 5\% allele frequency)
+\end{itemize}
+
+
+
+
+
+
+\end{document}
