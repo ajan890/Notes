@@ -17,6 +17,9 @@
 % code blocks
 \usepackage{minted, listings} 
 
+% verbatim greek
+\usepackage{alphabeta}
+
 \graphicspath{{./assets/images}}
 
 \newcommand{\solution}{\textbf{Solution:}} 
@@ -451,17 +454,90 @@ Our simple expression grammar is left-recursive.
 \subsection*{Eliminating left-recursion}
 To remove left-recursion, we can transform the grammar.  Consider the grammar fragment:
 \begin{verbatim}
-    <foo> ::= <foo> alpha
-           |  beta
+    <foo> ::= <foo> α
+           |  β
 \end{verbatim}
-where alpha and beta do not start with <foo>\\
+where $\alpha$ and $\beta$ do not start with <foo>\\
 We can rewrite this as:
 \begin{verbatim}
-    <foo> ::= beta <bar>
-    <bar> ::= alpha <bar>
-           | epsilon
+    <foo> ::= β <bar>
+    <bar> ::= α <bar>
+           | ε
 \end{verbatim}
-where <bar> is a new non-terminal.  This fragment contains no left-recursion.
+where <bar> is a new non-terminal.  This fragment contains no left-recursion.\\
+\textbf{Example:} Our expression grammar contaions two cases of left-recursion.
+\begin{verbatim}
+    <expr>   ::= <expr> + <term>
+              |  <expr> - <term>
+              |  <term>
+    <term>   ::= <term> * <factor>
+              |  <term> / <factor>
+              |  <factor>
+\end{verbatim}
+Applying the transformation gives:
+\begin{verbatim}
+    <expr>   ::= <term><expr'>
+    <expr'>  ::= + <term><expr'>
+              |  - <term><expr'>
+              |  ε
+    <term>   ::= <factor><term'>
+    <term'>  ::= * <factor><term'>
+              |  / <factor><term'>
+              |  ε
+\end{verbatim}
+With this grammar, a top-down parser will:
+\begin{itemize}
+    \item terminate
+    \item backtrack on some inputs
+\end{itemize}
+Although it is longer and harder to read, it factors out left-recursion.
+
+\subsection*{How much lookahead is needed?}
+We saw that top-down parsers may need to backtrack when they select the wrong production.\\
+Do we need arbitrary lookahead to parse CFGs?
+\begin{itemize}
+    \item in general, yes
+    \item use the Earley or Cocke-Younger, Kasami algorithms
+\end{itemize}
+Fortunately,
+\begin{itemize}
+    \item large subclasses of CFGs can be parsed with limited lookahead
+    \item most programming language constructs can be expressed in a grammar that falls in these subclasses
+\end{itemize}
+Among the interesting subclasses are:
+\begin{itemize}
+    \item LL(1): left to right scan, \textbf{left}-most derivation, 1-token lookahead
+    \item LR(1): left to right scan, \textbf{right}-most derivation, 1-token lookahead
+\end{itemize}
+
+\subsection*{Predictive Parsing}
+\textbf{Basic idea:} For any two productions $A \rightarrow \alpha \vert \beta$, we would like a distinct way of choosing the correct produciton to expand.\\
+For some RHS $\alpha \in G$, define FIRST($\alpha$) as the set of tokens that appear first in some string derived form $\alpha$.\\
+That is, for some $w \in V_t^*$, $w \in$ FIRST($\alpha$) if and only if $\alpha \Rightarrow^* w\gamma$.\\
+\textbf{Key property:} Whenever two productions $A \rightarrow \alpha$ and $A \rightarrow \beta$ both appear in the grammar, we would like
+\[\text{FIRST}(\alpha)\cap\text{FIRST}(\beta) = \phi\]
+This would allow the parser to make a correct choice with a lookahead of only one symbol!  The example grammar has this property!\\\\
+If a grammar does not have this property, we can transform it to have the property:
+\begin{itemize}
+    \item For each non-terminal $A$ find the longest prefix $\alpha$ common to two or more of its alternatives.
+    \item if $\alpha \neq \epsilon$ then replace all of the $A$ productions $A \rightarrow \alpha \beta_1 \vert \alpha \beta_2 \vert \cdots \vert \alpha\beta_n$ with:
+    \begin{align*}
+        A &\rightarrow \alpha A'\\
+        A' &\rightarrow \beta_1 \vert \beta_2 \vert \cdots \vert \beta_n
+    \end{align*}
+    \begin{itemize}
+        \item where $A'$ is a new non-terminal
+    \end{itemize}   
+    \item Repeat until no two altrernatives for a single non-terminal have a common prefix.
+    
+\end{itemize}
+
+
+
+
+
+
+
 
 
 
