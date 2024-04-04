@@ -87,9 +87,48 @@ DNA has two strands - the forward and reverse strands.  Which one is forward str
     \item A great overestimate of a person's variability is 3M genetic variants
     \item If we take the union of all single nuleotide variants, it's only $\sim$8M (> 5\% allele frequency)
 \end{itemize}
+\section*{Sequencing DNA}
+\begin{itemize}
+    \item Sanger Sequencing: the first practical method invent by Fred Sanger in 1977.  Initially used to sequence short genomes (e.g., viruses, with 10k base pairs)
+    \item 2nd Generation DNA Sequencing: around 2007, companies began sequencing commercially, but no technology can sequence much more than 10000 nucleotides at a reasonable cost, throughput, and accuracy
+    \begin{itemize}
+        \item As a result, there's a race to create sequencers that can read "short" fragments (100s of nucleotides) efficiently with the best cost and accuracy.
+        \item The DNA would be "read" in sections, and then pieced together in the correct order.
+    \end{itemize}
+\end{itemize}
 
+\subsection*{How DNA is Sequenced}
+\begin{enumerate}
+    \item Isolate the DNA part that needs to be sequenced
+    \item Use DNA polymerase to amplify the DNA (Polymerase Chain Reaction)
+    \item Cut the DNA into snippets (sound waves tend to break the DNA into random, small snippets)
+    \item Deposit the snippets on the slides (kind of like electrophoresis)
+    \item Submerge the snippets with a pool of nucleotides with terminators and polymerase.
+    \item As DNA polymerase "builds" the strands of DNA, use a microscopic camera to capture flashes.
+    \item Remove the terminators, and repeat.
+\end{enumerate}
+\begin{itemize}
+    \item There could be billions of templates on a single slide!  
+    \item This can be parallelized since a single microscope photo captures all the templates simultaneously.
+    \item The terminators act as "speed bumps" and keep reactions in sync.
+\end{itemize}
 
+\subsection*{Bridge Amplification}
+There is a slight issue with the way DNA is sequence, and that is, it's really hard to isolate a single DNA molecule.  In the Amplification stemp, bridge amplification may be used.
+This is done by attaching primers to a slide, and attaching a DNA strand in a "bridge" across two primers.  It can then be copied.
+\begin{center}
+    \includegraphics*[scale=1]{W1_1.png}
+\end{center}
+By doing this, each snippet is actually a cluster, making reads easier.
 
+\subsection*{Loss}
+Between each read, it is not guaranteed that each strand as gained exactly one nucleotide (or is read accurately).  As a result, we get \textit{loss}, a number that describes the quality of the data.
+\[Q = -10 \cdot \log_{10} p\]
+\begin{itemize}
+    \item $Q$ represents base quality
+    \item $p$ represents the probability that the base call is incorrect.
+\end{itemize}
+If $Q = 10$, it means there is a 1/10 chance the call is incorrect.  $Q=100$ means 1 in 100 chance the call is incorrect.  The higher the quality, the better.
 
 
 
