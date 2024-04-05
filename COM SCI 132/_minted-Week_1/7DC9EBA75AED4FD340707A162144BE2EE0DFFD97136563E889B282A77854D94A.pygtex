@@ -1,0 +1,25 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{+w}{    }\PYG{n}{Token}\PYG{+w}{ }\PYG{n}{token}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{eat}\PYG{p}{(}\PYG{k+kt}{char}\PYG{+w}{ }\PYG{n}{a}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{token}\PYG{+w}{ }\PYG{o}{==}\PYG{+w}{ }\PYG{n}{a}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{n}{token}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{next}\PYG{p}{.}\PYG{n+na}{token}\PYG{p}{();}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{        }\PYG{k}{else}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{n}{error}\PYG{p}{();}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{goal}\PYG{p}{()}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{n}{token}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{next}\PYG{p}{.}\PYG{n+na}{token}\PYG{p}{();}\PYG{+w}{ }\PYG{n}{expr}\PYG{p}{();}\PYG{+w}{ }\PYG{n}{eat}\PYG{p}{(}\PYG{n}{EOF}\PYG{p}{);}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{expr}\PYG{p}{()}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{n}{term}\PYG{p}{();}\PYG{+w}{ }\PYG{n}{expr\PYGZus{}prime}\PYG{p}{();}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{expr\PYGZus{}prime}\PYG{p}{()}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{token}\PYG{+w}{ }\PYG{o}{==}\PYG{+w}{ }\PYG{n}{PLUS}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{n}{eat}\PYG{p}{(}\PYG{n}{PLUS}\PYG{p}{);}\PYG{+w}{ }\PYG{n}{expr}\PYG{p}{();}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{        }\PYG{k}{else}\PYG{+w}{ }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{token}\PYG{+w}{ }\PYG{o}{==}\PYG{+w}{ }\PYG{n}{MINUS}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{n}{eat}\PYG{p}{(}\PYG{n}{MINUS}\PYG{p}{);}\PYG{+w}{ }\PYG{n}{expr}\PYG{p}{();}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{        }\PYG{k}{else}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{term}\PYG{p}{()}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{n}{factor}\PYG{p}{();}\PYG{+w}{ }\PYG{n}{term\PYGZus{}prime}\PYG{p}{();}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n}{term}\PYG{+w}{ }\PYG{n+nf}{prime}\PYG{p}{()}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{token}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{MULT}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{n}{eat}\PYG{p}{(}\PYG{n}{MULT}\PYG{p}{);}\PYG{+w}{ }\PYG{n}{term}\PYG{p}{();}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{        }\PYG{k}{else}\PYG{+w}{ }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{token}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{DIV}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{n}{eat}\PYG{p}{(}\PYG{n}{DIV}\PYG{p}{);}\PYG{+w}{ }\PYG{n}{term}\PYG{p}{();}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{        }\PYG{k}{else}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{factor}\PYG{p}{()}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{token}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{NUM}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{n}{eat}\PYG{p}{(}\PYG{n}{NUM}\PYG{p}{);}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{        }\PYG{k}{else}\PYG{+w}{ }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{token}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{ID}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{n}{eat}\PYG{p}{(}\PYG{n}{ID}\PYG{p}{);}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{        }\PYG{k}{else}\PYG{+w}{ }\PYG{n}{error}\PYG{p}{();}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

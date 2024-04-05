@@ -128,8 +128,16 @@ Between each read, it is not guaranteed that each strand as gained exactly one n
     \item $Q$ represents base quality
     \item $p$ represents the probability that the base call is incorrect.
 \end{itemize}
-If $Q = 10$, it means there is a 1/10 chance the call is incorrect.  $Q=100$ means 1 in 100 chance the call is incorrect.  The higher the quality, the better.
-
-
-
+If $Q = 10$, it means there is a 1/10 chance the call is incorrect.  $Q=100$ means 1 in 100 chance the call is incorrect.  The higher the quality, the better.\\
+$p$ refers to the ratio $\text{incorrect} / \text{total count}$.  For example:
+\begin{center}
+    \includegraphics*[scale=0.5]{W1_2.png}
+\end{center}
+In the above image, the call would be orange, since it is the most plentiful.  Then,
+\[p = \frac{\text{number not orange}}{\text{number in cluster}} = \frac{3}{9} = 0.\bar 3\]
+Plugging in and solving for $Q$ yields $Q = 4.77$.\\\\
+Furthermore, once a given pixel is marked as incorrect, it is essentially incorrect 'forever', since once behind or ahead, it is unlikely to be synchronized with the rest.  As a result, quality tends to decrease the longer into the strand.
+\begin{itemize}
+    \item \textbf{Quality decreases as a function of length!}
+\end{itemize}
 \end{document}
