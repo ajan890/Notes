@@ -16,7 +16,7 @@
 
 % code blocks
 \usepackage{minted, listings} 
-
+ 
 % verbatim greek
 \usepackage{alphabeta}
 
@@ -652,8 +652,33 @@ How to compute FOLLOW($B$):
     \item Solve the constraints.  Go for the $\subseteq$-least solution.
 \end{enumerate}
 
-
-
+\subsection*{LL1 Grammars}
+\textbf{Intuition:} A grammar $G$ is LL(1) if and only if:
+\begin{itemize}
+    \item for all non-terminals $A$, each distinct pair of productions ($A \rightarrow \beta$) and ($A \rightarrow \gamma$) satisfies the condition FIRST($\beta$)$\cap$FIRST($\gamma$) = $\emptyset$.
+\end{itemize}
+\textbf{Question:} What if NULLABLE($A$)?\\
+\textbf{Definition:} A grammar $G$ is LL(1) if and only if for each set of productions $A \rightarrow \alpha_1 \vert \alpha_2 \vert \cdots \vert \alpha_n$:
+\begin{enumerate}
+    \item FIRST($\alpha_1$), FIRST($\alpha_2$), \dots, FIRST($\alpha_n$) are pairwise disjoint, and
+    \item If NULLABLE($\alpha_i$), then for all $j$, such that $1 \leq j \leq n \land j \neq i$: FIRST($\alpha_j$)$\cap$FOLLOW($A$) = $\emptyset$
+\end{enumerate}
+If $G$ is $\epsilon$-free, condition 1 is sufficient.\\\\
+Provable facts about LL(1) grammars:
+\begin{enumerate}
+    \item No left-recursive grammar is LL(1)
+    \item No ambiguous grammar is LL(1)
+    \item Some languages have no LL(1) grammar
+    \item A $\epsilon$-free grammar where each alternative expansion for $A$ begins with a distinct terminal is a \textit{simple} LL(1) \textit{grammar}.
+\end{enumerate}
+\textbf{Example:}
+\[S \rightarrow aS \vert a\]
+is not LL(1) because FIRST($aS$) = FIRST($a$) = \{a\}
+\begin{align*}
+    S &\rightarrow aS'\\
+    S' &\rightarrow aS' \vert \epsilon
+\end{align*}
+accepts the same language and is LL(1).
 
 
 \end{document}
