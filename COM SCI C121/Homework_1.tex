@@ -1,0 +1,63 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+\graphicspath{{./assets/images}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+
+\title{COM SCI C121 Homework 1}
+
+\author{<name, id>}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Problem 1}
+\subsection*{Bags and nucleotides}
+Assume I have a bag with infinite nunmber of balls, I mean, nuceotides, with bases $\{A, C, G, T\}$.  When I pull each base (nucleotide) out, it is observed correctly, and each base is equally probable.  Further, assume independence between draws, i.e., $P(A, G) = P(A)P(G)$.
+\begin{enumerate}[~~(a)]
+    \item What is the probability of observing the sequence $AGG$?
+    \item What is the probability of observing the sequence $GAA$?
+    \item What is the probability of observing $A$, given you saw $GAA$ already, i.e., $P(A \:\vert\: GAA)$?
+\end{enumerate}
+\solution\\
+
+\section*{Problem 2}
+\subsection*{Finite nucleotides}
+Now, assume I have a total of 8 bases in my bag, each of them with equal probability.  When I draw a base, I \textit{do not} replace it.  Note, the order matters and assume you go from left to right.  No need to worry about reverse complements here.  Pretend it doesn't exist.
+\begin{enumerate}[~~(a)]
+    \item What is the probability of observing the sequence $AGG$?
+    \item What is the probability of observing the sequence $GAT$?
+    \item What is the probability of observing $A$, given you saw $GAA$ already, i.e., $P(A \:\vert\: GAA)$?
+    \item What is the probability of observing $G$, given you saw $GAA$ already, i.e., $P(G \:\vert\: GAA)$?
+\end{enumerate}
+\solution\\
+
+\section*{Problem 3}
+\subsection*{Thought experiments about sequencing by synthesis}
+Imagine I have an Illumina-style sequencer and my "true" sequence is $s = AAGTA$, but my first observed data is $d_1 = AAGTG$.  That is, $d_1$ has an error in the final base call.
+\begin{enumerate}[~~(a)]
+    \item Write up two sentences about how the error in $d_1$ could have arisen.  We are not looking for some in-depth biochemistry explanation, simply explaining the logic of one possible case.
+    \item We then query the sequencer for another data point, and this time it gives us $d_2 = AACTA$.  Given how sequencing-by-synthesis works, is $d_1$ or $d_2$ more likely?  Again, not looking for an in-depth biochemistry lesson, just explaining the logic of how errors might arise.  Strive for less than two sentences.
+\end{enumerate}
+\solution\\
+
+
+\end{document}

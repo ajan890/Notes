@@ -1,0 +1,235 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+\graphicspath{{./assets/images}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+
+\title{COM SCI 132 Week 2}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+\section*{The Java Compiler Compiler (JCC)}
+\begin{itemize}
+    \item Can be thought of as "Lex and Yacc for Java"
+    \item It is based on LL(k) rather than LALR(1).
+    \item Grammars are written in EBNF.
+    \item The Java Compiler Compiler transforms an EBNF grammar into an LL(k) parser.
+    \item The JavaCC grammar can have embedded action code written in Java, just like a Yacc grammar can have embeeded action code written in C.
+    \item The lookahead can be changed by writing LOOKAHEAD(\dots).
+    \item The whole input is given in just one file (not two).
+\end{itemize}
+\textbf{Input format:} one file containing a header, token specifications for lexical analysis, and grammar.\\
+\textbf{Example of a token specification:}
+\begin{verbatim}
+TOKEN:
+{
+    < INTEGER_LITERAL: ( ["1"-"9"] (["0"-"9"])* | "0" ) >
+}
+\end{verbatim}
+\textbf{Example of a production:}
+\begin{verbatim}
+void StatementListReturn():
+{}
+{
+    ( Statement() )* "return" Expression() ";"
+}
+\end{verbatim}
+\textbf{Generating a parser with JavaCC}
+\begin{verbatim}
+javacc fortran.jj // generates a parser with a specified name
+javac Main.java // Main.java contains a call of the parser
+java Main < prog.f // parses the program prog.f    
+\end{verbatim}
+
+\section*{The Visitor Pattern}
+According to Gamma, Helm, Johnson, Vlissides: \textbf{Design Patterns}, 1995:
+\begin{quotation}
+For \textbf{object-oriented programming}, the Visitor pattern \textbf{enables} the definition of a \textbf{new operation} on an \textbf{object structure without changing the classes} of the objects.
+\end{quotation}
+
+\subsection*{First Approach: Instanceof and Type Casts}
+The running Java example: summing an integer list.
+\begin{verbatim}
+interface List {}
+
+class Nil implements List {}
+
+class Cons immplements List {
+    int head;
+    List tail;
+}
+
+List l;
+\end{verbatim}
+Suppose we have a \texttt{List l} in the code to parse.  Is \texttt{l} a \texttt{Nil} or a \texttt{Cons}?  \\
+One way to check is to do type casting:
+\begin{verbatim}
+List l;  // The List-object
+int sum = 0;
+boolean proceed = true;
+while(proceed) {
+    if (l instanceof Nil) proceed = false;
+    else if (l instanceof Cons) {
+        sum += ((Cons) l).head;  // Notice these two type casts!
+        l = ((Cons) l).tail;
+    }
+}
+\end{verbatim}
+\textbf{Advantage:} The code is written without touching the classes Nil and Cons.\\
+\textbf{Drawback:} The code constantly uses type casts and \texttt{instanceof} to determine what class of object it is considering.\\
+
+\subsection*{Second Approach: Dedicated Methods}
+The first approach is \textbf{not} object-oriented!  To access parts of an object, the classcal approach is to use dedicated methods which both access and act on the subobjects.\\
+Instead, of writing a \texttt{sum()} method that operates on list types, just simply add a .sum() method to the \texttt{List} interface.  All classes that implement the interface can then override the method.
+
+\begin{verbatim}
+class Nil implements List {
+    public int sum() { return 0; }
+}
+
+class Cons implements List {
+    int head;
+    List tail;
+    public int sum() {
+        return head + tail.sum();
+    }
+}
+\end{verbatim}
+\textbf{Advantage:} The type casts and \texttt{instanceof} operations have disappeared, and the code can be written in a systematic way.\\
+\textbf{Drawback:} For each new operation on \texttt{List}-objects, write new dedicated methods and recompile all classes.
+
+\subsection*{Third Approach: The Visitor Pattern}
+\textbf{The Idea:}
+\begin{itemize}
+    \item Divide the code into an object structure and a Visitor (akin to Functional Programming!)
+    \item Insert an \texttt{accept} method in each class.  Each accept method takes a Visitor as an argument.
+    \item A Visitor contains a \texttt{visit} method for each class (overloading!) A method for a class $C$ takes an argument of type $C$.
+\end{itemize}
+\begin{verbatim}
+interface List {
+    void accept(Visitor v);
+}
+
+interface Visitor {
+    void visit(Nil x);
+    void visit(Cons x);
+}
+\end{verbatim}
+The purpose of the \texttt{accept} methods is to invoke the \texttt{visit} method in the Visitor which can handle the current object.
+
+\begin{verbatim}
+class Nil implements List {
+    public void accept(Visitor v) {
+        v.visit(this);
+    }
+}
+
+class Cons implements List {
+    int head;
+    List tail;
+    public void accept(Visitor v) {
+        v.visit(this);
+    }
+}
+\end{verbatim}
+\textbf{Notice:} the \texttt{accept} method in both classes is the same!  Due to the way the Visitor is implemented, the method always calls \texttt{visit}.  This is beneficial because it allows the compiler to easily parse classes by appending the same code to each class.  In fact, the \texttt{accept} method is always implemented the way it is shown above, for any class!\\\\
+The control flow goes back and forth between the \texttt{visit} methods in the Visitor and the \texttt{accept} methods in the object structure.
+
+\begin{verbatim}
+class SumVisitor implements Visitor {
+    int sum = 0;
+    public void visit(Nil x) {}
+    public void visit(Cons x) {
+        sum += x.head;
+        x.tail.accept(this);
+    }
+}
+.....
+
+SumVisitor sv = new SumVisitor();
+l.accept(sv);
+System.out.println(sv.sum);
+\end{verbatim}
+\textbf{Also notice:} since the \texttt{accept} method is titled \texttt{accept} in every class, the \texttt{visit} method in the Visitor can just call the \texttt{accept} method, and it automatically calls the method for the correct class!
+
+\subsection*{Visitors: Summary}
+\begin{itemize}
+    \item Visitor makes adding new operations easy.  Simply write a new visitor.
+    \item A visitor gathers related operations.  It also separates unrelated ones.
+    \item Adding new classes to the object structure is hard.  Key consideration: are you most likely to change the algorithm applied over an object structure, or are you most like to change the classes of objects that make up the structure.
+    \item Visitors can accumulate state.
+    \item Visitor can break encapsulation.  Visitor's approach assumes that the interface of the data sturcture classes is powerful enough tot let visitors do their job.  As a result, the patten often forces you to provide public operations that access internal state, which may compromise its encapsulation.
+\end{itemize}
+
+\section*{The Java Tree Builder}
+The Java Tree Builder (JTB) is a front for The Java Compiler Compiler.  It supports the building of syntax trees which can be traversed using visitors.\\\\
+JTB transforms a bare JavaCC grammar into three components:
+\begin{enumerate}
+    \item a JavaCC grammar with embedded Java code for building a syntax tree;
+    \item one class for every form of syntax tree node; and
+    \item a default visitor which can do a depth-first traversal of a syntax tree.
+\end{enumerate}
+The produced JavaCC grammar cam then be processed by the JCC to give a parser which produces syntax trees.  The produced syntax trees can now be traversed by a Java program by writing subclasses of the default visitor.
+\begin{center}
+    \includegraphics*[scale=0.9]{W2_1.png}
+\end{center}
+\subsubsection*{Example (simplified)}
+JTB produces a syntax-tree-node class for \texttt{Assignment:}
+\begin{verbatim}
+public class Assignment implements Npde {
+    PrimaryExpression f0; AssignmentOperator f1;
+    Expression f2;
+
+    public Assignment (PrimaryExpression n0, AssignmentOperator n1, Expression n2) {
+        f0 = n0;
+        f1 = n1;
+        f2 = n2;
+    }
+
+    public void accept(visitor.Visitor v) {
+        v.visit(this);
+    }
+}
+\end{verbatim}
+Notice the \texttt{accept} method; it invokes the method \texttt{visit} for \texttt{Assignment} in the default visitor.\\\\
+The default visitor looks like this:
+\begin{verbatim}
+public class DepthFirstVisitor implements Visitor {
+    ...
+    //
+    // f0 -> PrimaryExpression()
+    // f1 -> AssignmentOperator()
+    // f2 -> Expression()
+    //
+    public void visit(Assignment n) {
+        n.f0.accept(this);
+        n.f1.accept(this);
+        n.f2.accept(this);
+    }
+}
+\end{verbatim}
+Notice the body of the method which visits each of the three subtrees of the \texttt{Assignment} node.
+\end{document}

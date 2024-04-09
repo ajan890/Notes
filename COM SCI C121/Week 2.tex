@@ -1,0 +1,161 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+\graphicspath{{./assets/images}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+
+\title{COM SCI C121 Week 2}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+\section*{Conditional Probability}
+Know these:
+\begin{itemize}
+    \item Conditional Probability formulas
+    \item Bayes Theorem
+\end{itemize}
+
+\subsection*{Why does conditional probability matter?}
+\begin{itemize}
+    \item In the abstract sense, knowing one event tells us something about another event
+    \item Once you get proficient with modeling, it will become "easy" to write down a model
+    \begin{itemize}
+        \item I didn't say it woudl be a good model, just \textit{a} model
+    \end{itemize}
+    \item Consider: $P(\text{parameters}\vert \text{data}) = \frac{P(\text{parameters, data})}{P(\text{data})}$
+    \begin{itemize}
+        \item Using Bayes Theorem to invert the conditional, this gives $P(\text{data} \vert \text{parameters})$.  
+        \item This is the condition on the \textit{likelihood} of the data!
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Errors in Reads}
+\textbf{Short read sequence alignment:} the process of finding the putative source of reads.
+Suppose your genome is the following:
+\begin{center}
+\texttt{CGTCTGGGGGGTATGCA\underline{CGCGATAGCATTGCG}AGACGCTGGAGCCGGAGCACCCTATGTCGCAGTATCTGTCTTTGATTCCTG}
+\end{center}
+and you get the following read: \texttt{CGCGAT\underline{T}GCATTGCG}.  
+\begin{itemize}
+    \item Is that underlined T (incorrect base pair in the read) genetic variation or an error?
+\end{itemize}
+
+\section*{Genetic Variation:}
+\begin{itemize}
+    \item Humans have genomes ~3.2B bases long
+    \item Any two humans are ~99.9\% similar
+    \item Many types of genetic variation exist:
+    \begin{itemize}
+        \item Insertions, deletions, substitutions, inversions, etc.
+    \end{itemize}
+    \item We will be focusing on \textbf{single nucleotide polymorphisms (SNPs)}, or single base mutations.
+\end{itemize}
+
+\subsection*{Why is genetic variation important to study?}
+\begin{itemize}
+    \item Many \textit{traits} have a genetic component
+    \begin{itemize}
+        \item traits can be height, skin color, disease, etc.
+    \end{itemize}
+    \item Understanding which genetic variation is important enables us to understand the biology and potentially treat diseases
+    \begin{itemize}
+        \item see: all of statistical genetics, population genetics, human genetics
+    \end{itemize}
+\end{itemize}
+
+\subsection*{High-Level Problem Setup}
+\begin{itemize}
+    \item We have sequencing \textit{reads} that align to a genome with some \textit{mismatches}
+    \item Are tehse mismatches errors from the sequencer, or are they genetic variants?
+    \item Furthermore, there are two chromosomes, so are there one or two copies of the variant?
+    \item Jargon:
+    \begin{itemize}
+        \item The "common" variant is often called the \textbf{major allele} and the "less common" variant is often called the \textbf{minor allele}
+        \item When we talk about genetic variants, we often talk about the \textbf{dosage} of the minor allele (how many times the minor allele occurs)
+    \end{itemize}
+    \item E.g., 95\% of people have an "A" at site chr1:45280934, and 5\% have a "T".  If Bob has "A" from his mom and "T" from his dad, his \textbf{genotype} is "AT" and his \textbf{dosage} is 1.
+\end{itemize}
+
+\subsection*{Specific Problem Setup}
+\begin{center}
+    \includegraphics*[scale=0.9]{W2_1.png}
+\end{center}
+In modern sequencing techniques, each nucleotide gets an average of less than 1 read.  (We use data from the general population and statistical techniques to guess nucleotides instead.)  However, ten to twenty years ago, the state of the art sequencing would read each nucleotide multiple times.\\\\
+From this data, what is the genotype of the person?  AA, AB, or BB?  (Remember that both alleles are possible due to errors.)  Now, what if we only had the following data:
+\begin{center}
+    \includegraphics*[scale=0.9]{W2_2.png}
+\end{center}
+Now what is the genotype of the person?  Assume A is the major allele and B is the minor allele.
+\begin{itemize}
+    \item We have reads that overlap a position in the genome
+    \item For simplicity, we are assuming we know this position varies in the human population
+    \item We are restricting ourselves to \textbf{biallelic} single nucleotide polymorphisms
+    \begin{itemize}
+        \item They can only have two possibilities, genotype A or B
+    \end{itemize}
+    \item Further, you can assume you know what the frequency of this variant is in the population
+    \item Finally, remember that the sequencer (e.g., the base caller) tells us what the certainty there is of a base at any given position (the probability of an error at a position)
+\end{itemize}
+
+\subsection*{Rigorous Problem Setup}
+\begin{itemize}
+    \item There are three possible states: AA, AB, BB
+    \item We need probabilities for each state, given the data
+    \begin{itemize}
+        \item i.e., we need $P(AA \vert \text{data}) = \frac{P(\text{data} \vert AA) P(AA)}{P(\text(data))}$
+    \end{itemize}  
+\end{itemize}
+\subsection*{The oracle: How is the data generated?}
+\begin{itemize}
+    \item Let's pretend we know the genotype of the person.  Suppose it is AA.
+    \item To generate reads (as the oracle):
+    \begin{enumerate}
+        \item Pick a chromosome (and a starting position) and start generating bases.
+        \item Is the read an error?
+        \item What is the observation?
+    \end{enumerate}
+    Let $i$ be the index for the read, and let $c_i$ be the underlying "true" base.\\
+    Then, 
+    \begin{align*}
+    P(c_i = A \vert G = AA) &= 1\\
+    P(c_i = B \vert G = AA) &= 0
+    \end{align*}
+    This is because if the oracle generates AA, then it is impossible for the truth to be a B.\\
+    Additionally, $P(E_i = 1) = \epsilon_i$ and $P(E_i = 0) = 1 - \epsilon_i$.
+    \begin{itemize}
+        \item $G$ = what the oracle picked (ground "truth"), which is assumed to be true
+        \item $E_i$ = random variable that represents error.
+        \item $\epsilon_i$ = some probability
+        \item $P(E_i)$ essentially represents the chance that an error was made when picking 1 or 0.
+    \end{itemize}
+    \item Note that at this point, we have probability of data generated, and probability of a read.
+    \item Now, let $O$ represent the observation of read $i$.
+    \begin{align*}
+        P(O_i = A \vert E_i, c_i) \rightarrow \begin{cases} P(O_i = A \vert E_i = 0, c_i = A) \\ P(O_i = A \vert E_i = 1, c_i = B)\end{cases}\\
+        P(O_i = B \vert E_i, c_i) \rightarrow \begin{cases} P(O_i = B \vert E_i = 0, c_i = B) \\ P(O_i = B \vert E_i = 1, c_i = A)\end{cases}
+    \end{align*}
+    In this model, if the true genotype is $A$, it is impossible for a $B$ to be picked, since $c_i = B$ and an observed $A$ has an $E_i = 1$.  
+
+\end{itemize}
+
+\end{document}
