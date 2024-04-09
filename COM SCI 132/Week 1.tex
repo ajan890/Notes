@@ -16,7 +16,7 @@
 
 % code blocks
 \usepackage{minted, listings} 
-
+ 
 % verbatim greek
 \usepackage{alphabeta}
 
@@ -517,7 +517,7 @@ That is, for some $w \in V_t^*$, $w \in$ FIRST($\alpha$) if and only if $\alpha 
 \textbf{Key property:} Whenever two productions $A \rightarrow \alpha$ and $A \rightarrow \beta$ both appear in the grammar, we would like
 \[\text{FIRST}(\alpha)\cap\text{FIRST}(\beta) = \phi\]
 This would allow the parser to make a correct choice with a lookahead of only one symbol!  The example grammar has this property!\\\\
-If a grammar does not have this property, we can transform it to have the property:
+If a grammar does not have this property, we can transform it to have the property through a process called \textbf{left factoring}:
 \begin{itemize}
     \item For each non-terminal $A$ find the longest prefix $\alpha$ common to two or more of its alternatives.
     \item if $\alpha \neq \epsilon$ then replace all of the $A$ productions $A \rightarrow \alpha \beta_1 \vert \alpha \beta_2 \vert \cdots \vert \alpha\beta_n$ with:
@@ -529,16 +529,156 @@ If a grammar does not have this property, we can transform it to have the proper
         \item where $A'$ is a new non-terminal
     \end{itemize}   
     \item Repeat until no two altrernatives for a single non-terminal have a common prefix.
-    
 \end{itemize}
+\subsubsection*{Example:}
+Consider a right-recursive version of the expression grammar:
+\begin{verbatim}
+    1|  <goal>   ::= <expr>
+    2|  <expr>   ::= <term> + <expr>
+    3|            |  <term> - <expr>
+    4|            |  <term>
+    5|  <term>   ::= <factor> * <term>
+    6|            |  <factor> / <term>
+    7|            |  <factor>
+    8|  <factor> ::= num
+    9|            |  id
+\end{verbatim}
+To choose between productions 2, 3, and 4, the parser must see past the \texttt{num} or \texttt{id} and look at the $+$, $-$, $*$, or $/$.
+\[\text{FIRST}(2) \cap \text{FIRST}(3) \cap \text{FIRST}(4) \neq \Phi\]
+This grammar fails the test.  There are two non-terminals that must be left factored: \texttt{<expr>} and \texttt{<term>}.
+Applying left factoring gives:
+\begin{verbatim}
+    <expr>   ::= <term><expr'>
+    <expr'>  ::= + <expr>
+              |  - <expr>
+              |  ε
+    <term>   ::= <factor><term'>
+    <term'>  ::= * <term>
+              |  / <term>
+              |  ε
+\end{verbatim}
+Substituting this back makes it so selection requires only a single token lookahead.
 
+\section*{Generality}
+Question:\\
+\begin{itemize}
+    \item By left factoring and eliminating left-recursion, can we transform an arbitrary context-free grammar to a form where it can be predictively parsed with a single token lookahead?
+\end{itemize}
+Answer:\\
+\begin{itemize}
+    \item Given a context-free grammar that doesn't meet our conditions, it is undecidable whether an equivalent grammar exists that does meet our conditions.
+\end{itemize}
+Many context-free languages do not have such a grammar:
+\[\{a^n 0 b^n \vert n \geq 1\} \bigcup \{a^n 1 b^{2n} \vert n \geq 1\}\]
+Must look past an arbitrary number of a's to discover the 0 or the 1 and so determine the derivation.
 
+\subsection*{Recursive Descent Parsing}
+Now, we can produce a simple recursive descent parser from the (right-associative) grammar.
+\begin{minted}{java}
+    Token token;
+    void eat(char a) {
+        if (token == a) {token = next.token(); }
+        else { error(); }
+    }
+    void goal() { token = next.token(); expr(); eat(EOF); }
+    void expr() { term(); expr_prime(); }
+    void expr_prime() {
+        if (token == PLUS) { eat(PLUS); expr(); }
+        else if (token == MINUS) { eat(MINUS); expr(); }
+        else { }
+    }
+    void term() { factor(); term_prime(); }
+    void term prime() {
+        if (token = MULT) { eat(MULT); term(); }
+        else if (token = DIV) { eat(DIV); term(); }
+        else { }
+    }
+    void factor() {
+        if (token = NUM) { eat(NUM); }
+        else if (token = ID) { eat(ID); }
+        else error();
+    }
+\end{minted}
 
+\subsection*{NULLABLE}
+For a string $\alpha$ with grammar symbols, define NULLABLE($\alpha$) as $\alpha$ can go to $\epsilon$.
+\[\text{NULLABLE}(\alpha) \text{ if and only if } (\alpha \Rightarrow^* \epsilon)\]
+How to compute NULLABLE($U$), for $U \in V_t \cup V_n$:
+\begin{enumerate}
+    \item For each $U$, let NULLABLE($U$) be a Boolean variable
+    \item Derive the following constraints:
+    \begin{enumerate}
+        \item if $a \in V_t$, then NULLABLE($a$) = false.
+        \item if $A \rightarrow Y_1 \dots Y_k$ is a production, then [NULLABLE($Y_1$) $\land \dots \land$ NULLABLE($Y_k$)] $\Rightarrow$ NULLABLE($A$)
+    \end{enumerate}
+    \item Solve the constraints.
+    \[\text{NULLABLE}(X_1 \dots X_k) = \text{NULLABLE}(X_1) \land \dots \land \text{NULLABLE}(X_k)\]
+\end{enumerate}
 
+\subsection*{FIRST}
+For a string $\alpha$ with grammar symbols, define FIRST($\alpha$) as the set of terminal symbols that begin strings derived from $\alpha$.
+\[\text{FIRST}(\alpha) = \{a \in V_t \vert \alpha \Rightarrow ^* a\beta\}\]
+How to compute FIRST($U$), for $U \in V_t \cup V_n$:
+\begin{enumerate}
+    \item For each $U$, let FIRST($U$) be a set variable.
+    \item Derive the following constraints:
+    \begin{enumerate}
+        \item if $a \in V_t$, then FIRST($a$) = { $a$ }
+        \item if $A \rightarrow Y_1Y_2\cdots Y_k$ is a production, then 
+            \begin{itemize}
+                \item FIRST($Y_1$) $\subseteq$ FIRST($A$)
+                \item $\forall i \::\: 1 < i \leq k$, if NULLABLE($Y_1\cdots Y_{i - 1}$), then FIRST($Y_i$) $\subseteq$ FIRST($A$)
+            \end{itemize}
+    \end{enumerate}
+    \item Solve the constraints.  Go for the $\subseteq$-least solution.
+    \[\text{FIRST}(X_1\cdots X_k) = \bigcup \:_{i:1\leq i \leq k \land \text{NULLABLE}(X_1\cdots X_{i - 1})}\text{FIRST}(X_i)\]
+\end{enumerate}
 
+\subsection*{FOLLOW}
+For a non-terminal $B$, define FOLLOW($B$) as the set of terminals that can appear immediately to the right of $B$ in some sentential form.
+\[\text{FOLLOW}(B) = \{a \in V_t \vert G \Rightarrow^* \alpha B \beta \land a \in \text{FIRST}(\beta \$)\}\]
+How to compute FOLLOW($B$):
+\begin{enumerate}
+    \item For each non-terminal $B$, let FOLLOW($B$) be a set variable.
+    \item Derive the following constraints:
+    \begin{enumerate}
+        \item if $G$ is the start symbol and \$ is the end-of-file marker, then $\{\$\} \subseteq$ FOLLOW($G$)
+        \item if $A \rightarrow \alpha B \beta$ is a production, then:
+        \begin{itemize}
+            \item FIRST($\beta$) $\subseteq$ FOLLOW($B$)
+            \item if NULLABLE($\beta$), then FOLLOW($A$) $\subseteq$ FOLLOW($B$)
+        \end{itemize}
+    \end{enumerate}
+    \item Solve the constraints.  Go for the $\subseteq$-least solution.
+\end{enumerate}
 
-
-
+\subsection*{LL1 Grammars}
+\textbf{Intuition:} A grammar $G$ is LL(1) if and only if:
+\begin{itemize}
+    \item for all non-terminals $A$, each distinct pair of productions ($A \rightarrow \beta$) and ($A \rightarrow \gamma$) satisfies the condition FIRST($\beta$)$\cap$FIRST($\gamma$) = $\emptyset$.
+\end{itemize}
+\textbf{Question:} What if NULLABLE($A$)?\\
+\textbf{Definition:} A grammar $G$ is LL(1) if and only if for each set of productions $A \rightarrow \alpha_1 \vert \alpha_2 \vert \cdots \vert \alpha_n$:
+\begin{enumerate}
+    \item FIRST($\alpha_1$), FIRST($\alpha_2$), \dots, FIRST($\alpha_n$) are pairwise disjoint, and
+    \item If NULLABLE($\alpha_i$), then for all $j$, such that $1 \leq j \leq n \land j \neq i$: FIRST($\alpha_j$)$\cap$FOLLOW($A$) = $\emptyset$
+\end{enumerate}
+If $G$ is $\epsilon$-free, condition 1 is sufficient.\\\\
+Provable facts about LL(1) grammars:
+\begin{enumerate}
+    \item No left-recursive grammar is LL(1)
+    \item No ambiguous grammar is LL(1)
+    \item Some languages have no LL(1) grammar
+    \item A $\epsilon$-free grammar where each alternative expansion for $A$ begins with a distinct terminal is a \textit{simple} LL(1) \textit{grammar}.
+\end{enumerate}
+\textbf{Example:}
+\[S \rightarrow aS \vert a\]
+is not LL(1) because FIRST($aS$) = FIRST($a$) = \{a\}
+\begin{align*}
+    S &\rightarrow aS'\\
+    S' &\rightarrow aS' \vert \epsilon
+\end{align*}
+accepts the same language and is LL(1).
 
 
 \end{document}
