@@ -232,4 +232,102 @@ public class DepthFirstVisitor implements Visitor {
 }
 \end{verbatim}
 Notice the body of the method which visits each of the three subtrees of the \texttt{Assignment} node.
+
+\section*{Type Checking with Trees}
+Consider the following:
+\begin{center}
+    \texttt{e ::= c | true | false | !e | e + e}, where \texttt{c} represents a numerical constant.
+\end{center}
+Expressions can be written into trees then type checked.  For example, if the first $e$ is derived to $e + e$, then the new $e$ must be integers.  If $!e$ is derived, then $e$ must be a boolean.  Cases like \texttt{true + 5} or \texttt{!3} are not allowed.
+
+\subsection*{Notation}
+\[\frac{\text{hypothesis}_1 \dots \text{hypothesis}_n}{\text{conclusion}}\]
+is read as
+\begin{verbatim}
+    if (hypothesis1 and ... and hypothesisN)
+    then: conclusion
+\end{verbatim}
+In other words, if the numerator can be derived (e.g., proven true), then the conclusion can also be derived.\\
+In this case, we care about this notation for type checking.  In this problem, we care about hypotheses in form $e\::\:t$, where
+\begin{itemize}
+    \item $e$ = expression
+    \item $t$ = data type (e.g., t ::= int | boolean)
+\end{itemize}
+We can then derive expressions like:
+\[\frac{e_1 \::\: \text{int}, e_2 \::\: \text{int}}{e_1 + e_2 \::\: \text{int}}\]
+We can recursively go up the tree through every expression and check the types of all the expressions in this way.  If some mismatch is detected, then the compiler returns an error.\\
+Example: (pseudocode)
+\begin{minted}{java}
+class TypeChecker implements DepthFirstVisitor {
+    Type visit (IntConst n) {
+        return "int";
+    }
+
+    Type visit(Plus n) {
+        Type t0 = n.f0.accept(this)
+        Type t2 = n.f2.accept(this)
+        if (t0 == "int" && t2 == "int") {
+            return "int";
+        } else {
+            throw new Exception();
+        }
+    }
+}
+\end{minted}
+
+\subsection*{Some other derivation examples}
+
+\[\frac{\hspace{2cm}}{\vdash x = e}\]
+Assignment does not take any other expressions to derive; it simply just \textit{is}.
+
+\[\frac{\vdash e \::\: \text{boolean}, \vdash s_1, \vdash s_2}{\vdash \text{if}(e): s_1 \text{ else}: s_2}\]
+If/else can be derived if given that $e$ is a boolean, and $s_1$ and $s_2$ have some type.
+
+
+\[\frac{\vdash e \::\: \text{boolean}, \vdash s}{\vdash \text{while} (e): \:s}\]
+Similarly, while can be derived if given that $e$ is a boolean, and $s$ has some type.
+
+\subsection*{Overloading}
+Consider:
+\begin{verbatim}
+class a {
+    int a;
+    void a (int a) {
+        boolean a;
+    }
+}
+\end{verbatim}
+\texttt{a} has five different appearances: class name, field name, method name, parameter name, and local variable name.  How do you type \texttt{a}?  Also, how many of the \texttt{a} are identical?\\\\
+It turns out that none of the \texttt{a} are identical; they are all allowed to coexist.  As a result, we have to track these variables.  Thus, in the symbol table, it must be "chunked" per method - use a stack to keep track.  (This is similar to the environment manager in CS131).
+
+\subsection*{Arrays}
+In minijava, arrays are used as such:
+\begin{center}
+    \texttt{e ::= new int[e] | e1[e2] | e.length}\\
+    \texttt{s ::= id[e2] = e3}
+\end{center}
+Note: now, types are not limited to int and bool, but also extended to int[].\\
+Additional derivations:
+\begin{align*}
+    &\frac{A \vdash e \::\: \text{int}}{A \vdash \text{new int[e]} \::\: \text{int[]}}\\
+    &\frac{A \vdash e_1 \::\: \text{int[]}, \:A \vdash e_2 \::\: \text{int}}{A \vdash e_1[e_2]\::\: \text{int}}
+\end{align*}
+$A$ represents the symbol table.
+\texttt{A $\vdash$ e : t} represents "in symboltable $A$, the expression $e$ has type $t$."\\
+Similarly, \texttt{A $\vdash$ s} represents "in symboltable $A$, the statement $s$ tyoe checks."\\
+We can extend our visit function from earlier to include a symbol table.
+\begin{verbatim}
+Type visit(Exp n, Symboltable A) {
+    ...
+    return;
+}
+\end{verbatim}
+
+
+
+
+
+
+
+
 \end{document}
