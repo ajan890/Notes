@@ -155,7 +155,62 @@ Now what is the genotype of the person?  Assume A is the major allele and B is t
         P(O_i = B \vert E_i, c_i) \rightarrow \begin{cases} P(O_i = B \vert E_i = 0, c_i = B) \\ P(O_i = B \vert E_i = 1, c_i = A)\end{cases}
     \end{align*}
     In this model, if the true genotype is $A$, it is impossible for a $B$ to be picked, since $c_i = B$ and an observed $A$ has an $E_i = 1$.  
-
+\end{itemize}
+\subsection*{Example:}
+Suppose you got an A from both mom and dad.  Then,
+\begin{align*}
+    P(O_i = A \vert G = AA) &= P(O_i = A \vert E_i = 0, G = AA)P(E_i = 0) + P(O_i = A \vert E_i = 1, G = AA)P(E_i = 1)\\
+    P(O_i = B \vert G = AA) &= P(O_i = B \vert E_i = 0, G = AA)P(E_i = 0) + P(O_i = B \vert E_i = 1, G = AA)P(E_i = 1)
+\end{align*}
+Then,
+\begin{align*}
+    P(O_i = A \vert E_i = 0, G = AA) &= P(O_i = A \vert E_i = 0, c_i = A, G = AA) P(c_i = A) + P(O_i = A \vert E_i = 0, c_i = B, G = AA)P(c_i = B)\\
+    P(O_i = A \vert E_i = 1, G = AA) &= P(O_i = A \vert E_i = 1, c_i = A, G = AA) P(c_i = A \vert G \vert AA) + P(O_i = A \vert E_i = 1, c_i = B, G = AA) P(c_i = B \vert G = AA)
+\end{align*}
+\begin{itemize}
+    \item Notice that $P(O_i = A \vert E_i = 0, c_i = B, G = AA)P(c_i = B) = 0$ because it is impossible for there to be zero error while reading two A's, if the ground truth is a B.
+    \item Similarly, $P(O_i = A \vert E_i = 1, c_i = A, G = AA) = 0$ because it is impossible to have a 100\% chance of error when reading two A's, observing an A, and having a ground truth of A. 
 \end{itemize}
 
+Finally,
+\[P(O_i = A \vert G = AA) = P(O_i = A \vert E_i = 0, c_i = A, G = AA) P(c_i = A \vert G = AA) (P(E_i = 0))\]
+
+\subsection*{Example:}
+Suppose now you read a genotype of AB.  We can start with finding the probability the observed allele is A, while the genotype is AB.
+Then,
+\begin{align}
+    P(O_i = A \vert G = AB) &= P(O_i = A | E_i = 0, c_i = A, G = AB) P(E_i = 0) P(c_i = A \vert G = AB) \\
+    &+ P(O_i = A \vert E_i = 0, c_i = B, G = AB) P(E_i = 0) P(c_i = B \vert G = AB)\\
+    &+ P(O_i = A \vert E_i = 1, c_i = A, G = AB) P(E_i = 1) P(c_i = A \vert G = AB)\\
+    &+ P(O_i = A \vert E_i = 1, c_i = B, G = AB) P(E_i = 1) P(c_i = B \vert G = AB)
+\end{align}
+We know that
+\begin{align*}
+    P(c_i = A \vert G = AB) = \frac{1}{2}\\
+    P(c_i = B \vert G = AB) = \frac{1}{2}
+\end{align*}
+therefore, (1) would evaluate to $\frac{1}{2} \cdot (1 - \epsilon_i)$.\\
+Evaluating (2) and (3) result in 0, and evaluating (4) results in $\frac{1}{2} \cdot \epsilon_i$.\\
+Therefore,
+\[P(O_i = A \vert G = AB) = \frac{1}{2}(1 - \epsilon_i) + \frac{1}{2}(\epsilon_i) = \frac{1}{2}\]
+Similarly to above, $P(O_i = B \vert G = AB) = \frac{1}{2}$.\\\\
+We need to find the likelihood the guess on the allele is correct given on our observations, or in mathematical terms, $P(G \vert O)$.
+
+\subsection*{Example with multiple reads:}
+Suppose we have $O = \{B, A, B, B\}$.  For readability, label the indices, so $O_0 = B$, $O_1 = A$, etc.  To decide the most likely genotype, we consider all possiblities:
+\begin{align*}
+    &P(G = AA \vert O)\\
+    &P(G = AB \vert O)\\
+    &P(G = BB \vert O)
+\end{align*}
+for each one, we would calculate $\epsilon$.  For the case, $P(G = AA \vert O)$, we would do
+\begin{align*}
+    P(O \vert AA) &= P(O_1 = B \vert AA) \cdot P(O_2 = A \vert AA) \cdot P(O_3 = B \vert AA) \cdot P(O_4 = B \vert AA)\\
+    &= \epsilon_0 \cdot (1 - \epsilon_1) \cdot \epsilon_2 \cdot \epsilon_3
+\end{align*}
+and repeat for each.  We would choose the most likely sequence.\\\\
+For this example,
+\[P(O \vert G = AB) = \prod_i P(O_i \vert AB) = P(O_i = B \vert G = AB) \cdot P(O_i = A \vert G = AB) \cdot \cdots\]
+In this case, if the sequencer is completely accurate, then we get a epsilon product of 0 for $AA$ and $BB$, and a epsilon product of $\left(\frac{1}{2}\right)^4$ for $AB$.  Therefore, we would assume $AB$ to be the correct genotype.\\
+However, if the sequencer is inconsistent, the epsilons would not be as likely to give 'perfect' values leading to 0 and $\frac{1}{2}$, which may lead to inconsistent genotype guesses.
 \end{document}
