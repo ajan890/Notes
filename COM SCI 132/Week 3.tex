@@ -133,5 +133,81 @@ Remember that if $t_e \subseteq t_x$, then
 \[\frac{x \::\: t_x, e \::\: t_e}{\vdash x = e}\]
 Everything done on a \texttt{p} can be done on a \texttt{q}, but not the reverse, because \texttt{q} extends \texttt{p}.
 
+\subsection*{Sparrow}
+\begin{itemize}
+    \item Program       \texttt{p ::= $F_1$ \dots $F_m$}
+    \item FunDecl       \texttt{F ::= func f ($id_1$ \dots $id_f$) b}
+    \item Block         \texttt{b ::= $i_1$ \dots $i_n$ return id}
+    \item Instruction   \texttt{i ::= l: | id=@f | id = id + id | \dots | id = [id + c] | [id + c] = id |\\ id = id | id = alloc(id) | print(id) | goto l | if0 id goto l | id = call id(id\dots id)}
+    \begin{itemize}
+        \item \dots includes subtract, greater than, less than, etc. operators
+        \item in \texttt{[id + c]}, \texttt{id} is the heap address, \texttt{c} is the offset (measured in bytes).
+        \item \texttt{l:} is a label
+        \item \texttt{if0} is a conditional check that executes the goto if the variable is zero.  This is equivalent to the JZ processor command in x86 assembly.
+        \item Using \texttt{call} on an id works because identifiers can also be functions.
+    \end{itemize}
+\end{itemize}
+\subsection*{Sparrow Rules}
+\[\frac{\text{hypothesis$_0$ \dots hypothesis$_n$}}{\text{conclusion}}\]
+\begin{itemize}
+    \item Values:  integers \texttt{c}; heap address with offset (a, c); function names \texttt{f}
+    \item The heap: \texttt{H}: map from heap addresses to tuples of values
+    \item Environment: \texttt{E}: map from identifiers to values
+    \item Program state: $p, H, b^*, E, b$
+    \begin{itemize}
+        \item $p$ is the program (never modified; program being executed stays the same)
+        \item $H$ is the heap (heap changes as program is executed)
+        \item $b^*$ is the function being executed (in a way, a bigger block, changes only when change of control occurs)
+        \item $E$ is the environment
+        \item $b$ is the block of code currently being executed.  (e.g., a loop, conditional block, etc., same as $b^*$ at the start.)
+    \end{itemize}
+\end{itemize}  
+
+\subsection*{Program States}
+\subsubsection*{Assignment to constant}
+Suppose we add an extra statement in front of $b$, such that the statement is executed first.  Like:
+\[(p, H, b^*, E, (\texttt{id = c}) \cdot b)\]
+What happens on the next step?
+\[(p, H, b^*, E \cdot [id \rightarrow c], b)\]
+\begin{itemize}
+    \item An id is now assigned to the number c and stored in the environment
+    \item The next statement being executed is the first statement in $b$
+\end{itemize}
+\subsubsection*{Assignment to expression}
+What if we have $(p, H, b^*, E, id = (id_1 - id_2) \cdot b)$?\\
+The next step is more complex since we must check that $id_1$ and $id_2$ are both integers.
+\[\begin{cases} (p, H, b^*, E \cdot [id \rightarrow (c_1 - c_2)], b) & \text{if $id_1$ and $id_2$ map to constants} \\ \text{Error} & \text{otherwise} \end{cases}\]
+\subsubsection*{Assignment to variable on heap}
+If we now have $(p, H, b^*, E, (id = [id_1 + c]) \cdot b)$, where $id$ is being assigned to another variable stored in the heap, then,
+\[\begin{cases} (p, H, b^*, E \cdot [id \rightarrow ((H(a_1))(c_1 + c))], b) & \text{if E($id_1$) = $(a_1, c_1)$ and $(c_1 + c) \in H$} \\ \text{Error} & \text{otherwise}\end{cases}\]
+\begin{itemize}
+    \item Both variable checks for $id_1$ being an integer, and a range check of location $[id_1 + c]$ being in the heap must be passed to not result in an error
+    \item $H(a_1)$ is a tuple
+\end{itemize}
+\subsubsection*{Assignment of location on heap to identifier}
+If we are assigning a location in the heap to some identifier, so $(p, H, b^*, E, ([id_1 + c]) \cdot b)$, then the next step would be
+\[\begin{cases} (p, H \cdot [a_1 \rightarrow t], b^*, E, b) & \text{if $E(id_1) = (a_1, c_1)$ and $(c_1 + c) \in \text{dom}(H(a_1))$ and $t = H(a_1) \cdot [(c_1 + c) \rightarrow E[id]]$} \\ \text{Error} & \text{otherwise}\end{cases}\]
+\begin{itemize}
+    \item Range check still must be done
+    \item $H(a_1)$ is a tuple
+    \item Notice that this time, the heap changes instead of the environment
+\end{itemize}
+\subsubsection*{Function calls}
+If we have a function call: $(p, H, b^*, E, (id = call id_0(id_1)) \cdot b)$, many things change.\\
+First, we need to perform checks for the following:
+\begin{itemize}
+    \item $E[id_0] = f$
+    \item $p$ contains the function $f (id'_1 \dots id'_f)$
+\end{itemize}   
+If the checks pass, we get:
+\[(p, H', b^*, E \cdot [id \rightarrow E'(id')], b)\]
+where $E'(id')$ is the result of executing from the following program state:
+\[(p, H', b', E', b' \cdots \texttt{return } id')\]
+\begin{itemize}
+    \item Since a change in control occurs, the heap can be a completely new heap on the next instruction.
+    \item However, on the \texttt{return} statement, the program must return to the original heap.  As a result, an identifier in the environment is assigned to the \textbf{return value} of the function, if there is one.
+    \item Note that the $H'$ carries over into the original program state, since the other function can also modify the same heap.
+\end{itemize}
+
 
 \end{document}
