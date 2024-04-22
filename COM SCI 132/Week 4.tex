@@ -1,0 +1,199 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+\lstset{
+  basicstyle=\ttfamily,
+  mathescape
+}
+% verbatim greek
+\usepackage{alphabeta}
+
+\graphicspath{{./assets/images}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+
+\title{COM SCI 132 Week 3}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+\section*{Translation of Expressions}
+\[\varepsilon, k \rightarrow \text{code}, k'\]
+\begin{itemize}
+    \item $\varepsilon$ = minijava expression
+    \item $k$ = find unused number
+    \item code = sparrow code
+    \item $k'$ = first unused number after we translated $\varepsilon$
+\end{itemize}
+To compile minijava into sparrow, we use an indexed list.  We go expression by expression through the minijava program, and load all the variables into the list.\\\\
+Consider the syntax:
+\[5, k \rightarrow (t_k = 5), k + 1\]
+\begin{itemize}
+    \item This means to put the \textit{expression} (in this case 5), into index $k$ of the list.
+    \item The end result is $t_k = 5$, and $k$ is incremented to point to the next index.
+\end{itemize}
+More generally,
+\[v, k \rightarrow (t_k = v), k + 1\]
+where $v$ represents the value of a local variable.
+
+\subsection*{Addition Example}
+\[\epsilon_1, k + 1 \rightarrow \text{code}_1, k_1.\hspace{2cm} e_2, k_1 \rightarrow \text{code}_2, k\]
+
+Suppose we have $e_1 + e_2$.  How does that translate?
+\begin{itemize}
+    \item In the indexed list, index $k$ is taken by the result of $e_1 + e_2$ (1 'slot').
+    \item From index $k + 1$ to $k_1$ is the space to store code$_1$. (many 'slots')
+    \item From index $k_1$ to $k_2$ is the space to store code$_2$.  (many 'slots')
+\end{itemize}
+We write:
+\begin{align*}
+e_1 + e_2, t_k &\rightarrow \text{code}_1 \text{\hspace{1cm}// result is in $t_{k + 1}$}\\
+&\rightarrow \text{code}_2 \text{\hspace{1cm}// result is in $t_{k_1}$}
+\end{align*}
+What is $t_k$ in the first line?  Well, $t_k = t_{k + 1} + t_{k_1}$
+
+\subsection*{Java Example}
+To implement the above example in Java,
+\begin{minted}{java}
+class Result {
+    String code;
+    int t;
+
+    public Result(String code, int t) {
+        this.code = code;
+        this.t = t;
+    }
+
+}
+
+class Translator {
+    Result visit(IntConst n, int k) {
+        return new Result(
+            "t" + k + "=" n, k + 1
+        )
+    }
+    Result visit(Plus n, int k) {
+        Result r1 = n.e1.accept(this, k + 1);
+        Result r2 = n.e2.accept(this, r1.c);
+
+        return new Result(
+            r1.code + r2.code + "t" + k + "= t" + (k + 1) + "+ t" + r1.c
+        );
+    }
+}
+\end{minted}
+
+\section*{Translation of Statements}
+\[s, k \rightarrow \text{code}, k'\]
+\begin{itemize}
+    \item $s$ = minijava statement
+    \item $k$ = first free number in indexed list
+    \item code = sparrow code
+    \item $k'$ = first free number after translation
+\end{itemize}
+\[\frac{e, k \rightarrow \text{code}, k_e}{(v = e), k \rightarrow \text{code}, v = t_k}\]
+\begin{itemize}
+    \item $v$ represents a local variable.
+    \item This essentially stores the code in $t_k$.
+\end{itemize}
+\[\frac{s_1, k \rightarrow \text{code}_1, k_1 \hspace{1cm } s_2, k_1 \rightarrow \text{code}_2, k_2}{(s_1 \:;\: s_2), k \rightarrow {\text{code}_1 \choose \text{code}_2}, k_2}\]
+\begin{itemize}
+    \item $(s_1 \:;\: s_2)$ = minijava statements
+    \item $k$ = first free number
+\end{itemize}
+In this example, in the indexed list, indices $k$ to $k_1$ are taken up by $s_1$, and $k_1$ to $k_2$ are taken up by $s_2$.
+
+\subsection*{If-Else Example}
+\[\frac{e, k \rightarrow \text{code}_e, k_e \hspace{1cm} s_1, k_e \rightarrow \text{code}_1, k_1 \hspace{1cm} s_2, k_1 \rightarrow \text{code}_2, k_2}{\text{if }(e) s_1 \text{ else } s_2, k \rightarrow \text{code}_e \text{~~~~// result in $t_k$}}\]
+\begin{itemize}
+    \item (if $(e) s_1$ else $s_2$) = minijava statement
+    \item $k$ = first free number
+\end{itemize}
+For the if-else statement, we have two branches.  As a result, we must allocate space to store two separate sections of code.  The issue with our indexed list is that we execute it sequentially - we need some way to tell the computer to only execute one branch.  The solution?  GOTO statements!\\\\
+Our block would look something like:
+\begin{lstlisting}
+    if0 $t_k$ goto else$_{k_2}$          // if0 is the same as JZ in assembly - jump if $t_k == 0$
+        code$_1$                // code for if if statement evaluates to true (1)
+        goto end$_{k_2}$            // jump over the else branch
+    else$_{k_2}$:
+        code$_2$                // code for if if statement evaluates to false (0)
+    end$_{k_2}$: 
+        ...
+
+\end{lstlisting}
+In this example, the spaces in the indexed list are:
+\begin{itemize}
+    \item Indices $k$ to $k_e$ are taken by the conditional of the if statement
+    \item $k_e$ to $k_1$ is the True branch of the if statement
+    \item $k_1$ to $k_2$ is the False branch of the if statement
+    \item $k_2$ is the label for else$_{k_2}$
+    \item $k_2 + 1$ is the label for end$_{k_2}$
+\end{itemize}
+As a result, the $k$ value after the if statement would be $k_2 + 2$.  The next statement or expression would begin there.
+
+\subsection*{While Example}
+\[\frac{e, k \rightarrow \text{code}_e, k_e \hspace{1cm} s, k_e \rightarrow \text{code}_s, k_s}{(\text{while}(e)\: s), k \rightarrow \text{loop}_{ks} \::\: k_e}\]
+In this statement, we have two sections of code, one for the conditional, and one for the statements executed by the while loop.  However, we must be able to loop in the code.  This can also be done with GOTO statements!\\\\
+Our block would look something like:
+\begin{lstlisting}
+    loop$_{k_s}$:
+        code$_e$                // result in $t_k$, conditional of while loop
+        if0 $t_k$ goto end$_{k_s}$       // if conditional evaluates to false, don't loop.
+        code$_s$                // statements
+        goto loop$_{k_s}$           // after body of while loop executes, go back to the conditional.
+    end$_{k_s}$:
+        ...
+\end{lstlisting}
+In this example, the spaces in the indexed list are:
+\begin{itemize}
+    \item $k_e$ to $k_s$ is taken by the conditional
+    \item $k_s$ to $k$ is taken by the statements
+    \item $k$ is the label for loop$_{k_s}$
+    \item $k + 1$ is the label for end$_{k_s}$
+\end{itemize}
+While and If statements are the same construction in Sparrow - the major difference is that the while loop jumps backwards and the if statement jumps forwards.
+
+\subsection*{If-Elif-Else Statements (Nested If)}
+We write elif as a nested if statement.
+\[\frac{\hspace{1cm}\frac{e_1, k \rightarrow \text{code}_{e_1}, k_{e_1} \hspace{0.5cm} s_1, k_{e_1} \rightarrow \text{code}_{s_1}, k_{s_1} \hspace{0.5cm} e_2, k_{s_1} \rightarrow \text{code}_{s_2}, k_{e_1} \hspace{0.5cm} s_2, k_{e_2} \rightarrow \text{code}_{s_2}, k_{s_2} \hspace{0.5cm}\dots}{\text{if}(e_1) s_2 \text{ else } s_2, k_{e_1} \rightarrow \text{code}, k_{if}}\hspace{1cm}}{\text{if}(e_1) s_1 \text{ else } (\text{if} (e_2) s_2 \text{ else } s_3). k \rightarrow }\]
+This example would give the block:
+\begin{lstlisting}
+code$_{e_1}$
+if0
+code$_{s_1}$
+goto
+
+else$_{k_{if}}$:
+    code
+
+end$_{k_{if}}$:
+
+
+
+\end{lstlisting}
+
+
+
+
+
+
+
+
+\end{document}

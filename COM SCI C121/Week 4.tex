@@ -1,0 +1,258 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings}
+
+% links
+\usepackage{hyperref}
+
+\graphicspath{{./assets/images}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+
+\title{COM SCI C121 Week 3}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+\section*{RNA-seq}
+\begin{itemize}
+    \item "-seq": probing the molecular biology of the cell
+\end{itemize}
+A lot of times, when we want to measure some trait, the easiest way is to reduce it to sequencing, then sequence the DNA, count occurrences, and analyze.\\
+In this case, we want to measure RNA abundance, so we use the following pipeline.
+\[
+    \parbox{0.18\textwidth}{\begin{center}
+        RNA abundance \end{center}
+    } \rightarrow
+    \parbox{0.18\textwidth}{\begin{center}
+        cDNA Library \\Prep \end{center}
+    } \rightarrow
+    \parbox{0.18\linewidth}{\begin{center}
+        Sequence \end{center}
+    } \rightarrow
+    \parbox{0.18\linewidth}{\begin{center}
+        Estimate \\Abundances \end{center}
+    } \rightarrow
+    \parbox{0.18\linewidth}{\begin{center}
+        Differential Analysis \end{center}
+    }
+\]
+The below image depicts cDNA library prep, where the RNA is copied, isolated, fragmented, then converted to DNA.
+\begin{itemize}
+    \item When converting to DNA, the information to where the fragment came from on the original pool is lost.  (This is why the DNA is black in the image.)
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=1]{W3_1.png}\\
+    \includegraphics*[scale=1]{W3_2.png}
+\end{center}
+\begin{itemize}
+    \item Only the ends of each fragment is sequenced because the sequencer does not give good output when sequencing long sections.
+    \item Also, the middle is not necessarily needed since the sequenced ends have enough base pairs for us to figure out which other fragments it connects to.
+\end{itemize}
+
+\subsection*{Image of Converting RNA to DNA}
+\begin{center}
+    \includegraphics*[scale=0.8]{W3_3.png}
+\end{center}
+\begin{itemize}
+    \item Notice that Isoform X and Isoform Y share the same DNA coding region in the image.  This is referred to as an \textit{ambiguous read} - the limit of RNA-seq.  We want to know how much each X and Y there are, but since the two cover the same DNA region, sequencing cannot give you that information.
+    \item What makes this worse is that in real life (where you are not the oracle), you don't know that the isoforms are overlapping.
+\end{itemize}
+
+
+\subsection*{RNA-seq quantification: a computational problem}
+\textbf{Goal:} given a known set on isoform targets (genes) and RNA-seq fragments, recover the distribution of RNA molecules.
+\begin{center}
+    \includegraphics*[scale=1]{W3_4.png}
+    All we want is that output pie chart that describes how common each isoform is.
+\end{center}
+Unlike DNA reads, where we can assume that all fragments appear at a relatively constant frequency, this is not true for RNA reads, where some isoforms may be more common than others.  This makes solving the probabilities and thus the genome incredibly hard.  (This is an unsolved problem.)
+
+\subsubsection*{What is the "RNA Distribution"?}
+\begin{itemize}
+    \item In reality, there are a \textit{finite} number of RNA molecules in each cell
+    \item By nature of sequencing, we cannot directly sequence every molecule
+    \item Instead, we mix a ton of cells together, isolate their RNA, then get a \textbf{relative measurement}.
+\end{itemize}
+
+\subsubsection*{Use cases for RNA-seq}
+\begin{itemize}
+    \item \hyperlink{https://www.nature.com/articles/nature12962}{Tissue specific gene expression in \textit{D. melanogaster}}
+    \item \hyperlink{https://link.springer.com/article/10.1186/s12864-017-3906-0}{Cancer specific gene expression}
+    \item \hyperlink{https://www.science.org/doi/full/10.1126/science.aaz8528}{Genetic variation effects on gene expression and their relationships to tissues and complex traits}
+\end{itemize}   
+
+\section*{Binomial Sampling}
+\begin{itemize}
+    \item I'm going to sample $M$ transcripts at random.  Given the proportions below, what is a good model?
+    \begin{center}
+        \includegraphics*[scale=1]{W3_5.png}
+    \end{center}
+\end{itemize}
+Now, suppose we have a very large $M$ and many isoforms, where the proportion of each isoform is close to zero.  What is a good model now?
+\begin{itemize}
+    \item It turns out that the Poisson distribution is a good model.
+    \[X_i \sim Poisson(Mp_i)\]
+    \begin{itemize}
+        \item where $M$ is the number of reads (samples) and $p_i$ is the original isoform proportion.
+    \end{itemize}
+    \item This makes a strong assumption about sampling, that all the isoform lengths are the same.  This is not true in reality.
+    \item We have to normalize the number of counts for each isoform based on the length of the isoform.
+    \begin{itemize}
+        \item For example, if we have isoform $A$ with length $L$, and isoform $B$ with length $\frac{L}{2}$, then we would expect half as many reads in $B$ than $A$.  Therefore, to normalize the number of reads, we need to scale the raw count of reads of $B$ by a factor of 2.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Transcript per Million (TPM)}
+\[\text{TPM}_i = \frac{X_i}{\tilde{l_i}} \cdot \left(\frac{1}{\sum_j \frac{X_j}{\tilde{l_j}}}\right) \cdot 10^6\]
+where 
+\begin{itemize}
+    \item $X_i$ is the number of counts
+    \item $\tilde{l_i}$ is the length
+    \item $\sum_j \frac{X_j}{\tilde{l_j}}$ is the normalization constant
+    \item $10^6$ is a big number (the 'Million' part in TPM)
+\end{itemize}
+Assuming every site has equal probability of being sampled, what should the expectation of L squiggle be?  Remember, not all fragments are of the same length.  There's a fragment length probability in the expectation.\\\\
+Suppose we have a transcript of length 5.  Then:
+\begin{itemize}
+    \item if length of fragment (F) = 3, then there are three different sites.  (e.g., [0, 2], [1, 3], [2, 4])
+    \item if length(F) = 2, then there are 4 sites.
+    \item if length(F) = 1, then there are 5 sites.
+    \item In general, (number of sites) = $l - length(F) + 1$
+\end{itemize}
+
+\subsection*{A simple model for RNA-seq}
+Conceptually:  \hfill (let $n$ represent the read nunmber)
+\begin{enumerate}[~~~~1.]
+    \item Randomly select an isoform \hfill $I_n \vert p \sim \text{Categorical}(p)$
+    \item Randomly select a fragment length
+    \begin{flushright}\vspace{-0.2cm}$L_n \vert I_n = i_n \sim \text{Fragment length distribution(Length($I_n$))}$\end{flushright}
+    \item \vspace{-0.2cm} Randomly select a position to generate a fragment from
+    \begin{flushright}\vspace{-0.2cm}$R_n \vert L_n = l_n \sim \text{Uniform(1, Length($I_n$) $ -\:l_n + 1$)}$\end{flushright}
+    \item \vspace{-0.2cm} Observe and repeat
+\end{enumerate}
+What is the probability of a particular arrangement $P(r_n, l_n, i_n)$?  Hint: use the Bayes Theorem.\\\\
+Answer:
+\[P(r_n, l_n, i_n) = P(r_n \vert l_n, i_n) \cdot P(l_n \vert i_n) \cdot P(i_n)\]
+
+\subsection*{A brief aside on plate notation and graphical models}
+\begin{itemize}
+    \item A graphical model is a way to encode conditional dependencies in a generative model
+    \item Circles denote random variables
+    \item No circle means the value is fixed (a hyperparameter)
+    \item Rectangles denote repetitions of samples
+    \item Arrows denote conditional dependencies
+    \begin{itemize}
+        \item If you know the parents, you know how to draw from that corresponding distribution
+    \end{itemize}
+\end{itemize}
+For a normal distribution, $X_n \sim \text{Normal}(\mu, \sigma)$, the likelihood function is defined as:
+\[L_j(\mu, \sigma) = \prod_{n = 1}^N P(X_n = x_n \vert \mu, \sigma)\]
+If we create another normal distribution such that the mean is a random number chosen from another normal distribution with standard deviation 1 (see image below), we get a \textbf{random effects model}.
+\[L_n(\mu, \sigma) = \prod_{n = 1}^N P(X_n = x_n \vert \mu_n = u_n, \sigma) P(\mu_n = u_n \vert \mu, 1)\]
+
+\begin{center}
+    \includegraphics*[scale=1]{W3_6.png}
+\end{center}    
+
+\subsection*{Multinomial Models and RNA-seq}
+\begin{itemize}
+    \item The operator generates a sequencing library as a "true" distribution ($p_j$)
+    \item The sequencing \textit{fragments} with their true, \textit{unobserved} labeling represent $X_{jg}$, the counts
+    \begin{itemize}
+        \item For reference, in "the real world" we plug-in E[X] rather than use X directly (because it is unobserved!)
+    \end{itemize}
+\end{itemize}   
+Variables:
+\begin{itemize}
+    \item $j$: sample index
+    \item $g$: gene index
+    \item $X_{jg}$: the number of fragments in gene $g$, sample $j$
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.9]{W3_7.png}
+\end{center}
+
+\subsection*{Aside on Goodness of Fit}
+[FILL]
+
+\subsection*{A heuristic argument for Goodness Of Fit (GOF)}
+\[Df = Z_i \sim \text{N}(0, 1)\]
+Then,
+\[\sum_{i = 1}^S Z_i^2 \sim \chi_S^2\]
+This is a Chi-squared variable.  For large $\lambda_1$, $X_i \sim$ Poisson($\lambda$) can be roughly approximated by Normal($x, (\sqrt{\lambda})^2$).\\
+To "standardize" a Gaussian, $y_i \sim \text{N}(\mu, \sigma^2)$
+\[Z_i = \frac{y_i - \mu}{\sigma} \sim \text{N}(0, 1)\]
+By substitution,
+\[\frac{X_i - \lambda}{\sqrt{\lambda}} \sim \text{N}(0, 1)\]
+If we sum the square of this over all the samples, we get
+\[\sum_{i = 1}^S \frac{(X_i - \lambda)^2}{\lambda} \sim \chi^2\]
+which is equivalent to chi-squared.  How is this useful?
+
+\section*{Problem with Sampling 1}
+\begin{itemize}
+    \item \textbf{Problem:} no matter how hard you try, it is very hard to get the same number of reads.
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=1]{W3_8.png}
+\end{center}
+
+\section*{Problem with Sampling 2}
+\begin{itemize}
+    \item Sequencing is a \textit{composition}.
+    \begin{itemize}
+        \item All measurements are relative
+        \item They will always depend on the denominator
+        \item One way to think about it: you are sampling from a simplex.
+    \end{itemize}
+\end{itemize}
+One set of reads making up the bulk of the data screws everything up.
+\begin{center}
+    \includegraphics*[scale=0.6]{W3_9.png}
+\end{center}
+We need to normalize the data somehow.
+\subsection*{Normalizing by GOF}
+Let $X_{ij} \sim \text{Poisson}(\mu)$, where
+\begin{itemize}
+    \item $i$ is the sample
+    \item $j$ is the isoform
+    \item $\mu = \mathbb{E}[X_{ij}] = s_i \beta_j$
+    \begin{itemize}
+        \item $\beta_j$ is the proportion to true proportion
+        \item $s_i$ is the size factor
+    \end{itemize}
+\end{itemize}    
+Then,
+\[\hat s_i = \frac{\sum_j x_{ij}}{\sum_k \sum_l x_{kl}}\]
+where $s_i$ represents the "total count normalization".  We can fix $\hat s_i$ by conditioning on a set $S$ of gels/isoforms that don't "change".  To do this, we need to find some S that does not change between samples.  In other words, $\mu_i = \mu_j$.
+\[X_{ij} \sim \text{Poisson}(s_i \beta_j)\]
+and from before, $\hat \beta_j = \sum_n^N x_{nj}$.\\
+Recall that $\mathbb{E}[X_{ij}] = \hat s_i \hat \beta_j$.  Squaring and summing over the samples would give:
+\[\frac{(O_i - E_i)^2}{E_i} \Rightarrow \frac{\sum_{i = 1}^N (X_{ij} - \hat s_i \hat \beta_j)^2}{\hat s_i \hat \beta_j} = T_j\]
+Note that $T_j$ is always positive, and is very small when there is close to no error.
+We can then use $T_j$ values calculated from the estimated $\beta_j$ values to create a distribution, which can be used to estimate the actual data.
+\begin{itemize}
+    \item The tails of the distribution are chopped off because they are not as accurate.
+\end{itemize}
+
+
+
+
+\end{document}
