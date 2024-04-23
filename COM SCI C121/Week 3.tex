@@ -249,8 +249,61 @@ Recall that $\mathbb{E}[X_{ij}] = \hat s_i \hat \beta_j$.  Squaring and summing 
 Note that $T_j$ is always positive, and is very small when there is close to no error.
 We can then use $T_j$ values calculated from the estimated $\beta_j$ values to create a distribution, which can be used to estimate the actual data.
 \begin{itemize}
+    \item $T_j$ is the goodness of fit statistic, an approximation of Chi-Squared.
     \item The tails of the distribution are chopped off because they are not as accurate.
 \end{itemize}
+\begin{center}
+    \includegraphics*[scale=1]{W3_10.png}
+\end{center}
+
+\subsection*{What do we get under naive total count normalization?}
+\begin{tabular}{| c | c | c | c | c |}
+    \hline
+    Gene & Control Counts & Treatment Counts & Control Normalized (-FG) & Treatment Normalized (-FG) \\
+    \hline
+    G1 & 2.00 & 6.00 & & \\
+    G2 & 2.00 & 6.00 & & \\
+    G3 & 2.00 & 6.00 & & \\
+    G4 & 2.00 & 6.00 & & \\
+    FG & 2.00 & 76.00 & & \\
+    \hline
+\end{tabular}\\
+We want to fill out the chart above.
+\begin{align*}
+N_{..} &= \sum_i \sum_k X_{ij} = 10 + 100 = 110\\
+N_{1.} &= \sum_j X_{ij} = 10\\
+N_{2.} &= 100\\
+\hat s_1 &= \frac{N_{1.}}{N_{..}} = \frac{10}{110} = \frac{1}{11} \hspace{2cm} \text{(Total of Control Counts)}\\
+\hat s_2 &= \frac{N_{2.}}{N_{..}} = \frac{100}{110} = \frac{10}{11} \hspace{2cm} \text{(Total of Treatment Counts)}
+\end{align*}
+\begin{itemize}
+    \item $N_{1.}$ is basically the MLE.
+\end{itemize}
+
+\begin{align*}
+    \hat \beta_{G1} &= \sum_i X_{ij} = 2 + 6 = 8\hspace{2cm} \text{(from first line of table)}\\
+    E[X_{11}] &= s_1 * G1 = \left(\frac{1}{11}\right)(8) = \frac{8}{11}\\
+    E[X_{21}] &= s_2 * G1 = \left(\frac{10}{11}\right)(8) = \frac{80}{11}\\
+    \hat \beta_{FG} &= \sum_i X_{ij} = 2 + 76 = 78\hspace{2cm} \text{(from last line of table)}\\
+    E[X_{51}] &= s_1 * FG = \left(\frac{1}{11}\right)(78) = \frac{78}{11}\\
+    E[X_{52}] &= s_2 * FG = \left(\frac{10}{11}\right)(78) = \frac{780}{11}
+\end{align*}
+The $E$ values are the normalized values; these calculations can be used for filling it out.\\
+Notice that the fraction for FG-treatment takes up the majority, and the normalized value of it is significantly larger than the others (and inaccurate!).  Essentially, the massive number fucks up the rest of the data.
+
+\subsection*{Under PoissonSeq Normalization}
+We begin with the same table as above:\\
+\begin{tabular}{| c | c | c | c | c |}
+    \hline
+    Gene & Control Counts & Treatment Counts & Control Normalized (-FG) & Treatment Normalized (-FG) \\
+    \hline
+    G1 & 2.00 & 6.00 & & \\
+    G2 & 2.00 & 6.00 & & \\
+    G3 & 2.00 & 6.00 & & \\
+    G4 & 2.00 & 6.00 & & \\
+    FG & 2.00 & 76.00 & & \\
+    \hline
+\end{tabular}\\
 
 
 
