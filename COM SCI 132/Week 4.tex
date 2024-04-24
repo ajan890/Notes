@@ -185,14 +185,192 @@ else$_{k_{if}}$:
 
 end$_{k_{if}}$:
 
-
-
 \end{lstlisting}
 
 
+\subsection*{Arrays}
+\subsubsection*{Allocation}
+\begin{lstlisting}
+    e ::= new int[e] | e$_1$[e$_2$] | e.length
+    s ::= v[e$_2$] = e$_3$
+\end{lstlisting}
+
+\begin{lstlisting}
+    void m([]int a) {
+        ... a.length...
+    }
+\end{lstlisting}
+In the sparrow heap, arrays are stored as the following:
+\begin{itemize}
+    \item index 0 is the length of the array.  (arrays are fixed-length)
+    \item indices 1- is the contents of the array.
+    \item In minijava, each index is four bytes (because an int is 4 bytes)
+    \begin{itemize}
+        \item $\text{offset} = 4(\text{index} + 1)$
+    \end{itemize}
+\end{itemize}
+
+\[\frac{e, k + 1 \rightarrow \text{code}_e, k_e}{(\texttt{new int [e]}), k \rightarrow \text{code}_e \hspace{1cm}\texttt{// result in }v_{k + 1}}\]
+\begin{itemize}
+    \item \texttt{(new int [e])} is a minijava expression
+    \item $k$ is the first free number
+    \item The memory slot the element is stored in $v_{k + 1}$ corresponds to the $k + 1$ in the 'numerator'.
+    \item $k_e$ is the offset value - that is, $v_{k + 1} + 1$
+    \item Since this code is for declaring a \texttt{new} array, we must allocate the space in heap.
+    \begin{itemize}
+        \item Incrementing $t_{k_e} = v_{k + 1} + 1$ is equivalent to doing $t_{k_e} = 4 \cdot t_{k_e}$
+        \item $t_{k_e + 1}$ = \texttt{alloc}($t_{k_e}$) // this statement allocates the entire array
+        \item Ideally, after the allocate, we would traverse through and set all the values to 0.  However, allocating the array means you can't read the values there before, so the step \textit{can} be skipped.
+        \item To set to 0, move the pointer, then set 0.  Then move the pointer again, then set 0, etc...  Continue until you reach the correct length.
+    \end{itemize}  
+\end{itemize}   
+
+\subsubsection*{Length Function}
+\[\frac{e, k + 1 \rightarrow \texttt{code}, k_e}{\texttt{e.length}, k \rightarrow \texttt{code}_e \hspace{1cm}\texttt{// result in $t_{k + 1}$}}\]
+\begin{itemize}
+    \item \texttt{e.length} is a minijava expression
+    \item $k$ is the first free number
+    \begin{itemize}
+        \item $t_k = [t_{k + 1} + 0]$
+    \end{itemize}
+    \item The result of \texttt{code$_e$} is stored in $t_{k + 1}$ because $t_k$ contains the length of the array.
+\end{itemize}   
+
+\subsubsection*{Array Access}
+\[\frac{e_1, k + 1 \rightarrow \texttt{code}_1, k_1 \hspace{1cm} e_2, k_1 \rightarrow \texttt{code}_2, k_2}{e_1[e_2], k \rightarrow \texttt{code}_1, \texttt{code}_2}\]
+\begin{itemize}
+    \item \texttt{code}$_2$ is stored in $t_{k + 1}$
+    \item \texttt{code}$_3$ is stored in $t_{k_1}$
+    \item $t_{k_2} = 4(t_{k_1} + 1)$
+    \item $t_k = [t_{k + 1} + t_{k_2}]$
+\end{itemize}
+Note that:
+\begin{itemize}
+    \item $t_k$ represents the location in heap where the number from the access is stored.  That is, $e_1$[$e_2$] is stored at that location.
+    \item $t_k = [t_{k + 1} + t_{k_2}]$ because $t_{k + 1}$ represents the first index of the content of the array, and $t_{k_2}$ is the byte offset to the index from the top of the array.
+\end{itemize}
 
 
+\[\frac{e_2, k \rightarrow \texttt{code}_2, k_2 \hspace{1cm} e_3, k_2 \rightarrow \texttt{code}_3, k_3}{(v[e_2] = e_3), k \rightarrow \texttt{code}_2, \texttt{code}_3}\]
+\begin{itemize}
+    \item $v[e_2] = e_3$ is a minijava expression
+    \item $k$ is the first free number
+    \item \texttt{code}$_2$ is stored in $t_k$
+    \item \texttt{code}$_3$ is stored in $t_{k_2}$
+    \item $t_{k_3} = 4(t_k + 1)$, and [v + $t_{k_3}$] = $t_{k_2}$
+\end{itemize}
 
+\section*{Classes and Objects}
+Objects are instantiated like groups of variables in a heap.  The code for the methods and function are stored like how they are allocated in C.\
+\begin{itemize}
+    \item Methods in form \texttt{m(int a)} translates to \texttt{$c_m$(this a)} - a combination of a class and method name.
+\end{itemize}
+\[e ::= \texttt{new} C() \:\vert\: x \:\vert\: \texttt{this} \:\vert\: e_1 . m(e_2)\]
+\begin{itemize}
+    \item $C$ is the class name
+    \item $x$ is a field name.  (e.g., C.x)
+\end{itemize}
+\subsection*{Accessing methods in classes}
+\[\frac{e_1, k + 1 \rightarrow \texttt{code}_1, k_1 \hspace{1cm} e_2, k_1 \rightarrow \texttt{code}_2, k_2}{e_1 \:.\: m(e_2), k \rightarrow \texttt{code}_1, \texttt{code}_2}\]
+\begin{itemize}
+    \item $e_1 \:.\: m(e_2)$ is a minijava expression (the dot is part of minijava syntax)
+    \item \texttt{code}$_1$ is result in $t_{k + 1}$
+    \item \texttt{code}$_2$ is result in $t_{k_1}$
+    \item $t+k = C-m (t_{k + 1}, t_{k_1})$
+    \begin{itemize}
+        \item C-m is the function name in sparrow.
+        \item Like normal functions in sparrow, \texttt{code}$_1$ is the parameters, \texttt{code}$_2$ is the body of the function
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Instantiating Objects}
+\[\texttt{new } C(), k \rightarrow t_k = \texttt{alloc}(4 \cdot \#fields(c)), k + 1\]
+\begin{itemize}
+    \item \texttt{new }$C()$ is the minijava expression
+    \item $k$ is the first free number
+    \item $\texttt{alloc}(4 \cdot \#fields(c))$ allocates a space in heap large enough to store all the fields of the object.
+\end{itemize}
+
+
+\section*{Back to Type Checking (with class inheritance)}
+\begin{verbatim}
+    class C {
+        t m (s a) {
+            ...
+        }
+    }
+
+    class D extends C {
+        ... 
+        t m (s a) {
+            ...
+        }
+        ...
+    }
+\end{verbatim}
+\begin{itemize}
+    \item Minijava does not allow \textit{overloading}, the practice of having two methods of the same name but different parameters in the same class
+    \item It does, however, allow \textit{overwriting}, or having an inheriting class overwrite a class in its parent.  In the above example, the two methods have type t, the same method name m, and single parameter of type s and name a.
+\end{itemize}
+In this case, having a type checker simplifies a lot of code, since now the compiler just has to figure out which method to call.  If it is an object of Class C, it calls the method in class C.  If it is an object of Class D, it calls the method in class D, because the one in D overwrites the one in C.
+
+\subsection*{Method Tables}
+\begin{verbatim}
+class C {
+    ...
+    void m() {
+        ...
+    }
+    void q() {
+        ...
+    }
+}
+\end{verbatim}
+
+\begin{itemize}
+    \item Method table would store the locations of the start of C-m and C-q.
+    \item A pointer to the method table location in heap is stored in the first index of each object.
+    \item Calling a class method makes the compiler
+    \begin{enumerate}
+        \item Load method table
+        \item Load the method you want
+        \item Call the method
+    \end{enumerate}
+\end{itemize}
+\subsection*{Calling a Method}
+\[\frac{e_1, k + 1 \rightarrow \texttt{code}_1, k_1 \hspace{1cm} e_2, k_1 \rightarrow \texttt{code}_2, k_2}{e_1 \:.\: m(e_2), k \rightarrow \texttt{code}_1, \texttt{code}_2}\]
+\begin{itemize}
+    \item $e_1 \:.\: m(e_2)$ is the minijava expression (method call)
+    \item $k$ is the first free number
+    \item \texttt{code}$_1$ is stored in $t_{k + 1}$
+    \item \texttt{code}$_2$ is stored in $t_{k_1}$
+    \item $t_{k_2} = [t_{k + 1} + 0]$
+    \item $t_{k_2} + 1 = [t_{k_2} + 4 \cdot \text{(index of m)}]$
+    \item $t_k$ = call $t_{k_2 + 1}$($t_{k + 1}$, $t_{k_2}$)
+\end{itemize}
+\subsection*{A View of Method Tables}
+\begin{verbatim}
+class C {
+    void m() {...} 
+    void p() {...}
+}
+
+class D extends C {
+    void m() {...} // override!
+    void q() {...} // only in D object!
+
+}
+
+/*
+C Object Method Table:
+[C-m][C-p]
+0    4
+
+D Object Method Table:
+[D-m][C-p][D-q]
+0    4    8
+*/
+\end{verbatim}
 
 
 
