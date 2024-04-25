@@ -56,13 +56,16 @@ RNA-seq quantification is a computational problem.
 
 \subsection*{A Fundamental Problem: Alignment and Counting}
 \begin{itemize}
-    \item Classical approaches for exact matching are too slow.
+    \item Classical approaches for exact matching are too slow.  (Dynamic Programming, etc.)
     \begin{itemize}
         \item Boyer-Moore $O(\vert R \vert + \vert T \vert)$\
     \end{itemize}
     \item Contemporary methods use heuristics
     \begin{itemize}
         \item Seed and extend
+        \begin{itemize}
+            \item To 'seed' means you make an assumption that one of the reads is extremely accurate, and then you assume that read is correct and extend based on the other fragments.
+        \end{itemize}
     \end{itemize}
     \item Our approach: use the \textit{redundancy} and structure of the target sequences
 \end{itemize}
@@ -78,6 +81,10 @@ RNA-seq quantification is a computational problem.
     \includegraphics*[scale=0.75]{W4_2.png}
 \end{center}
 Equivalence classes are sufficient for quantification.
+\begin{itemize}
+    \item Equivalence classes is the assumption that which isoform the data matches to does not matter.
+    \item Essentially, an equivalence class is the set of isoforms a transcript is compatible with.
+\end{itemize}   
 
 \subsection*{Quick Aside: k-mer}
 A \textbf{k-mer} is a sequence of length $k$ that is a substring of a longer sequence\\\\
@@ -96,5 +103,69 @@ All observed equivalence classes easily fit into the memory on a laptop.
     \item ~100M kmers
     \item <1M equivalence classes
 \end{itemize}
+
+\subsection*{Kallisto: Introducing Pseudoalignment}
+\begin{center}
+    \includegraphics*[scale=0.8]{W4_4.png}
+\end{center}
+\begin{itemize}
+    \item \textbf{Goal:} provide the "set of colors" (set of transcripts) that an observation could have come from.
+    \item \textbf{Pseudoalignment: } a map from the sequence to equivalence class.
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=1]{W4_5.png}
+\end{center}
+
+\subsection*{A Naive Implementation of Pseudoalignment}
+\begin{center}
+    \includegraphics*[scale=0.8]{W4_6.png}
+\end{center}
+\begin{itemize}
+    \item Break the data into k-mers and match them with the transcriptome.
+    \item Optimal length of k-mers is based on many factors; the only way to get them is by experiment.  This is not practical to find.
+    \item Note that you have to compare every k-mer here to get the equivalence class.  If the read has a thousand base pairs, it is \textit{extremely} slow.
+\end{itemize}
+
+\section*{De-Brujin Graphs for Genome Assembly}
+The goal is to reconstruct target from $k$-mer perfect samples.
+\begin{center}
+    \fbox{\parbox{3cm}{\begin{center}Target: \texttt{AAABBBA}\end{center}}}\\
+    \vspace{0.5cm}
+    (Sample 3-mers)\\
+    $\downarrow$\\
+    \vspace{0.5cm}
+    \fbox{\parbox{10cm}{\begin{center}AAA \hspace{1cm} AAB \hspace{1cm} ABB \hspace{1cm} BBB \hspace{1cm} BBA\end{center}}}\\
+    \vspace{0.5cm}
+    (Form left/right 2-mers)\\
+    $\downarrow$\\
+    \vspace{0.5cm}
+    \fbox{\parbox{13cm}{\begin{center}AA / AA \hspace{1cm} AA / AB \hspace{1cm} AA / BB \hspace{1cm} BB / BB \hspace{1cm} BB / BA\end{center}}}\\
+    \vspace{0.5cm}
+    (Draw De-Brujin Graph)\\
+    $\downarrow$\\
+    \vspace{0.5cm}
+    \includegraphics*[scale=0.9]{W4_7.png}
+\end{center}
+\begin{itemize}
+    \item Normally in Computer Science, we want to use the De-Brujin graph to find the target.  However, in this case, going backwards is very, very hard.
+    \item Instead, we assume we know the target and we generate the graph from the target.
+    \item Then, we can use a probabilistic model to check the validity of the data.
+\end{itemize}   
+
+\subsection*{Transcriptome as a De-Brujin Graph}
+\begin{center}
+    \includegraphics*[scale=0.6]{W4_8.png}
+\end{center}
+\begin{itemize}
+    \item To find the isoforms, we first go to the first node of the read (ACA).  This can be done quickly with a hash table containing pointers to the nodes; simply hash the three letters to get the node.  
+    \item Next, we jump to the branch point.  (In this case, it's TGT branching to GTC or GTA).  Based on the read, we have GTC, so it rules out the green isoform.
+    \item We go to the next branch point.  (In this case it's AGT branching in from CAG and TAG).  AGT contains all three isoforms so it does not give any new information.
+    \item To determine the equivalence class for the read, we take the intersection of the three reads (beginning, first branch, second branch), and we find the equivalence class is the blue and red isoforms.
+    \begin{itemize}
+        \item This is considerably more efficient than taking the intersection of every node on the read like before.  If there are thousands of nodes but only a couple branch points, we don't have to consider any of the nodes other than the branch points, accelerating the process by up to a few thousand times while still being accurate.
+        \item This algorithm is called \textbf{Kallisto}.
+    \end{itemize}
+\end{itemize}
+
 
 \end{document}
