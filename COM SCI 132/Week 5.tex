@@ -1,0 +1,152 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+\lstset{
+  basicstyle=\ttfamily,
+  mathescape
+}
+% verbatim greek
+\usepackage{alphabeta}
+
+\graphicspath{{./assets/images}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+
+\title{COM SCI 132 Week 3}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+\section*{Reducing Variables}
+A program can have many variables, but a modern computer only has 16 registers.  We must find some way to reduce the number of variables!\\
+\begin{itemize}
+    \item Liveness Analysis $\rightarrow$ Interference Graph
+\end{itemize}
+Consider the example:
+\begin{verbatim}
+    a = 1
+    b = 10
+    c = 9 + a
+    d = a + c
+    e = c + d
+    f = b + 8
+    c = f + e
+    f = e + c
+    b = c + 5
+    return b + f
+\end{verbatim}
+Notice that we have six variables.  How do we compress this?
+\begin{verbatim}
+                   |                  |  a  b  c  d  e  f
+                   |  a = 1           |  *
+                a  |                  |  | 
+                   |  b = 10          |  |  *
+          c  b  a  |                  |  |  |
+                   |  c = 9 + a       |  |  |  *
+          c  b  a  |                  |  |  |  |
+                   |  d = a + c       |  O  |  |  *
+       d  c  b     |                  |     |  |  |
+                   |  e = c + d       |     |  O  O  *
+    e        b     |                  |     |        |
+                   |  f = b + 8       |     O        |  *
+ f  e              |                  |              |  |
+                   |  c = f + e       |        *     |  O
+    e     c        |                  |        |     |
+                   |  f = e + c       |        |     O  *
+ f        c        |                  |        |        |
+                   |  b = c + 5       |     *  O        |
+ f           b     |                  |     |           |
+                   |  return b + f    |     O           O
+\end{verbatim}
+Above is a \textbf{liveness graph}.
+\begin{itemize}
+    \item The middle section shows the code.
+    \item The right section shows the "liveness" of each variable.
+    \begin{itemize}
+        \item A variable becomes "alive" (denoted with \texttt{*}) when it is assigned a value.
+        \item A variable stays alive until the last time it is used before its next assignment or the end of the program.
+        \item A variable "dies" or can be deallocated after the last time it is used.  (denoted with \texttt{O}).
+    \end{itemize}   
+    \item The left section shows which variables are alive between each statement.
+    \begin{itemize}
+        \item Note that these are written in between each line of code instead of on the same line.
+        \item The number of registers required is the maximum number of variables on a line plus 1.  (In this case, 3 variables + 1 = 4 registers)
+        \begin{itemize}
+            \item The (+1) comes from the need to have an extra register to temporarily store a variable as it is being assigned.
+            \item This is similar to why you need an extra variable to swap the values in two variables!
+        \end{itemize}
+        \item This rule ONLY works when the code is straight executing (e.g., no branches or loops).
+    \end{itemize}
+\end{itemize}
+
+\section*{Liveness with loops - Context-free Graph}
+Consider the following:
+\begin{verbatim}
+        c = 0
+        a = 0
+    L1: b = a + 1
+        c = c + 2
+        a = b * 2
+        if (a < 10) goto L1
+        return c
+\end{verbatim}
+
+\begin{tabular}{| l | c | c || c | c || c | c || c | c || c | c || c | c || c | c |}
+    \hline
+    \multicolumn{3}{|c||}{ } & \multicolumn{2}{c ||}{init} & \multicolumn{2}{c ||}{iter 1} & \multicolumn{2}{c ||}{iter 2} & \multicolumn{2}{c ||}{iter 3} & \multicolumn{2}{c ||}{iter 4} & \multicolumn{2}{c |}{iter 5}\\
+    \hline
+    statement & def & use & in & out & in & out & in & out & in & out & in & out & in & out\\
+    \hline
+%    \texttt{c = 0} & c & - & - & - & - & a & - & ac & c & ac \\
+    \texttt{a = 0} & a & - & - & - & - & a & - & ac & c & ac & c & ac & & \\
+    \texttt{L1: b = a + 1} & b & a & - & - & a & c & ac & bc & ac & bc & ac & bc & & \\
+    \texttt{c = c + 2} & c & c & - & - & c & b & bc & b & bc & bc & bc & bc & & \\
+    \texttt{a = b * 2} & a & b & - & - & b & a & b & ac & bc & ac & bc & ac & & \\
+    \texttt{if (a < 10) goto L1} & - & a & - & - & a & ac & ac & ac & ac & ac & ac & ac & & \\
+    \texttt{return c} & - & c & - & - & c & - & c & - & c & - & c & - & & \\
+    \hline
+\end{tabular}
+\begin{itemize}
+    \item \texttt{in} and \texttt{out} refer to which variables are live going into the statement and which variables are live coming out of the statement.
+    \item We can stop after iter 4 because iter 4 matches iter 3, signifying that it will no longer change.
+\end{itemize}
+\textbf{Liveness Equations:}
+\begin{align*}
+    \text{in}[n] &= \text{use}[n] \cup (\text{out}[n] - \text{def}[n])\\
+    \text{out}[n] &= \bigcup_{s \in \text{succ}[n]} \text{in}[s]
+\end{align*}
+\textbf{Number of Iterations Time Complexity:}
+\begin{itemize}
+    \item The number of iterations is $O(n^2)$.
+    \item In the worst case scenario, every box is filled with every variable at the end of all the iterations.  We have $2n$ boxes to fill in: $n$ "in" boxes and $n$ "out" boxes.
+    \item In the worst case scenario, each iteration only adds one variable to one box.  There are $n$ variables.
+    \item Therefore, the worst case scenario would be of order $2n \cdot n = n^2$.
+\end{itemize}
+\textbf{Full Program Time Complexity:}
+\begin{itemize}
+    \item When there are $n$ variables...
+    \item $O(n^2)$ iterations
+    \item $O(n)$ set unions per iteration
+    \item $O(n)$ time to do a set union
+    \item Total = $O(n)^4$ (polynomial time!)
+\end{itemize}
+Note that this is not the most efficient algorithm - this is a sloppy way to do the algorithm, in other words, the naive way.  With more involved analyzing, this algorithm can be reduced to $O(n^2)$.
+
+\end{document}
