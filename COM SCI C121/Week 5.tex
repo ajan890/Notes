@@ -1,0 +1,74 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+\usepackage{tikz} % draw stuff
+
+% code blocks
+\usepackage{minted, listings}
+
+% links
+\usepackage{hyperref}
+
+\graphicspath{{./assets/images}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+
+\title{COM SCI C121 Week 5}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\subsection*{De Brujin Graphs Review}
+To make from read:
+\begin{enumerate}
+    \item Sample every 3-mer from the read.
+    \item Sample Left and Right 2-mers from each 3-mer.
+    \item On the graph, each 2-mer is a node, and 3-mers are the links between the nodes of the left and right 2-mers
+\end{enumerate}
+We cannot go back from the De Brujin to the aligned genome.  However, it is important to note that some Eulerian path (path that uses every link exactly once) would produce the original read.
+
+\subsection*{Eulerian Walk Definitions and Statements}
+\begin{itemize}
+    \item Node is \textit{balanced} if indegree equals outdegree
+    \item Node is \textit{semi-balanced} if indegree differs from outdegree by 1
+    \item Graph is \textit{connected} if each node can be reached by some other node
+    \item \textit{Eulerian walk} visits each edge exactly once
+    \item Not all graphs hae Eulerian walks.  Graphs that do are \textit{Eulerian}.
+    \item A directed, connected graph is Eulerian if and only if it has at most 2 semi-balanced nodes and all other nodes are balanced.
+\end{itemize}
+
+\section*{Attempt 2: Build the T-DBG}
+Consider the example:
+\begin{verbatim}
+         ACATACAT---ACA
+RED      ########---###
+GREEN    ########---###
+BLUE     #####------###
+\end{verbatim}
+Where $\#$ denotes the strand having the base, and $-$ denoting the base is absent on that strand.\\
+For the example last week, we built a graph that was straightforward.\\
+However, notice that some nodes were repeated this time. \\ 
+\begin{tikzpicture}[thick, nodedistancmain/.style = {draw, circle}]
+\node[main] (1) {ACA};
+\node[main] (2) [right of =1]{CAT};
+\node[main] (3) [right of =2]{ATA};
+\node[main] (4) [right of =3]{TAC};
+\end{tikzpicture}
+
+
+\end{document}
