@@ -21,6 +21,9 @@
 % links
 \usepackage{hyperref}
 
+% \mathbb{1} symbol
+\usepackage{dsfont}
+
 \graphicspath{{./assets/images}}
 
 \newcommand{\solution}{\textbf{Solution:}} 
@@ -63,12 +66,131 @@ BLUE     #####------###
 Where $\#$ denotes the strand having the base, and $-$ denoting the base is absent on that strand.\\
 For the example last week, we built a graph that was straightforward.\\
 However, notice that some nodes were repeated this time. \\ 
-\begin{tikzpicture}[thick, nodedistancmain/.style = {draw, circle}]
-\node[main] (1) {ACA};
-\node[main] (2) [right of =1]{CAT};
-\node[main] (3) [right of =2]{ATA};
-\node[main] (4) [right of =3]{TAC};
-\end{tikzpicture}
+% \begin{tikzpicture}[thick, nodedistance=1cm, main/.style = {draw, circle}]
+% \node[main] (1) {ACA};
+% \node[main] (2) [right of =1]{CAT};
+% \node[main] (3) [right of =2]{ATA};
+% \node[main] (4) [right of =3]{TAC};
+% \end{tikzpicture}
+
+\section*{From Alignments to Counting}
+\begin{center}
+    \includegraphics*[scale=0.9]{W5_2.png}
+\end{center}
+\textbf{Algorithm:} Aggregate isoforms into a "gene" then count all fragments that overlap.  There are several ways to aggregate the isoforms (see also Union-intersection)
+
+\subsection*{Gene Counting May Be Misleading}
+\begin{center}
+    \includegraphics*[scale=0.9]{W5_3.png}
+\end{center}
+Suppose that all of the fragments read have been aligned.  
+\begin{itemize}
+    \item Gene counting may be misleading because the fragments may have varying lengths, and so do the isoforms.
+\end{itemize}
+\begin{align*}
+TPM_{true} &= TPM_A + TPM_B \propto \frac{f_A}{l_A} + \frac{f_B}{l_B} = \frac{10}{1500} + \frac{10}{1000} = \boxed{\frac{1}{60}}\\
+TPM_{union} &\propto \frac{f_A + f_B}{l_A + l_B} = \frac{10}{1500} + \frac{20}{1500} = \boxed{\frac{1}{75}}
+\end{align*}
+Note that $TPM_{union} \leq TPM$
+\subsection*{Issues with Raw Counts}
+\begin{center}
+    \includegraphics*[scale=0.45]{W5_4.png}
+\end{center}
+\begin{itemize}
+    \item Because Isoform B is longer than Isoform A in reality, we cannot assume they are the same length.
+    \item Condition A and Condition B are two separate experiments. For example, Condition A may be a control group and Condition B may be the genes with some sort of drug included.
+\end{itemize}
+
+\subsection*{RNA-seq, the full generative model}
+\begin{center}
+    \includegraphics*[scale=1]{W5_5.png}
+\end{center}
+\begin{itemize}
+    \item $\theta$ represents the true abundance: that's what we are trying to solve for.
+    \item In the generative case (going forwards through that model):
+    \begin{itemize}
+        \item We first choose a gene.
+        \item We choose a position in the isoform to start
+        \item We choose orientation (forward or backward strands)
+        \item Those three factors gives us the observation. (some read that came from all the information)
+    \end{itemize}
+\end{itemize}
+\textbf{Example:} Suppose we generate some reads.  We have three strands, a blue, red, and orange strand.
+\begin{itemize}
+    \item $G_1$: red, $O_1$ = +1, $s_1$ = $\tilde{L}_{red}$   (red strand, forward, and the location starting is at the end of the strand)
+    \item $G_2$: orange, $O_2$ = +1, $s_2$ = $\frac{\tilde{L}_{orange}}{3}$ (orange strand, forward, and location is 1/3 from the start of the strand)
+\end{itemize}
+
+\subsection*{Aside: RNA-seq, the Likelihood}
+\begin{itemize}
+    \item Our observations are the reads and everything else is a nuisance parameter, except theta (which we care about)
+    \item What we observe is then:
+    \[P(r \vert \theta) = \prod_{n = 1}^N \sum_{i = 0}^M \theta_i P(r_n \vert G_n = i)\]
+    \begin{itemize}
+        \item where $N$ is the number of reads and $M$ is the number of transcripts
+    \end{itemize}
+    \item This equation is a pain in the ass to evaluate!  Can we simplify this?
+\end{itemize}
+We can simplify the total likelihood by \textbf{read mapping}.
+\[P(r \vert \theta) = \prod_{n = 1}^N \sum_{i = 0}^M \theta_i P(r_n \vert G_n = i) \rightarrow P(r \vert \theta) \approx \prod_{n=1}^N \sum_{(i, j) \in \pi^x_n} \frac{\theta_i}{l_i} P(r_n \vert Z_{nij} = 1)\]
+\begin{itemize}
+    \item $z_{nij} = 1$ if $(i, j) = (s_n, o_n)$
+    \item This approximation allows us to only sum over "compatible" alignments.
+\end{itemize}
+
+\subsection*{Isoform Abundance Estimation}
+\begin{itemize}
+    \item We have an unobserved variable (expression) that we wish to estimate
+    \begin{itemize}
+        \item Set up a model and estimate it using the expectation-maximization (EM) algorithm
+    \end{itemize}
+    \item Step 1: (Expectation) Given some abundances, estimate the probability of each read mapping to each transcript
+    \begin{itemize}
+        \item We assume we know the actual data. (Pretend we know something based on the data.)
+    \end{itemize}
+    \item Step 2: (Maximization) Update the abundances by redistributing the reads
+    \begin{itemize}
+        \item We use our assumptions to maximize some other function.
+    \end{itemize}
+    \item Step 3: (Repeat) Go to Step 1 until convergence.
+    \begin{itemize}
+        \item We use the information we gathered from maximizing the other function to make another guess about the data.
+        \item We iterate this until it converges.
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.5]{W5_6.png}
+\end{center}
+\begin{itemize}
+    \item On Epoch 0, we assume that the transcript abundances are equal.
+    \item On each E-step, we generate pie charts for each aligned read based on the probabilities.
+    \item On each M-step, we update the abundances based on the aligned reads.
+    \item The converged value is not necessarily perfectly accurate, but it gets good enough.
+\end{itemize}
+Notes:
+\begin{itemize}
+    \item Notice that the reads on each step do not change, just the probability they are associated with.
+\end{itemize}
+
+\section*{EM Algorithm Math Setup}
+\begin{align*}
+    P(r \vert \theta) &= \prod_{n = 1}^N \sum_{i = 0}^M P(O_n = i) P(r_n \vert O_n = i)\\
+    P(r, s, g) &= \prod_{n = 1}^N \sum_{(i, j) \in \pi} P(O_n = i) P(S_n = j \vert O_n = i) P(r_n \vert O_n = i, S_n = j)
+\end{align*}
+\begin{itemize}
+    \item $(i, j)$ in the summation is the alignment compatibility
+    \item $z_{nij} = 1$ if $(i, j) = (O_n, S_n)$
+\end{itemize}
+Under the assumption of uniform start positions (e.g., each transcript has equal abundance)
+\[P(S_n = j \vert O_n = i) = \frac{1}{l_i} \hspace{1cm} P(O_n = i) = \theta_i\]
+Therefore,
+\begin{align*}
+    p(r, s, y, \vert z, \theta) &= \prod_{n = 1}^N \sum_{(i, j) \in \pi} \frac{O_i}{l_i} P(r_n \vert z_{nij} = 1)\\
+    &= \prod_n \prod_i \prod_j \left(\frac{\theta_i}{l_i} P(r_n \vert z_{nij} = 1)\right)^{\mathds{1}\{z_{nij} = 1\}}
+\end{align*}
+where
+\[\mathds{1}\{X = 1\} = \begin{cases} P(X = 1) & (i, j) \in \pi \\ 1 - P(X = 1) & \text{otherwise}\end{cases}\]
+or in words, it represents the characteristic function of a set.
 
 
 \end{document}
