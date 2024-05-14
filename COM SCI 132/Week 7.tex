@@ -1,0 +1,231 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+\lstset{
+  basicstyle=\ttfamily,
+  mathescape
+}
+% verbatim greek
+\usepackage{alphabeta}
+
+\graphicspath{{./assets/images}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+
+\title{COM SCI 132 Week 6}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{LR Parsing}
+\subsection*{Review}
+Recall that
+\begin{itemize}
+    \item For a grammar $G$, with start symbol $S$, any string $\alpha$ such that $S \Rightarrow^* \alpha$ is called a \textit{sentential form}
+    \item If $\alpha \in V_t^*$, then $\alpha$ is called a \textit{sentence} in $L(G)$
+    \item Otherwise it is just a sentential form (not a sentence in $L(G)$)
+    \item A \textit{left-sentential form} is a sentential form that occurs in the leftmost derivation of some sentence.
+    \item A \textit{right-sentential form} is a sentential form that occurs in the rightmost derivation of some sentence.
+\end{itemize}
+
+\subsection*{Bottom-up parsing}
+The goal: Given an input string $w$ and a grammar $G$, construct a parse tree by starting at the leaves and working to the root.\\
+The parser repeatedly matches a \textit{right sentential} form from the language against the tree's upper frontier.  At each match, it applies a \textit{reduction} to build on the frontier:
+\begin{itemize}
+    \item each reduction matches an upper frontier of the partially built tree to the RHS of some production
+    \item each reduction adds a node on top of the frontier
+\end{itemize}
+The final result is a rightmost derivation, in reverse.
+
+\subsection*{Example}
+Consider the grammar:
+\begin{verbatim}
+    1 | S -> aABe
+    2 | A -> Abc
+    3 |   |  b
+    4 | B -> d
+\end{verbatim}
+and the input string \texttt{abbcde}.
+\begin{center}
+\begin{tabular}{c|c}
+    Prod'n & Sentential Form \\
+    \hline
+    3 & \texttt{a$\boxed{\texttt{b}}$bcde} \\
+    2 & \texttt{a$\boxed{\texttt{Abc}}$de} \\
+    4 & \texttt{aA$\boxed{\texttt{d}}$e} \\
+    1 & $\boxed{\texttt{aABe}}$ \\
+    - & \texttt{S}
+\end{tabular}
+\end{center}
+The trick appears to be scanning the input and finding valid sentential forms.
+
+\section*{Handles}
+What are we trying to find?
+\begin{itemize}
+    \item A substring $\alpha$ of the tree's upper frontier that matches some production $A \rightarrow \alpha$ where reducing $\alpha$ to $A$ is one step in the reverse of a rightmost derivation.
+\end{itemize}
+We call such a string a \textit{handle}.  Formally:
+\begin{itemize}
+    \item a \textit{handle} of a right-sentential form $\gamma$ is a production $A \rightarrow \beta$ and a position in $\gamma$ where $\beta$ may be found and replaced by $A$ to produce the previous right-sentential form in a rightmost derivation of $\gamma$.
+    \item (i.e., if $S \Rightarrow_{rm}^* \alpha Aw \Rightarrow_{rm} \alpha \beta w$, then $A \rightarrow \beta$ in the position following $\alpha$ is a handle of $\alpha \beta w$)
+\end{itemize}
+Because $\gamma$ is a right-sentential form, the substring to the right of a handle contains only terminal symbols.
+\begin{center}
+    \includegraphics*[scale=1]{W7_1.png}
+\end{center}
+
+\subsection*{Theorem:}
+\begin{itemize}
+    \item If $G$ is unambiguous then every right-sentential form has a unique handle.
+\end{itemize}
+\textit{Proof: (by definition)}
+\begin{enumerate}
+    \item $G$ is unambiguous $\Rightarrow$ rightmost derivation is unique
+    \item $\Rightarrow$ a unique production $A \rightarrow \beta$ applied to take $\gamma_{i - 1}$ to $\gamma_1$
+    \item $\Rightarrow$ a unique position $k$ at which $A \rightarrow \beta$ is applied
+    \item $\Rightarrow$ a unique handle $A \rightarrow \beta$
+\end{enumerate} 
+
+\subsubsection*{Example}
+\begin{center}
+    \includegraphics*[scale=0.9]{W7_2.png}
+\end{center}
+
+\subsection*{Handle-pruning}
+The process to construct a bottom-up parse is called \textit{handle-pruning}.\\
+To construct a rightmost derivation
+
+\[S = \gamma_0 \Rightarrow \gamma_1 \Rightarrow \gamma_2 \Rightarrow \cdots \Rightarrow \gamma_{n - 1} \Rightarrow \gamma_n = w\]
+we set $i$ to $n$ and apply the following simple algorithm:
+\begin{flalign*}
+    &\texttt{for i = n downto 1}&&\\
+    &\texttt{~~~~find the handle $A_i \rightarrow \beta_i$ in $\gamma_i$}&&\\
+    &\texttt{~~~~replace $\beta_i$ with $A_i$ to generate $\gamma_{i - 1}$}&& 
+\end{flalign*}
+This takes $2n$ steps, where $n$ is the length of the derivation
+
+\subsection*{Stack Implementation}
+One scheme to implement a handle-pruning, bottom-up parser is called a \textit{shift-reduce} parser.  Shift-reduce parsers use a \textit{stack} and an \textit{input buffer}
+\begin{enumerate}
+    \item initialize stack with \$
+    \item Repeat until the top of the stack is the goal symbol and the input token is \$
+    \begin{enumerate}
+        \item \textit{find the handle}  
+        \begin{itemize}
+            \item if we don't have a handle on top of the stack, \textit{shift} an input symbol onto the stack
+        \end{itemize}   
+        \item \textit{prune the handle}\\
+            if we have a handle $A \rightarrow \beta$ on the stack, \textit{reduce}.
+            \begin{enumerate}
+                \item pop $\vert \beta \vert$ symbols off the stack
+                \item push $A$ onto the stack
+            \end{enumerate}
+    \end{enumerate}
+\end{enumerate}
+
+\subsubsection*{Example}
+\begin{center}
+    \includegraphics*[scale=1]{W7_3.png}
+\end{center}
+\begin{enumerate}
+    \item Shift until top of stack is the right end of a handle
+    \item Find the left end of the handle and reduce
+\end{enumerate}
+For this example: 5 shifts + 9 reduces + 1 accept
+
+\section*{Shift-reduce parsing}
+\textit{Shift-reduce parsers are simple to understand}\\
+A shift-reduce parser has just four canonical actions:
+\begin{enumerate}
+    \item \textit{shift} - next input symbol is shifted onto the top of the stack
+    \item \textit{reduce} - right end of handle is on top of the stack; locate left end of handle within the stack; pop handle off stack and push appropriate non-terminal LHS
+    \item \textit{accept} - terminate parsing and signal success
+    \item \textit{error} - call an error recovery routine
+\end{enumerate}
+The key problem: to recognize handles (not covered in this course).
+
+\subsection*{LR(k) Grammars}
+Informally, we say that a grammar $G$ is LR($k$) if, given a rightmost derivation
+\[S = \gamma_0 \Rightarrow \gamma_1 \Rightarrow \gamma_2 \Rightarrow \cdots \Rightarrow \gamma_n = w\]
+we can, for each right-sequential form in the derivation,
+\begin{enumerate}
+    \item isolate the handle of each right-sequential form, and
+    \item determine the production by which to reduce
+\end{enumerate}
+by scanning $\gamma_i$ from left to right, going at most $k$ symbols beyond the right end of the handle of $\gamma_i$.\\
+Formally, a grammar $G$ is LR($k$) if and only if:
+\begin{enumerate}
+    \item $S \Rightarrow_{rm}^* \alpha Aw \Rightarrow_{rm} \alpha \beta w$, and
+    \item $S \Rightarrow^*_{rm} \gamma Bx \Rightarrow_{rm} \alpha \beta y$, and
+    \item \texttt{FIRST}$_k$(w) = \texttt{FIRST}$_k$(y) $\Rightarrow \alpha Ay = \gamma Bx$ 
+\end{enumerate}
+i.e., Assume sentential forms $\alpha \beta w$ and $\alpha \beta y$ with common prefix $\alpha \beta$ and common k-symbol lookahead \texttt{FIRST}$_k$(y) = \texttt{FIRST}$_k$(w), such that $\alpha \beta w$ reduces to $\alpha Aw$ and $\alpha \beta y$ reduces to $\gamma Bx$.\\
+But, the common prefix means $\alpha \beta y$ also reduces to $\alpha A y$, for the same result.\\
+Thus $\alpha Ay = \gamma Bx$
+
+\subsection*{Why Study LR Grammars?}
+LR(1) grammars are often used to construct parsers.  We call these parsers LR(1) parsers.
+\begin{itemize}
+    \item everyone's favorite parser
+    \item virtually all context-free programming language constructs can be expressed in an LR(1) form
+    \item LR grammars are the most general grammars parsable by a deterministic, bottom-up parser
+    \item efficient parsers can be implemented for LR(1) grammars
+    \item LR parsers detect an error as soon as possible in a left-to-right scan of the input
+    \item LR grammars describe a proper superset of the languages recognized by predictive (i.e., LL) parsers
+    \begin{itemize}
+        \item LL(k): recognize use of a production $A \rightarrow \beta$ seeing first $k$ symbols of $\beta$
+        \item LR(k): recognize occurrence of $\beta$ (the handle) having seen all of what is derived from $\beta$ plus $k$ symbols of lookahead.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Left Versus Right Recursion}
+Right Recursion:
+\begin{itemize}
+    \item needed for termination in predictive parsers
+    \item requires more stack space
+    \item right associative operators
+\end{itemize}
+Left recursion:
+\begin{itemize}
+    \item works fine in bottom-up parsers
+    \item limits required stack space
+    \item left associative operatives
+\end{itemize}
+Rule of thumb:
+\begin{itemize}
+    \item right recursion for top-down parsers
+    \item left recursion for bottom-up parsers
+\end{itemize}
+
+\subsection*{Parsing Review}
+\begin{itemize}
+    \item R. descent: A hand coded recursive descent parser directly encodes a grammar (typically an LL(1) grammar) into a series of mutually recursive procedures.  It has most of the linguistic limitations of LL(1).
+    \item LL(k): An LL($k$) parser must be able to recognize the use of a production after seeing only the first $k$ symbols of its right hand side.
+    \item LR(k): An LR($k$) parser must be able to recognize the occurrence of the right hand side of a production after having seen all that is derived from that right hand side with $k$ symbols of lookahead.
+    \item Dilemmas:
+    \begin{itemize}
+        \item LL dilemma: pick $A \rightarrow b$ or $A \rightarrow c$?
+        \item LR dilemma: pick $A \rightarrow b$ or $B \rightarrow b$?
+    \end{itemize}
+\end{itemize}
+
+
+\end{document}
