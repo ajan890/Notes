@@ -1,0 +1,260 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+\lstset{
+  basicstyle=\ttfamily,
+  mathescape
+}
+% verbatim greek
+\usepackage{alphabeta}
+
+\graphicspath{{./assets/images}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+
+\title{COM SCI 132 Week 6}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\section*{Register Allocation}
+Register Allocation can be split into two phases:
+\begin{itemize}
+    \item Liveness analysis
+    \item Graph coloring
+\end{itemize}
+Last week it was proved that liveness analysis can be done in polynomial time.  But what about graph coloring?
+
+\section*{Graph Coloring}
+\textbf{The problem statement:}\\
+Given a Graph $G = (V, E)$, where $V$ represents the set of vertices and $E$ represents the set of edges, such that $E \subseteq V \times V$, the goal is to give a color to each vertex such that neighbors have different colors.
+\begin{itemize}
+    \item From an algorithms class we know that this problem is \textbf{NP-complete}.  In other words, unsolvable in polynomial time.
+\end{itemize}
+
+\subsection*{Approximate Graph Coloring}
+There exists an algorithm called \textit{Linear Scan Register Allocation} that does a good job of graph coloring in linear time in the size of graph.\\\\
+Note: It does a \textit{good} job, not an \textit{optimal} job.  As in, this algorithm returns a suboptimal solution in exchange for fast execution.
+
+\subsection*{Example}
+Let's start with a basic program with liveness analysis done:
+\begin{verbatim}
+                    | a  b  c |         
+    a = 1           | *       |   (1)
+    b = 2           | |  *    |   (2)
+    c = a + 3       | O  |  * |   (3)
+    print(b + c)    |    O  O |   (4)
+\end{verbatim}
+Linear Scan Register Allocation is a greedy algorithm!  There is no backtracking.
+\begin{itemize}
+    \item (1) Assign $r_1$ to $a$.
+    \item (2) Assign the next free register, $r_2$ to $b$.
+    \item (3) Deallocate $r_1$ since $a$ is no longer used, and assign the next free register, now $r_1$, to $c$.
+    \item (4) After the print statement, deallocate $r_1$ and $r_2$ since they are no longer used.
+\end{itemize}
+The steps would be:
+\begin{enumerate}
+    \item Order the intervals after start points.
+    \item Process the intervals from left to right.
+    \item The only situation where we change our mind about an assignment is when we 'spill' a variable to memory.  (e.g., write it to the stack instead of register).
+    \begin{itemize}
+        \item Pick the live range that extends the furthest into the future (see next subsection.)
+    \end{itemize}
+\end{enumerate}
+
+\pagebreak
+\subsection*{Live Ranges Example}
+Suppose we have 6 variables but only 4 registers.
+\begin{verbatim}
+                    | a  b  c  d  e  f |
+    a = 1           | *                |  (1)
+    b = 10          | |  *             |  (2)
+    c = a + 9       | |  |  *          |  (3)
+    d = a + c       | O  |  |  *       |  (4)
+    e = c + d       |    |  |  O  *    |  (5)
+    f = b + 8       |    |  |     |  * |  (6)
+    c = f + e       |    |  |     |  | |  (7)
+    f = e + c       |    |  |     O  | |  (8)
+    b = c + 5       |    |  O        | |  (9)
+    return b + f    |    O           O |  (10)
+\end{verbatim}
+\begin{itemize}
+    \item (1) Assign register $r_1$ to $a$.
+    \item (2) Assign register $r_2$ to $b$.
+    \item (3) Assign register $r_3$ to $c$.
+    \item (4) Assign register $r_1$ to $d$. (deallocate $a$)
+    \item (5) Assign register $r_1$ to $e$. (deallocate $d$)
+    \item (6) Assign register $r_4$ to $f$
+\end{itemize}
+Below is the interference graph for this system, where $r$, $s$, $t$, and $u$ correspond to $r_1$, $r_2$, $r_3$, and $r_4$.
+\begin{center}
+    \includegraphics*[scale=0.7]{W6_1.png}
+\end{center}
+What if in this case, we only have three registers?\\
+Then, instead of allocating $r_2$ to $b$, we would store $b$ in memory.  The execution would look like:
+\begin{itemize}
+    \item (1) Assign register $r_1$ to $a$.
+    \item (2) Spill $b$ to memory ($M$).
+    \item (3) Assign $r_3$ to $c$.
+    \item (4) Assign $r_1$ to $d$.
+    \item (5) Assign $r_1$ to $e$.
+    \item (6) Assign $r_2$ to $f$.
+\end{itemize}
+The interference graph would now look like:
+\begin{center}
+    \includegraphics*[scale=0.7]{W6_2.png}    
+\end{center}
+Similarly, if we only had two registers, we would send $f$ to memory too, since it is the variable that lasts the longest into the future (other than $b$, which is already in memory).\\
+Note that when we are storing variables in memory, we \textbf{always} have to have two registers free to cycle values in and out of memory.
+
+\section*{Aside - Sparrow}
+Consider the expression \texttt{x = a + b}.  In Sparrow-V, we would need three lines:
+\begin{verbatim}
+    u = [b]
+    u = s + u
+    [x] = u
+\end{verbatim}
+Where \texttt{u} is a free register.  \texttt{[b]} and \texttt{[x]} are the variables.\\
+Note that you cannot assign \texttt{[x]} to the expression \texttt{s + u}, because of the way machine languages work; you cannot assign to expressions.
+
+\subsection*{Colors and Cliques}
+A clique is defined as a group of variables that all share existence at the same time.  The \textit{maximal} clique is the clique with the most members.  For the example above, the maximal clique would be variables $b$, $c$, $e$, and $f$, as those four variables are alive at the same time.
+A general rule is:
+\[\text{The minimal number of colors} \geq \text{The size of the maximal clique}\]
+This makes sense intuitively; we need at least $n$ registers to store $n$ coexisting variables.\\
+When does this number go larger than the size of the maximal clique?  Consider the following example:
+\begin{center}
+    \includegraphics*[scale=0.5]{W6_3.png}
+\end{center}
+Here, the maximal clique is size 2, since based on the graph, each variable is only bordering two others.  However, we need three registers to color the graph.
+
+\subsection*{Loops}
+What if instead of having a straight line program, we have a control flow program?  (e.g., loops)
+
+\begin{verbatim}
+                            | a  b  c |       | c  a  b |
+    (c from outer scope)    |       | |       | |       |
+    a = 0                   | *     | |       | |  *    |
+L1: b = a + 1               | |  *  | |       | |  |  * |
+    c = c + b               | |  |  | |  -->  | |  |  | |
+    a = b * 2               | |  O  | |       | |  |  O |
+    if (a < 10) goto L1     | *     | |       | |  *    |
+    return c                |       O |       | O       |
+\end{verbatim}
+On the right liveness analysis, we arrange them on order of appearance; in this case, if we only have two registers, then \texttt{C} can be sent to memory.  \texttt{a} and \texttt{b} can be assigned to registers $r_1$ and $r_2$.\\
+Note that in this case, \texttt{a} may stay alive after the goto statement, so its entry in the liveness analysis has a closed circle (\texttt{*}) on both ends.  (e.g., it is inclusive on both sides).
+
+\section*{Activation Records}
+\subsection*{Procedure Abstraction}
+Separate Compilation:
+\begin{itemize}
+    \item Allows us to build large programs
+    \item Keeps compile times reasonable
+    \item Requires independent procedures
+\end{itemize}
+The linkage convention:
+\begin{itemize}
+    \item a social contract: division of responsibility
+    \item machine dependent
+    \item ensures that every procedure inherits a valid run-time environment and that it restores one for its parent.
+\end{itemize}
+Code for linkage:
+\begin{itemize}
+    \item Generated at \textit{compile time}.
+    \item Executes at \textit{run time}.
+\end{itemize}
+
+\subsection*{Caller and Callee}
+The essentials:
+\begin{itemize}
+    \item \textit{on entry:} establish \texttt{p}'s environment
+    \item \textit{at a call:} preserve \texttt{p}'s environment
+    \item \textit{on exit:} tear down \texttt{p}'s environment
+    \item \textit{in between:} addressability and proper lifetimes
+\end{itemize}
+Each system has a standard linkage.
+\begin{center}
+    \includegraphics*[scale=1]{W6_4.png}
+\end{center}
+
+\subsection*{An activation record = a stack frame}
+Assume that each procedure activation has an associated \textit{activation record} or \textit{frame} (at run time).
+Assumptions:
+\begin{itemize}
+    \item \texttt{RISC} architecture
+    \item Can expand an allocated block
+    \item Locals stored in frame
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=1]{W6_5.png}
+\end{center}
+
+\subsubsection*{Procedure Linkages}
+The linkage divides responsibility between \textit{caller} and \textit{callee}.
+\begin{center}
+    \includegraphics*[scale=0.8]{W6_6.png}
+\end{center}
+
+\subsection*{Calls: Saving and restoring registers}
+\begin{tabular}{|c|c|c|c|}
+    \hline
+    & caller's registers & callee's registers & all registers \\
+    \hline
+    callee saves & 1 & 3 & 5\\
+    caller saves & 2 & 4 & 6\\
+    \hline
+\end{tabular}
+\begin{enumerate}
+    \item Hard: call includes bitmap of caller's registers.
+    \item Easy: the caller saves and restores its own registers.
+    \item Easy: the callee saves and restores its own registers.
+    \item Hard: the caller uses a bitmap in callee's stack frame to save and restore.
+    \item Easy: the callee saves and restores all registers.
+    \item Easy: the caller saves and restores all registers.
+\end{enumerate}
+
+\section*{RISC-V Registers}
+\begin{tabular}{|c|c||c|c|}
+\hline
+Register & Name & Saver & Description \\
+\hline
+\texttt{x0} & \texttt{zero} & - & Hard-wired zero \\
+\texttt{x1} & \texttt{ra} & Caller & Return address \\
+\texttt{x2} & \texttt{sp} & Callee & Stack pointer \\
+\texttt{x3} & \texttt{gp} & - & Global pointer \\
+\texttt{x4} & \texttt{tp} & - & Thread pointer \\
+\texttt{x5-7} & \texttt{t0-2} & Caller & Temporaries \\
+\texttt{x8} & \texttt{s0/fp} & Callee & Saved register / frame pointer \\
+\texttt{x9} & \texttt{s1} & Callee & Saved register \\
+\texttt{x10-11} & \texttt{a0-1} & Caller & Function arguments / return values \\
+\texttt{x12-17} & \texttt{a2-7} & Caller & Function arguments \\
+\texttt{x18-27} & \texttt{s2-11} & Callee & Saved registers \\
+\texttt{x28-31} & \texttt{t3-6} & Caller & Temporaries \\
+\hline
+\end{tabular}\\\\
+\textbf{Philosophy:} Use a general calling sequence only when necessary; omit portions of it where possible.
+
+
+
+
+
+
+
+
+\end{document}
