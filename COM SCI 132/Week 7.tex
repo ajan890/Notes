@@ -27,7 +27,7 @@
 
 \newcommand{\solution}{\textbf{Solution:}} 
 
-\title{COM SCI 132 Week 6}
+\title{COM SCI 132 Week 7}
 
 \author{Aidan Jan}
 \date{\today}
@@ -225,6 +225,117 @@ Rule of thumb:
         \item LL dilemma: pick $A \rightarrow b$ or $A \rightarrow c$?
         \item LR dilemma: pick $A \rightarrow b$ or $B \rightarrow b$?
     \end{itemize}
+\end{itemize}
+
+\section*{Type Checking Generices}
+A \textit{generic} is a type that has to be parameterized.  For example, the compiler needs to be told which object is stored in a given List.
+
+\begin{minted}{java}
+    class List<A> extends Object {
+        public <R> R accept(ListVisitor<R, A> f) {
+            // ... do stuff
+            return this.accept(f);
+        }
+    }
+
+    class ListNull<A> extends List<A> {
+        public<R> R accept(ListVisitor<R, A> f) {
+            return f.visit(this)
+        }
+    }
+
+\end{minted}
+The above program above will in fact, type check.
+\subsection*{Example}
+Grammar:
+\begin{flalign*}
+    &(Class) \texttt{ L} ::= \texttt{class C<$\bar x$> extends N \{$\bar s \bar f$; K $\bar M$\}}&&\\
+    &(Constructor) \texttt{ K} ::= \texttt{C($\bar T \bar f$) \{super(f); this.$\bar f$ = $\bar f$\}}&&\\
+    &(Method) \texttt{ M} ::= \texttt{<$\bar Y$> U m($\bar U \bar x$) \{ return e; \}}&&\\
+    &(Expression) \texttt{ e} ::= \texttt{x | e.f | e.<$\bar v$> m($\bar e$) | new N($\bar e$)}&&\\
+    &(Type) \texttt{ S, T, U, V} ::= \texttt{X | N}&&\\
+    &\hspace{1cm}\texttt{ N} ::= \texttt{C<$\bar T$>}&&
+\end{flalign*}
+Type Rules:
+\[\Gamma + e \::\: T\]
+where 
+\begin{itemize}
+    \item $\Gamma$ represents the type environment
+    \item $e$ represents an expression
+    \item $T$ represents a type
+\end{itemize}
+\begin{flalign}
+&\frac{\Gamma \vdash e \::\: T \hspace{1cm} \texttt{fields}(T) = \bar T \bar f}{\Gamma \vdash e.f_i \::\: T_i}&&\\
+&\frac{\texttt{fields}(N) = \bar T \bar f \hspace{1cm} \Gamma + \bar e \::\: \bar S \hspace{1cm} \bar S \leq \bar T}{\Gamma \vdash \texttt{new } N(\bar e) \::\: N}&&\\
+&\frac{\Gamma + e_0 \::\: T_0 \hspace{1cm}\texttt{mtype}(m, T_0) = <\bar Y> \bar U \rightarrow U \hspace{1cm} \bar S \leq [\bar V / \bar Y] \bar U}{\Gamma \vdash e_0.<\bar V> m(\bar e) \::\: [\bar V / \bar Y] U}&&
+\end{flalign}
+\begin{itemize}
+    \item \texttt{mtype} refers to method type
+    \item $<\bar Y> \bar U$ are the types of formal parameters and formal parameters, respectively.
+    \item Type expression (3) is created via substitution with (1) and (2).
+    \item $\bar S \leq \bar T$ is to check class extends; S and T are in a class-superclass relationship.
+    \item Substitution Notation: $[\bar V / \bar X]$ means the same thing as $[\bar X := \bar V]$
+    \item \texttt{mtype} is a placeholder function for method type checking
+\end{itemize}
+At this point, we have type checked methods and classes.  However, we still have to do the following:
+\begin{itemize}
+    \item Override methods
+    \item Fields
+    \item Subtyping
+    \item \texttt{mtype}
+\end{itemize}
+\subsection*{Subtyping}
+Recall that our types:
+\begin{flalign*}
+    &(Type) \texttt{ S, T, U, V} ::= \texttt{X | N}&&\\
+    &\hspace{1cm}\texttt{ N} ::= \texttt{C<$\bar T$>}&&
+\end{flalign*}
+Subtyping rules:
+\[T \leq T\]
+(one type is a subtype of another type)
+
+\begin{flalign}
+&\frac{S \leq T \hspace{1cm} T \leq U}{S \leq U}&&\\
+&\frac{\texttt{class } C<\bar x> \texttt{extends } N \{\dots\}}{C<\bar T> \leq [\bar T / \bar X]N}&&
+\end{flalign}
+
+\begin{itemize}
+    \item (5) states that if $C$ is a use of $N$, as in, $N$ is a parent class to $C$, then a use of $T$ in $C$ (as a parameter of $C$) is a subtype of the use of $T$ in $N$.
+    \begin{itemize}
+        \item In simpler terms, $C$ parameterized with $T$ would be a subtype of $N$ parameterized with $T$, because $C$ is a subtype of $N$.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Fields}
+\begin{flalign}
+&\frac{\texttt{class } C<\bar x> \texttt{extends } N \{\bar S \bar f; \dots\} \hspace{1cm} \texttt{fields }([\bar T / \bar x]N) = \bar V \bar g}{\texttt{fields}(C<\bar T>) = \bar U \bar g, [\bar T / \bar X]\bar f}&&
+\end{flalign}
+
+\begin{itemize}
+    \item $\bar S \bar f$ is one parameter, where $S$ is the type, $f$ is the field.
+\end{itemize}   
+
+\subsection*{\texttt{mtype} (Method Typing)}
+
+\begin{flalign}
+&\frac{\texttt{class } C<\bar X> \texttt{ extends } N \{\dots \bar M\} \hspace{1cm} (<\bar Y> \: U \: m (\bar U \: \bar x) \{\texttt{return }e\}) \in \bar M}{\texttt{mtype} (m, C<\bar T>) = [\bar T / \bar X](<\bar Y> \bar U \rightarrow U)}&&\\
+&\frac{\texttt{class } C<\bar x> \texttt{ extends } N \{\dots \bar M\} \hspace{1cm} m \notin \bar M}{\texttt{mtype }(m, C<\bar T>) = \texttt{mtype }(m, [\bar T / \bar X] \bar N)}&&
+\end{flalign}
+
+\begin{itemize}
+    \item $\bar M$ are the methods of the class $C$.
+\end{itemize}
+
+\subsection*{Method Overriding}
+
+\begin{flalign}
+&\frac{\texttt{If \{mtype}(m, N) = <\bar z> \bar U \rightarrow U \texttt{\} Then \{} \bar T = [Y / \bar Z] \bar U \hspace{1cm} T = [\bar Y / \bar Z]U\}}{\texttt{override}(m, N, <\bar Y> \bar T \rightarrow T)}&&
+\end{flalign}
+In the override statement\dots
+\begin{itemize}
+    \item $m$ = method name
+    \item $N$ = superclass of the current class
+    \item $<\bar Y> \bar T \rightarrow \bar T$ = method header
 \end{itemize}
 
 
