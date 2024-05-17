@@ -1,0 +1,273 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+\usepackage{tikz} % draw stuff
+
+% code blocks
+\usepackage{minted, listings}
+
+% links
+\usepackage{hyperref}
+
+% \mathbb{1} symbol
+\usepackage{dsfont}
+
+\usepackage{tabularx}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+
+\graphicspath{{./assets/images}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+
+\title{COM SCI C121 Week 7}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Single-cell RNA-seq Technologies and Fundamental Issues}
+We are given many samples of cells; each sample consists of some number of cells.  The data would appear like:
+\begin{tabularx}{\textwidth}{|c| * {6}{Y|}}
+\hline
+ & Sample 1 & Sample 2 & \dots & Sample N\\
+\hline
+Gene 1 & 20 & 32 & & 301 \\
+\hline
+Gene 2 & 100 & 100 & & 100 \\
+\hline
+\dots & & & & \\
+\hline
+Gene $p$ & 17 & 10 & & 43\\
+\hline
+\end{tabularx}
+What we would rather have: for each sample, we extract RNA from \textit{each individual cell} and sequence it.  
+This would get us individual cell results which makes it easier to compare, instead of aggregate results per sample.
+
+\subsection*{Why do we want to keep cell identity?}
+\begin{itemize}
+    \item Cells are inherently \textit{heterogenous}
+    \item If we assay many cells, we can understand heterogeneity within the heterogenity.
+    \item Given a population, we can understand what "types" of cells exist and what "state" they are in
+\end{itemize}
+
+The ideal (dissociated) single-cell transcriptomics method is:
+\begin{itemize}
+    \item Universal in terms of cell size, type, and state.
+    \item In situ measurements
+    \item No minimum input of number of cells to be assayed
+    \item Every cell is assayed, i.e., 100\% capture rate
+    \item Every transcript in every cell is detected, i.e., 100\% sensitivity.
+    \item Every transcript is identified by its full-length sequence
+    \item Transcripts are readily associated to single cells, e.g., no doublets
+    \item Additional measurements of other cell attributes.
+    \item Cost effective per cell
+    \item Easy to use.
+    \item Open source.
+\end{itemize}
+
+\subsection*{Single-cell RNA Technology Development}
+\begin{itemize}
+    \item Studies have been done since around 2013, but since then, especially in years 2018-2020, the technology improved dramatically.  The number of studies per year increased from about 2 in 2013 to over 70 in 2020.
+    \item At the same time, many new tools were developed.
+\end{itemize}
+
+\subsection*{Physical Separation of Cells in Wells}
+"First generation" single-cell sequencing is low throughput (relatively speaking).  It involves manually placing cells into a 96-well plate.
+\begin{center}
+    \includegraphics*[scale=1]{W7_1.png}
+\end{center}    
+
+\subsection*{Example: Library preparation for SMART-Seq2}
+\begin{center}
+    \includegraphics*[scale=1]{W7_2.png}
+\end{center}
+SMART-Seq2 meets all the 'requirements' we introduced above.  It is universal, in situ measurements, has no minimum input, with 100\% capture rate and sensitivity, etc.  The only problems is that it is \textbf{not} cost effective or easy to use.
+
+\subsection*{The inDrops Approach (Microfluidics)}
+This is a technique to isolate cells in a faster, more automated process.
+\begin{center}
+    \includegraphics*[scale=0.7]{W7_3.png}
+\end{center}
+This technique places each cell in a droplet, where each one contains a barcoding hydrogel.  Ideally, every droplet contains exactly one cell and one barcode.  The droplets are separated using oil (nonpolar).
+\begin{itemize}
+    \item Ideally, droplets contain exactly one barcode and one cell
+    \item Droplets with a barcode but no cell is okay, it is just ignored since there is no cell.
+    \item Doublets (droplets with more than one cell), and uncaptured cells are bad because they skew the data.
+    \item Splits are when a droplet have one cell but two barcodes, and collisions are when a single barcode is present in two different droplets.  Both are bad because they double-count the cells.
+\end{itemize}
+
+\subsection*{Barcode Diversity}
+\begin{itemize}
+    \item Barcode collisions occur when beads with identical barcode sequences are present in droplets with two different cells.
+    \item The number of available barcode sequences depends on the sequence length $L$.  Sequences of length $L$ can yield up to $4^L$ barcodes.
+    \item The number of distinct barcodes needed is a function of the number of cells that are to be barcoded.
+\end{itemize}
+Assuming that each of the $N$ cells get one barcode at random from a set of $M$ barcodes, the expected number of cells with a unique barcode is given by
+\[\mathbb{E}(\text{cells with unique barcode}) = N \left(1 - \frac{1}{M}\right)^{N - 1}\]
+\textbf{Proof:} If we denote the probability that any specific barcode associates with some cell by $p$, then $p = 1 / M$.  The probability that a given barcode is used for some specific set fo $k$ cells is therefore:
+\[\mathbb{P}(\#cells = k) = {N \choose k} p^k(1 - p)^{N - k}\]
+where:
+\begin{itemize}
+    \item $N$ = number of cells
+    \item $M$ = number of barcodes
+    \item $p$ = probability a specific barcode associated with a cell
+\end{itemize}
+Simplifying:
+\begin{align*}
+    \mathbb{P}(\#cells = 1) &= {N \choose 1} p^1 (1 - p)^{N - 1}\\
+    &= {N \choose 1} {\frac{1}{M}}^1 \left(1 - \frac{1}{M}\right)^{N - 1}\\
+    &= \frac{N}{M} \left(1 - \frac{1}{M}\right)^{N - 1}
+\end{align*}
+Due to how expected values work (e.g., $\mathbb{E}[X + Y] = \mathbb{E}[X] + \mathbb{E}[Y]$), thus,
+\[\mathbb{E}(\text{cells with unique barcode}) = M \cdot \frac{N}{M} \left(1 - \frac{1}{M}\right)^{N - 1} = N\left(1 - \frac{1}{M}\right)^{N - 1}\]
+For $N$ assayed cells and $M$ barcodes, the \textbf{barcode collision rate} can be estimated as
+\begin{align*}
+    & 1 - \frac{\mathbb{E}(\text{cells with a unique barcode})}{\text{number of cells}}
+   =& 1 - \left(1 - \frac{1}{M}\right)^{N - 1} \approx 1 - \left(\frac{1}{e}\right)^{\frac{N}{M}}
+\end{align*}
+Barcode collisions lead to \textbf{synthetic doublets}.  Avoiding synthetic doublets requires high \textbf{relative barcode diversity}, i.e., a high ratio of $M/N$.
+
+\subsection*{Droplet Tuning Concepts}
+\begin{itemize}
+    \item The \textbf{capture rate} is 1 - the fraction of cells that are in droplets without any beads.
+    \item The \textbf{split rate} is the fraction of droplets with exactly one cell that have more than one bead.
+    \item The \textbf{doublet rate} is the fraction of droplets with 1 bead that have more than one cell.
+\end{itemize}
+
+\subsection*{Binomial Distributions for Beads and Cells}
+\begin{itemize}
+    \item Consider $n$ droplets, each of which have a probability $p$ of containing a single cell.  Then the probability that $k$ cells will be captured is 
+    \[\mathbb{P}(\text{number of cells = k}) = {n \choose k} p^k (1 - p)^{n - k}\]
+    \item This suggests modeling the number of cells captured with a random variable that follows a \underline{Binomial distribution}.  That is, $X \sim B(n, p)$.
+    \item By the law of rare events, for a large $n$ and small $p$, $B(n, p)$ is approximated well with the Poisson distribution $Poi(np)$.  i.e.
+    \[{n \choose k} p^k (1 - p)^{n - k} \approx e^{-\lambda} \frac{\lambda^k}{k!}\]
+    \item This is convenient for many reasons: the expression on the right is easier to evaluate and the parameter $\lambda$ is readily interpretable as the expected value of a Poisson random variable.
+    \item The expected value of a Poisson random variable is $\lambda$.
+\end{itemize}
+
+\subsection*{A Poisson Approximation for Beads and Cells}
+\begin{itemize}
+    \item Load \textbf{cells} into droplets at Poisson rate $\lambda$.
+    \item Load \textbf{beads} into droplets at Poisson rate $\mu$.
+\end{itemize}
+\begin{align*}
+    \mathbb{P}(\text{droplet has $k$ cells}) &= \frac{e^{-\lambda} \lambda^k}{k!}\\
+    \mathbb{P}(\text{droplet has $j$ beads}) &= \frac{e^{-\mu} \mu^j}{j!}
+\end{align*}
+\begin{itemize}
+    \item The Poisson approximation yields a simple formula for the capture rate: $1 - e^{-\mu}$.
+    \item The split rate estimate is $\frac{(1 - e^{-\mu} - \mu e^{-\mu})}{1 - e^{-\mu}}$
+    \item This provides a quantitative assessment of the tradeoff between the capture rate and the split rate.
+\end{itemize}
+
+\subsection*{Reducing the Number of Beadless Droplets}
+\begin{center}
+    \includegraphics*[scale=0.63]{W7_4.png}
+\end{center}    
+
+\subsection*{Technical Doublets}
+\begin{itemize}
+    \item Technical doublets arise when two or more cells are captured in a droplet with a single bead.  The technical doublet rate is therefore the probability of capturing two or more cells in a droplet given that at least one cell has been captured in a droplet: $\frac{(1 - e^{-\lambda} - \lambda e^{-\lambda})}{1 - e^{-\lambda}}$.
+    \item Note that "overloading" a microfliuidics single-cell experiment by loading more cells while keeping flow rates constant will increase the number of technical doublets due to an effective increase in $\lambda$.
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.8]{W7_5.png}
+\end{center}
+
+\subsection*{Biological Doublets}
+\begin{itemize}
+    \item \textbf{Biological doublets} arise when two cells form a discrete unit that does not break apart during disruption to form a suspension.
+    \item Biological doublets will not be detected via barnyard plots
+    \item One approach to avoiding biological doublets is to perform nuclear single-cell RNA-seq
+    \item However, biological doublets are not necessarily just a technical nuisance to be avoided.  The paper Halpern et al. 2018 utilizes biological doublets of hepatocytes and liver endothelial cells to assign tissue coordinates to liver and endothelial cells via imputation from their hepatocyte partners.
+\end{itemize}
+
+\section*{Unique Molecular Identifiers}
+\begin{itemize}
+    \item Length determined by the diversity calculation and collision rater (same as barcodes).
+    \item \textit{UMI collapsing} refers to the process of using UMIs to avoid double-counting molecules after sequencing.
+    \begin{itemize}
+        \item Naive UMI collapsing consists of just counting reads that have the same UMI and cell barcode as a single event
+        \item UMI collapsing can include collision detection by checking whether reads also originate from the same molecule.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Remarks on Cell Barcodes and UMIs}
+\begin{itemize}
+    \item Sequencing errors can lead to:
+    \begin{itemize}
+        \item incorrectly labeled cells (from cell barcodes).
+        \item erroneous molecule counts (from UMIs).
+    \end{itemize}
+    \item Error correction can be used to address these problems
+    \begin{itemize}
+        \item Cell barcode error correction can sometimes be performed using a list of the known cell barcodes in the experiment (technology department).
+        \item Cell barcode and UMI error correction can be performed by first identifying sequences that likely represent true barcodes (based on frequency).
+    \end{itemize}
+    \item Sequencing errors are (sequencing) technology dependent.
+\end{itemize}
+
+\subsection*{Summary of Droplet Single-Cell RNA-seq Methods and Features}
+\begin{center}
+    \includegraphics*[scale=0.8]{W7_6.png}
+\end{center}
+
+\subsection*{What Single-cell RNA-seq is not}
+\begin{itemize}
+    \item It is not \textbf{cell}: While measurements are made from RNA molecules in cells, not \textit{all} RNA molecules are captured.  In fact, very few RNA molecules are captured.  Therefore, what is measured does not provide a complete picture of the RNA inside cells.
+    \item It is not \textbf{single}: Since measurements from cells are incomplete, claims are for the most part restricted to groups of cells, rather than individual cells.
+    \item It is not \textbf{RNA}: Single-cell RNA-seq largely consists of sampling cDNA molecules from a cDNA library, which serves as a proxy for the (captured) RNA content in cells.
+\end{itemize}
+
+\subsection*{So what are we missing?}
+We got:
+\begin{itemize}
+    \item Universal in terms of cell size, type, and state.
+    \item No minimum input of number of cells to be assayed
+    \item Easy to use.
+    \item Open source.
+\end{itemize}
+and kind of got
+\begin{itemize}
+    \item Transcripts are readily associated to single cells, e.g., no doublets
+    \item Additional measurements of other cell attributes.
+\end{itemize}
+We don't got:
+\begin{itemize}
+    \item In situ measurements
+    \item Every cell is assayed, i.e., 100\% capture rate
+    \item Every transcript in every cell is detected, i.e., 100\% sensitivity.
+    \item Every transcript is identified by its full-length sequence
+    \item Cost effective per cell
+\end{itemize}
+
+\subsection*{So the Data is Complicated.  What can we do?}
+\begin{itemize} 
+    \item Have a mix of cells and identify "cell types"
+    \begin{itemize}
+        \item Often done using clustering + low dimension projection/embedding
+        \item We will talk about UMAP, t-SNE, etc.
+    \end{itemize}
+    \item Identify genes that are associated with differentiation, aka "pseudotime"
+    \item Differential expression of the "difference" between cell-types\dots sort of ~\rotatebox{90}{$(:$}
+    \item Highly-parallel perturbation experiments with CRISPR
+    \item We are starting to see multimodal technologies (e.g., RNA + chromatin).  Can we see dynamics?
+    \item Imputation of unobserved genes
+    \item Alternative splicing?  Technology will get there\dots
+\end{itemize}
+
+\end{document}
