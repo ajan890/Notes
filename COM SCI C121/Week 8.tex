@@ -1,0 +1,239 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+\usepackage{tikz} % draw stuff
+
+% code blocks
+\usepackage{minted, listings}
+
+% links
+\usepackage{hyperref}
+
+% \mathbb{1} symbol
+\usepackage{dsfont}
+
+\usepackage{tabularx}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+
+\graphicspath{{./assets/images}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+
+\title{COM SCI C121 Week 8}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Matrices}
+\begin{itemize}
+    \item A matrix can be used to store data
+    \item Consider a matrix of dimension $m \times n$
+    \item The rows can be a high-dimensional sample of dimension $n$
+    \item That means that each column is \textit{one} dimension across \textit{all} samples, $m$
+\end{itemize}
+The goal is to summarize the data in the matrix to see relationship across samples.
+\begin{itemize}
+    \item The matrix itself is described by $m \times n$ data points, which on its own is unwieldy
+    \item Naturally, we would want a way to summarize $n$ data points into an "intuitive" representation that we can make sense of
+    \item One way to think about this is creating a "faithful" representation of $m \times n$ data points into, say, $n \times 2$ data points while preserving structure in the data.
+    \begin{itemize}
+        \item Taking this to the extreme, we will look at linear algebra for inspiration
+    \end{itemize}
+    \item In an ideal case, samples that are more "similar" will "cluster" together.  For example, if I put tumor samples and normal samples, one would expect the tumor samples to be more similar to each other and the normal samples to be more similar to each other.
+\end{itemize}
+
+\subsection*{What is a Matrix in Linear Algebra?}
+In short, a matrix is code for a linear function (to transform a set of vectors to another).
+For example, 
+\[\begin{bmatrix} 1 & 1 \\ 0 & 1 \end{bmatrix} \rightarrow \begin{cases} s = x + y & \\ t = 0x + y\end{cases}\]
+where $x$ and $y$ are the $x$ and $y$ of the original vector, and $s$ and $t$ are the components of the new vector.
+
+\section*{Singular Value Decomposition (SVD)}
+What is singular value decomposition about?
+\begin{itemize}
+    \item Linear transformations, and their corresponding matrices (which are rectnagular tables filled with numbers), are seemingly complicated and arbitrary.
+    \item The singular value decomposition (SVD) says that every matrix is essentially diagonal, i.e., "nice", provided the "right" bases are used for the domain and range spaces.
+    \item By finding the "right" bases, the SVD provides fundamental insights into linear transformations and their accompanying matrix representations.
+\end{itemize}
+\subsection*{SVD Algorithm}
+\begin{itemize}
+    \item \textbf{Input:} an $m \times n$ matrix
+    \item \textbf{Output:} a set of numbers called \textit{singular values} and a two collection of vectors: a set of \textit{right singular vectors} and another set of \textit{left singular vectors}.
+\end{itemize}
+\[\begin{bmatrix} & & \\ & M & \\ & & \\ & & \end{bmatrix} = \begin{bmatrix} & & & \\ & U & & \\ & & & \\ & & & \end{bmatrix} \times \begin{bmatrix} & & \\ & \Sigma & \\ & & \\ & & \end{bmatrix} \times \begin{bmatrix} & & \\ & V^* & \\ & & \end{bmatrix}\]
+\dots where:
+\begin{itemize}
+    \item $M$ is a $m \times n$ matrix
+    \item $U$ is a $m \times m$ matrix
+    \item $\Sigma$ is a $m \times n$ matrix
+    \item $V^*$ is a $n \times n$ matrix
+\end{itemize}   
+additionally
+\begin{itemize}
+    \item $U$ and $V^*$ have the property that their transposes equal their inverses.
+\end{itemize}
+
+\subsection*{The meaning of \textit{singular values}}
+\begin{itemize}
+    \item As a linear map, an $m \times n$ matrix $M$ can be thought of as mapping a vector $x$ from $R^n$ to $R^m$.
+    \item A unit sphere in $R^n$ is mapped to an ellipsoid in $R^m$
+    \item The non-zero \textit{singular values} of $M$ are the lengths of the \textit{semi-axes} of the ellipsoid.
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.5]{W8_1.png}
+\end{center}
+
+\subsection*{Measuring directions of distortion}
+\begin{itemize}
+    \item The maximal singular value can therefore be understood to be the size of the vector that points in the direction in which the linear transformation corresponding to $M$ has the largesst effect.
+    \item Formally, the maximal singular value, which is usually denoted as $\sigma_1$ can be understood to be 
+    \[\sigma_1 = \max_{x:\Vert x \Vert = 1} \Vert Mx\Vert\]
+    \item Similarly, the smallest non-zero singular value is the size of the smallest semi-axis of the ellipsoid that is the image of the unit sphere under $M$.
+\end{itemize}
+
+\subsection*{Calculating SVD}
+\begin{itemize}
+    \item Let $M = U\Sigma V^T$ and set $M_k = \sum_{i = 1}^k \sigma_i u_i v_i^T$.  The matrix $M_k$ is a good low-rank matrix approximation of $M$.  Specifically,
+    \[\min_{rank(X) = k} \Vert A - B \Vert_2 = \Vert A - A_k \Vert_2 = \sigma_{k + 1}\]
+    \item This theorem makes precise the intuition that the top singular values, which measure the sizes of the largest of the semi-axes of the ellipsoid resulting from mapping of a sphere by the linear transformation corresponding to a matrix, capture "most" of the transformation.
+\end{itemize}
+
+\subsection*{A Centered Matrix can be Transformed to Summarize the Covariance of the Data}
+\begin{itemize}
+    \item Take a matrix $A$ with $m \times n$ data points.  Create $M$ by subtracting the mean of each column from that corersponding column
+    \begin{itemize}
+        \item $M_{ij} = A_{ij} - \frac{1}{n} \sum_{k = 1}^n a_{kj}$
+        \item M is now a matrix that is \textit{centered}
+    \end{itemize}
+    \item $M^T M$ is a \textit{covariance matrix} of $A$ with the property:
+    \begin{itemize}
+        \item $(M^T M)_{ij} = \text{Cov}(A_i, A_j)$
+        \item In words, $M_ij$ represents how much samples $i$ and $j$ covary with each other
+        \begin{itemize}
+            \item If $(M^T M)_{ij} > 0$, samples $i$ and $j$ are positively related
+            \item If $(M^T M)_{ij} < 0$, samples $i$ and $j$ are negatively related
+            \item If $(M^T M)_{ij} \approx 0$, samples $i$ and $j$ are unrelated.
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\subsection*{PCA with SVD}
+\begin{itemize}
+    \item The SVD of a (centered) $M$, given by $M = U\Sigma V^T$, yields a decomposition of $M^T M$ ad $M^T M = V \Sigma^2 V^{-1}$, i.e., eigendecomposition of the covariance matrix $M^T M$ can be performed by SVD of $M$.Set $V_k$ to be the first $k$ columns of $V$, i.e., $V_k = [v_1, v_2, \dots v_k]$.  Then the projection of the points in $M$ by $V_k$, i.e., PCA($k$) = MV$_k$ has numerous useful properties.
+\end{itemize}
+
+\section*{An Example of a PCA Projection}
+\begin{itemize}
+    \item Each dot represents a sample
+    \item Remember, $M$ is $m \times n$, $V$ is $n \times n$.
+    \item If I take the first two columns of $V$:
+    \begin{itemize}
+        \item $PCA(2) = MV_2$ results in a $m \times 2$ matrix.
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.65]{W8_2.png}
+\end{center}
+PCA Steps:
+\begin{itemize}
+    \item Start with a data matrix $A$.
+    \item Center $A$ to get $M$.
+    \item $M$ has a singular value decomposition that is derived from viewing $M$ as a linear transformation.  $M = U\Sigma V^T$.
+    \item The matrix $V$ consists of the eigenvectors which diagonalize the covariance matrix $M^T M$.
+    \item Compute $V$ from $M$ using the SVD.
+    \item Let $V_k$ be the truncation of $V$ to its first $k$ columns.  We know from linear algebra that this is a meaningful restriction because $M_k = U_k \Sigma V_k^T$ is a good low-rank approximation to $M$.
+    \item Project the data matrix $M$ with $V_k$ to obtain a new set of points: $MV_k$. 
+    \item The projection has the property that it will maximize the variance of the projected points.
+\end{itemize}
+
+\subsection*{An Application of PCA: the Human Genotype Matrix}
+\begin{itemize}
+    \item Differences between any pair of human genomes are largely in the same sites, and consist of single nucleotide polymorphisms (SNPs).
+    \item Most human SNPs are biallelic.
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.8]{W8_3.png}
+\end{center}
+
+
+\subsection*{"Genes Mirror Geography Within Europe"}
+\begin{center}
+    \includegraphics*[scale=0.5]{W8_4.png}
+\end{center}
+
+\subsection*{Some Properties of the PCA}
+\begin{itemize}
+    \item Each subsequent dimension explains less variance than the previous
+    \begin{itemize}
+        \item i.e., there are \textit{diminishing returns} by including additional PCs
+    \end{itemize}
+    \item The singular values, $\sigma_i$ are related to how much variance each dimension explains
+    \begin{itemize}
+        \item Proportion of variance explained: $\sigma_p^2 l \sum_{j = 1}^n \sigma_j^2$
+    \end{itemize}
+\end{itemize}
+\pagebreak
+\section*{Choosing $k$ in K-means Clustering}
+As a review, K-means minimizes the following loss function:
+\[L(\mu, \alpha) = \sum_{k = 1}^K \sum_{i = 1}^n \Vert x_i - \mu_k \Vert_2^2 \mathds{1}\{\alpha_i = k\}\]
+where
+\begin{itemize}
+    \item $x_i$ is the data
+    \item $\mu_k$ is the cluster center (mean of the data)
+    \item $\mathds{1}$ is a function that returns 1 if the condition is true.  In this case, $1$ if the data belongs to cluster $k$, $0$ otherwise.
+\end{itemize}
+What happens if $k$ increases and approaches $n$?
+
+\subsection*{More thoughts}
+\begin{itemize}
+    \item Conceptually, you want a clustering that satisfies the \textit{good clustering principle:}
+    \begin{itemize}
+        \item "Every pair of points from the same cluster should be close to each other than any pair of points from different clusters."
+    \end{itemize}
+    \item Does setting $k = n$ satisfy this principle?
+\end{itemize}
+
+\subsection*{In Reality}
+Technically yes.  But then the data would not be useful.
+\begin{itemize}
+    \item We want to satisfy the good clustering principle with the \textit{simplest} model that sufficiently captures the complexity of the data
+\end{itemize}
+
+\subsection*{The Good Clustering Principle Mathematically}
+\begin{itemize}
+    \item Let $d_{ii'} = \Vert x_i - x_{i'} \Vert_2^2 = \sum_{j = 1}^p (x_{ij} - x_{i'j})^2$, the pairwise distance between two points.
+    \item Let $D_r = \sum_{i, i' \in C_r} d_{ii'}$ be the pairwise distance between all points in a cluster $C_r$.
+    \item Then
+    \[W_k = \sum_{r = 1}^K \frac{1}{2n_r} D_r\]
+    \begin{itemize}
+        \item where $n_r$ is the number of points in cluster $r$.
+        \item What is k-means with respect to W?  K-means minimizes W.  (W is the same objective function as the loss function above.)
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.5]{W8_5.png}
+\end{center}
+Graphically, we are looking for the value of $k$ at the "elbow".  Unfortunately, a lot of the times, the graph isn't that clean.
+
+\section*{Gap Statistic}
+A more principled approach: the Gap statistic is the difference in the expected W under a \textit{reasonable null distribution} and the observed $W$.
+\[\text{Gap}_n(k) = E_n^* \{\log(W_k)\} - \log(W_k)\]
+To see how to find an appropriate reference distribution, consider for a moment the population version corresponding to the gap statistic in the case of K-means clustering:
+\[g(k) = \log\left\{ \frac{\text{MSE}_{X^*}(k)}{\text{MSE}_{X^*}(1)}\right\} - \log\left\{ \frac{\text{MSE}_{X}(k)}{\text{MSE}_{X}(1)}\right\}\]
+
+\end{document}
