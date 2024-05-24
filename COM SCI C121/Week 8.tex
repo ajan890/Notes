@@ -10,6 +10,7 @@
 
 % lists
 \usepackage{enumerate}
+\usepackage{enumitem}
 
 % images
 \usepackage{graphicx} % for images
@@ -235,5 +236,155 @@ A more principled approach: the Gap statistic is the difference in the expected 
 \[\text{Gap}_n(k) = E_n^* \{\log(W_k)\} - \log(W_k)\]
 To see how to find an appropriate reference distribution, consider for a moment the population version corresponding to the gap statistic in the case of K-means clustering:
 \[g(k) = \log\left\{ \frac{\text{MSE}_{X^*}(k)}{\text{MSE}_{X^*}(1)}\right\} - \log\left\{ \frac{\text{MSE}_{X}(k)}{\text{MSE}_{X}(1)}\right\}\]
+
+\section*{Gap Statistic in Practice}
+We consider two choices for the reference distribution:
+\begin{enumerate}[label=(\alph*)]
+    \item generate each reference feature uniformly over the range of the observed values for that feature
+    \item generate the reference features from a uniform distribution over a box aligned with the principal components of the data.  In detail, if $X$ is our $n \times p$ data matrix, assume that the columns have mean 0 and compute the singular value decomposition $X = UDV^T$.  We transform via $X' = XV$ and then draw uniform features $Z'$ over the ranges of the columns of $X'$, as in method (a) above.  Finally we back-transform via $Z = Z'V^T$ to give reference data $Z$.
+\end{enumerate}
+Method (a) has the advantage of simplicity.  Method (b) takes into account the shape of the data distribution and makes the procedure rotationally invariant, as long as the clustering method itself is invariant.
+
+\subsection*{Estimation of the Gap}
+Steps:
+\begin{enumerate}
+    \item cluster the observed data, varying the total number of clusters from $k = 1, 2, \dots. K$, giving within-dispersion measures $W_k, 1, 2, \dots, K$.
+    \item generate $B$ reference data sets, using the uniform prescription (a) or (b) above, and cluster each one giving within-dispersion measures $W_{kb}^*$, $b = 1,2, \dots, B, k=1, 2, \dots, K$.  Compute the (estimated) gap statistic
+    \[\text{Gap}(k) = \frac{1}{B} \sum_b \log(W^*_{kb}) - \log(W_k)\]
+    \item let $\bar l = \frac{1}{B} \sum_b \log(W^*_{kb})$, compute the standard deviation
+    \[\text{sd}_k = \left[\left(\frac{1}{B}\right) \sum_b \{\log(W^*_{kb}) - \bar l\}^2\right]^{\frac{1}{2}}\]
+    and define $s_k = \text{sd}_k \sqrt{(1 + \frac{1}{B})}$.  Finally, choose the number of clusters via
+    \[\hat k = \text{smallest } k \text{ such that Gap}(k) \geq \text{Gap}(k + 1) - s_{k + 1}\]
+\end{enumerate}
+
+\subsection*{The Gap null distribution}
+We transform the singular value decomposition $X = UDV^T$ via $X' = XV$ so that the uniform features $Z'$ over the ranges of the columns of $X'$.  Finally, we back-transform via $Z = Z'V^T$ to give reference data $Z$.
+
+\begin{center}
+    \includegraphics*[scale=0.44]{W8_6.png}
+\end{center}
+
+\section*{Nonlinear Dimension Reduction Techniques}
+Broad goals from scRNA-seq:
+\begin{itemize}
+    \item Imagine you have a set of cells that are heterogenous, can you tell me interesting things about the cell-types and their characteristics?
+    \item What makes a \textit{cell-type}?
+\end{itemize}
+
+\subsection*{The Data Processing Pipeline}
+\begin{center}
+    \includegraphics*[scale=0.5]{W8_7.png}
+\end{center}
+
+\subsection*{Filtering and "Feature Selection"}
+Feature selection is the process of choosing which genes you're going to include versus not.\\
+Why is this important?
+\begin{itemize}
+    \item Practically speaking, zeroes screw up the denominator.
+    \[\hat s_{jg} = \frac{X_{jg}}{\left(\prod_{k = 1}^{N_{\text{samples}}} X_{kg}\right)^{1/N_{\text{samples}}}}\]
+    \item What if my true floor was 1 and not 0?
+\end{itemize}
+Lowly expressed genes have unreliable variance and thus should be filtered.
+
+\subsection*{Goals of Dimension Reduction}
+In general, you want a faithful representation of your \textit{high-dimensional} data in \textit{low-dimensions}\\
+In scRNA-seq, we usually think about a cell being a sample in high-dimensional gene space: $\mathbb{R}^G \rightarrow \mathbb{R}^D$ where $D << G$.
+\[f\left(\begin{bmatrix}X_{11} & X_{12} & \dots & X_{1C} \\ X_{21} & X_{22} & \dots & X_{2C} \\ \dots \\ X_{G1} & X_{G2} & \dots & X_{GC}\end{bmatrix}\right) \rightarrow \begin{bmatrix}X'_{11} & X'_{12} & \dots & X'_{1C} \\ X'_{21} & X'_{22} & \dots & X'_{2C} \\ \dots \\ X'_{D1} & X'_{D2} & \dots & X'_{DC}\end{bmatrix}\]
+Data is transformed into a Low Dimensional Representation.  $1\dots C$ (rows in both matrices) represent the cells, and the columns represent genes (G) and mappings (D).
+
+\subsection*{Faithful Representation?}
+Recall: PCA projects the data such that the maximum variation is explained in low dimenison.\\
+However, it is somewhat subjective.
+\begin{itemize}
+    \item What distances do you want to preserve?  Overall?  Local?
+    \item Actually, what is the distance?
+    \item Different distant functions behave differently
+    \item t-SNE takes an opinionated approach (you'll see on next few slides)
+\end{itemize}
+
+\subsection*{Another View of PCA: Probabilistic PCA}
+\begin{itemize}
+    \item Assume that points are generated from Gaussian distributions along a line (in this case, the black line, centered around the green point).
+    \item The points are randomly perturbed (Gaussian noise, equal variance), in both directions (up and down, left and right)
+    \item The goal is the find the black line using only the perturbed points as input
+    \item Note: this problem formulation is also known as 'total least squares'.
+    \begin{center}
+        \includegraphics*[scale=0.8]{W8_8.png}
+    \end{center}
+\end{itemize}
+Steps:
+\begin{itemize}
+    \item Draw $x \sim N_D(0, I)$ in low dimensional space
+    \item Transform it into higher dimensional space by the principle axes
+    \begin{itemize}
+        \item $t \vert x \sim N(Wx + \mu, \sigma^2 I)$
+        \item $I$ represents the identity matrix, and $W$ is a linear transformation
+    \end{itemize}
+\end{itemize}
+
+\subsection*{t-distributed Stochastic Neighbor Embedding}
+\begin{itemize}
+    \item Goal: find a \textit{distribution} in low-dimensions (often 2 or 3) that represents a high-dimension distribution reasonably.
+    \item Approach:
+    \begin{itemize}
+        \item Let the "true" high-dimensional distribution (your data) by represented by distribution $P$.
+        \item Approximate the high-dimensional distribution with a low-dimensional one, $Q$.
+        \item Minimize the Kullback-Leibler divergence of $P$ given $Q$.
+        \[KL(P \Vert Q) = \sum_{i = 1}^N \sum_{j \neq i} p_{ij} \log \frac{p_{ij}}{q_{ij}}\]
+        \item \textit{"KLD is the expected excess surprise from using $Q$ if the true distribution is $P$"}
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Short aside: Entropy is a Way to Summarize a Distribution}
+\begin{itemize}
+    \item Entropy is defined as:
+    \begin{itemize}
+        \item $H(X) = -\sum_{i=1}^N p(x_i) \log(p(x_i)) = -E[\log(p(X))]$
+    \end{itemize}
+    \item "How surprising an observation is on average"
+    \item Why is this "surprisal"?
+\begin{center}
+    \includegraphics*[scale=0.6]{W8_9.png}
+\end{center}
+\end{itemize}
+
+\subsection*{Some Useful Properties of the KLD}
+\begin{itemize}
+    \item $KL(P \Vert Q) \geq 0$, always.
+    \item It is \textit{not} symmetric $KL(P \Vert Q) \neq KL(Q \Vert P)$.
+    \item The "further away" $Q$ is from $P$, the larger $KL(P \Vert Q)$ is.
+    \[KL(P \Vert Q) = \sum_x p(x) \log(\frac{p(x)}{q(x)})\]
+    \item Given the points above, KLD is useful as a \textit{distance}, but is \textbf{not a distance metric} in the strict sense.
+\end{itemize}
+
+\subsection*{t-distributed Stochastic Neighbor Embedding}
+\begin{itemize}
+    \item Approach:
+    \begin{itemize}
+        \item Let the "true high-dimensional distribution (your data) be represented by distribution $P$.
+        \item Approximate the high-dimensional distribution with a low-dimensional one, $Q$.
+        \item Minimize the Kullback-Leibler divergence of $P$ given $Q$: $KL(P \Vert Q) = \sum_{i=1}^N \sum_{j \neq i} p_{ij} \log \frac{p_{ij}}{q_{ij}}$
+    \end{itemize}
+    \item TODOs:
+    \begin{itemize}
+        \item Define $p$ on data (reference distribution)
+        \item Define $q$ on data (generating distribution)
+        \item Minimuze KLD?
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Modeling the "probability" in high-dimensions}
+\begin{itemize}
+    \item Note, this notion of "conditional probability" is a bit... strange?  But it's an assumption one can make
+    \item First, define our data as samples $x_k \in R^G$
+    \item $p_{j \vert i} = \frac{\exp (- \Vert x_i - x_j \Vert^2 / 2 \sigma_i^2)}{\sum_{k \neq i} \exp (- \Vert x_i - x_k \Vert^2 // 2\sigma_i^2)}$, where $p_{i \vert i} = 0$
+    \begin{itemize}
+        \item $x_k$ = our data
+        \item $G$ = the observed dimension of our data
+    \end{itemize}
+    \item Make it symmetric, so define $p_{ij} = \frac{p_{j \vert i} + p_{i \vert j}}{2N}$
+    \item Very similar to soft $k$-means distance
+\end{itemize}
+
 
 \end{document}
