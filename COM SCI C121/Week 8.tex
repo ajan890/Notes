@@ -385,6 +385,43 @@ Steps:
     \item Make it symmetric, so define $p_{ij} = \frac{p_{j \vert i} + p_{i \vert j}}{2N}$
     \item Very similar to soft $k$-means distance
 \end{itemize}
+We have defined $P$, now define $Q$, our "reference" distribution in lower dimension
+\begin{itemize}
+    \item Recall our goal: Minimize the Kullback-Leibler divergence of $P$ given $Q$.
+    \[KL(P \Vert Q) = \sum_{i \neq j} p_{ij} \log \frac{p_{ij}}{q_{ij}}\]
+    \item $Q$ is a low-dimensional representation of $P$ that minimizes the KL divergence.
+    \[q_{ij} = \frac{(1 + \Vert y_i - y_j \Vert^2)^{-1}}{\sum_{k \neq l} (1 + \Vert y_k - y_l \Vert^2)^{-1}}\]
+    where $y$ are literally made up points in some lower dimensional space
+    \item t-distribution has much heavier tails and thus alleviates "crowding"
+    \item Notice the numerator is essentially a Student t-distribution.
+\end{itemize}
 
+\subsection*{The Perplexity Parameter}
+\begin{itemize}
+    \item Defined as $Perp(P_i) = 2^{H(P_i)}$, or the Shannon entropy.
+    \begin{itemize}
+        \item You, the oracle, chooses a fixed value, say, 5.
+        \item Find $\sigma_k^2$ such that your perplexity is basically what you said it should be.
+    \end{itemize}
+    \[p_{j \vert i} = \frac{\exp(- \Vert x_i - x_j \Vert^2 / 2 \sigma_i^2)}{\sum_{k \neq i} \exp ( - \Vert x_i - x_k \Vert^2 / 2 \sigma_i^2)}\]
+    \item Intuition: probability mass has to be shared (sum to 1), so setting larger bandwidth makes more "neighbors" and smaller fewer neighbors.
+    \item Desired behavior: dense regions get smaller $\sigma_i$, sparse regions get larger $\sigma_i$.
+    \begin{itemize}
+        \item "Small" values of perplexity favor local variation
+        \item "Large" values of perplexity favor global variation
+        \item Made up rule: perplexity between 5-50, because that is what \textit{they} say.
+    \end{itemize}
+\end{itemize}
 
+\subsection*{$P$ and $Q$ are defined, what's the intuition?}
+\begin{itemize}
+    \item Compute "probabilities" (distances) in high-dimensions using the Gaussian kernel:
+    \[p_{j \vert i} = \frac{\exp( - \Vert x_i - x_j \Vert^2 / 2 \sigma_i^2)}{\sum_{k \neq i} \exp(- \Vert x_i - x_k \Vert^2 / 2 \sigma_i^2)}\]
+    \item Choose the appropriate values of $\sigma_i$ in order to get a reasonable set of "neighbors".  Dense regions get smaller bandwidth, sparse get larger
+    \item Finally, find the t-distribution $Q$ in low dimension such that you minimize the KL-divergence:
+    \[KL(P \Vert Q) = \sum_{i \neq j} p_{ij} \log \frac{p_{ij}}{q_{ij}}\]
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.8]{W8_10.png}
+\end{center}
 \end{document}

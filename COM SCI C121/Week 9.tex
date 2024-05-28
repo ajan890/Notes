@@ -1,0 +1,148 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+\usepackage{enumitem}
+
+% images
+\usepackage{graphicx} % for images
+\usepackage{tikz} % draw stuff
+
+% code blocks
+\usepackage{minted, listings}
+
+% links
+\usepackage{hyperref}
+
+% \mathbb{1} symbol
+\usepackage{dsfont}
+
+\usepackage{tabularx}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+
+\graphicspath{{./assets/images}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+
+\title{COM SCI C121 Week 9}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Experimental Design, Robustness, and Functional Genomics}
+\subsection*{Functional Genomics}
+\begin{itemize}
+    \item The study of the function of many genes at once (or how genes bbehave in different contexts based on some form of a perturbation)
+    \item "Functional genomics focuses on the \textbf{dynamic expression of gene products in a specific context}, for example, at a specific developmental stage or during a disease.  In functional genomics, we try to use our current knowledge of gene function to develop a model linking genotype to phenotype."
+\end{itemize}
+
+\subsection*{Robustness}
+\begin{itemize}
+    \item Let's assume we have a \textit{hypothesis} we want to ask:
+    \begin{itemize}
+        \item If I perturb gene $X$, how will gene $Y$ behave?
+    \end{itemize}
+    \item There is \textit{reality}, there is my belief of reality, and there is my tractable representation of my belief of reality
+    \begin{itemize}
+        \item Which is my generative model and which is my inference model?
+    \end{itemize}
+    \item Robustness refers to a model that can behave well when there are varying levels of misspecification.
+\end{itemize}
+\subsubsection*{Experimental design in genomics is hard because of high-dimensional sampels and so many hypotheses}
+\begin{itemize}
+    \item There is a lot of work in the classical statistical literature around "experimental design"
+    \begin{itemize}
+        \item e.g., I'm designing a randomized controlled trial to test the efficacy of a drug.  If I believe the effect to be "around" some value, how many samples do I need?
+    \end{itemize}
+    \item In modern genomics, there are often many moving part in \textit{high dimensions}.
+    \item The fact that so many parts are moving makes this question of sample size very difficult because in some sense, every hypothesis is interrelated.
+\end{itemize}
+\subsubsection*{Experimental design can be used for robustness testing and for designing experiments}
+\begin{itemize}
+    \item Imagine you have a reasonable generative model of some experimental process
+    \item If I want to perform an experiment in a new setting, I can simulate under that process
+    \item Because I know what I changed in the generative model, I can evaluate how well I am doing on the inference side.  If the generative model is already different than the inference model, I've done a robustness analysis for free
+\end{itemize}
+
+\section*{Functional Genomics Today: Genetic Variation}
+\begin{itemize}
+    \item A fair amount of work is done on the statistical genetics side for functional genomics
+    \item Here, a perturbation is a genetic variant
+    \item A simple example is a cis-eQTL
+    \begin{itemize}
+        \item "cis" = jargon for "nearby".  In practice, within 100000 bases of a gene.
+        \item "eQTL" = expression quantitative trait loci.  Jargon for gene expression that changes as a function of the genetic variant.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Experimentally Induced Perturbations}
+\begin{itemize}
+    \item In the past, you pipette some lead into some cells on a dish, then look at gene expression differences
+    \item The function transcriptional (gene expression) changes in response to a stress (lead) is an experimentally induced perturbation.
+\end{itemize}
+
+\section*{CRISPR}
+\begin{itemize}
+    \item CRISPR can be used to knock out genes by introducing variants
+    \item Briefly, a short guide RNA (sgRNA) \~20 bases long is engineered.
+    \item Together, with Cas9, the complex searches for that sequence, cuts the DNA, then the cell "repairs" the DNA, and totally screws up super often, thus breaking the cell (NHEJ, non-homologous end joining)
+\end{itemize}
+
+\subsection*{CRISPR Works to change one gene, but how about many genes?}\
+\begin{itemize}
+    \item Remember engineered barcodes?  We can engineer guides!
+    \item There is an entire field of how to generate these efficiently
+    \item The GeCKO library targets 19050 genes with 123411 sequences.
+    \item It only costs \$600.
+\end{itemize}
+
+\subsection*{How do you put CRISPR library DNA into cells}
+\begin{itemize}
+    \item Amplify the library DNA
+    \item Put the library DNA in phages and have them "infect" cells.
+    \item Each cell gets a different snippet of DNA and you have basically run 10k experiments in one.
+\end{itemize}
+
+\subsection*{Exercise: A Generative Model for Single-Cell Perturbations}
+\begin{itemize}
+    \item How would you play the oracle for generating single-cell RNA data with perturbations?
+\end{itemize}
+\begin{enumerate}
+    \item Choose a cell type
+    \item Choose a gene to knock out
+    \item Measure sampling (DNA)
+    \item Repeat for every cell in sample.
+\end{enumerate}
+
+Cell Types:
+\begin{enumerate}
+    \item $t_c \sim \text{Categorical}(p_t)$
+    \item $k_c \sim \text{Categorical}(p_k)$
+    \item for each $g$ in numGenes:
+    \begin{itemize}
+        \item $y_{cg} \sim \text{Poisson}(\mu_g \exp(\sum_a \alpha_{ga}^{\mathds{1}\{k_i = 1\}}))$
+    \end{itemize}
+\end{enumerate}
+\begin{itemize}
+    \item where $p_t$ is the proportion of cell types.
+    \item A Categorical distribution is the same as $\text{Multinomial}(1, p_t)$
+    \item Part 3 essentially means, what is the probability that the gene is being affected by the given knockout and not another?
+    \item $\mu$ is the normal expression rate of a trait (some trait of some cell in standard conditions).  $\alpha$ is the "effect size", a constant.  Positive means the gene being knocked out causes expression to occur more than the mean. Negative means it expresses less than the mean.  Zero means that the removal of that gene does not affect the cell (e.g., expression of the studied trait is the same as the mean).
+    \item The goal is to use the knockout and effect data to predict which parts of genes are the most 'important' in what traits the cells express.
+\end{itemize}
+
+
+\end{document}
+
+
