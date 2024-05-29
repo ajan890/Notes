@@ -1,0 +1,155 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+\lstset{
+  basicstyle=\ttfamily,
+  mathescape
+}
+% verbatim greek
+\usepackage{alphabeta}
+
+\graphicspath{{./assets/images}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+
+\title{COM SCI 132 Week 9}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Class Heirarchy Analysis}
+Suppose we have a case where class \texttt{B} contains field \texttt{m}, and \texttt{C} extends class \texttt{B}.\\
+In this case, if we have
+\begin{verbatim}
+    B y;
+    C x;
+    ...
+    x.m();
+    y.m();
+\end{verbatim}
+x.m() is valid.  In this case, we make the assumption that it is a closed world, in that our source files contain all the code for the methods.
+In fact, any class can be the class of the object in \texttt{x}.  When you do \texttt{x.m}, it searches through the class allocation in the heap for the method or field name.  The compiler essentially generates a matrix containing all the class names along one axis, all the method names on the other axis, and if the method exists, a cell is filled with the memory address of the function code.\\
+If in our scenario now, both \texttt{B} and \texttt{C} implement their own function \texttt{m}, then
+\begin{verbatim}
+    B y;
+    C x;
+    ...
+    x.m();
+    y.m();
+\end{verbatim}
+would both be valid, but call different \texttt{m} methods.  The compiler's method matrix would have different entries for \texttt{x.m} and \texttt{y.m}.\\\\
+This type of analysis, referred to as Class Heirarchy Analysis, began in 1995, when Java was released.  (The concept of inheritance was present before, just this type of analysis was new.)
+
+\section*{Rapid Type Analysis (1995)}
+Suppose we have the same scenario as before.  \texttt{C} extends \texttt{B}, and both classes have their own function \texttt{m}.\\\\
+In rapid type analysis, it makes some structure like \{ Set of classes D | new D() in the program \}.  This represents a set (in set builder notation) of the classes present in the program, where the class has been instantiated with \texttt{new}.\\\\
+If our program has one line \texttt{C x;}, then this set would only contain \{\texttt{C}\}, even though \texttt{C} extends \texttt{B}, but \texttt{B} is not contained in the set since it was never instantiated with \texttt{new}.  By this logic, since the compiler knows that there are no \texttt{B} objects, \texttt{B.m} would never be called.  This means \texttt{B.m} does not need to be dynamically loaded.\\\\
+When many libraries were imported, but only certain functions in the libraries were used, this led to an average reduction in code size and compilation time by about 90\%.
+
+\subsection*{0-CFA}
+We have the grammar:
+\begin{verbatim}
+    e ::= x
+       |  new C()
+       |  e1.m(e2)
+    s ::= x = e
+\end{verbatim}
+The idea:
+\[\boxed{\text{program}} \longrightarrow \boxed{\text{constraint}} \longrightarrow \boxed{\text{solution}}\]
+\begin{itemize}
+    \item Use the program to generate constraints
+    \item Solve the constraints
+\end{itemize}
+For our grammar, we begin with an expression $e$, and use it to generate (constraint) set variable $[[e]]$.  The set variable ranges over sets of class names.\\\\
+If we have the scenario from before, then if we have \texttt{x.m()} we would want to generate the following set: $[[x]]$ - a superset of the true content of \texttt{x}.\\\\
+The following code snippets would generate the following sets:
+\begin{itemize}
+    \item \texttt{new C()} $\rightarrow$ [[\texttt{new C()}]] = \{\texttt{C}\}
+    \item \texttt{x = e} $\rightarrow$ [[\texttt{x}]] $\supseteq$ [[\texttt{e}]]
+    \item \texttt{$e_1$.m($e_2$)} $\rightarrow$ [[$e_1$]], [[$e_2$]]
+\end{itemize}
+For every class \texttt{C} with a method \texttt{m}, [FILL]
+
+\subsection*{Constraints for 0-CFA}
+\begin{itemize}
+    \item $\{C\}\subseteq V$, where $V$ are set variables.
+    \item $V \subseteq V'$
+    \item $(C \in V) \Rightarrow (V' \subseteq V'')$
+\end{itemize}
+We can solve such constraints in $O(n^3)$ time.
+
+\subsection*{Theorem}
+\[\text{Class Hierarchy Analysis} \supseteq \text{0-CFA}\]
+Basically, if you're doing analysis on a program, using class hierarchy analysis may give you \{A, B, C\} as the set, while 0-CFA may give you \{A, B\}.  Basically, 0-CFA would always generate a set that is a subset of or equal to the set from class hierarchy analysis.\\\\
+By this logic, 0-CFA is always more powerful than class hierarchy analysis.
+
+\section*{1-CFA}
+Consider the following code:
+\begin{verbatim}
+class P {
+    (Type) s() {
+        ...
+    }
+}
+
+class Q extends P {
+    (Type) s() {
+        ...
+    }
+}
+
+class B {
+    (Type) m(P a) {
+        a.s();
+    }
+}
+
+class Main {
+    psvm(String[] args) {
+        x = new B(new P());
+        x.m();
+
+        x = new B(new Q());
+        x.m();  
+    }
+}    
+\end{verbatim}
+In this case, method \texttt{m} in class \texttt{B} can take in both \texttt{P} and \texttt{Q} objects.  During compilation, this method is actually redefined twice, so separate functions are called for \texttt{P} and \texttt{Q}.  (That can be a lot of copies).  However, each copy can be individually optimized.  This process of splitting up a method is referred to as \textit{devirtualization}, or instead of doing \textit{virtual} calls to a method (via class extension matching stuff), you are converting them to \textit{direct} calls.\\\\
+Alternatively, if a method is only called like once, the compiler may detect that and just copy-paste the function body to locations it is called, saving a (slow) function call statement.  However, if the function contains the \texttt{this} keyword, what does it refer to?  It would replace all of the \texttt{this} statements with a reference to the object calling the function.  This works 100\% of the time, in that it's possible to do it.  The only problem is that suppose we have the case:
+\begin{verbatim}
+interface I {
+    void m();
+}
+
+class C implements I {
+    C f;
+    void m() {
+        this.f = this;
+    }
+}
+\end{verbatim}
+If this is called once, and the compiler decides to copy-paste the body and replace all instances of \texttt{this}, we run into a problem.  The type would now reference \texttt{I} instead of \texttt{C}, which doesn't type check!  (Interfaces cannot be instantiated.)  We would have to tweak the code to recognize the object as a type \texttt{C} instead.\\
+
+\subsection*{Branch Prediction}
+If we have a conditional in a loop, it is likely that most times it will execute on one branch.  One optimization is to compile the more common branch to be fast and the less common branch to be slow.
+
+
+\end{document}
