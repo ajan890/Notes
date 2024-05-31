@@ -142,6 +142,92 @@ Cell Types:
     \item The goal is to use the knockout and effect data to predict which parts of genes are the most 'important' in what traits the cells express.
 \end{itemize}
 
+\section*{Actual Functional Genomics: FACS Screens}
+\begin{center}
+    \includegraphics*[scale=0.8]{W9_1.png}
+\end{center}
+\begin{itemize}
+    \item Downstream mapping is studying what a changing a gene causes.
+    \item Upstream mapping is studying what causes a change in a gene.
+\end{itemize}
+Most of the time, we want to know the changes in other genes that causes changes in the trait we are observing, but that is really hard to do since we would need to know what all the genes do.
+
+\subsection*{Upstream Regulators can be Inferred by Perturbations}
+\begin{center}
+    \includegraphics*[scale=0.8]{W9_2.png}
+\end{center}
+Suppose we care about the trait.  We do a "do() operation" on gene B.  Basically, we set the expression of Gene B to 0 by knocking out the gene. (\texttt{do(Gene B = 0)}).  Now, the only genes affecting the trait are genes A, C, and D, in a straight line.  Now, if we modify Gene C, we can see its effect on the trait.\\\\
+We can use this technique, for say, finding genetic variants associated with size of watermelons.
+\begin{enumerate}
+    \item Take the seeds from one watermelon and mutate the seeds
+    \item Grow watermelons and sort them by size.
+    \item Analyze DNA of small melons vs big melons.
+\end{enumerate}
+\begin{center}
+    \includegraphics*[scale=0.8]{W9_3.png}
+\end{center}
+In this example, watermelon size was determined by which segments appeared more often (likely correlates to the amount of certain proteins synthesized.)
+
+\subsection*{Forward Genetics Using FACS-Based Screens Finds Upstream Regulators of a Gene}
+\begin{center} 
+    \includegraphics*[scale=0.8]{W9_4.png}
+\end{center}
+\begin{enumerate}
+    \item Apply sgRNA and viruses to create perturbed cells.  In FACS, genes are tagged with fluorescent molecules, the color of which is a "barcode" for the gene received.
+    \item Let the cells grow and observe the expression of the trait of interest.
+    \item Group all the traits into "bins"
+    \item Use a light detector on each bin to determine a correlation between the sets of genes (color) with the amount of expression.
+\end{enumerate}
+\begin{center}
+    \includegraphics*[scale=0.8]{W9_5.png}
+\end{center}
+
+\subsection*{How Do We Design Better Screens?}
+A big problem with flow cytometry is that you need a lot of cells.  There will be read errors, dead cells, and a lot of variation, so to get a good dataset, millions of cells are needed.\\\\
+The \textbf{goal} is to design a screen such that we have high confidence in calls and probe as many targets as possible\\\\
+Approach:
+\begin{enumerate}
+    \item Develop a model
+    \item Learn parameters from existing data
+    \item Simulat unobserved conditions
+    \item Evaluate performance
+    \item Repeat
+\end{enumerate}
+
+\subsection*{Pre-data Modeling Enables Efficient Screen Design...}
+... by using prior data for informative predictions
+\begin{center}
+    \includegraphics*[scale=0.8]{W9_6.png}
+\end{center}
+This is a generative model.
+\begin{itemize}
+    \item $M_{nc} \sim \text{Poisson}(\lambda)$
+    \item We pick a (single) cell with some number of guides in it.
+    \item The $G_{nc}$ node picks which guides they are, where how much each guide affects the observed trait is drawn from $p$, the total proportion of gene effects.  $G_{nc} \sim \text{Mult}(M_{nc}, p)$
+    \begin{itemize}
+        \item $p \sim \text{Dirichlet}(\frac{1}{N_g} \mathds{1}_{N_g}\delta)$
+    \end{itemize}
+    \item Skip $D_{nc}$ for now, since it is somewhat complicated.
+    \item At this point, if we draw many cells, as long as it is reasonably many, we will end up with a similar distribution for genes, since all the numbers so far are drawn from distributions.
+    \item The reporter distribution essentially shifts the distribution to the "true distribution"  (this is a linear transformation on the mean of the distribution)
+    \item This is repeated over $c$ cells to have a observed bin for a sample.  This is then repeated over all samples and all guides.
+\end{itemize}
+[FILL]
+
+\subsection*{Multiplicity of Infection (MOI)}
+\begin{itemize}
+    \item Multiplicity of Infection (MOI) = the rate of virions to cells
+    \item Effective coverage = the number of times we observe a guide
+    \item The higher the MOI, the better.  A low MOI leads to low effective coverage - most cells are wasted because they were never genetically altered.
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.8]{W9_7.png}
+    \includegraphics*[scale=0.8]{W9_8.png}
+\end{center}
+
+
+
+
 
 \end{document}
 
