@@ -1,0 +1,150 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+\usepackage{enumitem}
+
+% images
+\usepackage{graphicx} % for images
+\usepackage{tikz} % draw stuff
+
+% code blocks
+\usepackage{minted, listings}
+
+% links
+\usepackage{hyperref}
+
+% \mathbb{1} symbol
+\usepackage{dsfont}
+
+\usepackage{tabularx}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+
+\graphicspath{{./assets/images}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+
+\title{COM SCI C121 Week 10}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{How do we develop a model to analyze data from these experiments?}
+\begin{itemize}
+    \item "What targets (perturbations) affect the gene of interest (measurement)?"
+    \[y_{ng} = \beta_0 + \beta_g x_g\]
+    \item where:
+    \begin{itemize}
+        \item $n_{ng}$ = reporter of protein expression
+        \item $\beta_0$ = mean expression under "normal" conditions
+        \item $\beta_g$ = effect of perturbation
+        \item $x_g$ = indicator if perturbation occurs in this observation
+        \item $n$ = replicate
+        \item $g$ = target (gene) being perturbed
+    \end{itemize}
+
+\subsection*{We have unique data - let's think carefully}
+Some goals of our method:
+\begin{enumerate}
+    \item Identify gene perturbations that change the reporter (gene of interest) distribution
+    \begin{itemize}
+        \item multiple guides pere gene should show the same trend
+    \end{itemize}
+    \item Model the sampling distribution in its "native" state
+    \item Be well behaved in small sample sizes
+    \item Infer experimental specific parameters
+    \begin{itemize}
+        \item Bin size, guide specific variance, etc.
+    \end{itemize}
+\end{enumerate}
+\end{itemize}
+
+\subsection*{Multiple guides target the \textit{same} gene and shus should be correlated}
+Goal 1: Identify gene perturbations that change the reporter (gene of interest) distribution.  Multiple guides should show similar effects.
+\begin{itemize}
+    \item Suppose a gene we want to knock out is 20 base pairs long.
+    \item When we knock it out, maybe the gene we knocked out doesn't matter much.
+    \item However, maybe a gene that \textit{actually} matters contains the same 20 base pairs (highly likely considering the entire genome is billions of base pairs long)
+    \item This causes the data to show that knocking out that gene has a huge effect, even if it does nothing.
+\end{itemize}
+Approach: Guides have their own effect, but share a "parent" effect
+\begin{align*}
+    \mu_T \sim& F(.) \\
+    \beta_g \vert \mu_T \sim& H(\mu_T)
+    y_{ng} &= \beta_0 + \beta_g x_g
+\end{align*}
+The equations give:
+\begin{align*}
+    \mu_T \vert \sigma^2 &\sim N(0, \sigma^2)\\
+    \beta_g \vert \mu_T &\sim N(\mu_T, ?)\\
+    y_{ng} \vert \beta_g &\sim N(\beta_g x_g, 1)
+\end{align*}
+From these equations, we solve goal 2.  We don't directly observe the reporter, we observe a noisy, quantized version.\\
+Goal 2: Model the sampling distribution in its "native" state.
+\begin{center}
+    \includegraphics*[scale=0.8]{W10_1.png}
+\end{center}    
+What if the expected counts per bin wasn't even?  Then, the distribution is probably a Multinomial$(C, p)$.
+
+\subsection*{Dirichlet Multinomial}
+Our sampling distribution is an over dispersal Multinomial, aka \textit{Dirichlet Multinomial}.
+\[\text{DirMult}(c, \phi p)\]
+\[B_{ng} \vert \phi, p \sim \text{DirMult}(c, \phi p)\]
+We need to connect $y_{ng}$ to our sampling distribution, so
+\[B_{ng} \vert \phi, p \sim \text{DirMult}(c, \phi p(y_{ng}))\]
+\begin{itemize}
+    \item $B_{ng}$ is the data (observed bin counts)
+\end{itemize}
+In the previous equations:
+\begin{itemize}
+    \item $\mu_T \vert \sigma^2 \sim N(0, \sigma^2)$ = Gene level effect
+    \item $\beta_g \vert \mu_T \sim N(\mu_T, ?)$ = Guide level effect.  (There's a ? because we don't know the exact guide level effect)
+    \item $y_{ng} \vert \beta_g \sim N(\beta_g x_g, 1)$ = Unobserved reporter
+    \item $B_{ng} \vert \phi, p \sim \text{DirMult}(c, \phi p(\beta_g))$ = Observed bin counts
+    \item This is the perspective from the generator.
+\end{itemize}
+Goal 3: Behave well in small sample sizes (n = 3!?)
+\begin{itemize}
+    \item One way to deal with this is to \textit{shrink} parameters close to a \textit{shared} value
+    \item Additionally, we can enforce some sparsity
+\end{itemize}
+
+\subsection*{Spike-and-Slab Prior}
+The spike-and-slab prior enforces sparsity at the gene-level.\\
+Does this \textit{gene} have an effect?  $\psi_T \vert \pi \sim \text{Bernoulli}(\pi)$\\
+Yes, it does.  $\mu_T \vert \psi_T = 1 \sim N(0, \sigma^2)$.  But at the same time, no, it doesn't.  $\mu_T \vert \psi_T = 0 \equiv 0$.\\\\
+What is the $?$, effect of guides?
+\[\beta_g \vert \mu_T \sim N(\mu_g, ?)\]
+\[B_{ng} \vert \phi, p \sim \text{DirMult}(c, \phi p(\beta_g))\]
+
+\subsection*{Intuitively, we want the guides to be somewhat "similar"}
+\begin{itemize}
+    \item Guides should be similar
+    \item If we had many guides per gene, we could have a different variance for each gene's guides, $\beta_g \vert \mu_T \sim N(\mu_g, \tau^2_T)$
+    \begin{itemize}
+        \item The number of guides is usually 3-5.
+    \end{itemize}
+    \item Enter shrinkage: $\beta_g \vert \mu_T \sim N(\mu_g, \tau^2)$
+\end{itemize}
+
+\begin{center}
+    \includegraphics*[scale=0.8]{W10_2.png}
+\end{center}
+
+
+
+
+\end{document}
+
+
