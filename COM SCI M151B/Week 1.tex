@@ -1,0 +1,154 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+\graphicspath{{./assets/images}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+
+\title{COM SCI M151B Week 1}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+\section*{Using Abstraction}
+\begin{itemize}
+    \item We see a computer as a \textit{box} with multiple layers of \textbf{abstraction}.
+    \item Depending on which layer we want ot work on, we \textit{abstract away} the irrelevant layers.
+    \begin{itemize}
+        \item The \textit{main benefit} is that we don't need to know the unnecessary details of the other layers in order to be able to work on our layer.
+    \end{itemize}
+\end{itemize}
+\subsection*{Computer Abstractions (simplified)}
+\includegraphics*[scale=0.8]{W1_1.png}
+\begin{itemize}
+    \item Application software
+    \begin{itemize}
+        \item Translation from algorithm to code
+        \item Written in high-level language (e.g., C, Java)
+    \end{itemize}
+    \item System software
+    \begin{itemize}
+        \item Compiler: translates high level language code to machine code
+        \item Operating system: service code
+        \begin{itemize}
+            \item Handling input/output
+            \item Managing memory and storage
+            \item Scheduling tasks and sharing resources
+        \end{itemize}
+    \end{itemize}
+    \item Hardware
+    \begin{itemize}
+        \item Processor memory
+        \item I/O controllers
+    \end{itemize}
+\end{itemize}
+\begin{verbatim}
+    https://www.youtube.com/watch?v=_y-5nZAbgt4
+\end{verbatim}
+\subsection*{How do computers work?}
+\begin{itemize}
+    \item Theoretical and Historical Points of View
+    \begin{itemize}
+        \item Turing machines and history of electronics and computers.
+    \end{itemize}
+\end{itemize}
+\subsection*{Level of Program Code}
+\begin{itemize}
+    \item High level language
+    \begin{itemize}
+        \item Level of abstraction closer to problem domain
+        \item Provides for productivity and portability
+    \end{itemize}
+    \item Assembly language
+    \begin{itemize}
+        \item Textual representation of instructions
+        \item Architecture-dependent
+    \end{itemize}
+    \item Hardware representation
+    \begin{itemize}
+        \item Binary digits (bits)
+        \item Encoded instructions and data
+    \end{itemize}
+\end{itemize}
+\subsection*{How to maintain compatibility?}
+There are many different types of computer architecture, and many different languages applications are written in.  How do we maintain compatibility?
+\begin{itemize}
+    \item System software (OS) and software makes a contract to always give a program with \textbf{only a set of known instructions}, and the hardware promises to be able to run that.
+    \item The \textbf{ISA} is the \textit{interface} between hardware and software.  This allows the HW and SW to change/evolve \textbf{independently}.
+    \item Software sees:
+    \begin{itemize}
+        \item Function description of hardware:
+        \begin{enumerate}
+            \item Storage locations (e.g., memory)
+            \item Operations (e.g., add)
+        \end{enumerate}
+    \end{itemize}
+    \item Hardware sees:
+    \begin{itemize}
+        \item List of instructions and their order
+    \end{itemize}
+    \item In this course, we will use RISC-V ISA.
+\end{itemize}
+\subsection*{Goals when designing computers}
+They must be efficient. What is \textit{efficient}?
+\begin{itemize}
+    \item Performance (often most important)
+    \item Power consumption
+    \item Cost
+    \item Reliable and Secure
+\end{itemize}
+\subsubsection*{Past, Present, and Future}
+\begin{itemize}
+    \item Moore's Law: 
+    \begin{itemize}
+        \item We started with the ENIAC after World War II, and that computer had a size of 1000 cubic feet, used 125kW of power, only does 2000 additions per second, and had 48 kB of memory.
+        \item Now, we have computers taking up 1 cubic foot, consumes 250W of power, capable of 20B operations per second, with multiple GB of memory, for only less than 0.01\% of the cost of the ENIAC.
+        \item Moore's Law states that every two years, the number of transistors (and therefore computational power) doubles.  This suggests that the cost per transistor reduces each year.
+    \end{itemize}
+    \item Dennard's Scaling Law:
+    \begin{itemize}
+        \item According to Moore's law, the number of transistors on a chip doubles every two years, thus each transistor's area is reduced by 50\%, or every dimension by 0.7x.
+        \item As a result, voltage is reduced by -30\% (0.7x) to keep the electric field constant.  $V = EL$
+        \item $L$ is reduced, thus delays are reduced by -30\%.  ($x = Vt$)
+        \item Frequency is increased by +40\% ($f = 1 / t$)
+        \item Capacitance is reduced by -30\% ($C = kA/L$)
+    \end{itemize}
+    \item Scaling Power and Energy
+    \[P = CV^2f\]
+    \begin{itemize}
+        \item Power consumption per transistor is decreased by -50\%.
+        \item Power consumption of the entire chip stays the same!  Except now it has more transistors.
+    \end{itemize}
+    \item Where are these improvements coming from?
+    \begin{enumerate}
+        \item Advancements in microelectronics and fabrication technologies.
+        \item Advancements in architectural techniques
+        \begin{itemize}
+            \item What this course is about!
+            \item This lead to an improvement by a factor of 25 vs. if we had only relied on (1.)
+        \end{itemize}
+    \end{enumerate}
+\end{itemize}
+
+\end{document}
