@@ -130,4 +130,114 @@ This is the waveform and spectrum of the C-Major Triad.  The transform (a functi
     \item Traditional control systems
     \item Mixing music
 \end{itemize}
+
+\section*{Signals}
+\subsection*{Discrete vs. Continuous Signals}
+\begin{itemize}
+    \item A continuous signal is one that is defined for every point in time.
+    \item A discrete signal is one that is defined at individual points
+    \item Continous signals can be graphed as lines, discrete signals are graphed as points.
+\end{itemize}
+\subsection*{Signal Operations}
+\subsubsection*{1. Amplitude Scaling}
+Suppose we have a signal $x(t) = \alpha\sin(t)$.
+\begin{itemize}
+    \item If we choose a value of $\alpha$ that is between 0 and 1, the signal gets smaller. (\textit{attenuation})
+    \item If $\alpha$ is greater than 1, the signal is amplified. (\textit{amplification})
+    \item If $\alpha$ is negative, the signal is flipped.  (\textit{inversion})
+\end{itemize}
+\subsubsection*{2. Time Scaling}
+Suppose we have a signal $x(t) = \sin(\alpha t)$.
+\begin{itemize}
+    \item If the value of $\alpha$ is between 0 and 1, the signal's period increases.  (\textit{Time expansion})
+    \item If the value of $\alpha$ is greater than 1, the signal's period decreases.  (\textit{Time compression})
+    \item If the value of $\alpha$ is less than 0, the time of the signal is reversed.  (\textit{Time reversal})
+\end{itemize}
+\subsubsection*{3. Time Shift}
+Suppose we have a signal $x(t) = \sin(t - \alpha)$
+\begin{itemize}
+    \item If $\alpha$ is positive (e.g., you are subtracting a positive number), the signal is delayed.  (\textit{Delayed signal})
+    \item If $\alpha$ is negative (e.g., you are subtracting a negative number), the signal is advanced. (\textit{Advanced signal})
+\end{itemize}
+\subsection*{Combining Operations}
+Suppose we have a function that is zero everywhere, except between -1 and 1, where the function evaluates to 1.  Let $x(t)$ represent this function.
+\textbf{What is $x(2(t - 1))$?}\\\\
+The naive method (\textbf{Incorrect}):
+\begin{itemize}
+    \item First, apply the time delay.  Now the signal is 1 between $x=0$ and $x=2$.
+    \item Next, apply the compression by a factor of 2.  Now the signal goes from $x=0$ to $x=1$.
+    \item The result is a signal that is zero everywhere, but is 1 between $x = 0$ and $x = 1$.
+\end{itemize}
+The above answer is incorrect.  Why?
+\begin{itemize}
+    \item We can test this with $x(1)$, which should evaluate to 1.
+    \item To make $x(2(t - 1))$ equivalent to $x(1)$, we set $t = 1.5$.  In our proposed answer, $t = 1.5$ results in 0, where it should result in $1$, matching the original.
+\end{itemize}
+The correct method:
+\begin{itemize}
+    \item Do reverse PEMDAS -> SADMEP.
+    \item First, apply the time compression.  (Instead of the parenthesis, time delay first)  Now the signal begins at $t = -0.5$ and ends at $t = 0.5$.
+    \item Now, we apply the time delay.  Now the signal begins at $t = 0.5$ and ends at $t = 1.5$.
+    \item This gives the correct result. 
+\end{itemize}
+Alternatively, simply distribute the 2 into the parenthesis and separate all the terms.  That would also fix the problem.
+\subsection*{Even and Odd Decomposition}
+\begin{itemize}
+    \item An even function is a $f(x)$ such that $f(-x)$ = $f(x)$.
+    \item An odd function is a $f(x)$ such that $f(-x)$ = $-f(x)$.
+\end{itemize}
+Suppose we have the following function:
+\begin{center}
+    \includegraphics[scale=1]{W1_3.png}
+\end{center}
+Let's make an assertion that $x(t) = x_e(t) + x_o(t)$, where $x_e$ is some even function and $x_o$ is some odd function.  How do we find the functions?\\\\
+Our goal is to define $x_e(t)$ and $x_o(t)$ in terms of $x(t)$.\\
+First, let's rearrange the equation
+\[x_e(t) = x(t) - x_o(t)\]
+\[x_o(t) = x(t) - x_e(t)\]
+Following the rules of odd functions, we can do
+\[x_o(t) = -(x(-t) - x_e(-t))\]
+Simplifying the even function, we get 
+\[x_o(t) = -(-x(-t) - x_e(t))\]
+\[x_o(t) = x(-t) + x_e(t)\]
+Plugging this for $x_o(t)$ in the first equation, we get
+\[x_e(t) = x(t) + x(-t) - x_e(t)\]
+\[\boxed{x_e(t) = \frac{1}{2}\left(x(t) + x(-t)\right)}\]
+The odd function can be found by rearranging the original even function, then plugging it into the odd function.
+\subsection*{Periodic Signals}
+\begin{itemize}
+    \item The concept of periodic signals is very important in this class.  Colloquially, these are signals that repeat after a given interval, $T_0$.
+    \item The formal definition of a periodic signal is as follows:
+    \begin{itemize}
+        \item A continuous time signal is periodic if and only if there exists a $T_0 > 0$ such that
+        \[x(t + T_0) = x(t)\]
+            for all $t$.  $T_0$ is called the period of $x(t)$.
+    \end{itemize}
+\end{itemize}
+\subsubsection*{Periodic signal properties}
+Suppose $x(t)$ is periodic.
+\begin{align*}
+    x(t + T_0) &= x(t)\\
+    x(t + 2 \cdot T_0) &= x(t)\\
+    &= x(t + T_0 + T_0)
+\end{align*}
+Define $\tau = t + T_0$.  By substitution,
+\begin{align*}
+    x(t + 2 \cdot T_0) &= x(\tau)\\
+    &= x(t + T_0)
+\end{align*}
+Therefore, $x(t + nT_0) = x(t)$ is true, where $x(t)$ is periodic, for all integers $n$.\\
+The smallest $T_0$ for which $x(t + T_0) = x(t)$ is called the \textbf{"fundamental period"}.
+
+\subsubsection*{Sinusoids}
+The most basic signal in this class is the sine or consine wave.  We'll use them \textit{extensively} so it's worth reviewing their properties.  By the end of this class, you'll be proficient at manupulating sinusoids.\\
+A cosine function is defined by:
+\begin{align*}
+    x(t) &= A \cos(\omega t - \theta) \\
+    &= A \cos(2\pi ft - \theta)
+\end{align*}
+\begin{itemize}
+    \item $\omega = 2 \pi f$, and represents \textit{angular frequency}.
+    \item $f$ represents frequency, and is measured in Hertz.  $f = \frac{1}{T_0}$
+\end{itemize}
 \end{document}
