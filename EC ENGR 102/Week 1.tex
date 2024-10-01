@@ -1,0 +1,133 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+\graphicspath{{./assets/images}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+\newcommand{\example}{\textbf{Example: }}
+
+\title{EC ENGR 102 Week 1}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+\section*{Introduction}
+\begin{itemize}
+    \item Society relies on being able to:
+    \begin{enumerate}
+        \item Represent information (Signals)
+        \item Communicate, process, and operate on that information (Systems)
+    \end{enumerate}
+    \item Technology is a reflection of our ability to do these things.
+\end{itemize}
+The Signals and Systems perspetive is basically:
+\begin{itemize}
+    \item Information is represented as "signals", and information changes, or is processed, through "systems".
+\end{itemize}
+\subsection*{Examples of signals and systems}
+\begin{itemize}
+    \item My voice is a \textbf{signal}, and my cell phone (\textbf{a system}) records it, transforms it into a transmittable form, communicates it to a cell phone tower(s), eventually reaching the person I'm speaking to who hears it... in almost real time.
+    \item YouTube videos are a \textbf{signal}, and our computer or phone (\textbf{a system}) plays them, adjusting their resolution based on our WiFi speed, etc.
+    \item Moving a computer mouse or typing on a keyboard is a \textbf{signal}, and our computer then uses circuits (\textbf{a system}) to translate this information to show you an updated computer screen.
+    \item Note that signals and systems \textbf{are not} limited to digital signals.
+    \begin{itemize}
+        \item Any physical or abstract quantity that can be measured is a \textbf{signal}.
+        \begin{itemize}
+            \item The federal deficit is a \textbf{signal}\dots
+        \end{itemize}
+        \item Anything that changes a signal is a \textbf{system}
+        \begin{itemize}
+            \item Policies passed by Congress, the interaction of national and global economies, etc. are \textbf{systems}.
+        \end{itemize}
+        \item This is a general abstraction.
+    \end{itemize}    
+\end{itemize}
+\textbf{The goal of the signals and systems abstraction is to decompose a problem into components with the following block diagram.}
+\[\text{Input signal } x(t) \longrightarrow \boxed{\text{System}} \longrightarrow \text{ Output signal }y(t)\]
+This abstraction enables systems can be combined together to form composite systems.
+\subsection*{A Diversity of Signals and Systems}
+How do we (rigorously) represent signals and systems, considering their variety?
+\begin{itemize}
+    \item The short answer: depending on the application, there can be several ways to represent signals; \textbf{how we represent signals, and what we aim to do with them, determines the types of tools we need to analyze them.}
+    \item In traditional signal processing, signals are 1-D, and do not have a noise model.  Ex. Radio, communications, control systems, circuit analysis.
+    \item In statistical signal processing, signals can be multi-dimensional, and incorporate noise models.  Ex. Communications over noisy channels, information theory, noisy control.
+    \item In machine learning: signals can be multi-dimensional, and incorporate noise models.  Ex. AI, neural networks and deep learning, prediction systems, unsupervised learning.
+    \item This class will focus on traditional signal processing.
+\end{itemize}
+\subsection*{Signals in ECE 102}
+What is a signal?
+\begin{itemize}
+    \item A signal is a \textit{function} of one or more variables
+    \item What is a function?
+    \begin{itemize}
+        \item We ought be familiar with functions from mathematics: denoted by $f(\cdot)$, it typically accepts some input, $x$ and return some output, $y$.  We write this as:
+        \[y = f(x)\]\
+        \item We usually denote this function as: $f \::\: \mathbb{R} \rightarrow \mathbb{R}$, indicating that $f$ is a function mapping a real number (the first $\mathbb{R}$) to another real number (the second $\mathbb{R}$).
+    \end{itemize}
+\end{itemize}
+\subsubsection*{The Time Domain}
+Signals usually have to do with \textit{time} domain representations
+\begin{itemize}
+    \item That is, signals are usually functions that accept an input time $t$, and return the value of the signal at that time.  For example, a signal could be represented $x(t)$, which denotes the value of the signal at time $t$.
+\end{itemize}
+\subsubsection*{Music}
+\begin{itemize}
+    \item Suppose you recorded your voice or a musical instrument.  Your computer (system) recorded a sound (signal), which can be mathematically modeled as a sine wave.
+    \item When you hear it, played out from your speaker, the sound wave (signal) vibrates bones located inside your ear (system), which vibrates hair cells present, which transmits the neural signal to your brain.
+    \item Music is essentially a combined sine wave.
+\end{itemize}
+\textbf{Aside: One of the great secrets of the Universe}
+\begin{itemize}
+    \item "Every signal has a spectrum and is determined by its spectrum.  You can analyze the signal either in the time (or spatial) domain or in the frequency domain.  I think this qualifies as a Major Secret of the Universe."  -Prof. Brad Osgood, Stanford University.
+    \item A "spectrum" is basically a graph where frequency is on the x-axis, and power on the y-axis.  Instead of a Concert A being represented as a sine wave at 440 Hz., it can be represented by its spectrum, which is a graph with a peak at the 440Hz. frequency.  (Basically, run FFT on the signal to get the spectrum.)
+\end{itemize}
+\example
+\begin{center}
+\includegraphics[scale=0.7]{W1_1.png}\\
+Left: Sine wave of sound signal.  Right: Spectrum of sound signal (FFT)
+\end{center}
+Notice that the spectrum generated does not display time!  By observing the peaks on the left sine wave, we can tell it is an ascending scale, but the spectrum does not show that!\\\\
+\example
+\begin{center}
+\includegraphics[scale=0.6]{W1_2.png}\\
+This is the waveform and spectrum of the C-Major Triad.  The transform (a function) can bring context to a seemingly unintelligible waveform.
+\end{center}
+\begin{itemize}
+    \item We can run functions in the spectrum domain!  Say for example we want to recover the C from the triad waveform.  This would be incredibly difficult to do in the waveform graph, but easy in the spectrum graph.  All we have to do is to set a filter.  For example, our filter can multiply all the frequencies above 300Hz by zero.  Then, convert the remaining frequencies back to a waveform.
+\end{itemize}
+\subsection*{Sine waves are important}
+\begin{itemize}
+    \item When we talk about music, we talk about sine waves with frequencies of units \textbf{Hertz}.
+    \item Radio frequencies, wireless communication, music, etc.  It would not be an exaggeration to say that none of this technology would exist without the math that we'll learn in ECE 102.  
+    \item Any signal can be formed by adding sine waves.
+    \item \textbf{The Bottom Line:} once we understand the mathematics of how to create things with sine waves (frequency domain or spectrum), we can do very powerful operations.  This is the basis for many technologies that we may (sometimes) take for granted.
+\end{itemize}
+\subsection*{Applications of Signals and Systems}
+\begin{itemize}
+    \item The design of analog circuits
+    \item Magnetic resonance imaging (MRI)
+    \item Traditional control systems
+    \item Mixing music
+\end{itemize}
+\end{document}

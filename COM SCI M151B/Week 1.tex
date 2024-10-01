@@ -126,6 +126,16 @@ They must be efficient. What is \textit{efficient}?
         \item Now, we have computers taking up 1 cubic foot, consumes 250W of power, capable of 20B operations per second, with multiple GB of memory, for only less than 0.01\% of the cost of the ENIAC.
         \item Moore's Law states that every two years, the number of transistors (and therefore computational power) doubles.  This suggests that the cost per transistor reduces each year.
     \end{itemize}
+    \begin{center}
+        \includegraphics*[scale=0.5]{W1_2.png}
+    \end{center}
+    \begin{itemize}
+        \item From 1986 to 2003, Moore's Law was theorized
+        \item At 2003 to 2011, transistors grew so close together that it became near-impossible to make them smaller; refer to Power Wall below.
+        \item From 2011 to 2015, Amdahl's Law started taking effect.  (Refer below).
+        \item 
+    \end{itemize}
+
     \item Dennard's Scaling Law:
     \begin{itemize}
         \item According to Moore's law, the number of transistors on a chip doubles every two years, thus each transistor's area is reduced by 50\%, or every dimension by 0.7x.
@@ -146,9 +156,206 @@ They must be efficient. What is \textit{efficient}?
         \item Advancements in architectural techniques
         \begin{itemize}
             \item What this course is about!
-            \item This lead to an improvement by a factor of 25 vs. if we had only relied on (1.)
+            \item This lead to an improvement by a factor of 25 versus if we had only relied on (1.)
+        \end{itemize}
+    \end{enumerate}
+    \item Power Wall
+    \begin{itemize}
+        \item Up to 2005, manufacturers could double the processor performance while keeping the power constant.
+        \item Since 2005, due to smaller transistor sizes, \textbf{static power leakage} becomes so dominant that the power consumption did not stay constant.  (Moore's Law slowed down.)
+        \item However, the rate still grew since multicore systems began to emerge.
+    \end{itemize}
+    \item Amdahl's Law
+    \begin{itemize}
+        \item Performance improvement (speedup) is limited by the part you cannot improve (called "sequential part").
+        \[\text{speed up} = \frac{1}{(1 - p) + \frac{p}{s}}\]
+        \begin{itemize}
+            \item $P$ is the part that can be improved (e.g., \textbf{parallelized})
+            \item $S$ is the factor for improvement (e.g., more cores for parallelization)
+        \end{itemize}
+    \end{itemize}
+    \item Dark Silicon
+    \begin{itemize}
+        \item Where we are right now
+        \item Due to thermal management limitations, some parts of a chip cannot be turned on.
+        \item This is the end of the multi-core era.  
+        \item New technologies and techniques are being used to continue the scaling.  We need cross-stack approaches!
+    \end{itemize}
+\end{itemize}
+
+\section*{Instruction Set Architecture (ISA)}
+\subsection*{What is an ISA}
+\begin{itemize}
+    \item The contract between software and hardware is the ISA.  Typically described by giving all the programmer-visible state (register + memory) plus the semantics of the instructions that operate on that state.
+    \item IBM 360 was the first line of machines to separate ISA from implementation (aka. \textit{microarchitecture})
+    \item There are \textbf{many implementations possible} for a given ISA
+    \begin{itemize}
+        \item AMD, Intel, VIA processors run the AMD64 ISA
+        \item Many cell phones use the ARM ISA with implementations from many different ompanies including Apple, Qualcomm, Samsung, Huawei, etc.
+    \end{itemize}
+    \item We use RISC-V as the standard ISA in class.
+\end{itemize}
+\subsection*{Design Methodology}
+\begin{itemize}
+    \item ISA often designed with particular microarchitectural style in mind, e.g., 
+    \begin{itemize}
+        \item Accumulator $\rightarrow$ hardwired, unpipelined
+        \item CISC $\rightarrow$ microcoded
+        \item RISC $\rightarrow$ hardwired, pipelined
+        \item VLIW $\rightarrow$ fixed-latency in-order parallel pipelines
+        \item JVM $\rightarrow$ software interpretation
+    \end{itemize}
+    \item But can be implemented with any microarchitectural style
+    \begin{itemize}
+        \item Intel Ivy Bridge: hardwired pipelined CISC (x86) machine (with some microcode support)
+        \item Spike: Software-interpreted RISC-V machine
+        \item ARM Jazelle: A hardware JVM processor
+    \end{itemize}
+\end{itemize}
+\subsection*{RISC-V}
+\subsubsection*{What is RISC-V?}
+\begin{itemize}
+    \item An \textit{open-source} "RISC"-based ISA (\textit{royalty-free})
+    \item Developed in the 2010s at Berkeley
+    \item Mostly maintained by the open-source community.
+    \item Different extensions and models.  We will focus on the 32-bit "base" mode (i.e., "RV321").
+    \item RISC = "Reduced Instruction Set Computers".  Unlike "CISC", every instruction in RISC is the same size.
+\end{itemize}
+\subsubsection*{RISC vs. CISC}
+\begin{itemize}
+    \item Instruction size of RISC is fixed, CISC is variable
+    \item RISC has simple (one-by-one) operations, rather than packed operations
+    \item RISC is less complex than CISC in terms of instruction set.
+\end{itemize}
+\subsection*{Widely-Used ISAs}
+\begin{itemize}
+    \item All "RISC" except x86 (Intel's ISA)
+    \item Most popular RISC ISAs:
+    \begin{itemize}
+        \item MIPS, ARM, PowerPC, and RISC-V
+    \end{itemize}
+\end{itemize}
+\subsection*{Stored Program Computer (von Neumann)}
+\begin{itemize}
+    \item Computer hardware is a machine that reads instructions one-by-one and executes them sequentially.  It continues this until the program finishes.
+    \item Memory holds \textit{both} program and data
+    \begin{itemize}
+        \item Instructions and data in a linear memory array
+        \item Instructions can be modified as data
+    \end{itemize}
+    \item Sequential instruction processing
+    \begin{enumerate}
+        \item Program Counter (PC) identifies current instruction.
+        \item Fetch instruction from memory.
+        \item Update state (e.g., PC and memory) as a function of current state according to instruction
+        \item Repeat.
+    \end{enumerate}
+\end{itemize}
+\subsection*{How to build an ISA?}
+\begin{itemize}
+    \item Transition from HLL to assmebly
+    \item Take CS132 (Compiler Construction)
+\end{itemize}
+\subsection*{What do instructions look like?}
+There are two main parts: commands and operands. 
+\begin{itemize}
+    \item In 32-bit RISC-V, each instruction is fixed-size and is 32-bit.
+    \item Possible Types of Operands:
+    \begin{enumerate}
+        \item Registers
+        \begin{itemize}
+            \item A small storage unit \textit{inside} the processor to quickly access data.
+            \item Faster than memory, but much smaller (smaller is faster!)
+            \item Can be seen by Software*! (This is something that we will clarify later.)
+            \item Typically between 16 and 64 registers in modern ISAs.
+            \begin{itemize}
+                \item Larger width means easier data transfer but more power.
+                \item More registers means less access to the main memory, but requires more area and more power.
+                \item Low-end processors use smaller registers.  High-Performance processors use wider and more registers.
+            \end{itemize}
+            \item See section on RISC-V Registers
+        \end{itemize}
+        \item Immediate
+        \begin{itemize}
+            \item Constant numbers to be used in an instruction
+            \item Example: \texttt{addi x2, x1, 5}
+            \item Registers are 32-bits but immediates may not.  (This is because they must fit into the instruction.  Use pointer instead if it doesn't fit!)
+            \item See section on RISC-V Immediates.
+        \end{itemize}
+        \item Memory
+        \begin{itemize}
+            \item Values are stored in a memory and could be accessed.
+            \item Memory shouldbe byte-addressable
+            \item See section on Memory.
         \end{itemize}
     \end{enumerate}
 \end{itemize}
-
+\subsubsection*{RISC-V Registers}
+\begin{itemize}
+    \item RISC-V (RV32) uses 32 registers, 32-bit each (called "word").
+    \item RV64 uses 32 registers, 64-bit each (called double-word)
+    \item Each register shown as $xi$.
+    \item $x0$ is hardwired to zero.
+    \item Registers are stored in a data structure called the \textbf{Register File} (this is a hardware unit that will be discussed later.)
+    \item For more high-end processors, there is a separate set of registers for floating point operations.
+\end{itemize}
+\subsubsection*{RISC-V Immediates}
+\begin{itemize}
+    \item RISC-V does Sign-Extension and Padding
+    \item Sign-Extension
+    \begin{itemize}
+        \item Two's Complement for signed values
+    \end{itemize}
+    \item Padding
+    \begin{itemize}
+        \item For LSBs (least significant bit), padding zeros is sufficient.
+    \end{itemize}
+\end{itemize}
+\subsubsection*{Memory}
+Format and addressing
+\begin{itemize}
+    \item Byte-addressability vs. 32-bit data (little endian vs. big endian)
+    \item Alignment:
+    \begin{center}
+        \includegraphics*[scale=0.4]{W1_3.png}
+    \end{center}
+    \item Load and Store Variants
+    \begin{itemize}
+        \item LW, LB, LH (load different amounts of bits - word, byte, high) (this one does sign extension, e.g., adding 1's instead of 0's if number is negative)
+        \item LBU, LHU (byte unsigned, high unsigned) (this one does not do sign extension, which means higher bits are unaltered)
+        \item SW, SB, SH (store word, byte, high - doesn't care about the sign)
+    \end{itemize}
+\end{itemize}
+\subsection*{Instruction Types}
+\begin{enumerate}
+    \item Arithmetic/ALU
+    \begin{itemize}
+        \item Do an arithmetic operation on two registers or one register and an immediate
+        \item Result is saved in another register
+        \item Example: \texttt{ADDI x5, x1, 10} - adds \texttt{x1} and \texttt{10}, stores in \texttt{x5}
+    \end{itemize}
+    \item Memory
+    \begin{itemize}
+        \item Load and Store
+        \item Addressing modes:
+        \begin{itemize}
+            \item Base (register) + Offset (immediate)
+            \item Base could be zero or it could be a value stored in a register.
+        \end{itemize}
+        \item Data Size and format
+        \begin{itemize}
+            \item Word, half-word, byte
+            \item Signed and unsigned
+        \end{itemize}
+    \end{itemize}
+    \item Control-Flow
+\end{enumerate}
+\subsubsection*{RISC-V Arithmetic operators}
+\begin{center}
+\includegraphics*[scale=0.4]{W1_4.png}
+\end{center}
+\subsubsection*{Memory-Type Instructions}
+\begin{center}
+\includegraphics*[scale=0.4]{W1_5.png}
+\end{center}
 \end{document}
