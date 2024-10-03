@@ -349,6 +349,15 @@ Format and addressing
         \end{itemize}
     \end{itemize}
     \item Control-Flow
+    \begin{itemize}
+        \item Program counter and PC register
+        \item Next PC $\rightarrow$ PC + 4 (remember that instructions are 4 bytes and memory is byte-addressable).
+        \item Sometimes, we need to jump/branch over some instructions (GOTO statements!)
+        \begin{itemize}
+            \item Conditionals
+            \item Loops
+        \end{itemize}
+    \end{itemize}
 \end{enumerate}
 \subsubsection*{RISC-V Arithmetic operators}
 \begin{center}
@@ -358,4 +367,110 @@ Format and addressing
 \begin{center}
 \includegraphics*[scale=0.47]{W1_5.png}
 \end{center}
+\subsection*{Jumps}
+\begin{itemize}
+    \item Checking a condition (if/else, switch)
+    \item Loops (for/while)
+    \item Function calls and returns
+    \item Exception and interrupt
+\end{itemize}
+To jump, a destination address (i.e., where to jump?) is needed.  We use \textit{PC-relative addressing}, or we specify the address relative to the PC.\\\\
+\subsubsection*{JUMP vs. Branch}
+\begin{itemize}
+    \item Jump \textbf{always} change the PC!
+    \item Branch changes the PC \textbf{only if} the condition is TRUE!
+\end{itemize}
+\subsubsection*{JUMP and Link}
+\begin{itemize}
+    \item Why do we need linking?
+    \begin{itemize}
+        \item Linking jumps while storing the address you were at before.  This is useful for example, function calls, where you have to jump back after reaching the \texttt{ret}
+    \end{itemize}
+    \item What if we don't need to link?
+    \begin{itemize}
+        \item Use \texttt{jalr} instead of \texttt{jal}
+        \item \texttt{jalr} calculates the destination with a register and offset.
+        \begin{itemize}
+            \item \texttt{jalr x10 x1 10} would move the execution to the address stored in x1, plus 10 bytes, storing the address of x10
+            \item \texttt{jal x10 label} would move the execution to whereever the label is, and store the address of x10.
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+\subsubsection*{Control Flow Instructions}
+\begin{center}
+    \includegraphics*[scale=0.51]{W1_6.png}
+\end{center}
+\subsection*{Pseudo Instructions}
+\begin{itemize}
+    \item Instructions that are not in the ISA but can be easily converted to one or two.
+    \item Example: (load immediate) \texttt{li rd, constant} $\rightarrow$ \texttt{addi rd, x0, constant}
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.6]{W1_7.png}
+\end{center}
+\begin{itemize}
+    \item \texttt{RET} and \texttt{CALL} (return and function call) are also pseudo instructions, which are built from jump and load commands
+\end{itemize}
+\subsection*{Calling Convention}
+\begin{itemize}
+    \item When starting a new mechanism, a set of rules have to be followed to guarantee correctness.
+    \item Major rules:
+    \begin{itemize}
+        \item The callee promises to leave some registers unchanged for the caller.  If needs to be modified, the callee saves these on the stack first and restores them at the end.
+        \item On the call, the return has to be saved on the stack.
+        \item Before returning, the frame pointer has to be recovered.
+    \end{itemize}
+\end{itemize}
+\subsubsection*{Stack Management}
+\begin{itemize}
+    \item \textbf{Caller}
+    \begin{itemize}
+        \item Puts arguments on the stack
+        \item Invokes callee by using call instruction
+    \end{itemize}
+    \item \textbf{Callee}
+    \begin{itemize}
+        \item Saves reserved registers for caller
+        \item Saves old based pointer
+        \item Makes room for local variables and executes the code
+        \item Puts return value into register
+        \item Restores stack frame and key registers
+        \item Returns
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.5]{W1_8.png}
+\end{center}
+\subsection*{Assembly to Machine Code}
+\begin{itemize}
+    \item Machine don't understand assembly, so computers use a specific tool called an \textit{assembler} to generate machine code (binary)
+    \item To generate the machine code, the assembler uses a table.
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.5]{W1_9.png}\\
+    \includegraphics*[scale=0.8]{W1_10.png}
+\end{center}
+\begin{itemize}
+    \item Note that every function uses a different number of bits to store immediates!
+    \item R-type instructions have funct3 and funct7 (instruction bits are separated) to preserve modularity.
+    \item Notice that each group of functions (ALU, Memory, Control) share the same opcode.  The assembler distinguishes them based on the funct3 and funct7.
+\end{itemize}
+\subsubsection*{How to build an ISA?}
+\begin{itemize}
+    \item Translition from HLL to assembly
+    \item No discussion (yet) on how
+    \begin{enumerate}
+        \item to generate machine code?
+        \item to upload this to hardware?
+        \item does hardware run this?
+    \end{enumerate}
+\end{itemize}
+\subsubsection*{How to execute these codes?}
+\begin{itemize}
+    \item Store-Program computers!
+    \item To run programs on the processor, we store programs on the memory (same as data).
+    \item Processor reads one instruction, updates some states and/or some memory contents, then reads the next instruction, \dots
+    \item This model called Store-Program (or von-Neuman model).  (there are other alternatives too!)
+\end{itemize}
+
 \end{document}

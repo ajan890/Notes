@@ -240,4 +240,204 @@ A cosine function is defined by:
     \item $\omega = 2 \pi f$, and represents \textit{angular frequency}.
     \item $f$ represents frequency, and is measured in Hertz.  $f = \frac{1}{T_0}$
 \end{itemize}
+
+\subsection*{Rules from trigonometry}
+Some additional properties that you should be familiar:
+\begin{itemize}
+    \item $\sin(\theta) = \cos(\theta - \frac{\pi}{2})$
+    \item $\cos$ is even and $\sin$ is odd
+    \item $\frac{d}{dt} \sin(\theta) = \cos(\theta)$ and $\frac{d}{dt}\cos(\theta) = -\sin(\theta)$
+    \item $\sin^2(\theta) + \cos^2(\theta) = 1$
+    \item Suppose we have the sum or product of two periodic signals.  Let $x_1$ be the period $T_1$ and $x_2$ be the period $T_2$.  If $x_1$ and $x_2$ share a \textbf{integer} common multiple, then the resulting function is also periodic.
+    \begin{itemize}
+        \item If the period of $f(t)$ is 4 and the period of $g(t)$ is 5, then the resulting sum or product, $f(t) + g(t)$ or $f(t) \cdot g(t)$ would have a period of 20.
+        \item If the period of $f(t)$ is 4 and the period of $g(t)$ is $\pi$, then the resulting sum or product is not periodic.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Periodic Extension}
+In this class, we will sometimes be interested in taking an aperiodic signal and making its periodic extension.  What this means is that we take some interval on this signal of length $T_0$ and repeat it, as illustrated below:
+\begin{center}
+    \includegraphics[scale=0.8]{W1_4.png}
+\end{center}
+
+\subsection*{Causality}
+Another signal property is the concept of causality.  It is important to define causality because in real life, we typically can only work with signals in the present and past (i.e., we don't know the future).  This will become more clear when we discuss convolution and filtering.
+\begin{itemize}
+    \item Causal signals are non-zero only for $t \geq 0$.  Colloquially, the signal starts at $t = 0$ or later.
+    \item Noncausal signals are non-zero for some $t < 0$.  Colloquially, the signal starts before $t = 0$.
+    \item Anticausal signals are non-zero only for $t \leq 0$.  Colloquially, these signals only exist before $t = 0$ and typically are interpreted as running backwards in time.
+\end{itemize}
+
+\subsection*{Signal Energy and Power}
+We know from circuits that the voltage signal, $v(t)$, and current signal, $i(t)$, across a resistor, $R$ is related through:
+\[v(t) = i(t)R\]
+and further, that the signal's instantaneous power at time $t$ is:
+\[p(t) = v(t)i(t)\]
+If we consider that $R = 1 \Omega$, then we see that
+\begin{center}
+    \begin{align*}
+        p(t) &= v^2(t) \\
+        &= i^2(t)
+    \end{align*}
+\end{center}
+This is to show that power is proportional to the signal quantity squared; if resistance was not 1, it would only scale power by a constant.  In most cases, this is not \textit{actual power} in that most signals aren't applied to a $1 \Omega$ resistor.\\\\
+Signal power has units of Watts (Joules per time).  Hence, to get the total energy of a signal, $x(t)$, across all time, we integrate the power.
+\[\boxed{E_x = \lim_{T \rightarrow \infty} \int_{-T}^T \vert x(t) \vert^2 \:\text{d}t}\]
+(We incorporate the absolute value, $\vert \cdot \vert$, in case $x(t)$ is a complex signal.)  Like signal power, signal energy is usually not an \textit{actual} energy.\\\\
+We can also caltulate \textit{average power} of the signal by calculating:
+\[\boxed{P_x = \lim_{T \rightarrow \infty} \frac{1}{2T} \int_{-T}^T \vert x(t) \vert^2 \:\text{d}t}\]
+\begin{itemize}
+    \item If $0 < E < \infty$, $x(t)$ is called an "\textit{energy signal}"
+    \item If $0 < P < \infty$, $x(t)$ is called a "\textit{power signal}"
+\end{itemize}
+~\\
+\example
+\begin{itemize}
+    \item $x(t) = e^{-t^2}$ is an energy signal, for its integral from negative to positive infinity converges to a finite number.  In this case, $\sqrt{\pi}$.
+    \begin{itemize}
+        \item Energy signal means there is a finite amount of power in total, from the beginning to end of time.
+        \item If $\vert x(t) \vert^2 \propto \frac{1}{t^2} \rightarrow$ energy signal
+        \item If $\vert x(t) \vert^2 \propto \frac{1}{\sqrt{t}} \rightarrow$ not an energy signal
+        \item The border is $\frac{1}{t}$.  If it decays faster, it is an energy signal.  Otherwise, it is not.
+        \item Every energy signal \textbf{has 0 power} since a finite amount of energy distributed over an infinite amount of time converges to 0.
+    \end{itemize}
+    \item $x(t) = \cos(\omega t)$ is a power signal.
+    \begin{itemize}
+        \item $\vert x(t)\vert^2 = \cos^2(\omega t)$, which there exists a constant finite average power.
+        \item For a periodic signal, the way to find the average power easily is to calculate the average power for one period.
+        \item Every power signal \textbf{has infinite energy} since a finite amount of energy times an infinite amount of time diverges to infinity.
+    \end{itemize}
+    \item A signal cannot be both an energy signal and a power signal.  However, there can be signals that are neither energy nor power.
+\end{itemize}
+~\\
+\example
+\[x(t) = a \cdot \sin(\omega_0 t)\]
+This is a power signal because it is periodic; there isn't a finite amount of energy.
+\begin{itemize}
+    \item $E_x = \infty$
+    \item $P_x = \frac{a^2}{2}$
+\end{itemize}
+\example
+\[x(t) = \begin{cases} Ae^{-at} & t \geq 0, a > 0 \\ 0 & \text{else}\end{cases}\]
+\begin{itemize}
+    \item $P_x = 0$
+    \item $E_x = \frac{A^2}{2a}$\\
+\end{itemize}
+Sanity check:
+\begin{align*}
+E_x &= \int_{-\infty}^{0} 0 \cdot \text{d}t + \int_0^\infty (Ae^{-at})^2 \:\text{d}t\\
+&= \int_0^\infty A^2 e^{-2at} \:\text{d}t\\
+&= \frac{A^2}{-2a}\bigg\vert_{t = 0}^{t = \infty}\\
+&= 0 - \left(-\frac{A^2}{2a}\right)\\
+&= E_x = \frac{A^2}{2a}
+\end{align*}
+
+\subsection*{Complex Sinusoids}
+So far, all signals we've presented are real-valued.  But signals can also be complex.
+\begin{itemize}
+    \item A complex signal is one that takes the form:
+    \[z(t) = x(t) + jy(t)\]
+    where $x(t)$ and $y(t)$ are real-valued signals and $j = \sqrt{-1}$
+    \item $j$ is used instead of $i$ because electrical engineers use $i$ for current.
+\end{itemize}
+\subsubsection*{Review of complex numbers}
+\begin{itemize}
+    \item A complex number is formed from two real numbers, $x$ and $y$, via:
+    \[z = x + jy\]
+    why $j = \sqrt{-1}$.  Hence, a complex number is simply an ordered pair of real numbers, $(x, y)$.
+    \item $x = \mathfrak{R}(z)$ is called the \textit{real} part of $z$.  In this class we will also write $x = \text{Re}(z)$.
+    \item $y = \mathfrak{I}(z)$ is called the \textit{imaginary} part of $z$.  In this class we will also write $y = \text{Im}(z)$.
+\end{itemize}
+\subsubsection*{Polar Representation of Complex Numbers}
+The same complex number can be written in polar form,
+\begin{align*}
+    z &= x + jy\\
+    &= re^{j \phi}
+\end{align*}
+where 
+\begin{itemize}
+    \item $r$ is the \textit{modulus} or \textit{magnitude} of $z$.
+    \item $\phi$ is the \textit{angle} or \textit{phase} of $z$.
+    \item $e^{j\phi} = \cos(\phi) + j\sin(\phi)$.  We will sometimes write this as $\exp(j\phi)$.
+\end{itemize}
+\begin{center}
+    \includegraphics[scale=0.6]{W1_5.png}
+\end{center}
+Here are the same intuitions from Cartesian and polar coordinates hold.
+\begin{itemize}
+    \item $x = r \cos(\phi)$
+    \item $y = r\sin(\phi)$
+    \item $r = \sqrt{x^2 + y^2}$
+    \item $\phi = \arctan\left(\frac{y}{x}\right)$
+\end{itemize}
+\subsubsection*{Complex relations}
+Here are a few relations:
+\begin{itemize}
+    \item \textbf{Complex conjugate:} If $z = x + jy$, then $z^*$, the complex conjugate of $z$,
+    \[z^* = x - jy\]
+    \item \textbf{Modulus and complex conjugate.}  The following relation holds:
+    \[\vert z \vert^2 = z^*z = zz^*\]
+    This is because
+    \begin{align*}
+        zz^* &= (x + jy)(x - jy) \\
+        &= x^2 + y^2\\
+        &= r^2
+    \end{align*}
+    where $r = \sqrt{x^2 + y^2}$ as described above.
+    \item \textbf{Inverse of $j$.}  Since $j^2 = -1$, we have that $-j = \frac{1}{j}$.
+\end{itemize}
+
+\subsubsection*{Example using Euler's Formula}
+\begin{align*}
+    \cos(\theta) &= \frac{1}{2} \left(e^{j\theta} + e^{-j \theta}\right)\\
+    \sin(\theta) &= \frac{1}{2j} \left(e^{j\theta} - e^{-j \theta}\right)
+\end{align*}
+Using these, you can very easily derive the Law of Cosines.
+
+\subsection*{Signal Models}
+\subsubsection*{Sinusoids}
+We have all seen real sinusoids.
+\[x(t) = A \cos(\omega t - \theta)\]
+Now \dots there are complex sinusoids.\\\\
+The complex sinusoid is given by:
+\[Ae^{j(\omega t + \theta)} = A \cos(\omega t + \theta) + jA \sin(\omega t + \theta)\]
+We draw complex signals with dotted lines.
+\begin{center}
+    \includegraphics[scale=0.6]{W1_6.png}
+\end{center}
+The real part of the complex sinusoid (solid line) is:
+\[\mathfrak{R}\left(Ae^{j(\omega t + \theta)}\right) = A \cos(\omega t + \theta)\]
+The imaginary part of the complex sinusoid (dotted line) is:
+\[\mathfrak{I}\left(A e^{j(\omega t + \theta)}\right) = A \sin(\omega t + \theta)\]
+
+\subsubsection*{Exponential Signals}
+An exponential signal is given by
+\[x(t) = e^{\sigma t}\]
+\begin{itemize}
+    \item If $\sigma > 0$, this signal grows with increasing $t$ (black signal in the plot below).  This is called exponential growth.
+    \item If $\sigma < 0$, this signal decays with increasing $t$ (blue signal in the plot below).  This is called exponential decay.
+\end{itemize}
+\begin{center}
+    \includegraphics[scale=0.6]{W1_7.png}
+\end{center}
+
+\subsubsection*{Damped or Growing Sinusoids}
+A damped or growing sinusoid is denoted
+\[x(t) = e^{\sigma t} \cos(\omega t + \theta)\]
+The sinusoid will grow exponentially if $\sigma > 0$ and decay exponentially if $\sigma < 0$.
+\begin{center}
+    \includegraphics[scale=0.6]{W1_8.png}
+\end{center}
+There are also complex exponentials!  They are denoted:
+\[x(t) = e^{(\sigma + j\omega)}t\]
+It is a combination of the complex sinusoid and an exponential.  All prior signals are special cases of the complex exponential signal.
+\begin{center}
+    \includegraphics[scale=0.6]{W1_9.png}
+\end{center}
+It is helpful to think of $\sigma$ and $j\omega$ in the complex plane.  $\sigma$ is the x-axis and $j\omega$ is the y-axis.  Then complex exponentials in the left complex plane are decreasing signals and those in the right are increasing signals.
+\begin{itemize}
+    \item Basically, you can define any complex exponential using two points in the complex plane, $\sigma$ and $j\omega$.
+\end{itemize}
+
 \end{document}
