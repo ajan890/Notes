@@ -67,4 +67,64 @@ This is significant because this is where agriculture started in China.  This ar
   * The Mongols were one of the such groups.  They used to control a very large area, but then lost power over time.
   * People of this time were aware of the dynastic cycle; emperors would train future emperors to take their stead to keep their reign going.
 
+## Myths and Legends
+* It is very different viewing the myths now as highly educated individuals. Most people in ~800 C.E. would believe the myths and accept them as truth, since there was no other reasonable scientific explanation for many things<br>
 
+**Some famous ones:**
+* "Yellow Emperor (Huang Di) was an ancestor of every Chinese person"
+* "Cang Jie, a subject of Huang Di, invented all of Chinese writing"
+
+## Celebratory and Commenorative Writings (and presumably oral narratives)
+### Writing and Divination: Oracle Bones
+Oracle bones were used for *divination*, or predicting the future.  
+* Bones usually came from animals
+* When the bone is dried then exposed to heat, drilling a hole on one side of a bone would make a crack on the other
+* In ancient China, the king could read the cracks present in the bones to make predictions
+* Most divinations were not recorded, but some divinations with their results were recorded.
+
+### Writing and Ritual Celebration: Bronze Inscriptions
+Bronze casting likely originated in the southern steppes.  (Modern-day Ukraine)
+* Bronze casted objected were often highly decorated.
+* Decorated bronze items were a symbol of prestige.
+* Some objects had writing:
+  * Greater Cauldron of Yu [FILL]
+* Kings spread their rule by gifting inscripted bronze items to their subjects and asking them to settle somewhere
+  * The subjects which often "cultured" farming villages would be allowed to use the bronze goods for sacred acts to benefit the people living there
+
+### States in Early China
+**State Formation in early China**
+* Yangshao (ca. 5000-3000 BCE)
+* Liangzhu (ca. 3200-2300)
+* Longshan
+* Erlitou (Xia?)
+* Shang (ca. 1600-1045)
+
+**State failure in early China**
+* Western Zhou (1045-771)
+
+**State competition in early China**
+* Eastern Zhou (770-256)
+  * Spring and Autumn Period (770-476)
+  * Warring States Period (475-221)
+
+#### Yangshao
+* Located in central China, around the Yellow River
+* Jiangzhai, an early Yangshou plaza, was special in that it was circular
+  * Most Chinese architecture is rectangular and north-south oriented.
+  * Archiologists believe that the buildings surrounding the plaza had to do with people getting together and sharing (probably ideas)
+  * This site was about 5 hectares (12 acres) in size.  (About the size of Dickson Plaza and Royce Hall at UCLA)
+
+#### Liangzhu
+* Economic hub present in south-east China.  Located near the East China Sea south of the Yangzi.
+* Contained a "smaller complex chiefdom" at its center
+  * Structured like a castle - obviously required a lot of labor, had its own wall and moat, heavily fortified.
+* People in this area lived on rice, unlike those in the north, who lived on millet.
+  * Rice is important due to the gain.  (Seeds you put in vs. amount of food you get out)
+* Liangzhu was a relative large city during its time.  (about the size of UCLA + Westwood)
+* Very stratified society; the rich were located in the center, the poor were around.
+* The most distinctive artifact was the jade *cong*, a square tube with a circular hole made of jade.
+  * No one knows what these were used for, but they were buried with many higher-ups.
+* They also made the *bi*, a jade disk.
+  * Symbolizes dedication, a sacred object often given as gifts to show loyalty.
+  * One of these takes hundreds to thousands of hours to create because jade is a very hard stone (there were no power tools then!)
+* Jade objects are a condensation of human labor, and symbolizes the amount of power one controls to make them
