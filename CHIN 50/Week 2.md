@@ -35,4 +35,27 @@
 
 ## Shang Dynasty (1600-1045 BCE)
 * Shang had a massive area of influence (about a quarter of modern-day China), although the area it controlled was only a fraction of that
-* 
+* Shimao
+  * Shang dynasty city with massive fortifications
+  * There were jade disks stuffed into the cracks of the walls
+* "Coerced cooperation"
+  * People are able to unite under the Shang empire because they were forced to probably to not starve or get killed
+  * This allows the Shang to grow to a very large size
+* Shang lasted for ~500 years before Zhou overthrew it.
+## Zhou Dynasty (1045-256 BCE)
+* There exist manuscripts describing the sky when the Zhou dynasty was founded.
+* They record "heavenly omens" that the Shang dynasty was falling and the Zhou dynasty was beginning
+* Astronomy
+  * Modern-day scholars use software to predict what the sky looked like in the past and estiamte that the Zhou started at around ~1045 BCE.
+* Zhou's excuse for overthrowing the Shang dynasty was that the heavens had seen the virtues of King Wen and King Wu of the Zhou, and transferred the *mandate of heaven* to Zhou from the Shang.
+  * It is not easy to overthrow a party that has been ruling for 500+ years.
+* The first move that Zhou did was to put their family into the government structure.
+  * e.g., defeat existing Shang dynasty local rulers, or force them to surrender, etc.
+* "court policies"
+  * Chinese politics (and even family) are very hierarchical.
+  * However, since government is an expansion of family relations, people in the same hierarchical tier in the family can be in competition over government positions
+  * Siblings (especially brothers) would literally kill each other to get ahead in the pursuit of government positions or become the hier of the dynasty.
+  * Basically feudalism
+  * Government is patrimonial (positions and assets are inherited by eldest male)
+* Western Zhou eventually fell to raiders
+  * There was so much wealth and power involved that commoners broke into the property and "rebalanced" the wealth.
