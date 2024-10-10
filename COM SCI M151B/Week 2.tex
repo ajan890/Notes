@@ -10,6 +10,7 @@
 
 % lists
 \usepackage{enumerate}
+\usepackage{multirow}
 
 % images
 \usepackage{graphicx} % for images
@@ -205,6 +206,194 @@ We need to connect the registers to the ALU.
     \includegraphics*[scale=0.7]{W2_10.png}
 \end{center}
 The MemtoReg multiplexer decides whether data should be written.
+\begin{itemize}
+    \item This is the completed datapath used to execute an instruction.
+    \item Now we need to wire it to the controller to pick which instruction to go to.
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.6]{W2_11.png}
+\end{center}
+\begin{itemize}
+    \item Notice that we added an additional MUX to pick whether to go to the next instruction (PC += 4), or branch somewhere else.
+    \item The immediate generator also generates the offset in which to jump.
+    \item We now have the datapath and the instruction selector, but still need a module to fill in the rest (control signals - blue wires).
+\end{itemize}
+\subsection*{Control Signals}
+There are seven control signals:
+\begin{itemize}
+    \item RegWrite, ALUSrc, ALUOp, MemRead, MemWrite, MemtoReg, PCSrc
+    \item This is where the finite state machine is used.
+\end{itemize}
+\subsubsection*{Control Signal FSM}
+\begin{itemize}
+    \item First, initialize the FSM state to zero.
+    \item Based on the instruction (opcode), and current state, some control signals should be changed.
+    \begin{itemize}
+        \item First, we need to find out which instruction.  (Think: big opcode switch statement.  Include funct3 and funct7 if necessary)
+        \item Once we know the instruction, we issue proper control signals (based on the list).
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.7]{W2_12.png}
+\end{center}
+\subsubsection*{Single-Cycle Design}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+    \hline
+    \textbf{Instruction} & \textbf{Opcode} & \textbf{RegWrite} & \textbf{AluSrc} & \textbf{Branch} & \textbf{MemRe} & \textbf{MemWr} & \textbf{MemtoReg} & \textbf{ALUOp}\\
+    \hline
+    R-type & 0110011 & 1 & 0 & 0 & 0 & 0 & 0 & -\\
+    \hline
+    I-type & 0010011 & 1 & 1 & 0 & 0 & 0 & 0 & -\\
+    \hline
+    lw & 0000011 & 1 & 1 & 0 & 1 & 0 & 1 & -\\
+    \hline
+    sw & 0100011 & 0 & 1 & 0 & 0 & 1 & 0 & -\\
+    \hline
+    beq & 1100011 & 0 & 0 & 1 & 0 & 0 & 0 & -\\
+    \hline
+\end{tabular}
+
+\pagebreak
+\noindent\textbf{ALUOp for each instruction:}\\
+\begin{tabular}{|c|c|c|}
+    \hline
+    \textbf{Instruction} & \textbf{ALU Function} & \textbf{ALU Op}\\
+    \hline
+    lw & add & 0010\\
+    \hline
+    sw & add & 0010\\
+    \hline
+    beq & subtract & 0110\\
+    \hline
+    \multirow{4}{*}{R-type / I-type} & add & 0010 \\\cline{2-3}
+                                     & subtract & 0110 \\\cline{2-3}
+                                     & AND & 0000 \\\cline{2-3}
+                                     & OR & 0001\\
+    \hline
+\end{tabular}
+\subsection*{Dataflow with ALU Controller}
+\begin{center}
+    \includegraphics*[scale=0.75]{W2_13.png}
+\end{center}
+
+\section*{Efficiency}
+\begin{itemize}
+    \item The single-cycle processor is very simple and easy to design, but not the most efficient!  
+    \item This is because different instructions have different paths and hence different delays.
+    \item \textbf{Longest delay} determines clock period.
+    \item The critical path is the \textit{load instruction}, which takes the longest: Instruction memory $\rightarrow$ register file $\rightarrow$ ALU $\rightarrow$ data memory $\rightarrow$ register file
+    \item The only advantage of single-cycle designs is that they are simpler.
+\end{itemize}
+Can we do better?  How do we assess this?\\
+\subsection*{Basic Metrics}
+\begin{itemize}
+    \item Latency
+    \begin{itemize}
+        \item How long does it take to finish a task (measured in sec, ms, $\mu$s, \dots)
+        \item Lower is better
+    \end{itemize}
+    \item Throughput
+    \begin{itemize}
+        \item How many tasks can be done for a given time (measured in instruction per cycle, bit/second, \dots)
+        \item Higher is better
+    \end{itemize}
+    \item Power
+    \begin{itemize}
+        \item Measured in J/sec
+        \item Lower is better
+    \end{itemize}
+    \item Energy
+    \begin{itemize}
+        \item Product of power and latency (a function of both)
+    \end{itemize}
+\end{itemize}
+\subsubsection*{Throughput vs. Latency}
+Is $\text{throughput} = \frac{1}{\text{latency}}$?
+\begin{itemize}
+    \item If it takes $t$ seconds to do 1 task, then latency = $t$, does throughput = $1 / t$?
+    \item If it takes $T$ seconds to do $N$ tasks, then throughput = $N / T$, does latency = $T / N$?
+    \item If there is concurrency (e.g., running in parallel, then throughput $\neq$ 1 / latency).
+\end{itemize}
+\textbf{(Confusing) Terminology:}
+\begin{itemize}
+    \item Improved by 2.5x = improved by 150\% = improved by 2.5 times
+    \item For \textit{bigger-is-better} metrics, "improved" means \textbf{increase}, but for \textit{smaller-is-better} metrics, "improved" means \textbf{decrease}
+\end{itemize}
+
+\subsection*{What is performance?}
+\begin{itemize}
+    \item \textbf{Time} is the measure of computer performance:
+    \begin{itemize}
+        \item The computer that performs the \textbf{same amount of work} in the \textbf{least time} is the fastest.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Measuring Time in a Computer}
+\begin{center}
+    \includegraphics*[scale=0.6]{W2_14.png}
+\end{center}
+\begin{itemize}
+    \item How to measure CPU Time?
+    \begin{itemize}
+        \item Directly: just run the program and measure time!  --\textit{too costly}
+        \item Simulation: create a piece of software that accurately simulates the behavior of a real processor.  --\textit{architects love this!  But, there is a trade-off between simulation accuracy and complexity!}
+    \end{itemize}
+    \item What types of applications should be used?
+    \begin{itemize}
+        \item Different applications have different characteristics.
+        \item Solution: Benchmarking
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Benchmark Software}
+\begin{itemize}
+    \item A set of programs that were carefully designed to measure a specific metric (usually CPU's performance).
+    \item The purpose of benchmarking (depends on who you talk to)
+    \begin{itemize}
+        \item \textbf{The Architect:} Prove my gizmo is great!
+        \item \textbf{Marketing:} Make us look good to sell \$\$ and crush our competition.
+        \item \textbf{The Users:} Be our proxy, run our applications on new systems so we don't waste our money or our time.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{"Iron Law" of Processor Performance}
+\[\text{CPU Time} = \text{InstructionCount} \times \text{CyclePerInstruction} \times \text{CycleTime}\]
+\begin{itemize}
+    \item InstructionCount
+    \begin{itemize}
+        \item IC
+        \item Total number of instructions that we are executing (i.e., how large is the program)
+        \item To optimize performance (i.e., reducing CPU Time) IC should be decreased by changing the algorithm or using a better compiler/ISA.
+    \end{itemize}
+    \item CyclePerInstruction
+    \begin{itemize}
+        \item CPI (also widely used is I/CPI=IPC, or MIPS = million instructions per second)
+        \item Cycles needed to execute a given instruction
+        \item CPI differs for different instructions (e.g., MULT vs. ADD) to optimize performance
+        \item CPI should be decreased by using different \textit{architectural} techniques
+    \end{itemize}
+    \item CycleTime
+    \begin{itemize}
+        \item CT=I/F\_clk
+        \item Faster clock rate decreases CT.
+        \item Device and architecture-level techniques can be used to improve CT.
+        \item Dennard and Moore's Laws
+    \end{itemize}
+\end{itemize}
+\subsection*{MultiCycle/MultiStage}
+\begin{itemize}
+    \item Break down the datapath into multiple stages
+    \item Each stage can be executed in one cycle.
+    \item Using these stages we can break down the critical path, and hence increase the clock frequency.
+    \item Intermediate values are stored in registers.
+\end{itemize}
+\subsubsection*{How does \textit{multicycle} improve performance?}
+\begin{itemize}
+    \item This reduces CycleTime, but also increases CPI.  What about overall performance?
+\end{itemize}
+
+
+
 
 
 \end{document}
