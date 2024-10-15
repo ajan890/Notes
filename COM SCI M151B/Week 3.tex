@@ -1,0 +1,173 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+\graphicspath{{./assets/images}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+
+\title{COM SCI M151B Week 3}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Pipelining}
+\begin{itemize}
+    \item Last week, we discussed that a single-cycle processor is simple and relatively to implement, but not the most efficient.  Why isn't it the most efficient?
+    \item \textbf{Pipelining} refers to parallelizing resources.
+    \item Consider the following analogy: suppose you have four people, A, B, C, D, who have to do laundry.
+    \item If one set of laundry takes 2 hours to complete, and the four people go one after another, the entire task takes 8 hours.
+    \begin{center}
+        \includegraphics*[scale=0.65]{W3_1.png}
+    \end{center}
+    \item However, if the second person starts as soon as the first is done with the washer, etc., then the process takes much less time.
+    \begin{center}
+        \includegraphics*[scale=0.65]{W3_2.png}
+    \end{center}
+    \item Notice that each individual load of laundry did not get faster; but the entire task does.
+    \item This is like executing one instruction per cycle!
+    \begin{center}
+        \includegraphics*[scale=0.5]{W3_3.png}
+    \end{center}
+\end{itemize}
+
+\subsection*{Single Cycle vs. Pipeline}
+\begin{center}
+    \includegraphics*{W3_4.png}
+\end{center}
+\begin{itemize}
+    \item Remember that the processor's clock speed is the time it takes for the longest procedure to execute.
+    \item Without pipelining, the clock speed would have to be 800 ps, since that instruction takes the longest.
+    \item With pipelining, the clock speed can be 200 ps, since the specific part takes the longest and the rest can be pipelined.
+    \item CPI remains at 1
+\end{itemize}
+
+\subsection*{Pipelined Datapath + Controller}
+\begin{center}
+    \includegraphics*[scale=0.5]{W3_5.png}
+\end{center}
+\begin{itemize}
+    \item We divide the original datapath and controller into 5 sections.  (The fifth section is writing to registers.)
+    \item This lets us decrease the clock cycle since each section can be pipelined.
+\end{itemize}
+\subsubsection*{Half-Cycle}
+Since reading from registers and writing to registers happen at different times, we get an issue:
+\begin{center}
+    \includegraphics*[scale=0.8]{W3_6.png}
+\end{center}
+Do we read the old value or new value of the register?
+\begin{itemize}
+    \item The answer is the new value, because programmers assume the instructions execute sequentially.
+    \item The purpose is to abstract concepts like instruction timing.
+    \item As a result, we divide into half-cycles.  Every read (from registers or memory) happen in the second half-cycle, and all the writes (registers and memory) happen in the first half-cycle.
+\end{itemize}
+
+\subsection*{Hazards}
+Consider this scenario:
+\begin{verbatim}
+    add x5, x1, x2
+    sub x20, x5, x4
+\end{verbatim}
+\begin{center}
+    \includegraphics*[scale=0.8]{W3_7.png}
+\end{center}
+\begin{itemize}
+    \item There are situations in pipelining when the next instruction cannot execute in the following clock cycle.  \textbf{These events are called hazards.}
+    \item There are \textbf{three} different types of hazards.
+    \begin{enumerate}
+        \item Data hazard
+        \item Control hazard
+        \item Structural hazard
+    \end{enumerate}
+\end{itemize}
+
+\subsubsection*{Data Hazard}
+\begin{itemize}
+    \item Read after write (RAW)
+    \item Writing to a register (rd) and using it (rs1 or rs2) \underline{before} the writing is finished (i.e., \textit{rd} reaches to the \textit{WB stage}).
+    \begin{center}
+        \texttt{add \textbf{x5}, x1, x2}\\
+        \texttt{sub x20, \textbf{x5}, x4}
+    \end{center}
+    \item For how many cycles we might have RAW hazard?
+    \begin{center}
+        \includegraphics*[scale=0.5]{W3_8.png}
+    \end{center}
+\end{itemize}
+What about other relations/dependencies?
+\begin{itemize}
+    \item \textbf{write after write (WAW)} - this is called \textit{output dependency}.  For our pipelined processor, \textit{this won't be an issue} since instructions are executed \textit{\textbf{in order}}.
+    \item \textbf{write after read (WAR)} - this is called \textit{false dependency}.  For our pipelined processor \textit{this also won't be an issue for the same reason} (i.e., in-order execution).
+\end{itemize}
+\textbf{How to solve RAW hazard?}
+\begin{itemize}
+    \item Stop the processor until the first instruction finishes!
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.5]{W3_9.png}
+\end{center}
+
+
+\begin{itemize}
+    \item Stopping (a part of) the pipeline is called a "stall".
+    \item To achieve stall, we can \textbf{prevent} pipeline registers from updating (only those stages that we want to freeze/stall)
+    \item Since some pipeline registers are not updated, we need to send \textit{something} to the next stage.
+    \begin{itemize}
+        \item Sending \textit{arbitrary} values could overwrite data and cause problems.
+        \item We can send \textbf{NOP} which acts as a bubble (i.e., does nothing).
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.4]{W3_10.png}
+\end{center}
+
+\subsubsection*{Forwarding (Bypassing)}
+\begin{itemize}
+    \item Stalling can hurt performance if RAW often happens (which it may).
+    \item We can prevent this by forwarding.
+    \item Use the result when it is computed, don't wait for it to be stored in a register
+    \item Requires extra connections in the datapath
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.35]{W3_11.png}
+\end{center}
+\begin{itemize}
+    \item Register to register (i.e., updating ALU operands)
+    \item From ALU Result to ALU srcs
+    \item From Mem to ALU srcs
+    \item Can we always avoid stalling with this method?
+\end{itemize}
+\textbf{Load-Use Data Hazard}\\
+\begin{itemize}
+    \item Unlike in \textit{reg-to-reg} forwarding, in this case data is \textbf{not yet ready} in the Mem stage to be forwarded to EX stage.
+    \item Half cycle!
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.6]{W3_12.png}\\
+    \includegraphics*[scale=0.6]{W3_13.png}
+\end{center}
+\begin{itemize}
+    \item We can't avoid stalling completely.  However, with forwarding, we stall for one less cycle.
+\end{itemize}
+\end{document}
