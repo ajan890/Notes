@@ -182,7 +182,138 @@ Looking at the convolution integral,
     &= x(t - \alpha)
 \end{align*}
 
+\section*{Convolutions}
+\subsection*{Intuition of what is going on in a convolution}
+\begin{center}
+    \includegraphics[scale=0.6]{W3_3.png}
+\end{center}
+Consider the convolution integral:
+\[y(t) = \int_{-\infty}^\infty x(\tau) h(t - \tau) \text{d}\tau\]
+Consider each graph on the left of the image as $x(t)$ (input), and the graph on the right of the image $y(t)$ (output).
+\[x(t) \longrightarrow \boxed{H} \longrightarrow y(t)\]
+The first two rows should be intuitive.  Input passes through function $H$ and returns the output.  The second row shows a time shift.\\\\
+For the third row, write the interal as a riemann sum:
+\begin{align*}
+    x(t) &= \int_{-\infty}^\infty x(\tau) \delta(t - \tau) \text{d}\tau\\
+    &= \sum_{n = -\infty}^\infty x(n \cdot \Delta \tau) \cdot \Delta \tau \cdot \delta(t - n \Delta \tau)
+\end{align*}
+One term out of the summation would be:
+\[x(\Delta \tau) \cdot \Delta \tau \cdot \delta(t - \Delta \tau)\]
+The first part of the formula ($x(\Delta \tau) \cdot \Delta \tau$) represents the area of the rectangle (highlighted on the left graph).  $\Delta \tau$ is the width, $x(\Delta \tau)$ is the height.  The remaining part ($\delta(t - \Delta \tau)$) is the time shift present on the right side.
+This equation \textit{can} be thought as:
+\begin{align*}
+    & x(\Delta \tau) \cdot \Delta \tau \cdot \delta(t - \Delta \tau)\\
+    &= H(\text{area} \cdot \delta(t - \Tau))\\
+    &= \text{area} \cdot H(\delta(t - \tau))\\
+    &= \text{area} \cdot h(t - \tau)
+\end{align*}
+\begin{itemize}
+    \item We scale by the area of the rectangle because the height of the function $H$.  Since these are impulse responses, it makes sense that they are scaled.
+\end{itemize}
+The fourth row represents the graph with all of the terms of the riemann sum, which sum to the final function $y(t)$.
+The \textit{convolution} essentially takes in an input signal, divides it into an infinite amount of scaled impulse responses (approximated by riemann sum), and sums the output for every impulse to find the output signal.
+\begin{itemize}
+    \item Notice: this allows you to pass an input signal (of your choosing) through a black box, and know the exact output signal.
+\end{itemize}
 
+\subsection*{Notation of Convolution}
+\[y(t) = \int_{-\infty}^\infty x(\tau) h(t - \tau) \text{d}\tau\]
+(This is a mathematical expression; the $t$ on both sides are the same, unlike last time.)\\
+\example\\
+\[y(5) = \int_{-\infty}^\infty x(\tau) h(5 - \tau) \text{d}\tau\]
+\textbf{Notation:}
+\[y(t) = (x * h)(t)\]
+Convolution is denoted by the star ($*$).  This is the rigorous notation.\\\\
+The convenient and common way is to write: $y(t) = x(t) * h(t)$.  However, this is bad because the $t$'s are not the same.  This adds confusion.\\\\
+Additionally, in the block diagram, we write:
+\[x(t) \longrightarrow \boxed{h(t)} \longrightarrow y(t)\]
+also means the same thing.  A box with a variable in it represents convolution.
 
+\subsection*{How to Compute Convolution: Flip and Drag}
+\[y(t) = \int_{-\infty}^\infty x(\tau) h(t - \tau \text{d}\tau)\]
+Let's break this integral down piece by piece.
+\begin{itemize}
+    \item The term $h(t - \tau)$, w.r.t., $t$, is the impulse response delayed to time $\tau$.
+    \item However, our integral is over $\tau$ and so we should consider how $h$ varies with $\tau$.
+    \item This term $h(t - \tau)$, w.r.t. $\tau$, tells us that we should first delay the signal to time $t$ and then reverse the signal.  This operation, which we colloquially call "flipping," is illustrated below.
+\end{itemize}
+\begin{center}
+    \includegraphics[scale=0.8]{W3_4.png}
+\end{center}
+\begin{itemize}
+    \item Notice that the x-axis changes labels!
+\end{itemize}
+Next, convolution tells us to multiply $h(t - \tau)$, our flipped impulse response, with $x(\tau)$ and do it for all $\tau$.  This means we simply multiply $x(\tau)$ and $h(t - \tau)$ together pointwise.  This is illustrated below in red.
+\begin{center}
+    \includegraphics[scale=0.8]{W3_5.png}
+\end{center}
+Finally, to get $y(t)$ for this particular value of $t$, we integrate this curve over all $\tau$.  This is illustrated below.
+\begin{center}
+    \includegraphics[scale=0.9]{W3_6.png}
+\end{center}
+Now, to get $y(t)$ for all values of $t$, we repeat this process, "dragging" $h(t - \tau)$ across different delays $t$.
 
+\subsection*{Summary of the Flip and Drag Technique}
+To calculate $y(t) = (x * h)(t)$:
+(Convolutions are commutative, so $x$ and $h$ can be switched.  But, one can be thought of as the input and the other is the kernel.  Traditionally, $x$ is the input and $h$ is the impulse response.)
+\begin{itemize}
+    \item Flip (i.e., reverse in time) the impulse response.  This changes $h(\tau)$ to $h(-\tau)$.
+    \item Begin to drag the reversed time response by some amount, $t$.  This results in $h(t - \tau)$.
+    \item For a given $t$, multiply $h(t - \tau)$ pointwise by $x(\tau)$.  This produces $x(\tau) h(t - \tau)$.
+    \item Integrate this product over $\tau$.  This produces $y(t)$ at this particular time $t$.
+\end{itemize}
+This technique is referred to as the "flip-and-drag" technique.
+\begin{center}
+    \includegraphics[scale=0.6]{W3_7.png}\\
+\end{center}
+\example\\
+Consider the two rectangles given by $x(t)$ and $h(t)$.
+\begin{center}
+    \includegraphics[scale=0.6]{W3_8.png}
+\end{center}
+\begin{itemize}
+    \item When $t < 0$, the rectangles don't overlap.  Therefore, the product is 0, as seen in the bottom right graph.
+    \item When $0 < t < 1$, we get parts of the rectangles overlapping, and as the overlap increases, the convolution increases.
+    \begin{itemize}
+        \item Suppose we use $t = 0.5$.  We have $y(t) = x(\tau) \times h(0.5 - \tau)$.  The left 0.5 of the $h(t)$ rectangle gives 0, while the right 0.5 of the $h(t)$ rectangle gives 2.  Integrating (finding average height) gives a height of 1.  Therefore, $y(0.5) = 1$ 
+        \item If we did $t = 0.6$, we get $y(t) = x(\tau) \times h(0.6 - \tau)$.  That is, 0.6 of the rectangle is overlapping.  Then, the integral simplifies to $y(0.6) = (0.6 * 1 * 2 + 0.4 * 1 * 0) / 1 = 1.2$  Therefore, $y(0.6) = 1.2$.
+    \end{itemize}
+    \item When $1 < t < 2$, the rectangles are completely overlapping.  As a result, the average is going to be the product of the heights of both rectangles.  For example, $y(1.5) = 2$.
+    \item When $2 < t < 3$, we get a similar case as $0 < t < 1$.  This time, since the overlap is decreasing with increasing $t$, the slope on the convolution is decreasing.
+    \item Finally, if $t > 3$, the rectangles are no longer overlapping.  Therefore $y(t) = 0$.
+\end{itemize}
+Note: Convolutions can be done with pretty much any function!  Including impulses (which are basically rectangles with width 0)!
+
+\subsection*{Causal Convolution}
+In a causal system, $h(t) = 0$ for $t < 0$.  (Why?  Hint: what happens if $h(t) \neq 0$ for some $t < 0$?)\\\\
+This means that $h(t - \tau) = 0$ if $\tau > t$.  Hence, there is no need to integrate if $\tau$ exceeds $t$, since $h(t - \tau) = 0$.  We can use this to simplify the convolution integral.
+\begin{align*}
+    y(t) &= \int_{-\infty}^\infty x(\tau) h(t - \tau) \text{d}\tau\\
+    &= \int_{-\infty}^t x(\tau) h(t - \tau) \text{d}\tau
+\end{align*}
+This equation tells us that only past and present values of $x(\tau)$ contribute to $y(t)$.
+
+\subsection*{Properties of Convolution}
+\begin{itemize}
+    \item \textbf{Commutativity}
+    \[(x * h)(t) = (h * x)(t)\]
+    \item \textbf{Associativity}
+    \[(f * (g * h))(t) = ((f * g) * h)(t)\]
+    \item \textbf{Distributivity}
+    \[f * (g + h) = f * g + f * h\]
+    \item \textbf{Linearity}
+    \[h * (\alpha x_1 + \beta x_2) = \alpha(h * x_1) + \beta(h * x_2)\]
+    \item \textbf{Time-invariance}
+\end{itemize}
+
+\subsubsection*{Proof of Commutativity}
+\[x * h = h * x\]
+\begin{align*}
+    y(t) &= (x * h)(t) \\
+    &= \int_{-\infty}^\infty x(\tau) h(t - \tau) \text{d}\tau\\
+\intertext{Let $\tau' = t - \tau$.  Then, $\tau = t - \tau'$.  Also, $\text{d}\tau' = -\text{d}\tau$, and the bounds switch to $\infty \rightarrow -\infty$}
+    &= \int_{-\infty}^\infty h(\tau')x(t - \tau') \text{d}\tau'\\
+    &= (h * x)(t)
+\end{align*}
+Therefore, convolutions are commutative.
 \end{document}

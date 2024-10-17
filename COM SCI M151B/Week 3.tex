@@ -170,4 +170,210 @@ What about other relations/dependencies?
 \begin{itemize}
     \item We can't avoid stalling completely.  However, with forwarding, we stall for one less cycle.
 \end{itemize}
+
+\subsection*{How to detect when to forward?}
+\begin{itemize}
+    \item Data hazards when:
+    \item If the following happen, forward from EX/MEM pipeline reg
+    \begin{itemize}
+        \item EX/MEM. Rd = ID/EX. Rs1
+        \item EX/MEM. Rd = ID/EX. Rs2
+        \item EX/MEM.RegWrite = 1
+    \end{itemize}
+    \item EX = execution
+    \item If the following happen, forward from MEM/WB pipeline reg
+    \begin{itemize}
+        \item MEM/WB. Rd = ID/EX. Rs1
+        \item MEM/WB. Rd = ID/EX. Rs2
+        \item MEM/WB.RegWrite = 1
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Datapath with RAW Forwarding}
+\begin{center}
+    \includegraphics*[scale=0.6]{W3_14.png}
+\end{center}
+
+\subsection*{How to detect forward in Load-Use}
+\begin{itemize}
+    \item If the following happen, stall and insert bubble.
+    \begin{itemize}
+        \item ID/EX. Rd = IF/ID.Rs1
+        \item ID/EX. Rd = IF/ID.Rs2
+        \item UD/EX.MemRead = 1
+    \end{itemize}
+    \item (after inserting the bubble, the forwarding condition would be similar to that of RAW)
+    \item Why ID/EX instead of EX/MEM?
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.55]{W3_15.png}
+\end{center}
+
+\subsection*{What about the other hazards?}
+\begin{itemize}
+    \item \textbf{Structural:} one unit is busy
+    \begin{itemize}
+        \item Shared resources (e.g., ALU)
+        \item Won't happen in our design (no sharing)
+    \end{itemize}
+    \item \textbf{Control:} what happens when there is a branch instruction?
+\end{itemize}
+
+\subsection*{Control Hazards}
+\begin{itemize}
+    \item What instruction should be fetched after a branch?
+    \item When the flow of instruction addresses is not known/expected, we have \textbf{control hazard}.
+    \item \texttt{BEQ} in our design.
+    \item This isn't an issue in single cycle because the next instruction is known by each cycle.
+    \item With pipelining, you don't know the instruction until possibly multiple cycles later!
+\end{itemize}
+
+\subsection*{Resolving Control Hazards}
+Answer: we can stall!
+\begin{itemize}
+    \item For how many cycles?  How?
+    \item Any better solution(s)?
+\end{itemize}
+The \textbf{3 W's:}
+\begin{itemize}
+    \item \underline{When} the branch happens?
+    \begin{itemize}
+        \item When to decode an undecoded instruction is a branch (e.g., \texttt{BEQ})
+        \item \item End of ID stage
+    \end{itemize}
+    \item \underline{Where} to branch to?
+    \begin{itemize}
+        \item What is the target address of the branch (if taken) - i.e., pc + offset
+        \item End of EX or Beginning of Mem stage
+    \end{itemize}
+    \item \underline{Whether} to branch?
+    \begin{itemize}
+        \item Predict if the branch is taken or not (for conditional)
+        \item End of Mem stage
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{If we use stalling\dots}
+\begin{center}
+    \includegraphics*[scale=0.6]{W3_16.png}
+\end{center}
+\begin{itemize}
+    \item 20\% of instructions in a mix are control-flow instructions!
+    \item We stall for 3 cycles (meaning a single control flow instruction takes 4 cycles)
+    \item CPU Time = $0.8 \times CPI \times CT + 0.2 \times CPI \times CT \times 4$
+    \item This is a huge hit to performance!
+\end{itemize}
+
+\subsection*{Can we do better?}
+\begin{itemize}
+    \item How about \textbf{guessing?}
+    \item Instead of waiting (stalling), let's pick one of the outcomes (i.e., \{Taken, Not Taken\}), and fetch the next instruction based on that!
+    \item \textbf{Speculation:} An approach whereby the compiler or processor \textit{guesses} the outcome of an instruction to remove it as a dependence in executing other instructions.
+    \item For the sake of this example, let's always predict \textbf{\textit{Not Taken!}}
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.6]{W3_17.png}
+\end{center}
+For any \textit{not taken} branch, we don't have to stall at all!\\\\
+Some stats:
+\begin{itemize}
+    \item About 20\% of instruction mix is control-flow
+    \begin{itemize}
+        \item 50\% of "forward" (i.e., if-then-else conditions) branches are taken.
+        \item 90\% of "backward" (i.e., end of loops) branches are taken.
+        \item Overall, about 30\% of all branch instructions are not-taken.
+        \item By predicting not-taken, we are fine in about 86\% of the time (i.e., 80\% non-branch + 30\% accuracy for branch).
+    \end{itemize}
+\end{itemize}
+What would happen if the branch is \textbf{Taken}?
+\begin{itemize}
+    \item This is a correctness issue!
+    \item We have to clear those incorrectly fetched instructions.  This is called a \textbf{"flush"}.
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.4]{W3_18.png}
+\end{center}
+\begin{itemize}
+    \item If branch is Taken (i.e., Zero == 1), we need to flush.
+    \item We need to flush FE, DE, and EX.
+    \item At MEM we will realize that we need to flush.
+    \item To \textit{flush}, we have to connect Zero (in MEM) back to the controller.  The controller then issues the Flush control signals.
+    \item Referring to the program execution image above, we would need to flush instructions i1-i3.
+\end{itemize}
+
+\subsubsection*{Branch Miss Penalty}
+\begin{itemize}
+    \item If we make a wrong decision, we have to flush three instructions (i.e., same as stalling for three cycles).
+    \item 70\% of branches are Taken (i.e., our prediction accuracy - among branches - is only 30\%).
+    \item Another issue is the added complexity to the datapath!
+\end{itemize}
+Can we do better than this?
+
+\subsection*{Resolving the Branch Sooner}
+\begin{itemize}
+    \item It turns out we can do better!
+    \item Even when we make a wrong decision, at least flushing can happen sooner.
+    \item This can be done as early as \textit{Decode} stage!  The "Where" and "Whether" out of the 3 W's needs to be changed.
+\end{itemize}
+\textbf{"Where"}
+\begin{itemize}
+    \item Offset is available in DE stage.
+    \begin{itemize}
+        \item Move nextPC calculation to DE
+        \item Use ALU for PC + offset in DE stage
+    \end{itemize}
+\end{itemize}
+\textbf{"Whether"}
+\begin{itemize}
+    \item rs1 and rs2 are also available in DE stage (for Zero).
+    \begin{itemize}
+        \item Move the comparison between rs1 and rs2 after reading from the register file.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Resolving Branch in DE Stage}
+\begin{center}
+    \includegraphics*[scale=0.4]{W3_19.png}
+\end{center}
+\begin{itemize}
+    \item New control signals are not shown.
+    \begin{itemize}
+        \item The equal comparator next to the registers would output to the Control, if it detects branching.
+        \item This is how the instruction can be queued correctly.
+    \end{itemize}
+    \item Only one instruction needs to be flushed!
+\end{itemize}
+This results in another problem: RAW Data Hazard?
+\begin{itemize}
+    \item What if rs1 or rs2 are being written in the flushed instruction?  You also have to revert the registers!
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.6]{W3_20.png}
+\end{center}
+\begin{itemize}
+    \item Restore values from the buffer register.
+    \item Forwarding condition?
+    \begin{itemize}
+        \item Similar, only everything shift one cycle to the left.
+        \begin{itemize}
+            \item check IF/ID.rs1 with EX/MEM or MEM/WB.rd AND RegWrite signal
+        \end{itemize}
+    \end{itemize}
+    \item Hazard and Stalling condition?
+    \begin{itemize}
+        \item For load-use hazard, we need to \textbf{stall} if needed.
+        \item Similar, again only shifted one cycle to the left.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Role of the Compiler}
+\begin{itemize}
+    \item Reordering the instruction
+    \begin{itemize}
+        \item \textbf{Delay Slot:} moving an independent instruction between the branch and the next instruction.
+    \end{itemize}
+    \item Increasing the chance of not-taken
+    \item Loop unrolling
+    \item \dots
+\end{itemize}
 \end{document}
