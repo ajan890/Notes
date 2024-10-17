@@ -71,6 +71,32 @@
 * During this time, the aristocrats are gaining more power than the rulers due to economic affairs.
 * Local power was challenging more centralized power.
 * At 221 BCE, Qin took over China and unifies the currency, roads, and metrics of measurement.  They were the first to establish logistics, technology, and documentation guidelines.
-* 
+* Once Qin Shi Huang died, and his son succeeded, there was an over-concentration of power.
+  * Qin Shi Huang was a genius in terms of management who was very capable of running the government.   Supposedly he would have a "quota" of the number of documents he would read per day, and would not sleep until it were complete.
+  * His son does not have the same work ethic nor experience, and a rebellion occurred.
 
+# Han Dynasty (202 BCE - 220 CE)
+## Western Han (Former Han, 202 BCE - 9 CE)
+* Han took over Qin.  Liu Bang became the emperor.
+* Han enjoyed some temporary peace.
+* Han rejected legalism, but were unable to wipe it out completely since Qin had its influence and they could not do a complete reform.
+* After Liu Bang passed away, his son was supposed to take over, but instead, his wife did, known as Empress Lu.
+  * The Empress was particularly harsh with the way things worked, basically torturing anyone who did not agree with her on political matters.
+  * The Empress also attempted to give her lineage access to imperial power, which was strictly forbidden in the Chinese dynastic cycle, since the Liu family was supposed to inherit the throne.
+  * The empress was eventually overthrown.
+* This was the end of passing power through lineage.
+## Xin (Wang Mang reign, 9 - 23 CE)
+[FILL]
 
+## Eastern Han (aka. Later Han, 25-220)
+* Cao Cao takes over Han dynasty; after he dies, his elder son Cao Pi becomes the new emperor; this is the end of the Han dynasty and the start of the Wei dynasty.
+* Buddhism spreads into China at around this time.
+
+# The Six Dynasties (220 - 589)
+## The Three Kingdoms (220 - 280)
+## Jin Dynasty (265 - 420)
+* At some time in the 4th century, a particularly cold winter occurred, and the yangze river had a breach.
+* The Western Jin collapses due to taxation from powers from the North.  This is the first time where a foreign power (Mongols) are controlling Chinese land.
+* In (317-420), the Eastern Jin rebuilt the southern Jin area, taking names, ways of thinking, etc. from the North and implanting them in the south.
+  * During this time, a lot of migration occurred.
+## Northern and Southern Dynasties (420 - 589)
