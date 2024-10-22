@@ -1,0 +1,148 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+\graphicspath{{./assets/images}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+
+\title{COM SCI M151B Week 4}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Review}
+\subsection*{ISA}
+\begin{itemize}
+    \item First step in the design process
+    \item The ISA (instruction set architecture) is essentially the assembly code.  Ex. RISC-V.
+    \item ISA converts to machine code using a standard table.
+\end{itemize}
+
+\subsection*{The Iron Law of Processor Performance}
+\begin{itemize}
+    \item For single cycle design:
+    \item $\text{CPU Time} = InstructionCount \times CyclePerInstruction \times CycleTime$
+    \item Allowing for parallelism (overlaps)
+    \begin{center}
+        \includegraphics*[scale=0.7]{W4_1.png}
+    \end{center}
+\end{itemize}
+
+\subsection*{Hazards}
+\subsubsection*{Data Hazard - Read after write (RAW)}
+\begin{itemize}
+    \item Writing to a register (rd) and using it (rs1 or rs2) \textbf{before} the writing is finished (i.e., rd reaches to the WB stage.)
+    \item To fix this, we either \textbf{stall} or \textbf{forward}.
+\end{itemize}
+\textbf{Stalling:}
+\begin{center}
+    \includegraphics*[scale=0.8]{W3_9.png}
+\end{center}
+\begin{itemize}
+    \item We add bubble instructions (In RISC-V, this is the NOP instruction, which does nothing).
+    \item Alternatively, we can add other, unrelated instructions (e.g., instructions that need to be run that don't involve any of the same registers)
+\end{itemize}
+\textbf{Forwarding:}
+\begin{center}
+    \includegraphics*[scale=0.8]{W3_11.png}
+\end{center}
+\begin{itemize}
+    \item Instead of writing the resultant value to the register first, pass it to the ALU directly.
+    \item Forwarding helps prevent stalls!
+    \item See Week 3 Notes for how to detect when to forward.
+\end{itemize}
+
+\subsection*{Branches}
+\begin{itemize}
+    \item If we get hazards in a branch, we have two options:
+    \begin{itemize}
+        \item Stalling
+        \item Speculation (not forwarding!)
+    \end{itemize}
+    \textbf{Stalling:}
+    \begin{itemize}
+        \item We must stall for 3 cycles!
+            \begin{itemize}
+                \item When: End of ID stage
+                \item Where: End of EX or Beg. of Mem stage
+                \item Whether: End of Mem stage
+            \end{itemize}
+    \end{itemize}
+    \textbf{Speculation/Prediction}
+    \begin{itemize}
+        \item We predict which branch to take.  To do this, we predict one as always taken and the other as never taken
+        \item Not taken is easier to check for, because:
+        \begin{itemize}
+            \item We don't need branch addresses; not taken means the next address is PC + 4.
+            \item Most instructions are not branch so they are not taken too!
+        \end{itemize}
+        \item If we guess the branch incorrectly, we have to flush!
+        \item The penalty for flushing is 3 cycles, unless we can resolve the branch during the DE stage.  This reduces the flush to 1 cycle.
+    \end{itemize}
+\end{itemize}
+
+\section*{Branch Prediction}
+How can we improve branch prediction?
+\begin{itemize}
+    \item Branch Miss Penalty
+    \begin{itemize}
+        \item Resolving branches sooner has reduced this penalty
+    \end{itemize}
+    \item Miss rate?
+    \begin{itemize}
+    \item Predicting always not-taken has only 30\% accuracy.
+    \item What if we predict always taken?
+    \begin{itemize}
+        \item We need nextPC at Fetch stage!  (we need to be able to run the next instructions down that branch to save time).
+    \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Guessing Always Taken}
+\begin{itemize}
+    \item Idea: keep track of previous targets and use that to guess!
+    \item If we see a branch instruction before, we know where it jumped.  Remember this if we see the same branch again!
+    \item How frequent is this?  Is this always correct?
+\end{itemize}
+
+\subsubsection*{Branch Predictor - Where?}
+\textbf{Branch Target Buffer (BTB)}
+\begin{itemize}
+    \item A table that stores \textit{target addresses.}
+    \item Entries are indexed by PC.
+    \begin{itemize}
+        \item The size?  Lower bits of PC (to utilize \textit{locality}).
+    \end{itemize}
+\end{itemize}
+\textbf{Algorithm for BTB}
+\begin{itemize}
+    \item For a new PC, record the target address in the table (using the PC as the index).
+    \item Next time (a recurring PC), look up the table (i.e., by using the same index) and predict (i.e., use the stored value as the next PC).
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.7]{W4_2.png}
+\end{center}
+
+\end{document}
