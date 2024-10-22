@@ -86,17 +86,34 @@
   * The empress was eventually overthrown.
 * This was the end of passing power through lineage.
 ## Xin (Wang Mang reign, 9 - 23 CE)
-[FILL]
+* Wang Mang was a Han dynasty official who took the throne from Liu Bang by force. (founding Xin 'dynasty')
+* He began and held multiple monopolies, including liquor, iron, salt, weapons, coinage, forestry, and fishing.
+* Also debased the currency and introduced agricultural reforms
+* During this time, a lot of natural disasters happened, and people were not convinced he was legitimate (think: mandate of heaven)
+  * Rebellions followed, and the unity of China shattered when many different families claimed the throne was rightfully theirs.
+  * A group known as the Red Eyebrows forced Wang Mang to retreat and killed the emperor, and placed Liu Penzi as the new emperor.
+    * The new emperor did not gain traction with the public either (also mandate of heaven), and they eventually surrendered to Liu Xiu
+* Liu Xiu was a distant relative to Liu Bang.
+  * He pardoned all the red eyebrows leaders.
+* Liu Xiu eventually conquered all the other emperors and re-unified China, leading to another golden age.
+  * More natural disasters happened, and although they were dealt with well by the dynasty (e.g., peasants got relief, food support, etc.), they increased the taxes which pissed people off.
+* Individual warlords took over again, leading to the Eastern Han period.
 
 ## Eastern Han (aka. Later Han, 25-220)
-* Cao Cao takes over Han dynasty; after he dies, his elder son Cao Pi becomes the new emperor; this is the end of the Han dynasty and the start of the Wei dynasty.
+* Cao Cao was one of the warlords who had their own domain when Liu Xiu fell.
+* Cao Cao takes over (part of) Han dynasty; after he dies, his elder son Cao Pi becomes the new emperor; this is the end of the Han dynasty and the start of the Wei dynasty.
 * Buddhism spreads into China at around this time.
+* Cao Cao began the Wei dynasty in the north 1/3 of China.
 
 # The Six Dynasties (220 - 589)
 ## The Three Kingdoms (220 - 280)
+* The three kingdoms were the Wei, Shu, and Wu, Wei being in the north, Shu in the southwest, Wu in the southeast.
+* 
+
 ## Jin Dynasty (265 - 420)
 * At some time in the 4th century, a particularly cold winter occurred, and the yangze river had a breach.
 * The Western Jin collapses due to taxation from powers from the North.  This is the first time where a foreign power (Mongols) are controlling Chinese land.
 * In (317-420), the Eastern Jin rebuilt the southern Jin area, taking names, ways of thinking, etc. from the North and implanting them in the south.
   * During this time, a lot of migration occurred.
 ## Northern and Southern Dynasties (420 - 589)
+* Continue next week.
