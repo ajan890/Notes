@@ -218,5 +218,195 @@ We can start by splitting up the exponent.
 \end{align*}
 where $H(s) = \int_{-\infty}^\infty h(\tau) e^{-s\tau} \text{d}\tau$, called the "Transfer Function".
 
+\[e^{st} \:\longrightarrow\:\boxed{\text{LTI System} * h(t)} \longrightarrow \: a\cdot e^{st}\]
+where $a = H(s)$
+
+\subsection*{Proving that LTI functions on a Fourier series returns a Fourier series}
+Say $x(t) = \sum_{k = -\infty}^\infty c_k \cdot e^{jk\omega_0 t}$.  $x(t)$ is then a fourier series and is periodic.\\\\
+Take one complex exponential, $k = 1 \Rightarrow x_1(t) = c_1 \cdot e^{j\omega_0 t}$\\\\
+In this case,
+\[x_1(t) \longrightarrow \boxed{\text{LTI}}\longrightarrow y_1(t) = H(j\omega_0) \cdot c_1 \cdot e^{j \omega_0 t}\]
+Now, we take another complex exponential, $k = 2 \Rightarrow x_2(t) = c_2 e^{j \cdot 2\omega_0 t}$\\\\
+Now, we get
+\[x_2(t) \longrightarrow\boxed{\text{LTI}}\longrightarrow y_2(t) = H(j\omega_2) \cdot c_2 \cdot e^{j \cdot 2\omega_0 t}\]
+And we continue doing this for everything in the sum.\\\\
+By the linearity property $x_1(t) + x_2(t) \rightarrow\boxed{\text{LTI}}\rightarrow y_1(t) + y_2(t)$, so
+\begin{align*}
+    x(t) &= \sum_{k = -\infty}^\infty c_k e^{jk\omega_0 t}\\
+    \Rightarrow y(t) &= \sum_{k = -\infty}^\infty H(jk\omega_0) \cdot c_k e^{jk\omega_0 t}\\
+    &= \sum_{k = -\infty}^\infty c_k e^{jk\omega_0}
+\end{align*}
+Essentially, every fourier series can be broken down into the sum of many complex sinusoidals, each of which passing through the LTI system would become another complex sinusoidal.  By adding them up, we receive another fourier series.  Therefore, a fourier series passed into an LTI would return another fourier series.
+
+\subsection*{Fourier Series Example}
+Let's start simple.  Consider the sinusoid:
+\[f(t) = A \cos(\omega_0 t + \theta)\]
+Converting to exponential form, we get:
+\begin{align*}
+    f(t) &= \frac{A}{2} e^{-j(\omega_0 t + \theta)} + \frac{A}{2} e^{j(\omega_0 t + \theta)}\\
+    &= \frac{A}{2} e^{-j^\theta} \cdot e^{-j \omega_0 t} + \frac{A}{2} e^{j^\theta} \cdot e^{j\omega_0 t}
+\end{align*} 
+\begin{itemize}
+    \item Notice the first term, written in form $c_k \cdot e^{-j\omega t}$, would be $c_{-1}$, and the second term would be $c_1$.
+    \item Both terms have amplitude $\frac{A}{2}$.
+    \item The first term has a phase of $-\omega_0$ while the second has $\omega_0$.
+    \item We can plot these on the spectrum. (remember that every signal can be defined by the spectrums!)
+\end{itemize}
+
+\subsection*{Using Spectrum to Find Structure}
+Suppose we were given the following signal:
+\begin{center}
+    \includegraphics[scale=0.7]{W4_5.png} 
+\end{center}
+This signal is very simple, but it's hard to recover what $x(t)$ is.  However, if given the spectrum:
+\begin{center}
+    \includegraphics[scale=0.7]{W4_6.png}
+\end{center}
+From the spectrum, we can read off that this signal is composed of sinusoids at three different frequencies ($2\pi, 3\pi, 4\pi$) with amplitudes given by the amplitude spectrum and phases given by the phase spectrum.\\\\
+We get:
+\begin{itemize}
+    \item Signal 1: Frequency $2\pi$, Amplitude $3$, Phase $0$.
+    \item Signal 2: Frequency $3\pi$, Amplitude $1$, Phase $\pi/4$.
+    \item Signal 3: Frequency $4\pi$, Amplitude $2$, Phase $-\pi/3$.
+    \begin{align*}
+        x(t) &= 1.5 \cdot e^{j_0} \cdot e^{-j \cdot 2\pi t} + 1.5 \cdot e^{j_0} \cdot e^{j \cdot 2\pi t}\\
+        &\hspace{0.5cm}+ 0.5 \cdot e^{j\pi/4} \cdot e^{-j\cdot 3\pi t} + 0.5 \cdot e^{-j\pi/4} \cdot e^{j\cdot 3\pi t}\\
+        &\hspace{0.5cm}+ 1 \cdot e^{-j\pi/3} \cdot e^{-j \cdot 4\pi t} + 1 \cdot e^{j\pi/3} \cdot e^{j \cdot 4\pi t}\\
+        &= 3\cos(2\pi t) + \cos (3\pi t - \pi / 4) + 2\cos(4\pi t + \pi/3)
+    \end{align*}
+    
+\end{itemize}
+
+\subsection*{Deriving the Fourier Series Coefficients}
+How do we find the $c_k$?  Remember that $c_k$ is some constant, that is a complex value.\\\\
+Our derivation is as follows:
+\begin{itemize}
+    \item First, we \textit{assume} that the signal $f(t)$ can be written as a sum of complex exponentials that are scaled by coefficients $c_k$.
+    \item Given this assumption, we find if there are $c_k$ such that we can represent $f(t)$ in this way.
+\end{itemize}
+
+\subsubsection*{A Preliminary result on integrating complex exponentials}
+Before proceeding, we're going to introduce a handy trick that will simplify our derivation.  Let $T_0 = 2\pi / \omega_0$.  Consider the complex exponential
+\[e^{jk\omega_0 t}\]
+in our Fourier series.
+\begin{itemize}
+    \item When $k = 0$, then this complex exponential is equal to 1.
+    \item When $k \neq 0$, then this complex exponential is equal to $\cos(k\omega_0 t) + j\sin(k\omega_0 t)$
+\end{itemize}
+If we now integrate this expression over a period, we get the following:
+\begin{align*}
+    \int_{t_0}^{t_0 + T_0} e^{jk\omega_0 t}\text{d}t &= \int_{t_0}^{t_0 + T_0} e^{j \frac{2\pi k}{T_0}t} \text{d}t\\
+    &= \int_{t_0}^{t_0 + T_0} \cos\left(\frac{2\pi k}{T_0}t\right)\text{d}t + k \cdot \int_{t_0}^{t_0 + T_0} \sin\left(\frac{2\pi k}{T_0}t\right) \text{d}t
+\end{align*}
+If $k \neq 0$, then both terms evaluate to 0.  If $k = 0$, then we get:
+\begin{align*}
+    \int_{t_0}^{t_0 + T_0} 1 \cdot \text{d}t + j \cdot \int_{t_0}^{t_0 + T_0} 0 \cdot \text{d}t
+\end{align*}
+Therefore, our final result is
+\[\int_{t_0}^{t_0 + T_0} e^{jk\omega_0 t}\text{d}t = \begin{cases}T_0 & \text{if $k = 0$} \\ 0 & \text{if $k \neq 0$}\end{cases}\]
+
+\subsection*{Deriving Fourier Series}
+Let's begin with the derivation.
+Define $\omega_0 \triangleq  2\pi/T_0$, and assume that
+\[f(t) = \sum_{k = -\infty}^{\infty} c_k e^{jk\omega_0 t}\]
+To use our preliminary result, what we'll do is multiply both sides by a complex exponential,
+\[e^{-jn\omega_0 t}\]
+and then integrate over one period, $T_0$.
+\begin{align*}
+    \int_{t_0}^{t_0 + T_0} f(t) e^{-jn\omega_0 t} \text{d}t &= \int_{t_0}^{t_0 + T_0} \left(\sum_{k = -\infty}^\infty c_k e^{jk\omega_0 t}\right) \cdot e^{-jn\omega_0 t}\text{d}t\\
+    &= \int_{t_0}^{t_0 + T_0} \sum_{k = -\infty}^\infty c_k e^{j(k - n)\omega_t} \text{d}t\\
+    &= \sum_{k = -\infty}^\infty c_k \cdot \int_{t_0}^{t_0 + T_0} e^{j(k - n)\omega t}\text{d}t\\
+    &= \begin{cases}
+    T_0 & \text{if $k = n$} \\ 0 & \text{if $k \neq n$}
+    \end{cases}
+\end{align*}
+Therefore, 
+\begin{align*}
+    \int_{t_0}^{t_0 + T_0} f(t) e^{-jn\omega_0 t}\text{d}t &= c_n \cdot T_0\\
+    c_n &= \frac{1}{T_0} \cdot \int_{t_0}^{t_0 + T_0} f(t) \cdot e^{-jn}
+\end{align*}
+
+\[\boxed{c_k = \frac{1}{T_0} \int_{t_0}^{t_0 + T_0} f(t) e^{-jk\omega_0 t} \text{d}t}\]
+These are the Fourier coefficients (!) and demonstrate that indeed, a periodic signal (or one defined over a length $T_0$) can be written as a sum of complex exponentials.
+
+\subsection*{Square Wave}
+Consider the square wave below:
+\begin{center}
+    \includegraphics[scale=0.8]{W4_7.png}
+\end{center}
+Let's calculate the Fourier series for this.  First, we note that we only need to look at one period, so let's look from $t = -0.5$ to $0.5$, where the square wave starts at $0$ and transitions to $1$ at $t = -0.25$ and from $1$ back to $0$ at $t = 0.25$.  Let's define:
+\[s(t) = \begin{cases} 0 & -0.5 \leq t < -0.25 \text{ and } 0.25 \leq t < 0.5 \\ 1 & -0.25 \leq t < 0.25\end{cases}\]
+When we calculate the Fourier series, we should worry about two cases: when $k = 0$ and $k \neq 0$.  (Usually, if we just solve for when $k \neq 0$, we'll get an expression that is undefined for $k = 0$.  This is why we do both.)\\\\
+For our square wave, we have that $T_0 = 1$.  When $k = 0$, 
+\[c_k = \frac{1}{T_0} \int_{t_0}^{t_0 + T_0} f(t) e^{-jk\omega_0 t}\text{d}t\]
+When $k \neq 0$,
+\begin{align*}
+    c_k &= \frac{1}{T_0} \int_{t_0}^{t_0 + T_0} f(t) e^{-jk\omega_0 t}\text{d}t\\
+    &= \frac{1}{1} \int_{-0.5}^{0.5} s(t) \cdot e^{-jk\omega_0 t} \text{d}t\\
+    &= \int_{-0.25}^{0.25} 1 \cdot e^{-jk\omega_0 t} \text{d}t\\
+    &= -\frac{1}{jk\omega_0} e^{-jk\omega_0 t} \rvert_{t = -0.25}^{t = 0.25}\\
+    &= -\frac{1}{jk\omega_0} \cdot \left[\left(\cos\left(k \cdot 2\pi \cdot \frac{1}{4}\right) - k \cdot \sin\left(k \cdot 2\pi \cdot \frac{1}{4}\right)\right)\right. \\
+    &\hspace{2cm}- \left.\left(\cos\left( k \cdot 2\pi \cdot \frac{1}{4}\right) + j \cdot \sin\left(k \cdot 2\pi \cdot \frac{1}{4}\right)\right)\right]\\
+    &= -\frac{1}{jk\cdot 2\pi} \left[ -2j \cdot \sin\left(\frac{k\pi}{2}\right)\right]\\
+    &= \frac{\sin(k\pi / 2)}{k\pi}
+\end{align*}
+
+The term $\frac{\sin(\pi t)}{\pi t}$ occurs so frequently in signal processing that it has its own name:
+\newcommand{\sinc}{\text{sinc}}
+\[\sinc(t) \triangleq \frac{\sin(\pi t)}{\pi t}\]
+The $\sinc$ function looks like:
+\begin{center}
+    \includegraphics[scale=0.7]{W4_8.png}
+\end{center}
+(Note that some define $\sinc(t) = \sin(t) / t$.  We do NOT use this definition.)\\\\
+Thus, we have that
+\[c_k = \frac{1}{2} \sinc(k / 2)\]
+Note that $\sinc(0) = 1$.
+
+\pagebreak
+\subsubsection*{Plotting the Square Wave Fourier Series}
+Let's plot Fourier series fits for our square waves with one complex exponential frequency.
+\begin{center}
+    \includegraphics[scale=0.7]{W4_9.png}
+\end{center}
+Now, with three:
+\begin{center}
+    \includegraphics[scale=0.7]{W4_10.png}
+\end{center}
+\pagebreak
+Now, with 10?
+\begin{center}
+    \includegraphics[scale=0.7]{W4_11.png}
+\end{center}
+And\dots with 100:
+\begin{center}
+    \includegraphics[scale=0.7]{W4_12.png}
+\end{center}
+\pagebreak
+Do they converge?  Can we definitely say that for
+\[c_k = \frac{1}{T_0} \int_{t_0}^{t_0 + T_0} f(t) e^{-jk\omega_0 t} \text{d}t\]
+that
+\[f(t) = \sum_{k = -\infty}^\infty c_k e^{jk\omega_t}\]
+at every point in time $t$?\\\\
+The answer is no.  If you notice our derivation, we only showed that this holds when $f(t)$ or its Fourier series representation are in an integral, i.e.,
+\[\int_{t_0}^{t_0 + T_0} f(t) e^{-jn\omega_0 t} \text{d}t = \int_{t_0}^{t_0 + T_0} \left(\sum_{k = -\infty}^\infty c_k e^{jk\omega_0 t}\right) e^{-jn\omega_0 t}\text{d}t\]
+What this means is that our Fourier series formula really only holds in the sense of the integral average over this period.  But it need not be the case that our Fourier series formula holds at exactly every single $t$.\\\\
+\textbf{Fourier series does not equal $f(t)$ everywhere.}\\\\
+As we can see, the Fourier series does not equal $f(t)$ everywhere.  However, it does a very reasonable job at fitting the square wave. There is work (we won't cover) on things we observe, like the "ringing" (called Gibbs effect) of the Fourier series at discontinuities. Interestingly, increasing the number of terms compresses the ringing but does not reduce its amplitude. You can see it's still present with $k = 100$ complex exponential frequencies in our square wave example.\\\\
+There are \textit{Dirichlet} conditions that describe when $f$ can be approximated by a Fourier series. We won't talk about these in depth in class, but essentially, the signal should be "smooth" and "well-behaved" for a Fourier series approximation to be good.\\\\
+In our square wave, there is no absolute for it using a Fourier series.
+
+\subsection*{Sawtooth Signal}
+The sawtooth signal is given by $f(t) = t \mod 1$.  It is plotted below:
+\begin{center}
+    \includegraphics[scale=0.9]{W4_13.png}
+\end{center}
+This signal has a period of $T_0 = 1$.  Now, when $k = 0$,
+\begin{align*}
+    c_0 &= \int_0^1 te^0 \text{d}t\\
+    &= \left.\frac{t^2}{2}\right|_0^1\\
+    &= \frac{1}{2}
+\end{align*}
+
 
 \end{document}
