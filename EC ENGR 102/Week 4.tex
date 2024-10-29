@@ -40,9 +40,15 @@
     \begin{align*}
         |y(t)| &= \left|\int_{-\infty}^\infty x(\tau) h(t - \tau) \text{d}\tau\right|\\
         &= \left|\int_{-\infty}^\infty h(\tau) x(t - \tau) \text{d}\tau \right|
+        &\leq \int_{-\infty}^\infty |h(\tau)| \cdot |x(t - \tau| \text{d}\tau)\\
+        &\leq \int_{-\infty}^\infty |h(\tau) \cdot M_x \text{ d}t\\
+        &= M_x \cdot \int_{-\infty}^\infty |h(\tau)| \text{ d}\tau\\
+        &\leq M_y
     \end{align*}
+    Therefore, $H$ is stable.
+    \[\text{If } \int_{-\infty}^\infty |h(\tau)| \text{ d}\tau \leq M_h < \infty \Rightarrow \text{ H is BIBO stable.}\]
 
-    [FILL]
+    
 \end{itemize}
 
 \subsection*{Proof of Associativity}
