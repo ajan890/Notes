@@ -49,3 +49,64 @@
 ## Yan Guozhong (d. 756)
 * Cousin of Yang Guifei who eventually came into power
 ## An Lushan (703-757; An Lushan Rebellion 755-763)
+* **Yangzhou massacre:** thousands of foreign (particularly Arab and Indian) merchants were killed in Yangzhou as part of a protest due to economic tensions and political instability.
+
+
+# The Five Dyansties
+* (No need to know the name any of the dynasties/kingdoms during this time)
+* This was a period of transition between the Tang Dynasty and the Song Dynasty
+* This time was dominated by dozens of warlords and military forces
+
+# Song Dynasty
+* Founded by Taizu
+* The government of the Song dynasty demanded tax from the people, which funded military protection from the non-Chinese people to the west and the north.
+* The Song dynasty did very well with making the divide between civil and military power distinct.
+  * After the Song dynasty took over, the emperor forced military officials to retire, soldiers to go back to being civilians, etc.
+  * Only the best would keep their jobs, which was now to guard the emperor.
+ 
+* Wang Anshi (1021-1088)
+  * Introduced the "New Policy", a bill that reforms many parts of society
+    *  Social welfare - peasants can loan farming tools, for a relatively low price
+    *  Peasants were allowed to pay tax in cash, instead of labor
+    *  Local militias were set up for neighborhood protection
+    *  Grainaries were set up to decrease impact of famines as well as control supply of grain
+    *  Military reforms were made to strengthen the military
+  * This bill was highly controversial during the time, with the conservatives criticizing it for disrupting the existing power structure.
+  * After Emperor Shenzong's death, many of these changes were undone.
+
+* Printing
+  * Woodblock printing was invented, which involved characters carved onto a wood block (1 block per page), and stamped onto pages.
+  * People did not have to be literate to do this job; they could copy the characters from an already-printed book onto the wood block without being able to read it
+  * The government used this technique to propagate information very quickly
+
+* New Rice
+  * The government promoted the growing of *Champa rice*, a species of rice originating in modern-day Vietnam, which was capable of growing at higher altitudes compared to the rice they were cultivating before.
+  * Farmers who were willing to move to higher altitudes to grow Champa rice were subsidized by the government and given tax cuts.
+  * This allowed much more land to be open for agriculture, and therefore they are able to feed more people.
+
+* Magnetism
+  * People knew about the presence of lodestones and how they attracted metals for a very long time.  However, they were not able to work with them.
+  * New technology during the Song dynasty enabled the production of compasses, which simplified navigation.
+
+## People
+* Su Song (1020-1101)
+  * A polymath who made multiple contributions to astronomy, engineering, pharmacology, and cartography
+  * Designed a clock tower in the Song capital with astronomical observation tools.
+* Shen Kua/Gua (1031-1095_
+  * Also a polymath.  He discussed the early formations of certain rocks and land formations, innovated technology, specifically a water clock and optical devices, created a star compass and more accurate calendar, and wrote on philosophy and politics.
+* Huizong (1100-1126)
+  * Last emperor of the northern Song dynasty
+  * did "slender gold calligraphy".  was known for his presence in art.
+  * had a strong interest in Daoism and Buddhism - he commissioned many religious texts and built temples
+* Su Shi (1037-1101)
+  * A *literatus* - a person who had the highest level of education, passing the national exam, etc.
+  * Wrote multiple forms of poetry
+* Sima Guang
+  * A chinese historian who wrote Zizhi Tongjian (Comprehensive Mirror to Aid in Government)
+  * Provided much historical insight on philosophy and politics
+* Cheng Yi (Cheng Hao)
+  * These two are brothers who were both teachers.  They stressed  the necessity of studying classics and literature.
+* Li Qingzhao (1083-1155)
+  * A great (female) poet who experienced the fall of the Northern Song.
+  * Wrote an essay comparing the heights of the Northern Song and the depths of the changing of dynasties
+  * Wrote a lot of poems that did not follow the structured format (5 words per line, etc) of earlier forms of poetry
