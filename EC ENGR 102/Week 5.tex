@@ -24,6 +24,7 @@
 
 \newcommand{\solution}{\textbf{Solution:}} 
 \newcommand{\example}{\textbf{Example: }}
+\newcommand{\sinc}{\text{sinc}}
 
 \title{EC ENGR 102 Week 5}
 
@@ -167,9 +168,231 @@ The idea is the following:
     where $\omega_0 = 2\pi/T$.  In the Fourier transform, we're now going to let $T \rightarrow \infty$.
 \end{itemize}
 \example\\
+This is the rect() function.
 \begin{center}
     \includegraphics[scale=0.65]{W5_1.png}
 \end{center}
+\subsection*{Arriving at the Fourier transform}
+When $T \rightarrow \infty$, $c_k \rightarrow 0$.
+\[c_k = \frac{1}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) e^{jk\omega_0 t} \text{d}t\]
+To prevent this, we introduce the truncated Fourier transform.
+\begin{align*}
+    &F_T(j\omega) = \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) e^{-j\omega t} \text{d}t\\
+    \Rightarrow \hspace{0.5cm} & F_T(jk\omega_0) = T \cdot c_k
+\end{align*}
+Remember that we replace $k\omega_0$ with $\omega$.
+\begin{center}
+    \includegraphics[scale=0.68]{W5_2.png}
+\end{center}
+The intuition: as $T \rightarrow \infty$, we more finely sample the truncated fourier transform.  $k\omega_0 \rightarrow \omega$, since $\omega_0 \rightarrow 0$ as $T \rightarrow \infty$.\\\\
+Now, let's set $T \rightarrow \infty$.  If we do this, then $\omega_0 = 2\pi / T$ will approach 0.  So suppose instead that we define a continuous variable,
+\[\omega = \frac{2\pi k}{T}\]
+which means that $k$ increases with $T$, so that $\omega = k\omega_0$ is fixed.\\\\
+The Fourier transform is the limit of the truncated Fourier transform.
+\begin{align*}
+    F(k\omega) &= \lim_{T \rightarrow \infty} F_T(j\omega)\\
+    &= \lim_{T \rightarrow \infty} \int_{-T/2}^{T/2} f(t) = e^{-j\omega t} \text{d}t\\
+    &= \int_{-\infty}^\infty f(t) e^{-j\omega t} \text{d}t
+\end{align*}
+This is the Fourier transform, which takes you from the time domain, $f(t)$, to the frequency domain, $F(j\omega)$.
+\subsubsection*{Fourier Transform Formula}
+\[F(j\omega) = \int_{-\infty}^\infty f(t) e^{-j\omega t} \text{d}t\]
+\subsection*{Inverting the Fourier Transform}
+How do we go from $F(j\omega)$ back to $f(t)$?.  Let's begin by writing the Fourier series.
+\begin{align*}
+    f(t) &= \lim_{T \rightarrow \infty} f_T(t)\\
+    &= \lim_{T \rightarrow \infty} \sum_{k = -\infty}^\infty \frac{1}{T} F_T(jk\omega_0)e^{jk\omega_0 t}
+\end{align*}
+Now as $T \rightarrow \infty$, what we see is that this approaches an integral.  This is an infinite sum, where the integration "widths" are the infinitesimal $1/T$ and the "heights" are $F_T(jk\omega_0)e^{jk\omega_0 t}$.  To make this more clear, we denote $\Delta \omega = 2\pi / T$, and note that $\omega = k\Delta \omega$.  Then, this sum becomes
+\begin{align*}
+    f(t) &= \lim_{\Delta \omega \rightarrow 0} \sum_{k = -\infty}^\infty F_T(jk\Delta \omega) e^{jk\Delta \omega t} \frac{\Delta \omega}{2\pi}\\
+    &= \frac{1}{2\pi} \int_{-\infty}^\infty F(j\omega) e^{j\omega t} \text{d}\omega
+\end{align*}
+This is the inverse Fourier transform, which takes you from the frequency domain, $F(j\omega)$ to the time domain, $f(t)$.
+\subsection*{Fourier Transform Summary}
+The fourier transform is:
+\[\boxed{F(j\omega) = \int_{-\infty}^\infty} f(t) e^{-j\omega t} \text{d}t\]
+The inverse fourier transform is:
+\[\boxed{f(t) = \frac{1}{2\pi} \int_{-\infty}^{\infty} F(j\omega)e^{j\omega t} \text{d}\omega}\]
+A few notes:
+\begin{itemize}
+    \item Like in Fourier series, the inversion formula for $f(t)$ is accurate when $f(t)$ is continuous, but produces the midpoint when $f(t)$ has jumps.
+    \item These two are almost identical in form, except for the sign of the complex exponential and the factor of $1/2\pi$.
+    \item Check your intuition when you look at these formulas: to go from the time domain to frequency domain (Fourier transform) you should integrate away time (giving a function of frequency).  Likewise, to go from the frequency domain to the time domain (inverse Fourier transform) you should integrate away frequency (giving a function of time).
+\end{itemize}
 
+\subsection*{A sufficient condition for the existence of the Fourier transform}
+    \begin{itemize}
+        \item From $F(j\omega)$, we can determine $f(t)$ and vice versa (if it's well-behaved; e.g., at discontinuities, the Fourier transform will return the midpoint).
+        \item Not every function has a Fourier transform.  For example, a sufficient condition for a Fourier transform is that it should have finite energy.  Note,
+        \begin{align*}
+            |F(j\omega)| &= \left|\int_{-\infty}^\infty f(t) e^{-j\omega t} \text{d}t\right|\\
+            &\leq \int_{-\infty}^\infty \left| f(t) e^{-j\omega t} \right| \text{d}t\\
+            &= \int_{-\infty}^\infty|f(t)| \text{d}t\\
+            < \infty
+        \end{align*}
+        \item The above is a sufficient (but not necessary) requirement for the existence of the Fourier transform.
+    \end{itemize}
 
+\subsection*{Example: Fourier Transform of rect()}
+\begin{align*}
+    F(j\omega) &= \int_{-\infty}^\infty \text{rect}(t/T) e^{-j\omega t} \text{d}t\\
+    &= \int_{-T/2}^{T/2} e^{-j\omega t} \text{d}t\\
+    &= \left.\frac{e^{-j\omega t}}{-j\omega}\right|_{-T/2}^{T/2}\\
+    &= \frac{1}{-j\omega} \left(e^{-j\omega T/2} - e^{jwT/2}\right)\\
+    &= \frac{1}{-j\omega}(-2j \sin(\omega T/2))\\
+    &= \frac{2\sin(\omega T/2)}{\omega}\\
+    &= \frac{T \sin(\pi(\omega T/2\pi))}{\pi(\omega T/2\pi)}\\
+    &= T \sinc(\omega T / 2\pi)
+\end{align*}
+Note that here, we went through some extra algebra to get things into the $\sinc(\cdot)$ form.  This is out of convenience.  Thus, we have that
+\[\text{rect}(t/T) \Longleftrightarrow T \sinc(\omega T/2\pi)\]
+
+\subsection*{Example: Fourier Transform of a Causal Exponential}
+Let's find the Fourier transform of
+\[f(t) = \begin{cases}e^{-at} & t \geq 0 \\ 0 & \text{otherwise}\end{cases}\]
+for $a > 0$.\\\\
+Its Fourier transform is 
+\[F(j\omega) = \int_{-\infty}^\infty e^{-at} u(t) e^{-j\omega t} \text{d}t\]
+[FILL]
+
+Below is the spectrum of the causal exponential for $a = 1$.
+\begin{center}
+    \includegraphics[scale=0.8]{W5_3.png}
+\end{center}
+
+\subsubsection*{Fourier Transforms we know}
+\begin{align*}
+    \text{rect}(t/T) &\Longleftrightarrow T \sinc(\omega T / 2\pi)\\
+    e^{-at} u(t) &\Longleftrightarrow \frac{1}{a + j\omega}
+\end{align*}
+
+\subsection*{Fourier Symmetries}
+Derivations analogous to Fourier series
+\begin{itemize}
+    \item For any $f(t)$, whether it be real, imaginary, or complex:
+    \begin{itemize}
+        \item $f(t)$ even $\rightarrow F(j\omega)$ even.
+        \item $f(t)$ odd $\rightarrow F(j\omega)$ odd.
+    \end{itemize}
+    \item A \textit{real} signal has a Hermitian Fourier transform:
+    \[F(-j\omega) = F^*(j\omega)\]
+    \item An \textit{imaginary} signal has an anti-Hermitian Fourier transform:
+    \[F(-j\omega) = -F^*(j\omega)\]
+    \item Furthermore,
+    \begin{itemize}
+        \item For $f(t)$ real and even, $F(j\omega)$ is real and even.
+        \item For $f(t)$ real and odd, $F(j\omega)$ is imaginary and odd.
+        \item For $f(t)$ imaginary and odd, $F(j\omega)$ is real and odd.
+        \item For $f(t)$ imaginary and even, $F(j\omega)$ is imaginary and even.
+    \end{itemize}
+\end{itemize}
+
+\section*{The Fourier Transform Operator}
+To denote the operation of taking the Fourier transform, we use $\mathcal{F}(\cdot)$ or $\mathcal{F}[\cdot]$.  That is, if
+\[f(t) \Longleftrightarrow F(j\omega)\]
+we may alternately write this as
+\[F(j\omega) = \mathcal{F}[f(t)]\]
+Likewise, the operator $\mathcal{F}^{-1}$ refers to the inverse Fourier transform.  Therefore, 
+\[\mathcal{F}^{-1}[F(j\omega)] = f(t)\]
+This also means that
+\[\mathcal{F}^{-1}[\mathcal{F}[f(t)]] = f(t)\]
+at all points of continuity in $f(t)$.
+
+\subsection*{Summary of all properties of Fourier Transform (can be used without proof)}
+\begin{enumerate}
+    \item \textbf{Linearity:}
+    \[\boxed{\mathcal{F}[a f_1(t) + b f_2(t)] = a \mathcal{F}[]f_1(t) + b\mathcal{F}[f_2(t)]}\]
+    \item \textbf{Time scaling:}
+    \[\boxed{\mathcal{F}[f(at)] = \frac{1}{|a|}F\left(j\frac{\omega}{a}\right)}\]
+    \item \textbf{Time reversal:}
+    \[\boxed{\mathcal{F}[f(-t)] = F(-j\omega)}\]
+    \item \textbf{Complex conjugate:}
+    \[\boxed{f^*(t) \Longleftrightarrow F^*(-j\omega)}\]
+    \item \textbf{Duality:}
+    \[\boxed{F(t) \Longleftrightarrow 2\pi f(-j\omega)}\]
+    \item \textbf{Time-shifting:}
+    \[\boxed{\mathcal{F}[f(t - \tau)] = e^{-j\omega \tau} F(j\omega)}\]
+    \item \textbf{Derivative:}
+    \[\boxed{\mathcal{F}[f'(t)] = j\omega F(j\omega)} \]
+    \item \textbf{Convolution:}
+    \[\boxed{\mathcal{F}[(f_1 * f_2)(t)] = F_1(j\omega) F_2(j\omega)}\]
+    \item \textbf{Perseval's Theorem:}
+    \[\boxed{\int_{-\infty}^\infty |f(t)|^2 \text{d}t = \frac{1}{2\pi} \int_{-\infty}^\infty |F(j\omega)|^2 \text{d}\omega}\]
+    \item \textbf{Multiplication:}
+    \[\boxed{\mathcal{F}[f_1(t)f_2(t)] = \frac{1}{2\pi} (F_1 * F_2)(j\omega)}\]
+    \item \textbf{Modulation:}
+    \[\boxed{\mathcal{F}[f(t) e^{j\omega_0 t}] = F(j(\omega - \omega_0))}\]
+\end{enumerate}
+
+\subsection*{Proof of Linearity}
+For two signals, $f_1(t)$ and $f_2(t)$ and two complex numbers $a$ and $b$,
+\[\boxed{\mathcal{F}[a f_1(t) + b f_2(t)] = a \mathcal{F}[]f_1(t) + b\mathcal{F}[f_2(t)]}\]
+Another way to write this is
+\[a f_1(t) + b f_2(t) \Longleftrightarrow aF_1(j\omega) + bF_2(j\omega)\]
+where $F_1(j\omega) = \mathcal{F}[f_1(t)]$ and $F_2(j\omega) = \mathcal{F}[f_2(t)]$.\\\\
+To show this, note:
+\begin{align*}
+    \mathcal{F}(af_1(t) + bf_2(t)) &= \int_{-\infty}^\infty (af_1(t) + bf_2(t))e^{-j\omega t} \text{d}t\\
+    &= \int_{-\infty}^\infty af_1(t) e^{-j\omega t} \text{d}t + \int_{-\infty}^\infty bf_2(t) e^{-j\omega t} \text{d}t\\
+    &= a\mathcal{F}[f_1(t)] + b\mathcal{F}[f_2(t)]
+\end{align*}
+This extends to finite combinations, i.e., 
+\[\mathcal{F}\left[\sum_{k = 1}^K a_k f_k(t)\right] = \sum_{k = 1}^K a_k \mathcal{F}[f_k(t)]\]
+
+\subsection*{Linearity example}
+Consider the signal:
+\[f(t) = \begin{cases}\frac{1}{2} & \frac{1}{2} \leq |t| \leq 1 \\ 1 & |t| \geq \frac{1}{2}\end{cases}\]
+This signal steps up and then steps down, as shown below.
+\begin{center}
+    \includegraphics{W5_4.png}
+\end{center}
+[FILL]
+and therefore,
+\begin{align*}
+    F(j\omega) &= \frac{1}{2}2\sinc(2\omega/2\pi) + \frac{1}{2} \sinc(\omega/2\pi)\\
+    &= \sinc(\omega/\pi) + \frac{1}{2} \sinc(\omega/2\pi)
+\end{align*}
+This is shown below:
+\begin{center}
+    \includegraphics{W5_5.png}
+\end{center}
+
+\subsection*{Proof of Time-scaling Property}
+If $\mathcal{F}[f(t)] = F(j\omega)$, then
+\[\boxed{\mathcal{F}[f(at)] = \frac{1}{|a|}F\left(j \frac{\omega}{a}\right)}\] 
+Note, for real $a$:
+\begin{itemize}
+    \item If $a > 1$, $f(t)$ contracts, but its Fourier transform expands.
+    \item If $0 < a < 1$, then $f(t)$ expands, but its Fourier transform contracts.
+    \item Thus, stretching a signal in time compresses its Fourier transform, and compacting the signal expands its Fourier transform.
+\end{itemize}
+To show this, let's consider $a > 0$.  (The proof is essentially the same for $a  0$)  We will use a variable change, $\tau = at$, which means that $\text{d}\tau = a\text{d}t$.
+\[\mathcal{F}(f(at)) = \int_{-\infty}^\infty f(at) e^{-j\omega t} \text{d}t\]
+\example\\
+Knowing that
+\[\text{rect}(t/T) \Longleftrightarrow T\sinc(\omega T/2\pi)\]
+we can then determine that the Fourier transform of $\text{rect}(t)$ is $\sinc(\omega/2\pi)$
+
+\subsection*{Time-Scaling Example}
+Bandwith: consider two rect pulses, $\text{rect}(t)$ and $\text{rect}(t/5)$.  These are their graphs and Fourier transforms.
+\begin{center}
+    \includegraphics*[scale=0.8]{W5_6.png}
+\end{center}
+The fatter rect has a narrower spectrum.  The width of the spectrum is called bandwidth.  So a shorter pulse has a larger bandwidth.
+\subsection*{Time-reversal}
+If $\mathcal{F}[f(t)] = F(j\omega)$, then
+\[\boxed{\mathcal{F}[f(-t)] = F(-j\omega)}\]
+To show this, apply the time-scaling result with $a = -1$.\\
+Find the Fourier transform on $f(t) = e^{-a|t|}$ (for $a > 0$) without doing integration.\\\\
+We know that
+\[e^{-at} u(t) \Longleftrightarrow \frac{1}{a + j\omega}\]
+
+[FILL]
+
+\subsection*{Time-shift}
+If $\mathcal{F}[f(t)] = F(j\omega)$, then
+\[\mathcal{F}[f(t - \tau)] = e^{-j\omega \tau} F(j\omega)\]
+
+\subsection*{Convolution Theorem}
 \end{document}
