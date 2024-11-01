@@ -253,9 +253,88 @@ Now, we just need the mechanism for \textit{tracking} instructions, as described
 \begin{center}
     \includegraphics*[scale=0.8]{W5_8.png}
 \end{center}
-Now, we can remove the MEM stage and consolidate it to one \textbf{functional unit.}
+Now, we can remove the MEM stage and consolidate it to one \textbf{functional unit,} with multiple units (FUs)
 \begin{center}
     \includegraphics*[scale=0.8]{W5_9.png}
 \end{center}
+Our pipeline looks like this:
+\begin{center}
+    \includegraphics*[scale=0.8]{W5_10}
+\end{center}
+\subsection*{Steps}
+\begin{enumerate}
+    \item Fetch
+    \item Dispatch: putting instructions in reservation station.
+    \begin{itemize}
+        \item Copying values (e.g., rsl) to RS.
+        \item Reserving an entry in ROB
+        \item If RS or ROB is full, stall the backend.
+    \end{itemize}
+    \item Issue/Fire: starting the execution once all sources are ready and the FU is available.
+    \begin{itemize}
+        \item Releasing the entry in RS (but not ROB).
+    \end{itemize}
+    \item Complete: copying results to the ROB.
+    \begin{itemize}
+        \item Releasing FU.
+        \item Mark Rd \textit{ready} $\rightarrow$ forwarding happens here!
+    \end{itemize}
+    \item Commit/Retire: writing the results to architectural state (i.e., register and memory)
+    \begin{itemize}
+        \item If this instruction is the top of ROB, commit.
+        \item Mark old (physical) register as free.
+    \end{itemize}
+\end{enumerate}
+
+\subsection*{Out of Order Execution Example}
+\begin{center}
+\includegraphics*[width=\textwidth]{W5_out_of_order/0.png}\\
+\includegraphics*[width=\textwidth]{W5_out_of_order/1.png}\\
+\includegraphics*[width=\textwidth]{W5_out_of_order/2.png}\\
+\includegraphics*[width=\textwidth]{W5_out_of_order/3.png}\\
+\includegraphics*[width=\textwidth]{W5_out_of_order/4.png}\\
+\includegraphics*[width=\textwidth]{W5_out_of_order/5.png}\\
+\includegraphics*[width=\textwidth]{W5_out_of_order/6.png}\\
+\includegraphics*[width=\textwidth]{W5_out_of_order/7.png}\\
+\includegraphics*[width=\textwidth]{W5_out_of_order/8.png}\\
+\includegraphics*[width=\textwidth]{W5_out_of_order/9.png}\\
+\includegraphics*[width=\textwidth]{W5_out_of_order/10.png}\\
+\includegraphics*[width=\textwidth]{W5_out_of_order/11.png}\\
+\includegraphics*[width=\textwidth]{W5_out_of_order/12.png}\\
+\includegraphics*[width=\textwidth]{W5_out_of_order/13.png}\\
+\includegraphics*[width=\textwidth]{W5_out_of_order/14.png}\\
+\includegraphics*[width=\textwidth]{W5_out_of_order/15.png}\\
+\includegraphics*[width=\textwidth]{W5_out_of_order/16.png}\\
+\includegraphics*[width=\textwidth]{W5_out_of_order/17.png}\\
+\includegraphics*[width=\textwidth]{W5_out_of_order/18.png}\\
+\includegraphics*[width=\textwidth]{W5_out_of_order/19.png}\\
+\includegraphics*[width=\textwidth]{W5_out_of_order/20.png}\\
+\includegraphics*[width=\textwidth]{W5_out_of_order/21.png}
+\end{center}
+\subsection*{Summary}
+We now have a way to execute instructions out of order with the three parts discussed earlier:
+\begin{itemize}
+    \item A mechanism for \textit{tracking} instructions
+    \begin{itemize}
+        \item Later instructions might be \textbf{ready}
+    \end{itemize}
+    \item A mechanism for \textit{removing} data hazards
+    \begin{itemize}
+        \item \textbf{New} hazards: WAW, WAR, load-store
+    \end{itemize}
+    \item A mechanism for \textit{recovery}
+    \begin{itemize}
+        \item \textit{Speculation} (e.g., branch misprediction), etc.
+    \end{itemize}
+\end{itemize}
+\subsection*{Datapath with ROB, RAT, FU}
+\begin{center}
+    \includegraphics*[scale=0.7]{W5_11.png}
+\end{center}
+\begin{itemize}
+    \item Each unit can be further split into multiple stages (not shown here).
+\end{itemize}
 \end{document}
+
+
 
