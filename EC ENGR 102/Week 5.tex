@@ -60,8 +60,7 @@ There are interesting symmetries and properties of the Fourier series that are w
 We can apply Euler's formula to re-write the Fourier coefficients, and reveal some symmetries:
 \begin{align*}
     c_k &= \frac{1}{T_0} \int_{t_0}^{t_0 + T_0} f(t) e^{-j\frac{2\pi kt}{T_0}}\text{d}t\\
-    &= \frac{1}{T_0} \int_{t_0}^{t_0 + T_0} f(t) \left[\cos\left(\frac{2\pi k}{T_0}t\right) - j \sin\left(\frac{2\pi k}{T_0}t\right)\right]\text{d}t
-    &= \frac{1}{T_0} \int_{t_0}^{t_0 + T_0} f(t) \cos\left(\frac{2\pi k}{T_0}t\right) \text{d}t - \frac{j}{T_0} \int_{t_0}^{t_0 + T_0} f(t) \sin\left(\frac{2\pi k}{T_0}t\right)\text{d}t
+    &= \frac{1}{T_0} \int_{t_0}^{t_0 + T_0} f(t) \left[\cos\left(\frac{2\pi k}{T_0}t\right) - j \sin\left(\frac{2\pi k}{T_0}t\right)\right]\text{d}t\\    &= \frac{1}{T_0} \int_{t_0}^{t_0 + T_0} f(t) \cos\left(\frac{2\pi k}{T_0}t\right) \text{d}t - \frac{j}{T_0} \int_{t_0}^{t_0 + T_0} f(t) \sin\left(\frac{2\pi k}{T_0}t\right)\text{d}t
 \end{align*}
 In the above equation, the left term is the real part, the right term is the imaginary part.\\\\
 If $f(t)$ is real, then so are:
@@ -212,7 +211,7 @@ Now as $T \rightarrow \infty$, what we see is that this approaches an integral. 
 This is the inverse Fourier transform, which takes you from the frequency domain, $F(j\omega)$ to the time domain, $f(t)$.
 \subsection*{Fourier Transform Summary}
 The fourier transform is:
-\[\boxed{F(j\omega) = \int_{-\infty}^\infty} f(t) e^{-j\omega t} \text{d}t\]
+\[\boxed{F(j\omega) = \int_{-\infty}^\infty f(t) e^{-j\omega t} \text{d}t}\]
 The inverse fourier transform is:
 \[\boxed{f(t) = \frac{1}{2\pi} \int_{-\infty}^{\infty} F(j\omega)e^{j\omega t} \text{d}\omega}\]
 A few notes:
@@ -230,7 +229,7 @@ A few notes:
             |F(j\omega)| &= \left|\int_{-\infty}^\infty f(t) e^{-j\omega t} \text{d}t\right|\\
             &\leq \int_{-\infty}^\infty \left| f(t) e^{-j\omega t} \right| \text{d}t\\
             &= \int_{-\infty}^\infty|f(t)| \text{d}t\\
-            < \infty
+            &< \infty
         \end{align*}
         \item The above is a sufficient (but not necessary) requirement for the existence of the Fourier transform.
     \end{itemize}
@@ -423,7 +422,7 @@ If $f_1(t)$ and $f_2(t)$ are two signals with Fourier transforms $F_1(j\omega)$ 
 \[\boxed{\mathcal{F}[(f_1 * f_2)(t)] = F_1(j\omega) F_2(j\omega)}\]
 Stated simply: \textbf{convolution in the time domain is multiplication in the frequency domain.}  (and multiplication is easy.)\\
 
-\begin{tabular}{llcc}
+\begin{tabular}{llcl}
     Time: & LTI & $y(t) = h(t) * x(t)$ & $\Leftarrow$"Impulse response"\\
     Spectrum: & FT & \hspace{0.1cm}$Y(j\omega) = H(j\omega) X(j\omega)$ & $\Leftarrow$"Frequency response"
 \end{tabular}
