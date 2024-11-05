@@ -1,0 +1,296 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+\graphicspath{{./assets/images}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+
+\title{COM SCI M151B Week 6}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\subsection*{Out of Order Processor Recap}
+\textbf{How to build an out-of-order processor?}
+\begin{itemize}
+    \item Dispatching and Renaming
+    \item Retiring and Re-order buffer (ROB)
+    \item Scheduling and reservation station
+    \item Functional units, fire, and complete
+\end{itemize}
+\textbf{What are the Challenges?}
+\begin{itemize}
+    \item Different design choices
+    \item How to recover?
+    \item How to forward?
+    \item New issues?
+\end{itemize}
+\subsubsection*{Different Design Choices}
+\textbf{Centralized RoB vs. ROB and RS}
+\begin{itemize}
+    \item In the centralized model, RS can be a part of ROB.
+    \item Simplified design when sharing both.
+\end{itemize}
+\subsubsection*{Dispatch}
+\textbf{Scheduling Queue/Reservations Station}
+\begin{itemize}
+    \item Centralized?
+    \begin{itemize}
+        \item You have one ROB connected to many functional units (single datapaths), and each instruction is assigned a functional unit to be run on.
+        \item Benefit: efficient
+        \item Detriment: complicated to implement
+    \end{itemize}
+    \item Per execution unit?
+    \begin{itemize}
+        \item Each functional unit has an ROB and you assign instructions directly to each one.
+        \item Benefit: easier, simpler wiring
+        \item Detriment: you have to schedule in such a way that the work loads for each functional unit is balanced.
+    \end{itemize}
+    \item When to read data?
+    \begin{itemize}
+        \item Read before issue $\rightarrow$ also called data capture
+        \item Read after issue $\rightarrow$ non-data capture
+        \item This is important because it changes the renaming algorithm!
+    \end{itemize}
+    \item How to do the renaming?
+    \begin{itemize}
+        \item Use a RAT and a physical register.
+        \item Use a tag system, store and broadcast those tags (need only an \textit{architectural} register file.)
+    \end{itemize}
+\end{itemize}
+\subsection*{Explicit vs. Implicit}
+\begin{center}
+    \includegraphics*[scale=0.8]{W6_1.png}
+    Explicit: left.  Implicit: right.
+\end{center}
+\subsection*{Wakeup}
+\begin{itemize}
+    \item The load instruction is slow, and we only have one register file.  The register can only load so many values at a time.
+    \item Therefore, we have a process called wakeup. Instructions are "woken up" when data they request from the register file is ready for usage.
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.8]{W6_2.png}
+\end{center}
+\subsection*{More Nuances}
+\textbf{Where to store operands?}
+\begin{itemize}
+    \item Store values and tags in Reservation Station (RS), need only a separate physical register file.
+    \begin{itemize}
+        \item (i.e., "reg read" happens during \textit{dispatch.})
+    \end{itemize}
+    \item Store (physical) register numbers in RS, data held in a unified physical register file.
+    \begin{itemize}
+        \item (i.e., "reg read" happens during \textit{execute.})
+    \end{itemize}
+\end{itemize}
+\textbf{When to forward?}
+\begin{itemize}
+    \item Once instruction is complete (need more ports in ROB)
+    \item Wait for "retire" (simpler but much slower)
+\end{itemize}
+\textbf{How to recover/flush?}
+\begin{itemize}
+    \item Steps:
+    \begin{itemize}
+        \item Flush from RS
+        \item Remove from ROB
+        \item Restore RAT
+        \item Free destination registers
+        \item Free functional units
+        \item Update PC
+    \end{itemize}
+    \item Options:
+    \begin{itemize}
+        \item Log-based: store "old" destination register, and restore RAT one instruction at a time
+        \item Checkpoint-based: have two versions for each table "messy" and "safe".  Use "messy" for RS, copy values from "messy" to "safe" when an instruction is retired.  If recovery is needed, copy "safe" to "messy".
+        \item We can always use a "hybrid" approach!
+    \end{itemize}
+\end{itemize}
+\subsubsection*{Handling Hazards}
+\begin{itemize}
+    \item RAW hazards: "ready" bits in RS take care of that!
+    \item Control hazards: With ROB and RAT we can recover!
+    \item Structural hazard: Ready bits for FU, stall if ROB or RS is full $\rightarrow$ need write-enable for fetch and decode pipeline register (similar to in-order design)
+\end{itemize}
+\textbf{New hazard: memory dependency}
+\begin{itemize}
+    \item RAW: reading from a memory address BEFORE writing to it was finished.
+    \item WAW: writing to the same address twice.
+    \item WAR: do load first and then store.
+\end{itemize}
+\textbf{How to fix?}
+\begin{itemize}
+    \item Renaming won't work since addresses are not known!  We use a store queue!
+\end{itemize}
+\textbf{Store Queue (SQ)}
+\begin{itemize}
+    \item Acts similar to ROB but for store instructions
+    \item Assign an entry during decode (stall if full).
+    \item Store the values in the queue when complete.
+    \item Only write to the memory if the instruction is retired (ROB will send signal)
+    \item This fixes WAW and WAR!  (What about RAW?)
+\end{itemize}
+\textbf{LW-Store Queue (LSQ)}
+\begin{itemize}
+    \item LW can scan the queue and data can be forwarded from store to loads.
+    \item We need to make sure that we preserve the order of writes.
+    \item This fixes RAW!
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.7]{W6_3.png}
+\end{center}
+\subsubsection*{Memory (dis)Ambiguation}
+\begin{center}
+    \includegraphics*[scale=0.8]{W6_4.png}
+\end{center}
+\textbf{Two scenarios:}
+\begin{itemize}
+    \item R1 != R7
+    \item R1 == R7
+\end{itemize}
+Why?
+\begin{itemize}
+    \item value of R7 is dependent on loading the address of R6.
+    \item Meanwhile, R8 is dependent on loading R1.  What if they point to the same virtual location?
+    \item Before the load finishes, we don't know if R1 and R7 are the same!  (Stalling a few cycles to find out is slow.)
+    \item We can instead guess whether or not they are equal!
+\end{itemize}
+This is like branch prediction, but with values instead.
+\subsection*{Simplified Pipeline}
+\begin{center}
+    \includegraphics*[width=\textwidth]{W6_5.png}
+\end{center}
+\section*{Memory}
+We have spent the last five weeks looking at the CPU, and caught up with the current CPU design.  What's next?
+\begin{itemize}
+    \item Before, we always abstracted away the memory and assumed that it is always there, but in reality, memory is a big challenge
+    \item Memory as it exists now is very slow.  This is called the "Memory Wall". 
+    \item Accessing DRAM takes 1000's of cycles in modern processors.  CPU speed is growing faster than memory speed.
+    \begin{itemize}
+        \item The performance gap between memory and CPU is growing by around 50\% per year.
+    \end{itemize}
+\end{itemize}
+\subsection*{Caching}
+The fundamental challenge of memory: memories can be \textbf{either} large \textbf{or} fast.\\
+We need a memory hierarchy.
+\begin{itemize}
+    \item Latches and Flip-Flops (aka Registers)
+    \begin{itemize}
+        \item Very fast, parallel access.
+        \item Very \textit{expensive} (one bit costs 10+ transistors.)
+        \item \textbf{Size:} a few KB
+        \item \textbf{Access time:} within a cycle (<1ns)
+    \end{itemize}
+    \item Static RAM (SRAM)
+    \begin{itemize}
+        \item Relatively fast, only one data word at a time.
+        \item Expensive (one bit costs 6+ transistors.)
+        \item \textbf{Size:} 10-100 KB
+        \item \textbf{Access time:} 2-5 to 10s cycles (1-3/10s ns)
+    \end{itemize}
+    \item Dynamic RAM (DRAM)
+    \begin{itemize}
+        \item Slower, one data word at a time, reading \textit{destroys} content (refresh), needs special process for manufacturing.
+        \item Cheap (one bit costs only \textbf{one} transistor plus one capacitor.)
+        \item \textbf{Size:} 1-10s GB
+        \item \textbf{Access time:} 500-1000s cycles (>100ns)
+    \end{itemize}
+    \item Disk (flash memory, hard disk)
+    \begin{itemize}
+        \item Much slower, access takes a long time, \textbf{non-volatile.}
+        \item Very cheap.
+        \item \textbf{Size:} 1-10 TB.
+        \item \textbf{Access time:} 10k-100k cycles (>10ms = 10000000 ns)
+    \end{itemize}
+\end{itemize}
+We build a hierarchy of memory to compromise between fast and large memory!
+\begin{itemize}
+    \item Data that is currently used goes into the registers.
+    \item Commonly accessed data goes into SRAM
+    \item Data that is used sometimes goes into DRAM
+    \item Data that is rarely used goes into Disk.
+    \item A given piece of data can be moved between the layers of the hierarchy if its usage changes.
+\end{itemize}
+\subsubsection*{Why Hierarchy would Work?}
+\begin{itemize}
+    \item \textbf{Temporal Locality}
+    \begin{itemize}
+        \item Items accessed recently are likely to be accessed again soon.
+        \item Examples: instructions in a loop, induction variables
+    \end{itemize}
+    \item \textbf{Spatial Locality}
+    \begin{itemize}
+        \item Items \textit{near} those accessed recently are likely to be accessed soon.
+        \item Examples: sequential instruction access, array data.
+    \end{itemize}
+\end{itemize}
+\subsection*{Cache}
+The cache stores temporary data close to the CPU.
+\begin{itemize}
+    \item If the requested data exists in the cache, we call it a \textbf{cache hit}.
+    \item If the requested data does not exist in the cache, it is a \textbf{cache miss}.
+    \begin{itemize}
+        \item When cache miss, we need to bring the data from the main memory and put it in the cache.
+    \end{itemize}
+\end{itemize}
+\subsubsection*{Memory Delay}
+Recall the pipeline:
+\begin{center}
+    \includegraphics*[scale=0.8]{W6_6.png}
+\end{center}
+In reality, depending on where the data is, the MEM stage may take 1-1000 cycles!  (Stalling!)
+\begin{itemize}
+    \item If in L1 cache?  1 cycle.
+    \item Else if in L2?  20 cycles.  (STALL!)
+    \item Else if in L3?  100 cycles.  (STALL!)
+    \item Else\dots
+\end{itemize}
+This is the reason why memory is so important.
+\subsection*{Cache Design}
+The goal: minimizing the access to the main memory!  (i.e., minimizing stalls!)
+\begin{itemize}
+    \item Average time to access the memory:
+    \[AAT = HitTime + MissRate \times MissPenalty\]
+    \begin{itemize}
+        \item $HitTime$: Time it takes to access the (L1) cache.
+        \item $MissRate$: The average frequency of misses (in L1).
+        \item $MissPenalty$: The time required to access the main memory.
+    \end{itemize}   
+\end{itemize}
+\textbf{Problem:} we have limited space in cache!\\
+\textbf{Solution:} Cache \textit{management}!
+
+\subsection*{Where to store/find data?}
+\begin{itemize}
+    \item We have the address (32 bit)
+    \item We need:
+    \begin{enumerate}
+        \item Whether this address exists in the cache.
+        \item The value/content
+    \end{enumerate}
+    \item Assuming a 32-bit PC, each unique value of PC is one line in memory = 4 billion lines of memory!  This is not practical because it would be slow.
+    \item The cache is only a tiny fraction of memory space!  Therefore, one cache row is assigned to \textbf{many} memory lines.
+\end{itemize}
+\end{document}
