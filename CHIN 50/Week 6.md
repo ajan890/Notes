@@ -68,3 +68,15 @@
 * The Mongols were relatively laissez-faire when it came to regulating trade.  They didn't mind what people did as long as they agreed to be subjects to the Mongol government.
 * Despite this, the Mongols had very strong social control; they attempted to do heriditary inheritance of jobs; your children are forced into whatever job you have.
 * Mongols created their own versions of Daoism and Buddhism
+
+#### People
+* Marco Polo (c. 1254-1324) travelled to China during the Mongol rule, and was given multiple government positions after he impressed Khubilai Khan with his linguistic and diplomatic skills.
+
+# Ming Dynasty
+### Red Turban Movement
+* The Red Turban Movement was an uprising of peasants that overthrew the Yuan Dynasty and drove the Mongols back north (to Mongolia).
+* The uprising began after the Mongols began discriminating against Chinese officials, preferring Mongol officials instead.  This with heavy taxation, forced labor (e.g., hereditary jobs), and corruption fueled the rebellion.
+#### Zhu Yuanzhang
+* Zhu Yuanzhang (1328-1398, r. 1368-1398) was a monk who lost his family during a famine and since 1352, became an exceptional leader during the Red Turban movement.
+  * In 1367, he captured the Yuan capital, Dadu (located at modern-day Beijing), and declared himself emperor of the Ming dynasty.
+* He was partially responsible for the design of Beijing, which was a relatively-large, walled city, as well as the forbidden city in the center.
