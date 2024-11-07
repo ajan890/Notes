@@ -293,4 +293,124 @@ The goal: minimizing the access to the main memory!  (i.e., minimizing stalls!)
     \item Assuming a 32-bit PC, each unique value of PC is one line in memory = 4 billion lines of memory!  This is not practical because it would be slow.
     \item The cache is only a tiny fraction of memory space!  Therefore, one cache row is assigned to \textbf{many} memory lines.
 \end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.8]{W6_7.png}
+\end{center}
+\textbf{What do we store as the tag?}
+\begin{itemize}
+    \item Ideally, we have a one-to-one mapping of bits to tag.  However, we need a lot of tags, and we have limited space.  We will not achieve the one-to-one mapping.  As a result, we may for example only store the last few bits of the tag, and use an index.
+    \item Consider the example of three-bit tags.  (e.g., we only have 3 bits to store an address.  Instead of doing a 1:1 mapping, we divide it to a 1-bit tag and a 2-bit index.)
+    \begin{center}
+        \includegraphics*[scale=0.8]{W6_8.png}
+    \end{center}
+\end{itemize}
+\subsection*{How to Organize Data in Cache?}
+\begin{itemize}
+    \item There are different addressing modes
+    \begin{itemize}
+        \item Find the first available spot! (problem?)
+        \item Use index to only go to one line! (problem?)
+    \end{itemize}
+    \item Solution: use a \textit{Direct-Mapped Cache}
+    \begin{itemize}
+        \item Same index should go to the same row!
+    \end{itemize}
+\end{itemize}
+\subsubsection*{Direct-Mapped Cache Lookup}
+\begin{center}
+    \includegraphics*[scale=0.8]{W6_9.png}
+\end{center}
+Suppose we want to search indexes 0, 8, 0, 8, 0, 8, in that order.  Since our cache is not big enough, it misses every time!
+\subsection*{Alternative to Direct-Mapped?}
+\begin{itemize}
+    \item Instead of assigning each memory address into a predetermined set, why don't we put the new data into any free set?
+    \begin{center}
+        \includegraphics*[scale=0.8]{W6_10.png}
+    \end{center}
+    \item Here, we can exploit locality; if the search indexes are 0, 8, 0, 8, 0, 8, then they can be stored next to each other.  The miss rate is zero after the initial loads.  However, this now comes with the tradeoff that the list is unsorted, which means searching for tags takes a lot longer.
+    \begin{itemize}
+        \item Average Access Time = $HitTime + MissRate \times MissPenalty$
+        \item $HitTime$: Direct Mapped << Fully Associative
+        \item $MissRate$: Direct Mapped >> Fully Associative
+        \item $MissPenalty$: Direct Mapped == Fully Associative
+    \end{itemize}
+    \item Here, hit time and miss rate are tradeoffs.  What if we have both?
+    \item Introducting, \textit{set-associative} cache
+    \begin{itemize}
+        \item Add associativity \textit{within} each set!
+    \end{itemize}
+    \begin{center}
+        \includegraphics*[scale=0.8]{W6_11.png}
+    \end{center}
+    We call each column \textbf{way}.  This cache is 2-way set-associative.
+    \begin{center}
+        \includegraphics*[scale=0.8]{W6_12.png}
+    \end{center}
+    \begin{itemize}
+        \item Average Access Time = $HitTime + MissRate \times MissPenalty$
+        \item $HitTime$: DM < SA << FA
+        \item $MissRate$: DM >> SA > FA
+        \item $MissPenalty$: DM == FA == SA
+    \end{itemize}
+    \item Set-Associative mapping is a compromise between Direct-Mapped and Fully Associative.
+\end{itemize}
+\subsection*{What happens on a miss?}
+Specifically, which cache entry do we evict and replace?
+\begin{itemize}
+    \item Option 1: pick at \textbf{random}!
+    \begin{itemize}
+        \item Very easy to implement
+        \item Not the best usage for \textit{temporal} locality
+    \end{itemize}
+    \item Option 2: pick the \textbf{least-recently-used (LRU)}!
+    \begin{itemize}
+        \item Find the oldest line and evice that!
+        \item This preserves locality!
+        \item This needs to store age and adds overhead (bad)!
+        \item Not practical for large caches.
+    \end{itemize}
+    \item Option 3: The compromise: \textbf{Pseudo-LRU} Replacement Policy
+    \begin{itemize}
+        \item Store only one bit per row, all start assigned to 0.
+        \item On a hit, set the bit to 1.
+        \item On a miss, find the first row with flag==0.
+        \item If all bits are 1, pick the first row and reset all bits to 0.
+    \end{itemize}
+    \item Can we do better?
+\end{itemize}
+\subsubsection*{Replacement Policy Tradeoffs}
+\begin{itemize}
+    \item Storage vs. Accuracy
+    \begin{itemize}
+        \item Possible solutions:
+        \begin{itemize}
+            \item Approximate (pseudo-LRU)
+            \item Adaptive (Change strategies based on how it has been running)
+            \item Hybrid (Combine multiple strategies)
+        \end{itemize}
+        \item \textbf{Important Note:} replacement policy performance is quite dependent on the access pattern (i.e., what type of locality are we seeing).
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Three Types of Miss in a Cache}
+\begin{itemize}
+    \item Compulsory Miss
+    \begin{itemize}
+        \item To have something in the cache, first it must be \textit{fetched}.
+        \item The initial fetch of anything is a \textit{miss}.
+        \item Also called unique references or first-time references.
+    \end{itemize}
+    \item Capacity Miss
+    \begin{itemize}
+        \item A miss that occurs due to the \textbf{limited capacity} in a \underline{fully-associative cache}.
+    \end{itemize}
+    \item Conflict Miss
+    \begin{itemize}
+        \item For \underline{set associative} or \textit{direct-mapped} only.
+        \item Misses due to the index bits matching (conflicts).
+        \item Also called mapping misses.
+    \end{itemize}
+\end{itemize}
+
+
 \end{document}
