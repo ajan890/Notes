@@ -80,3 +80,11 @@
 * Zhu Yuanzhang (1328-1398, r. 1368-1398) was a monk who lost his family during a famine and since 1352, became an exceptional leader during the Red Turban movement.
   * In 1367, he captured the Yuan capital, Dadu (located at modern-day Beijing), and declared himself emperor of the Ming dynasty.
 * He was partially responsible for the design of Beijing, which was a relatively-large, walled city, as well as the forbidden city in the center.
+#### The Great Wall
+* After the Mongols were driven out, people during the Ming dynasty decided to "upgrade" the Great Wall.  Emperors from many previous dynasties already had the concept and had small sections of walls built, but it was during the Ming dynasty where the full-scale project took place
+* Most of the workers on the wall were peasants who were conscripted, as well as prisoners who were forced to build the wall as punishment.
+* Engineers, soldiers, artisans, and craftsmen also helped on the wall, mostly focusing on designing the structure and sourcing materials rather than the physical labor.
+#### People
+* Zheng He (1371-1433) was a eunich who served Prince Zhu Di.  He was valued by the Prince for his intelligence and knowledge of the outside world.  When Zhu Di became the emperor, he appointed Zheng He as an admiral of the treasure fleet, a fleet of approximately 300 ships which served as both naval defense and trading ships.  His fleet traded many Chinese items (e.g., silk) with items from other regions, including spices and animals.  He was also responsible for establishing diplomatic relations with other civilizations.
+* Matteo Ricci (1552-1610) was an Italian Jesuit priest and scholar, and one of the first Western missionaries to enter China.  He was responsible for much of the early scientific and cultural exchange between China and Europe.
+
