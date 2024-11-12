@@ -1,0 +1,376 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+\graphicspath{{./assets/images}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+
+\title{COM SCI M151B Week 7}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\subsection*{Cache Block}
+\begin{itemize}
+    \item Instead of storing 1 byte per row, we can store a block with multiple bytes.
+    \begin{itemize}
+        \item Every time we need to load something to the cache, we load it at block level.  (Spatial Locality)
+        \item We still send things to the CPU at byte level
+        \begin{itemize}
+            \item How to do that? $\rightarrow$ We need \textit{block offset} to decide which byte within the block should be selected!
+        \end{itemize}
+        \item How big a block should be?  It depends!  Typically somewhere between 8B-64B.
+    \end{itemize}
+    \item Therefore, \textbf{Cache Address = \{tag, index, block offset\}}
+\end{itemize}
+\subsection*{A 64B Direct Mapped Cache}
+\begin{center}
+    \includegraphics*[scale=0.8]{W7_1.png}
+\end{center}
+\begin{itemize}
+    \item Address is used to select index, of tag, which selects "rows", and block offset selects the word "columns".
+\end{itemize}
+
+\subsection*{A 64B 2-way Set Associative Cache}
+\begin{center}
+    \includegraphics*[scale=0.8]{W7_2.png}
+\end{center}
+\begin{itemize}
+    \item Compared to the direct mapped cache, the tag is two bits shorter to make way for an index.
+    \item Here, the tag is used to select which "Way" is used, and the two bits of the index selects the row.  The block offset then gets the column.
+\end{itemize}
+
+\subsection*{CBS}
+\begin{itemize}
+    \item C = log(bytes per cache)
+    \item B = log(bytes per block)
+    \item S = log(blocks per set)
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.9]{W7_3.png}
+\end{center}
+
+\subsection*{How Big A Block Should Be?}
+\begin{itemize}
+    \item Bringing more data is nice because you have spatial locality
+    \item However, it is not always the best idea because it increases overhead
+    \item You are essentially making a trade off between miss rate and miss penalty.
+\end{itemize}
+
+\subsection*{Reducing Miss Rate}
+\begin{itemize}
+    \item Miss rate can be reduced by making blocks bigger, but that comes at the trade-off of miss penalty.
+    \item What if we increase associativity?  (e.g., add more ways)
+    \begin{itemize}
+        \item More ways leads to higher hit time.  (As log(cache size) increases, miss rate drops, but it drops following an exponential decay function.  "diminishing returns")
+        \item An 8-way set associative cache is as good as fully-associative.  After that, the limit is capacity miss.
+    \end{itemize}
+    \item We can also increase cache size.  But this leads to slower hit time.  Making cache larger also has diminishing returns!
+    \item Prefetching:  Idea: if we can guess the access pattern we can bring data before it is needed!
+\end{itemize}
+
+\subsection*{Prefetching - Four Questions!}
+\begin{itemize}
+    \item \textbf{What} addresses to prefetch (i.e., address prediction algorithm)
+    \item \textbf{When} to initiate a prefetch request (early, late, on time)
+    \item \textbf{Where} to place the prefetched data (different layers of caches, separate buffer)
+    \item \textbf{How} does the prefetcher operate and who operates it (software, hardware, hybrid)
+\end{itemize}
+Prefetchers look at the history of addresses accessed to predict the next address access.  Similar to how a branch predictor looks at the history of branches, the prefetcher looks at the history of addresses.\\
+\begin{itemize}
+    \item This reduces compulsory misses and therefore miss rate
+    \item However, this leads to cache pollution
+    \begin{itemize}
+        \item Need to monitor prefetching accuracy to change its \textit{aggressiveness}
+        \item Other than this, no other negative impacts!  No correctness issues!
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Software vs. Hardware Prefetch}
+\begin{itemize}
+    \item Software prefetching
+        \begin{itemize}
+            \item ISA provides prefetch instructions
+            \item Programmer or compiler inserts prefetch instructions (effort)
+            \item Usually works well only for "regular access patterns"
+        \end{itemize}
+    \item Hardware prefetching
+    \begin{itemize}
+        \item Hardware monitors processor accesses
+        \item Memorizes or finds patterns/strides
+        \item Generates prefetch addresses automatically
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Example: Hardware Prefetcher}
+Next line prefetcher:
+\begin{itemize}
+    \item Always prefetch next N cache lines after a demand access
+    \item Pros:
+    \begin{itemize}
+        \item Simple to implement
+        \item No need for sophisticated pattern detection
+        \item Works well for sequential/streaming access patterns (instrctions?)
+    \end{itemize}
+    \item Cons:
+    \begin{itemize}
+        \item Can waste bandwidth with irregular patterns
+        \item Low prefetch accuracy if access stride = 2 or when the program is traversing memory from higher to lower addresses.
+    \end{itemize}
+    \item Better options?  Stride prefetcher, stream buffers, etc.
+\end{itemize}
+
+\subsubsection*{Victim Cache}
+\begin{itemize}
+    \item Idea: for heavily conflicting addresses, a few "extra" temporary sets could remove conflicts!
+    \begin{itemize}
+        \item Use a very small buffer (called victim cache) to save the recently discarded blocks.  Search through them as well.
+        \item Reduce conflict misses
+        \begin{itemize}
+            \item Research shows a 4-entry victim cache can remote up to 90\% of conflicts.
+        \end{itemize}
+        \item Extra overhead
+        \item More complex design.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Compiler and Software}
+\begin{itemize}
+    \item Reorder accesses/arrays to increase locality.
+    \item Combine loops with similar behavior
+    \item Use "tiling" to access arrays region by region instead of whole
+    \begin{itemize}
+        \item If column-major, \texttt{x[i+1, j]} follows \texttt{x[i, j]} in memory.
+        \item Meanwhile, \texttt{x[i, j + 1]} is far away from \texttt{x[i, j]}.
+        \item Poor code:
+\begin{verbatim}
+    for i = 1:
+        for j = 1:
+            sum = sum + x[i, j]
+\end{verbatim}
+        \item Better code:
+\begin{verbatim}
+    for j = 1:
+        for i = 1:
+            sum = sum + x[i, j]
+\end{verbatim}
+    \end{itemize}
+    \item Use compiler profiling to improve prefetching
+\end{itemize}
+
+\subsection*{Reducing Miss Rate}
+\begin{itemize}
+    \item Replacement policy
+    \begin{itemize}
+        \item LRU vs. PLRU vs. Random
+        \item Storage vs. Accuracy tradeoff!
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Reducing Miss Penalty}
+\begin{itemize}
+    \item Write buffer: use a load store queue
+    \item Pros:
+    \begin{itemize}
+        \item No wait for stores needed.
+        \item Lower miss penalty for loads.
+    \end{itemize}
+    \item Cons:
+    \begin{itemize}
+        \item More overhead.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{What happens on a store?}
+\begin{enumerate}
+    \item Data exists in the cache?
+    \begin{itemize}
+        \item Should we update memory AND cache on every write?
+        \begin{itemize}
+            \item Write through strategy
+        \end{itemize}
+        \item Update the memory only when the line is evicted.
+        \begin{itemize}
+            \item Write back strategy
+        \end{itemize}
+        \item Tradeoff: Less writes vs. Storage overhead vs. Memory status.
+    \end{itemize}
+    \item Data does not exist.
+    \begin{itemize}
+        \item Should we bring it to the cache?  -write allocate
+        \item We probably don't need it anymore, so don't bring it.  -write no allocate
+    \end{itemize}
+\end{enumerate}
+\begin{itemize}
+    \item \textit{Write back} often compined with \textit{write-allocate.}
+    \item \textit{Write-through} often combined with \textit{write-no allocate.}
+    \item How to pick?
+    \begin{itemize}
+        \item It depends!
+        \begin{itemize}
+            \item Could be different for each level!
+            \item Can be optimized using simulation and architectural search!
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Reducing Miss Penalty via Early Restart}
+\begin{itemize}
+    \item Instead of waiting for all bytes (in a block) to arrive, forward data to CPU as soon as the requested byte(s) arrives.
+    \begin{center}
+        \includegraphics*[scale=1]{W7_4.png}
+    \end{center}
+\end{itemize}
+Early Restart \textit{with critical word first}:
+\begin{itemize}
+    \item Instead of waiting for all bytes (in a block) to arrive, forward data to CPU as soon as the requested  byte(s) arrives.
+    \item To further optimize this, first read the requested byte!
+\end{itemize}
+
+\subsection*{Multi-level Cache}
+\begin{itemize}
+    \item We can also reduce miss penalty by adding more levels of cache:
+    \begin{itemize} 
+        \item Adding L2, L3, etc.
+    \end{itemize}
+    \item Higher level cache means bigger and slower.  However, it is still both smaller and faster than the main memory.
+    \begin{center}
+        \includegraphics*[scale=0.5]{W7_5.png}
+    \end{center}
+\end{itemize}
+
+\subsection*{Cache Performance}
+\begin{itemize}
+    \item Average time to access the cache:
+    \[AAT = HitTime + MissRate \times MissPenalty\]
+    \item $HitTime$: Time it takes to access the (L1) cache.
+    \item $MissRate$: The average frequency of misses (in L1).
+    \item $MissPenalty$: The time required to access the main memory.
+    \item What if there are multiple levels?
+    \begin{itemize}
+        \item The miss penalty is the average time required to grab the data from either the other caches or main memory.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Inclusive vs. Exclusive Cache}
+\begin{itemize}
+    \item Inclusive: $L_i$ is a subset of $L_{i + 1}$
+    \begin{itemize}
+        \item (pro) Easier to find data
+        \item (con) Wasted capacity
+    \end{itemize}
+    \item Exclusive: Data is \textbf{only} in one of the levels.
+    \begin{itemize}
+        \item (con) Difficult to find data
+        \item (pro) Efficient capacity
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Modern Designs}
+\begin{itemize}
+    \item Split vs Unified "Caches"
+    \begin{itemize}
+        \item L1 I/D caches commonly split and asymmetrical
+        \begin{itemize}
+            \item Double bandwidth and no-cross pollution on disjoint I and D footprints
+            \item i-cache is smaller, simpler with more spatial locality.  Usually a prefetcher and/or trace cache is connected to i-cache.
+        \end{itemize}
+        \item L2 and L3 are unified for simplicity
+    \end{itemize}
+    \item "Havard" design referred to a microarchitecture with \textbf{separate} instruction and data memory.
+    \item "Princeton" design referred to von Neumann's \textbf{unified} instruction and data memory.  This is the most common design.
+\end{itemize}
+
+\subsection*{Sub-Blocking}
+\begin{itemize}
+    \item Higher block size improves miss rate but also increases miss penalty!
+    \item Idea: keep a large block size, but divide it into smaller "subblocks".  Bring only a subset of subblocks on a miss.
+    \begin{itemize}
+        \item (pro) lower miss rate
+        \item (pro) lower miss penalty
+        \item (con) need separate storage for valid bits for each subblock
+        \item (con) more complex circuitry.
+    \end{itemize}
+\end{itemize}
+
+
+\subsection*{Reducing Hit Time via reducing associativity and size}
+\begin{itemize}
+    \item DM < FA (direct mapping < fully associative)
+    \begin{itemize}
+        \item Use SA to balance between the two
+    \end{itemize}
+    \item Use smaller cache in lower levels (L1, L2, \dots)
+\end{itemize}
+
+\subsection*{Reducing Hit Time via Parallel lookup}
+\begin{itemize}
+    \item Access tag and data in parallel.
+    \item Access each way in parallel.
+\end{itemize}
+
+\subsection*{Reducing Hit Time via Speculative load}
+\begin{itemize}
+    \item Instead of waiting for a store (potentially conflicting), issue the load speculatively.
+    \begin{itemize}
+        \item Once store is resolved, check whether there was a conflict or not.  Recover if there was.
+    \end{itemize}
+\end{itemize}
+\section*{Cache Summary}
+\begin{itemize}
+    \item Miss Rate
+    \begin{itemize}
+        \item Increase block size
+        \item Increase associativity
+        \item Increase cache size
+        \item Prefetching
+        \item Victim cache
+        \item Compiler
+        \item Replacement Policy
+    \end{itemize}
+    \item Miss Penalty
+    \begin{itemize}
+        \item Write buffer
+        \item Early restart with critical block first
+        \item Adding more levels
+        \item Sub-blocking
+    \end{itemize}
+    \item Hit Time
+    \begin{itemize}
+        \item Set associative cache
+        \item Add more levels
+        \item Parallel lookup
+        \item Speculative loads
+    \end{itemize}
+\end{itemize}
+
+
+
+
+
+
+
+
+\end{document}
