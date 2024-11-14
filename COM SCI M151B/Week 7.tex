@@ -9,7 +9,7 @@
 \usepackage{amsmath, amsfonts, amssymb, amsthm}
 
 % lists
-\usepackage{enumerate}
+\usepackage{enumerate, enumitem}
 
 % images
 \usepackage{graphicx} % for images
@@ -366,11 +366,281 @@ Early Restart \textit{with critical word first}:
     \end{itemize}
 \end{itemize}
 
+\section*{Main Memory}
+\subsection*{Current Technology}
+\begin{itemize}
+    \item We see combination of DRAM and DISK as the main memory (usually call teh DRAM part Main Memory and the HardDrive part DISK).
+    \item Access to the Main Memory (combination of disk and DRAM) is \textit{always a hit}.
+    \begin{itemize}
+        \item As we will describe alter, data could be in disk and/or DRAM, and we need to handle that.
+        \item Huge difference between latency of DRAM to DISK (and of course to cache).
+    \end{itemize}
+\end{itemize}
+\subsection*{Where to store different programs?}
+\begin{center}
+    \includegraphics*[scale=0.8]{W7_6.png}
+\end{center}
+The fundamental requirement is \textbf{Isolation}.
+\begin{itemize}
+    \item Each program typically has \textit{different} regions:
+    \begin{itemize}
+        \item code
+        \item data
+        \item heap
+        \item stack
+        \item \dots
+    \end{itemize}
+    \item Portion of the memory code can be \textbf{shared} among multiple programs
+    \item Portion of the memory can be \textbf{reserved} for the OS and/or other privileged activities.
+\end{itemize}
 
+\subsection*{Memory Management}
+\begin{itemize}
+    \item Early (and simple) machines only run one program with unrestricted access to ALL memory.
+    \item Modern systems run several programs, and memory should be shared between multiple programs.
+    \item Memory management is controlled by OS or system software, or hardware.
+\end{itemize}
 
+\subsection*{How to share the memory between multiple programs?}
+\textbf{Option 1:} Partition the memory (statically)!
+\begin{itemize}
+    \item \textbf{Protection:} Independent program should not be able to affect each other inadvertently.  (check bounds!)
+    \item \textbf{Location-Independence:} Program might be moved anywhere in the memory.  (use a base pointer!)
+    \item To do these, we use a \textit{virtual} address, which is the base pointer plus whatever pointer in the program.
+    \begin{itemize}
+        \item When switching programs, OS updates base and bound registers.
+        \item Example: $PA = Base\_Reg + Logical\_Adr$
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.5]{W7_7.png}
+    \includegraphics*[scale=0.6]{W7_8.png}
+\end{center}
 
+\hrulefill
+\subsubsection*{How to share code/libraries?}
+\begin{itemize}
+    \item Multiple programs can access (read-only) shared memory spaces.
+    \begin{itemize}
+        \item Standard libraries (e..g, printf)
+        \item Drivers
+        \item \dots
+    \end{itemize}
+    \item To do this, the library will be stored in its own block of main memory, and each program has a pointer to it!
+    \item What about the OS?  (e.g., system commands)  The OS is a program as well!  Therefore, it can be shared.
+\end{itemize}
+\hrulefill
+~\\
+What happens if we want to add a program or change the space the program takes up?\\\\
+\textbf{Option 2:} Partition the memory (dynamically)!
+\begin{itemize}
+    \item Divide the memory into fixed-size blocks (called page).
+    \item Assign pages to each program as needed.
+    \item Pages can be \textit{scattered} in the memory
+    \item Typically 4KB per page.
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.8]{W7_9.png}
+\end{center}
+\begin{itemize}
+    \item Now we have another problem: each page can be \textit{anywhere}!
+    \item To solve this, we use a \textit{page table} which tracks mapping!
+\end{itemize}
 
+\subsection*{Virtual Addressing}
+\begin{itemize}
+    \item Since we are using page tables for translations, we no longer need to use real physical memory addresses in each program.
+    \begin{itemize}
+        \item Each program can start from (virtual) address 0x00.
+        \item Each program sees a \textit{large, private}, and \textit{uniform} memory.  (this is just an illusion though!)
+    \end{itemize}
+    \begin{center}
+        \includegraphics*[scale=0.6]{W7_10.png}\\
+    \end{center}
+    \begin{itemize}
+        \item Each program sees a large, private, and unified memory.
+    \end{itemize}
+    \begin{center}
+        \includegraphics*[scale=0.8]{W7_11.png}
+    \end{center}
+\end{itemize}
 
+\subsubsection*{Virtual to Physical Address Translation}
+\begin{itemize}
+    \item $2^n$: virtual address size
+    \item $2^m$: physical address size
+    \item $2^p$: page size
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.7]{W7_12.png}
+\end{center}
+\subsubsection*{Virtual and Physical Memory}
+\begin{itemize}
+    \item System:
+    \begin{itemize}
+        \item Virtual memory size: 4GB = $2^{32}$ bytes
+        \item Physical memory size: 256MB = $2^{28}$ bytes
+        \item Page size: 4KB = $2^{12}$ bytes
+    \end{itemize}
+    \item Organization:
+    \begin{itemize}
+        \item Virtual address: $32$ bits
+        \item Physical address: $28$ bits
+        \item Page offset: $12$ bits
+        \item \# Virtual pages = $2^{32} / 2^{12} = 2^{20}$ (VPN = $20$ bits)
+        \item \# Physical pages = $2^{28} / 2^{12} = 2^{16}$ (PPN = $16$ bits)
+    \end{itemize}
+\end{itemize}
+\subsubsection*{Page Table}
+\begin{center}
+    \includegraphics*[scale=0.8]{W7_13.png}
+\end{center}
+\begin{itemize}
+    \item Note that the Virtual Page Number (VPN) is the index to the table.
+\end{itemize}
+\subsubsection*{What else to store in each page table entry (PTE)?}
+\begin{itemize}
+    \item Protections and flags
+    \begin{itemize}
+        \item Whether we can write to this page or not (read-only)?
+        \item Who is the owner?  Is it shared?
+        \item Can we execute it?
+    \end{itemize}
+    \item Page tables must also be stored in the memory.
+    \item Each memory access becomes two accesses, one for accessing the page table (i.e., adr + VPN + base).  The other for accessing the translated address (i.e., adr = PPN + page offset).
+\end{itemize}
+\subsubsection*{How large is a page table?}
+\begin{itemize}
+    \item \# Virtual pages = $2^{32} / 2^{12} = 2^{20}$  (VPN = $20$ bits)
+    \item Physical address: 28
+    \item Each entry in page table (PTE) = 28 - offset + flags $\approx 32$ bites = 4 bytes.
+    \item $\rightarrow 2^{30} \times 32 = 4\text{MB}$ for each application!
+    \item Number of bits double in a 64-bit system!
+\end{itemize}
 
+\subsection*{Hierarchical Page Table}
+\begin{itemize}
+    \item Store the page table as a page table
+    \begin{center}
+        \includegraphics*[scale=0.7]{W7_14.png}
+    \end{center}
+    \item Now we divide one translation into multiple.  
+    \item The process of going from one level of page table to the next is called "walking".
+    \item The problem is that now the page table is huge, and memory is limited.
+    \item Solution: Remove some second level pages!  Empty page tables can be immediately removed, and reallocated in memory if it is needed.
+    \item Hierarchical page tables can leverage the existing sparsity of virtual addressses and make the page table storage compact!
+    \item New problem: Each memory access (e.g., L1 cache) needs multiple memory accesses!
+    \begin{itemize}
+        \item To address this, \textbf{cache} the most recent translations!
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Translation Lookaside Buffer (TLB)}
+\begin{center}
+    \includegraphics*[scale=0.9]{W7_15.png}
+\end{center}
+\begin{itemize}
+    \item The hit time is $t_{TLB} + t_{L1}$.
+    \item Cache translations in TLB
+    \begin{itemize}
+        \item TLB hit $\Rightarrow$ Single-cycle translation
+        \item TLB miss $\Rightarrow$ Page-Table Walk to refill
+    \end{itemize}
+    \begin{center}
+        \includegraphics*[scale=0.8]{W7_16.png}
+    \end{center}
+\end{itemize}
+
+\subsubsection*{TLB Design}
+\begin{itemize}
+    \item Typically 32-128 entries, usually fully associative
+    \begin{itemize}
+        \item Each entry maps a large page, hence less spatial locality across pages.
+        \item Larger TLBs (256-512 entries) are 4 or 8 way set-associative.
+        \item Larger systems sometimes have multi-level (L1 and L2) TLBs.
+        \item Random or FIFO replacement policy
+        \item \textbf{TLB Reach:}
+        \begin{itemize}
+            \item Size of largest virtual address space that can be simultaneously mapped by TLB
+            \item Example: 64 TLB entries, 4KB pages, one page per entry.  TLB Reach = $256$ KB
+        \end{itemize}
+        \item TLB miss causes an exception and results in a page table walk.
+        \item OS typically is responsible to handle TLB miss (software handling).
+        \item Alternatively, memory management unit (MMU) can handle TLB miss.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{How to utilize disk?}
+\begin{itemize}
+    \item Disk is our secondary storage unit with much bigger size, but much larger access time.
+    \item How do we use this efficiently?
+\end{itemize}
+
+\subsubsection*{Demand Paging}
+\begin{itemize}
+    \item Use main memory and "swap" pages in the disk as automatically managed memory hierarchy levels.
+    \item $\rightarrow$ Analogous to cache vs. main memory
+    \item $M$ (DRAM + Disk capacity) bytes of storage.
+    \begin{itemize}
+        \item keep most frequently used $C$ bytes in DRAM ($C << M$)
+        \item keep the rest in disk.
+        \item If the page is not in DRAM, we call it a \textit{page fault}.
+        \item Bring a page (from disk to main memory) when "demanded".
+        \item In the page table, if the valid bit is 0, then the page is not in memory
+        \begin{itemize}
+            \item We call this a \textbf{page fault}.
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+\subsubsection*{Demand Paging Design}
+\begin{itemize}
+    \item Same basic issues as before (in cache)
+    \begin{itemize}
+        \item When to bring a page into DRAM?
+        \item Which page to evict (we call it "swap") from DRAM to disk to free-up DRAM for new pages?
+        \item Page size?
+        \item \dots
+    \end{itemize}
+    \item OS handles everything (easier, fast enough)
+    \begin{itemize}
+        \item Pseudo-LRU replacement policy
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Memory Hierarchy Summary}
+\begin{center}
+    \includegraphics*[scale=0.8]{W7_17.png}
+\end{center}
+\begin{itemize}
+    \item Page tables
+    \begin{itemize}
+        \item Why we need them and how to translate?
+        \item How to store them?
+        \item How to reduce access time?
+    \end{itemize}
+\end{itemize}
+\subsection*{How to decrease hit time?}
+\begin{itemize}
+    \item Can we access L1 before TLB?
+    \begin{itemize}
+        \item Address in L1 should be stored with VA (i.e., no translation!)
+        \item Problem?  Aliasing.  Therefore, L1 \textbf{cannot} cannot be accessed \textit{before} TLB.
+        \begin{itemize}
+            \item However, we can access them \textit{in parallel}.
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+\subsubsection*{Virtually-Indexed Physically-Tagged Cache}
+\begin{center}
+    \includegraphics*[scale=0.8]{W7_18.png}
+\end{center}    
+\subsubsection*{With and Without MMU}
+\begin{itemize}
+    \item Most embedded processors and DSPs provide \textit{physical addressing} only!
+    \begin{itemize}
+        \item Can't afford area/speed/power budget for virtual memory support
+        \item Often there is no secondary storage to swap to!
+    \end{itemize}
+\end{itemize}
 
 \end{document}

@@ -249,5 +249,134 @@ What are $Y(j\omega)$ and $y(t)$?\\\\
     &= \frac{2}{1 + j\omega} - \frac{2}{2 + j\omega}
 \end{align*}
 Now, finish this problem by simply referring to the Fourier pairs.
-\[y(t) = 2e^t u(t) - 2e^{2t}u(t)\]
+\[y(t) = 2e^{-t} u(t) - 2e^{-2t}u(t)\]
+Recall that when we multiply two complex numbers, their magnitudes multiply and their phases add.  This is shown below:
+\begin{center}
+    \includegraphics[scale=0.7]{W7_3.png}
+\end{center}
+To measure the frequency response of an LTI system, we can input complex exponentials different frequencies.
+\begin{itemize}
+    \item At the output we measure change in amplitude, giving $|H(j\omega)|$.
+    \item We also measure the phase shift, giving the phase of $H(j\omega)$.
+    \item This describes the entire LTI system!
+\end{itemize}
+
+\subsection*{Filters}
+Filters are designed to extract or attenuate certain desired frequencies from a signal.  For example, consider a recording of music where the microphones accidentally recorded the sopranos too loudly. It would be possible to rebalance the audio by attenuating higher frequencies in the signal.\\\\
+We'll first discuss ideal filters, which only pass through certain frequencies.  There are three main types of filters we'll discuss:
+\begin{itemize}
+    \item Low pass filter: suppresses all frequencies that are higher than a specified frequency, $\omega_c$.  Its name comes from the fact that it lets frequencies less than $\omega_c$ through.  (i.e., low frequencies)
+    \item High pass filter: suppresses all frequencies that are lower than a specified frequency, $\omega_c$.
+    \item Band pass filter: suppresses all frequencies outside of a range $\pm \omega_c$ around a chosen frequency $\omega_0$.
+    \item These three filters are illustrated below.
+\end{itemize}
+\begin{center}
+    \includegraphics[scale=0.8]{W7_4.png}
+\end{center}
+
+\subsubsection*{Ideal Low Pass Filter}
+The ideal low pass filter is
+\begin{center}
+    \includegraphics[width=\textwidth]{W7_5.png}
+\end{center}
+We call the region where frequencies are not suppressed (i.e., up to frequency $\omega_c$ for this ideal low pass filter) the "passband."  This filter can be represented as
+\[H(j\omega) = \rect(\omega / (2\omega_c))\]
+\begin{align*}
+    \rect\left(\frac{t}{T}\right) &\llra T \cdot \sinc\left(\frac{\omega T}{2\pi}\right)
+    \intertext{By duality:}
+    \frac{1}{2\pi} T \cdot \sinc\left(\frac{t \cdot T}{2\pi}\right) &\llra \rect\left(\frac{\omega}{T}\right)
+\end{align*}
+Let $T = 2\omega_c$\dots
+\begin{align*}  
+    h(t) &= \frac{1}{2\pi} \cdot 2\omega_c \cdot \sinc\left(\frac{t \cdot 2 \omega_c}{2\pi}\right)\\
+    \Aboxed{h(t) &= \frac{\omega_c}{\pi} \sinc\left(\frac{\omega_c}{\pi} \cdot t\right)}
+\end{align*}
+What are limitations of actually filtering this signal?
+\begin{itemize}
+    \item The impulse response is non-causal, i.e., it is nonzero for $t < 0$.  Hence, ideal low pass filtering the signal at time $t$ requires convolution with future signal, which might not be known to us.
+    \item The filter impulse response has an infinite duration, and thus to convolve would take an infinite amount of time.  Realistically, $\sinc(\cdot)$ is close to zero as $|t|$ grows, so it could be truncated
+    \item But even if we truncate it, we see that $\sinc(t)$ decays with an envelope of $1/t$ (since $\sinc(t) = \sin(\pi t) / \pi t$), and so the decay is relatively slow.  It would be better if the impulse response decayed faster, like $1/t^2$, etc.  This means the impulse response convolution requires less computation time.
+\end{itemize}
+\subsubsection*{A (less ideal) low pass filter}
+Consider the following low pass filter, which is not ideal because it lets in some frequencies between $\omega_c$ and $2\omega_c$, albeit attenuated.  This region (from $[\omega_c, 2\omega_c]$) is sometimes called the \textit{transition band}.
+\begin{center}
+    \includegraphics[width=\textwidth]{W7_6.png}
+\end{center}
+How do we write $H(j\omega)$ in a way that is amenable to a simple inverse Fourier transform using things we already know?
+\begin{itemize}
+    \item We write it as a convolution of two rectangles!
+\end{itemize}
+\[\rect\left(\frac{\omega}{3\omega_c}\right) * \rect\left(\frac{\omega}{\omega_c}\right)\]
+Then, 
+\begin{align*}
+    H(j\omega) &= \rect\left(\frac{\omega}{3\omega_c}\right) * \rect\left(\frac{\omega}{\omega_c}\right)\\
+    h_1(t) = \fourier^{-1}\left[\rect\left(\frac{\omega}{3\omega_c}\right)\right] &= \frac{3\omega_c}{2\pi} \sinc\left(\frac{3\omega_c}{2\pi}t\right)\\
+    h_2(t) = \fourier^{-1}\left[\rect\left(\frac{\omega}{\omega_c}\right)\right] &= \frac{\omega_c}{2\pi} \sinc\left(\frac{\omega_c}{2\pi}t\right)\\
+    \therefore \fourier[h_1(t) \cdot h_2(t)] &= \frac{1}{2\pi} H_1(j\omega) * H_2(j\omega)\\
+    h(t) &= 2\pi \cdot h_1(t) \cdot h_2(t)\\
+    &= \frac{3\omega_c^2}{2\pi} \cdot \sinc\left(\frac{3\omega_c t}{2\pi}\right) \cdot \sinc\left(\frac{\omega_c}{2\pi} t\right)
+\end{align*} 
+\subsubsection*{Ideal High Pass Filter}
+The ideal high pass filter is:
+\begin{center}
+    \includegraphics[width=\textwidth]{W7_7.png}
+\end{center}
+This can be written as 1 minus the ideal low pass filter, i.e.,
+\[H(j\omega) = 1 - \rect(\omega / (2\omega_c))\]
+Therefore, its impulse response is
+\[h(t) = \delta(t) - \frac{\omega_c}{\pi} \sinc\left(\frac{\omega_c}{\pi}t\right)\]
+This filter has the same limitations of the ideal low pass filter, with the additional inconvenience that we need to generate an approximate $\delta(t)$.
+\begin{itemize}
+    \item Can we get rid of the $\delta(t)$ in the high pass filter?
+    \item How do we get around having a $\delta(t)$ in the impulse response?
+\end{itemize}
+\subsubsection*{Ideal Band Pass Filter}
+The ideal band pass filter is:
+\begin{center}
+    \includegraphics[width=\textwidth]{W7_8.png}
+\end{center}
+The frequency response of this filter is
+\[H(j\omega) = \rect\left(\frac{\omega + \omega_0}{2\omega_c}\right) + \rect\left(\frac{\omega - \omega_0}{2\omega_c}\right)\]
+\begin{align*}
+    H(j\omega) &= \rect\left(\frac{\omega}{2\omega_c}\right) * \left[\delta(\omega - \omega_0) + \delta(\omega + \omega_0)\right]\\
+    \fourier^{-1}\left[\rect\left(\frac{\omega}{2\omega_c}\right)\right] &= \frac{\omega_c}{\pi} \cdot \sinc\left(\frac{\omega_c}{\pi} t\right)\\
+    \fourier^{-1}\left[\delta(\omega - \omega_0) + \delta(\omega + \omega_0)\right] &= \frac{1}{\pi} \cos(\omega_t)\\
+    \fourier\left[f_1(t) \cdot f_2(t)\right] &= \frac{1}{2\pi} F_1(j\omega) + F_2(j\omega)\\
+\end{align*}
+\begin{align*}
+    h(t) &= 2\pi \cdot \frac{\omega_c}{\pi} \cdot \sinc\left(\frac{\omega_c}{\pi}t\right) \cdot \frac{1}{\pi} \cos(\omega_0 t)\\
+    &= 2 \cdot \cos(\omega_0 t) \cdot \left[\frac{\omega_c}{\pi} \sinc\left(\frac{\omega_c}{\pi}t\right)\right]
+\end{align*}
+The impulse response of the ideal band pass filter is:
+\begin{center}
+    \includegraphics[width=\textwidth]{W7_9.png}
+\end{center}
+Hence, convolution with this impulse response extracts out frequencies in a range $\omega_0 \pm \omega_c$!  The same intuitions about using a transition band to make the filter more practical hold.
+\subsection*{Example: AM Radio}
+We previously talked about amplitude modulation (AM) which is used for e.g., AM radio.  We are now equipped to understand how it works.  Here is the problem setup:
+\begin{itemize}
+    \item Say we want to transmit a message signal, $m(t)$.
+    \item To avoid interference and leverage the electromagnetic spectrum, we are given a frequency range over which we can transmit this signal.
+    \item Anyone with knowledge of what frequency we are transmitting on can tune a receiver to receive the message signal, $m(t)$.
+\end{itemize}
+The fundamental idea of AM radio is to "multiply by a cosine".\\\\
+When we do, the transmitted signal is $m(t) \cos(\omega_c t)$ with Fourier transform
+\[\frac{1}{2} [M(j(\omega + \omega_c)) + M(j(\omega - \omega_c))]\]
+Hence, multiplying by cosine creates copies of the signal at $\pm \omega_c$.\\\\
+Let's show this mathematically.  If
+\[\fourier[m(t) \cos(\omega_c t)] = \frac{1}{2} M(j(\omega + \omega_c)) + \frac{1}{2}M(j(\omega - \omega_c))\]
+Then,
+\begin{align*}
+    \fourier[m(t) \cos^2(\omega_c t)] &= \frac{1}{2\pi} \left[\frac{1}{2} M(j(\omega + \omega_c)) + \frac{1}{2}M(j(\omega - \omega_c))\right] \cdots * [\pi \delta(\omega + \omega_c) + \pi\delta(\omega - \omega_c)]\\
+    &= \frac{1}{4} \left[M(j(\omega + 2\omega_c)) + 2M(j\omega) + M(j(\omega - 2\omega_c))\right]\\
+    &= \frac{1}{2} M(j\omega) + \frac{1}{4}M(j(\omega - 2\omega_c)) + \frac{1}{4}M(j(\omega + 2\omega_c))
+\end{align*}
+What if we demodulated by multiplying with a sine?  i.e.,
+\[m(t)\cos(\omega_c t) \sin(\omega_c t)\]
+It zeros the basebound replica.
+
+\subsubsection*{What do we do after demodulation?}
+We apply a low pass filter to get remove all replicas except the one we want (basebound).
+
+
 \end{document}
