@@ -36,11 +36,11 @@
   * Most of the time, people don't perform the entire play.  (It is 55 scenes long, and people usually only perform their favorite scenes).
 
 #### Vernacular Fiction
-
-* The Romance of the Three Kingdoms
-* The Water Margin
-* Journey to the West
-* Plum in the Golden Vase
+* Fictions:
+  * The Romance of the Three Kingdoms
+  * The Water Margin
+  * Journey to the West
+  * Plum in the Golden Vase
 
 * Feng Menglong (1574-1646)
   * Major supporter of vernacular fiction
@@ -52,4 +52,53 @@
     * **Stories to Caution the World**
     * **Stories Old and New**
 
+* Zheng Dai (1597-1684)
+  * Courtesy name: Banqiao
+  * Poet and artist who lived through many wars; wrote a lot of social critiques
+    * Common themes included resilience and strength
+  * Was a government official for some time before resigning due to frustrations and corruption
+ 
+# Qing Dynasty
+### Nurhaci (1559-1626)
+* Manchu who came to overthrow the Ming dynasty.
+* Unified the many disparate Jurchen tribes who were typically fighting among each other
+* Started the **Banner System**, where people (esp. Manchus) were grouped into eight distinct military units.
+  * The people in each Banner bonded with each other, and it allowed Nurhaci to unify the people
+  * The banner system was eventually expanded to include Chinese and Mongol people, with eight units each, raising the total to 24 banners.
 
+### Other People in the Late Ming
+#### Hong Taiji (1636-1643)
+* Eighth son to Nurhaci
+* Responsible for renaming the later Jin dynasty to the Qing dynasty, formally making the Manchu state into a new imperial dynasty.
+
+#### Dorgon (regent 1643-1650)
+* Highly capable military commander who led numerous successful campaigns against the Ming Dynasty, and secured Manchu control over northern China
+* Acted as a de facto ruler of the Qing dynasty
+  
+#### Wu Sangui (1612-1678)
+* High ranking military official in the late Ming dynasty.
+* Commanded Ming forces at Shanhaiguan, a key pass along the Great Wall, where he defended against the Manchu incursions in the north.
+* Eventually allied with Dorgon and helped the Manchus seize Beijing and end the Ming dynasty
+
+### Kangxi (r. 1662-1722)
+* First ruler of the Qing dynasty
+* He was very brutal; would commit massacres to send a message.
+* Forced all men to share the same hairstyle; violation results in heavy punishments
+* Tried to ban the practice of foot binding on young women (but failed)
+* Created a lot of stability due to his long rule.
+  * Had higher standards of living than Western Europe
+* Accepting of Western visitors
+  * Allows Jesuits to continue exploring and informing Europe of China's events
+  * Interested in European science, math, and technology.
+
+### Yongzheng (r. 1722-1736)
+* Father was Kangxi, son was Qianlong.
+* Made many fiscal reforms
+  * Changed the way people are taxed
+* Bans hereditary servile status
+  * People born no longer have to inherit their parents' jobs.
+
+### Qianlong (r. 1736-1795)
+* Dramatically expanded China's territory
+* Made many military campaigns to Central Asia, Tibet, and present-day Xinjiang.
+* 
