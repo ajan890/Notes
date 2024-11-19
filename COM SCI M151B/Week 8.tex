@@ -1,0 +1,405 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+\usepackage{pifont}
+
+% lists
+\usepackage{enumerate, enumitem}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+\graphicspath{{./assets/images}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+\newcommand{\example}{\textbf{Example:}}
+\newcommand{\cmark}{\ding{51}}
+\newcommand{\xmark}{\ding{55}}
+
+\title{COM SCI M151B Week 8}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\subsection*{UniProcessor}
+\begin{itemize}
+    \item Threads
+    \begin{itemize}
+        \item "Per-thread" state
+        \begin{itemize}
+            \item Context state: PC, registers
+            \item Stack (per-thread local variable)
+        \end{itemize}
+        \item "Shared" state: global, heap, etc.
+        \item Threads generally share the same memory space.
+    \end{itemize}
+    \item A process is like a thread, but with its own memory space.
+    \item Generally, system software (the O.S.) manages threads.
+    \begin{itemize}
+        \item "Thread scheduling", "context switching"
+    \end{itemize}
+    \item In single-core system, all threads share one processor
+    \begin{itemize}
+        \item Hardware timer interrupt occasionally triggers O.S.
+        \item Quickly swapping threads gives the illusion of concurrent execution.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Instruction-Level Parallelism (ILP)}
+\begin{itemize}
+    \item We introduced Instruction-Level Parallelism (ILP, superscalar) a long time ago
+    \begin{itemize}
+        \item 2 ALUs, and you can fetch two instructions at a time, etc.
+    \end{itemize}
+    \item Limitations
+    \begin{itemize}
+        \item Data dependency
+        \item Poor branch prediction (Lots of flushes!)
+        \item Memory Latency (aka memory "wall")
+    \end{itemize}
+    \item Due to the limitations, superscalar pipelines are typically underutilized.
+    \begin{center}
+        \includegraphics*[scale=0.6]{W8_1.png}
+    \end{center}
+    \item What can we do?
+\end{itemize}
+
+\subsection*{Simultaneous Multithreading (SMT)}
+\begin{itemize}
+    \item Execute multiple programs (threads) on the same pipeline.  (Two separate programs typically have no dependencies on each other! )
+    \item This allows us to utilize the pipeline width more efficiently.
+    \item Processes and threads
+    \item Different from context switch
+    \item Fine-grained vs. Coarse-grained.
+\end{itemize}
+\subsubsection*{How to implement SMT?}
+\begin{itemize}
+    \item Each thread requires its own:
+    \begin{itemize}
+        \item PC
+        \item Register file
+        \item Logic for virtual address translation
+        \item Exception Handling mechanism
+        \item (No need for extra memory or separate ROB, RS, etc.)
+    \end{itemize}
+    \item Example:
+    [fill]
+\end{itemize}
+\subsection*{Multi-Tasking and Context Switch}
+\begin{itemize}
+    \item Running different processes/tasks on the same core.
+    \item Different from SMT!
+    \begin{center}
+        \includegraphics*[scale=0.6]{W8_2.png}
+    \end{center}
+\end{itemize}
+\subsubsection*{Normal vs. CMT vs. FMT vs. SMT}
+\begin{center}
+    \includegraphics*[scale=0.7]{W8_3.png}
+\end{center}
+\begin{itemize}
+    \item Can we do better?
+\end{itemize}
+
+\subsection*{Multi-Core Systems}
+\begin{itemize}
+    \item How to leverage multiple cores
+    \item Design choices
+    \item Challenges
+\end{itemize}
+
+\subsubsection*{Real World Systems}
+Server vs. Personal vs. Embedded:
+\begin{itemize}
+    \item PC:
+    \begin{itemize}
+        \item 4-8 core systems
+        \item 4-8-wide superscalar, out-of-order
+        \item SMT
+        \item 3-level cache
+    \end{itemize}
+    \item Server:
+    \begin{itemize}
+        \item Intel Xeon, 20-50 cores
+    \end{itemize}
+    \item Embedded:
+    \begin{itemize}
+        \item ARM Cortex (M and A series)
+        \item In-order
+        \item No OS and no virtual address
+    \end{itemize}
+\end{itemize}
+\rule{\textwidth}{2pt}
+\begin{center}
+    \includegraphics*[scale=0.7]{W8_4.png}
+\end{center}
+
+\subsection*{How multi-core helps?}
+\begin{itemize}
+    \item Multitasking
+    \item Thread-Level Parallelism
+    \item (They are not the same!)
+    \item (Amdahl's law)
+\end{itemize}
+\subsubsection*{Multitasking}
+\begin{itemize}
+    \item Scheduling
+    \item Power vs. Performance
+    \item Heterogeneous systems
+    \item \dots
+\end{itemize}
+
+\subsubsection*{Thread-Level Parallelism}
+\begin{itemize}
+    \item How to improve the speed of one program?
+    \begin{itemize}
+        \item This can give us improvement in performance (hence faster computers)
+    \end{itemize}
+\end{itemize}
+\example\\
+\begin{itemize}
+    \item Sum 64000 numbers on 64 processors
+    \begin{itemize}
+        \item Each processor has ID: $0 \leq Pn \leq 63$
+        \item Partition 1000 numbers per processor
+        \item Initial summation on each processor
+        \item Now need to add these partial sums
+        \begin{minted}{cpp}
+sum[Pn] = 0;
+for (int i = 1000 * Pn; i < 1000 * (Pn + 1); i++) {
+    sum[Pn] += A[i];
+}
+        \end{minted}
+        \begin{itemize}
+            \item Reduction: divide and conquer
+            \item Half the processors add pairs, then quarter, \dots
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+\textbf{Problems:}
+\begin{itemize}
+    \item Difficult to extract (and write)!
+    \begin{itemize}
+        \item Parallel algorithms and programming: MPI, Pthread, \dots
+    \end{itemize}
+    \item Communication overhead and sequential parts
+    \item $N$ cores won't give us $N$ times faster system.
+\end{itemize}
+\textbf{How do we improve this?}
+\begin{itemize}
+    \item Better algorithms
+    \item Faster communication
+    \item $\rightarrow$ Parallel Programming
+\end{itemize}
+\subsection*{How to build a multicore system?}
+\subsubsection*{What changes?}
+\begin{itemize}
+    \item Interaction with Memory!
+    \item Multiple cores try to talk to the same memory!
+    \item Data needs to be shared, otherwise, what is the point!?
+\end{itemize}
+\subsubsection*{Design Choices}
+\begin{itemize}
+    \item How to share the main memory between cores?
+    \item What about caches?
+\end{itemize}
+\subsubsection*{Shared vs. Private}
+\begin{center}
+    \includegraphics*[scale=0.5]{W8_5.png}
+    Left: Shared, Right: Private
+\end{center}
+\begin{itemize}
+    \item Hit time?
+    \begin{itemize}
+        \item P: $\cmark$ S: $\xmark$
+        \item Shared places CPU further from cache.
+    \end{itemize}
+    \item Miss rate?
+    \begin{itemize}
+        \item Two scanarios:
+        \begin{itemize}
+            \item Cache-friendly $\rightarrow$ P: $\xmark$ S: $\cmark$
+            \item Streaming application $\rightarrow$ P: $\cmark$ S: $\xmark$
+        \end{itemize}
+    \end{itemize}
+    \item Miss penalty?!
+    \item What about sharing?
+\end{itemize}
+\subsubsection*{Hybrid Approach}
+Best of both worlds!
+\begin{center}
+    \includegraphics*[scale=0.5]{W8_6.png}
+\end{center}
+\begin{itemize}
+    \item Place L1 cache private, the others are shared.
+\end{itemize}
+\textbf{Challenges}
+\begin{itemize}
+    \item Cache and memory is shared between cores and is simultaneously utilized by them.
+    \begin{enumerate}
+        \item This could lead to correctness issues!  (See below.)
+        \item This could also lead to performance issues!
+        \begin{itemize}
+            \item Cache is not efficiently shared and utilized (e.g., one program can hurt others\dots)
+        \end{itemize}
+    \end{enumerate}
+\end{itemize}
+
+\subsection*{Correctness Issues in Multicore}
+\begin{enumerate}
+    \item We may end up with incorrect copies in each private cache (called \textit{cache coherency})
+    \item Multiple cores are reading from/writing to memory concurrently, thus we may end up with incorrect ordering of reads/writes (called \textit{memory consistency}).
+\end{enumerate}
+
+\subsubsection*{Synchronization Problem (Who arrives first?)}
+\begin{center}
+    \includegraphics*[scale=0.8]{W8_8.png}
+\end{center}
+
+\subsubsection*{Cache Coherence Problem}
+\begin{center}
+    \includegraphics*[scale=0.8]{W8_7.png}
+\end{center}
+
+\begin{itemize}
+    \item Uniformity of \textit{shared} resource data that ends up stored in multiple \textit{local caches}.
+    \item What if no sharing?  What if no private cache?
+    \item A memory system is \textit{coherent} if:
+    \begin{enumerate}
+        \item Read what is written: A read of X on P1 returns the value written the most recent write to X and P1 if no other processor has written to X in between.
+        \item Coherent writes happen eventually: If P1 writes to X and P2 reads X after a sufficient time, and there are no other writes to X in between, P2's read returns the value written by P1's write.
+        \item Causality of writes: Writes to the same location are serialized: two writes to location X are seen in the same order by all processors.
+    \end{enumerate}
+    \item Can we prevent the cache coherence problem in software?
+    \begin{itemize}
+        \item No!
+        \item Cache is transparent to software.
+        \item What about ISA?  (No $\rightarrow$ Maybe)
+        \begin{itemize}
+            \item Special instruction(s) to flush a line and/or entire cache
+            \item Very inefficient (needed for every single access!)
+        \end{itemize}
+        \item What about in the OS?
+    \end{itemize}
+\end{itemize}
+\textbf{Solution to cache coherency}
+\begin{itemize}
+    \item We need cache coherency protocols!
+    \begin{itemize}
+        \item What should happen after each load or store for each core?
+        \item See something say something!
+    \end{itemize}
+    \item Use hardware to track each cache line!
+    \begin{itemize}
+        \item "Snoop" the cache for each read/write/  Invalidate each copy if a new write comes.
+    \end{itemize}
+\end{itemize}
+\subsubsection*{Snoopy Cache}
+    \begin{center}
+        \includegraphics*[scale=0.7]{W8_9.png}
+    \end{center}
+    \begin{itemize}
+        \item Where do we store these?
+        \begin{itemize}
+            \item With lines!  (metadata)
+            \item Recall LRU states
+        \end{itemize}
+    \end{itemize}
+    \textbf{Snoopy Cache Coherence}
+    \begin{itemize}
+        \item Write miss:
+        \begin{itemize}
+            \item The address is invalidated in all other caches before the write is performed
+        \end{itemize}
+        \item Read miss:
+        \begin{itemize}
+            \item If a \textit{dirty copy} is found in another cache, a \textbf{write-back} is performed before the memory is read (e.g., a broadcast is made to all the cores whenever a value is updated).
+            \item Otherwise, just read from the memory.
+        \end{itemize}
+        \begin{center}
+            \includegraphics*[scale=0.8]{W8_10.png}
+        \end{center}
+    \end{itemize}
+\subsubsection*{Coherence States}
+\begin{itemize}
+    \item The minimum we need:
+    \begin{enumerate}[label=\alph*.]
+        \item We have the valid copy, and it is most updated!
+        \item We do not have the copy (or we had it but no longer valid)
+    \end{enumerate}
+    \item MI Coherence protocol
+    \begin{itemize}
+        \item $M$ = Modified state
+        \item $I$ = Invalid state
+    \end{itemize}
+    \begin{center}
+        \includegraphics*[scale=0.7]{W8_11.png}
+    \end{center}
+    \begin{itemize}
+        \item Core 1: I, M, I, I, M
+        \item Core 2: I, I, M, I*, I
+        \item Core 3: I, I, I, M, I
+        \item Sequence: $R_1, W_2, R_3, R_1$
+    \end{itemize}
+\end{itemize}
+\subsubsection*{Adding a Shared State}
+\begin{itemize}
+    \item No need to invalidate if the other processor wants to read (still the same copy)
+    \item $\rightarrow$ Unnecessary invalidation create overhead and hurt the performance
+\end{itemize}
+\subsubsection*{Cache States}
+\begin{itemize}
+    \item Using snooping and broadcasting, each cache line (in each core) can have one of three possible \textbf{states}.
+    \begin{itemize}
+        \item Shared - This line is a fresh and "clean" copy of main memory
+        \item Modified - This core wants to write to this line, thus it contains "dirty" copy of the line.
+        \item Invalid - Another core wants to write to this line, so the current copy is no longer valid.
+    \end{itemize}
+\end{itemize}
+\textbf{Dirty Line}
+\begin{itemize}
+    \item Write back vs. Write Through
+    \item Dirty bit
+\end{itemize}
+\subsubsection*{MSI (Per Core)}
+\begin{center}
+    \includegraphics*[scale=0.7]{W8_12.png}
+\end{center}
+\subsubsection*{Optimizing MSI}
+How can we make MSI better?
+\begin{itemize}
+    \item A core is in $S$, and issues a write (store), it needs to broadcast that:
+    \begin{itemize}
+        \item But if this core is the only one that has this line (exclusive), why does it have to broadcast?
+        \item It can silently upgrade from S to M, no broadcast needed.
+    \end{itemize}
+    \item How to distinguish between shared and exclusive?
+    \begin{itemize}
+        \item Need a new state called $E$.
+    \end{itemize}
+\end{itemize}
+\subsubsection*{MESI Protocol}
+\begin{itemize}
+    \item Same as MSI, except:
+    \begin{itemize}
+        \item On a read miss, a processor can go from I to E if this is the only core that needs that line.
+        \item If on E, and if another core wants that line, it changes from E to S, the other core also goes to S.
+        \item In E, if the same core wants to write, it silently goes to M (others are all in I).
+    \end{itemize}
+\end{itemize}
+\end{document}
