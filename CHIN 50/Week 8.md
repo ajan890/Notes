@@ -50,6 +50,8 @@
 
 ### The Great Divergence
 * In the mid 1800's, China was the most commercialized areas in the world.
+* The Great Divergence refers to the differences in development in Western Europe and China (or the rest of the world)
+  * Europe started having much more advanced technologies (steam power, railroads, imperialism, etc.)
 * They had trade centers - essentially distribution hubs for many different resources.
   * During this time, grain moved by trade instead of tax
   * Tax was paid in cash instead of grain.
@@ -59,3 +61,59 @@
   * Kangxi allowed exports and international trade, but limited the amount of external trade.
     * Unlike before, international traders were required to pay a tribute to the government.
     * Many foreign powers, especially Great Britain, pushed against these limits.
+* Macartney Embassy
+  * The first diplomatic mission from Britain to China, led by Lord George Macartney, to try to negotiate for better deals for merchants.
+  * Britain felt the need to "normalize" trading with China, (aka. exploit in imperialism)
+  * In the triangular trade between India (cotton) to China (tea), to Britain (money), Britain wanted to sell the opium from India to China instead
+    * Britain had an opium addiction, so the government banned it.
+
+#### Late Qing Emperors
+* Qianlong (r. 1736-1795)
+  * Emperor throughout the entire "high" of China
+  * Grew close to Heshen in his last years of ruling
+* Heshen (1750-1799)
+  * Gained an immense amount of trust from Qianlong over some 20 years due to Qianlong's affection
+  * Committed the largest case of embezzlement (ever), where he and his supporters took funds from Qianlong's coffers to "suppress the White Lotus rebellion"
+* Jiaqing (r. 1796-1819)
+  * Ruler of China after Qianlong
+  * Person in charge during the opium wars.
+
+### The Fall of Qing (Late Qing, 1800-1911) 
+* Pop. 400M.
+  * Limits of population reached limited by agriculture
+  * More population = more agriculture = more erosion = more floods on the Yellow River
+  * There were a lot of young men had no life, no land to work on.  They were known as "bare sticks"
+  * A lot of people were addicted to opium
+* Lin Zexu
+  * A person who saw the amount of opium Great Britain wanted to import and burned it all
+  * This action leads to three years of war (The First Opium War)
+* The First Opium War
+  * China was not prepared for a war since Britain had much more advanced technology, and lost heavily
+  * Treaty of Nanjing ended the war, which was the first of a set of very harsh treaties
+    * Millions of silver on indemnities
+    * "Most Favorable Nation Clause" - if China extends favors to any other state, Britain automatically gets them  (e.g., China cannot strategize with other states)
+    * Forces China to buy opium through five ports.
+* After first opium war, people were addicted to opium, and rebellions occurred.
+  * Resentment from Han Chinese people and the Manchus grew as the Manchus were opening China to exploitation
+* Hong Xiuquan (1814-1864)
+  * A Hakka person who leads the Taiping rebellion against the government.
+  * Also a Christian who believed that he was the younger brother of Jesus Christ.
+  * Taiping rebellion was incredibly destructive; it controlled the entire area around the Yangze River and around Western China
+    * Established their own capital at Nanjing
+    * Banned footbinding, segregated genders, reassigned jobs, appointed female officials, divided all property (think: communism)
+* Second Opium War
+  * After Taiping rebellion was suppressed, the British declared war on China again after arresting Chinese crew members operating a British ship.
+  * China lost heavily (again), and was forced to pay reparations.
+
+### Late Qing
+* Tongzhi Restoration (1860-1875) and Self-Strengthening Movement
+  * The restoration China after the damages of the Opium wars.
+* Sino-Japanese War (1894-1895)
+  * Japan takes aggression against Korea, which was recognized by China as a "tributary" state
+  * Japan wanted to colonize Asia like Great Britain colonized the rest of the world.
+  * Consequences: Korea became independent, and Taiwan was ceded to Japan.
+* Hundred Days Reform (1898)
+  ,* Ci Xi (Emperor's dowager) set out to create massive reforms.
+* Boxer Rebellion (1900)
+* New Policies (1901-1908)
+* Xinhai Revolution (Wuchang Uprising, Oct. 10, 1911)
