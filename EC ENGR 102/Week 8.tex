@@ -11,6 +11,7 @@
 
 % lists
 \usepackage{enumerate}
+\usepackage{enumitem}
 
 % images
 \usepackage{graphicx} % for images
@@ -30,6 +31,7 @@
 \newcommand{\rect}{\text{rect}}
 \newcommand{\llra}{\Longleftrightarrow}
 \newcommand{\fourier}{\mathcal{F}}
+\newcommand{\laplace}{\mathcal{L}}
 \newcommand{\absint}{\int_{-\infty}^\infty}
 \newcommand{\dd}{\text{d}}
 
@@ -225,12 +227,242 @@ Another intuition to remember here is that the Fourier transform of a periodic s
 \begin{center}
     \includegraphics*[width=\textwidth]{W8_9.png}
 \end{center}
-\textbf{Discrete - periodic duality}\\\\
+\textbf{Discrete (sampling) - periodic duality}\\\\
 We can determine the Fourier transform of a signal sampled in the time domain.  Consider
 \[\tilde{f}(t) = f(t) \delta_T(t)\]
 Its Fourier transform is
 \[\tilde{F}(j\omega) = \fourier[f(t) \delta_T(t)]\]
 These are merely samples of $F(j\omega)$ repeated every $\omega_0$, since
-\[\tilde{F}(j\omega) = \frac{1}{T} F(j\omega) * \delta_{\omega_0}(\omega)\]
+\begin{align*}
+    \tilde{F}(j\omega) &= \frac{1}{T} F(j\omega) * \delta_{\omega_0}(\omega)\\
+    &= \frac{1}{T} F(j\omega) * \sum_{k=-\infty}^\infty \delta(\omega - k\omega_0)\\
+    &= \frac{1}{T} \sum_{-\infty}^\infty F(j(\omega - k\omega_0))
+\end{align*}
+This leads us to the realization that:
+\begin{itemize}
+    \item A signal that is periodic in time is \textbf{sampled} in spectrum.
+    \item A signal that is sampled in time is \textbf{periodic} in spectrum.
+\end{itemize}
+There are important consequences from this result when we consider sampling signals in the time domain.
+
+\subsection*{Sampling Theorem}
+Consider the following problem.  We have a signal $f(t)$, and we need to store it.  Our experimental set up is able to sample this signal at an interval $T$.  How do we set $T$ so that we can faithfully store $f(t)$.  If $T$ is too large, we sample infrequently and may lose information about $f(t)$.  If $T$ is too small, we waste memory and resources to store values we don't need.\\\\
+The sampling theorem uses the results we've derived to tell us the minimum frequency at which we must sample $f(t)$ to not lose information.  It is a very important theorem.\\\\
+If $\tilde{f}(t) = f(t) \delta_T(t)$, then 
+\[\tilde{F}(j\omega) = \frac{1}{T} \sum_{k=-\infty}^\infty F(j(\omega - k\omega_0))\]
+Therefore, the spectrum of $\tilde{f}(t)$ are shifted replicas of the spectrum, $F(j\omega) = \fourier[f(t)]$ spaced every $\omega_0$ and scaled by $1/T$.  We define the bandwidth of $f(t)$ to be $\pm B$ Hz, e.g.,
+\begin{center}
+    \includegraphics*[width=\textwidth]{W8_10.png}
+\end{center}
+For a particular choice of $\omega_0$, where $\omega_0 \gg 2\pi B$, we see the spectrum of $\tilde{F}(j\omega)$ looks like:
+\begin{center}
+    \includegraphics*[scale=0.8]{W8_11.png}
+\end{center}
+For this choice of $\omega_0$, the original $F(j\omega)$ can be recovered through low pass filtering.
+\begin{itemize}
+    \item This is because the triangles are not overlapping.
+\end{itemize}
+With ideal low pass filtering for the illustrated $\omega_0$, we can \textit{perfectly} recover $f(t)$ after sampling.\\\\
+However, if we increase the time $T$ between samples, which decreases $\omega_0$, the replicas of $F(j\omega)$ get closer and closer together.
+\begin{center}
+    \includegraphics*[scale=0.8]{W8_12.png}
+\end{center}
+We can see that as $\omega_0$ decreases, the bands start to overlap.  When the replicas overlap, even with ideal low pass filtering, we cannot recover the original $F(j\omega)$.\\\\
+This overlap is called \textit{aliasing} because low frequencies of one spectral replica appear (or alias) as high frequencies in the next spectral replica.  The vice versa is true as well; high frequencies of one spectral replica alias as low frequencies in an adjacent spectral replica.  The aliased sections are shown in the darker red.
+\begin{center}
+    \includegraphics*[scale=0.8]{W8_13.png}
+\end{center}
+To perfectly recover a signal, we need to sample so as to avoid aliasing.  No aliasing happens if $2\pi B < \omega_0 / 2$.  We can simplify this as
+\begin{align*}
+    2B &< \omega_0 / 2\pi\\
+    &= \frac{2\pi}{T} \frac{1}{2\pi}\\
+    &= \frac{1}{T}
+\end{align*}
+Therefore, the signal can only be recovered exactly if the signal bandwidth $2B$ is less than or equal to the sampling rate $1/T$.  Hence, we need to sample at intervals less than or equal to $T = 2B$.  This sampling rate, $2B$ is called the \textit{Nyquist rate} for $f(t)$, and it is the lowest rate that we can sample $f(t)$ so that it can be perfectly recovered.  $T$ is called the \textit{Nyquist Interval}.
+
+\subsection*{Recovering the original signal through Interpolation}
+With a sampled signal, $\tilde{f}(t)$, as long as we have sampled at a rate $\geq 2B$, we can perfectly recover the original signal through ideal low pass filtering.  Let's formalize how this happens, using the particular instantiation that $T = \frac{1}{2}B$, i.e., we sample at the Nyquist rate.
+\begin{center}
+    \includegraphics*[scale=0.8]{W8_14.png}
+\end{center}
+Our low pass filter has frequency response
+\[H(j\omega) = T\rect\left(\frac{\omega}{4B}\right)\]
+The inverse Fourier transform of $H(j\omega)$ is:
+\[h(t) = 2BT\sinc(2Bt)\]
+Since $T = \frac{1}{2}B$, we can simplify this expression to 
+\[h(t) = \sinc(2Bt)\]
+Therefore, to reconstruct $f(t)$ from $\tilde{f}(t)$, we calculate:
+\begin{align*}
+    \tilde{f}(t) * h(t) &= \left(\sum_{k=-\infty}^\infty f(kT) \delta(t - kT)\right) * h(t)\\
+    &= \sum_{k=-\infty}^\infty f(kT) h(t - kT)\\
+    &= \sum_{k=-\infty}^\infty f(kT) \sinc(2B(t-kT))\\
+    &= \sum_{k=-\infty}^\infty f(kT) \sinc(2Bt - k)
+\end{align*}
+This reconstruction,
+\[\boxed{\tilde{f}(t) * h(t) = \sum_{k=-\infty}^\infty f(kT) \:\sinc(2Bt - k)}\]
+is called the \textbf{Whittaker-Shannon interpolation formula}.  Intuitively, it does the following:
+\begin{center}
+    \includegraphics*[width=\textwidth]{W8_15.png}
+    \includegraphics*[width=\textwidth]{W8_16.png}
+\end{center}
+The sum of the green sinc functions will equal the red function, $f(t)$.\\\\
+To not mince words, this result is remarkable.  Through this reconstruction, we are able to \textit{perfectly} recover an original signal from samples.
+
+\subsection*{Example: Sinusoids}
+Let's consider sampling a cosine,
+\[f(t) = \cos(\omega_0 t)\]
+Let's take $\omega_0 = 2\pi$.  What is B?
+[FILL]
+
+\subsection*{Aliasing Example}
+Here's an example of aliasing.  Below are two sinusoids.  The upper one is at a frequency of $f=0.75$ Hz and the one below is at $f = 1.25$ Hz.\\\\
+Sampling both signals at $f_s = 2$ Hz,
+\begin{center}
+    \includegraphics*[scale=0.8]{W8_17.png}
+\end{center}
+As you can see, the samples are the same for both sinusoids, however the sampling is below the nyquist rate of the bottom function (and equal to the nyquist rate of the top function).\\\\
+Using these points for reconstruction will yield the $f=0.75$ Hz sinusoid.
+
+\subsubsection*{Looking at aliasing in the Frequency Domain}
+\begin{center}
+    \includegraphics*[scale=0.7]{W8_18.png}
+\end{center}
+The top set corresponds to the top cosine wave ($f = 0.75$), and the bottom set corresponds to the bottom cosine wave ($f=1.25$)
+
+\subsection*{How to ameliorate aliasing}
+If you sample below the Nyquist rate, there will be aliasing.  Once aliasing happens, there is no way to eliminate aliasing without having additional information about the signal.\\\\
+One way we can ameliorate aliasing is to first low pass filter the signal, then sample.
+\begin{center}
+    \includegraphics*[scale=0.8]{W8_19.png}
+\end{center}
+\begin{itemize}
+    \item In reality, our low pass filters are not perfect, and so the bandwidth will be larger than $\omega_0 / 2$.  However, we'll attenuate frequencies outside of range.
+    \item Low pass filtering will distort the signal.
+    \item However, the point is that when sampling, frequencies beyond $\omega_0 / 2$ would cause artifacts.  Low pass filtering ameliorates this.
+    \item It also supresses noise outside of $\omega_0 / 2$.
+\end{itemize}
+
+\section*{Laplace Transform}
+\textbf{Motivation:}
+The Fourier transform is powerful, but it doesn't exist for some signals and systems. In several applications, including image processing, communications, and circuit design, its sufficient for analysis.\\\\
+However, some systems are unstable, or are power signals where the Fourier transform can not be straightforwardly generalized. Some examples of this are signals that grow with time, like (ideally) your bank account, or the S\&P 500.\\\\
+How do we analyze these systems in a similar framework to what Fourier analysis enables us to do?
+
+\subsection*{Motivating Example}
+Let
+\[f(t) = e^{at} u(t)\]
+When $a > 1$, this signal does not have a Fourier transform.\\\\
+One approach to arrive at a Fourier transform is to define a new function
+\[g(t) = f(t) e^{-\sigma t}\]
+If $\sigma > a$, then $g(t)$ is a decreasing exponential, which has a Fourier transform.\\\\
+The function $g(t) = f(t) e^{-\sigma t}$ has a Fourier transform for $\sigma$ sufficiently large.  The Fourier transform of $g(t)$ comprises how to sum spectral components of $e^{j\omega t}$,
+\[g(t) = \frac{1}{2\pi} \absint G(j\omega) e^{j\omega t} \dd \omega\] 
+The intuition here is that because $f(t) = g(t) e^{\sigma t}$, $f(t)$ has spectral components
+\[e^{\sigma t} e^{j\omega t} = e^{(\sigma + j\omega)t}\]
+Hence, the Laplace transform gives us a spectrum of $f(t)$ in terms of a complex exponential with both real and imaginary components (where as the Fourier transform was only with imaginary components.)
+\begin{center}
+    \includegraphics*[scale=0.8]{W8_20.png}
+\end{center}
+\subsubsection*{When does the $s$-spectrum exist?}
+For what values fo $\sigma$ does this work?  In the case where $f(t) = e^{at} u(t)$, this is clear, i.e., $\sigma > a$.\\\\
+In general, there is some $\sigma_0$ for which
+\[f(t) e^{-\sigma_0 t}\]
+goes to zero.  If it does, then this $f(t) e^{-\sigma_0 t}$ is an energy signal, and its spectrum will exist.  The portion of the complex plane where $\sigma > \sigma_0$ is called the "region of convergence".\\\\
+This is illustrated below:
+\begin{center}
+    \includegraphics*[scale=0.8]{W8_21.png}
+\end{center}
+Note that the $y$-axis on this graph is when $s = j\omega$, and $\sigma = 0$.  This is the Fourier transform.\\\\
+The region of convergence is where $s = \sigma + j\omega$.  Note that the region of convergence does not include the $j\omega$ axis.\\\\
+For a function to have a valid Fourier transform, its region of convergence MUST include the axis.
+
+\subsection*{Laplace transform notation}
+Our notation for the Laplace transform is very similar to our prior notation.  We denote
+\begin{align*}
+    F(s) &= \mathcal{L}[f(t)]\\
+    f(t) &= \mathcal{L}^{-1}[F(s)]
+\end{align*}
+We will also denote this:
+\[f(t) \llra F(s)\]
+Remember that $s = \sigma + j\omega$.
+
+
+\subsection*{Bilateral Laplace Transform (Not on exam)}
+The Laplace transform incorporates the real exponential.  With $s = \sigma + j\omega$, as before, 
+\begin{itemize}
+    \item $j\omega$ is related to the oscillatory component of the complex exponential
+    \item $\sigma$ is related to the decay or growth of the complex exponential
+\end{itemize}
+Then, the \textbf{bilateral} Laplace transform is:
+\[\boxed{F(s) = \absint f(t) e^{-st} \dd t}\]
+To invert the bilateral Laplace transform, we calculate:
+\[\boxed{f(t) = \frac{1}{2\pi j} \int_{c - j\omega}^{c + j\omega} F(s) e^{st} \dd s}\]
+for $c > \sigma_0$.
+
+\subsection*{Unilateral Laplace Transform}
+Usually, we are interested in analyzing causal signals.  In this case, we can simplify the bilateral Laplace transform.  A causal signal can be written as $f(t)u(t)$, and its Laplace transform is
+\begin{align*}
+    F(s) &= \absint f(t)u(t) e^{-st} \dd t\\
+    &= \int_{0^-}^\infty f(t) e^{st} \dd t
+\end{align*}
+When we write $0^-$, this indicates that impulses at the origin are included (e.g., $\delta(t)$ would have a contribution to this integral).\\\\
+The Laplace transform is (essentially) unique.  From now on, we'll use $\laplace[f(t)]$ to denote the unilateral Laplace transform of $f(t)$.
+
+\subsection*{Laplace Transform Properties}
+\begin{enumerate}[label=\arabic*.]
+    \item \textbf{Linearity:}
+    \[\boxed{\laplace[af_1(t) + bf_2(t)] = aF_1(s) + bF_2(s)}\]
+    \item \textbf{Time scaling:}
+    \[\boxed{\laplace[f(at)] = \frac{1}{a} F\left(\frac{s}{a}\right)}\]
+    \item \textbf{Time shift:}
+    \[\boxed{\laplace[f(t - T)] = e^{-sT} F(s)}\]
+    \item \textbf{Frequency shift:}
+    \[\boxed{\laplace[f(t) e^{s_0 t} = F(s - s_0)]}\]
+    \item \textbf{Convolution:}
+    \[\boxed{\laplace[f_1(t) * f_2(t) = F_1(s) F_2(s)]}\]
+    \item \textbf{Integration:}
+    \[\boxed{\laplace\left[\int_0^t f(\tau) \dd \tau\right] = \frac{1}{s} F(s)}\]
+    \item \textbf{Derivative:}
+    \[\boxed{\laplace[f'(t)] = sF(s) - f(0)}\]
+    \item \textbf{Multiplication by $t$:}
+    \[\boxed{\laplace[t f(t)] = -F'(s)}\]
+\end{enumerate}
+\subsection*{Relationship between the Fourier and Laplace transforms}
+The Fourier transform is a special case of the Laplace transform, i.e.,
+\[\boxed{F(j\omega) = F(s) \vert_{s=j\omega}}\]
+The Fourier transform is evaluated at $s = j\omega$ and the Laplace transform is evaluated at a particular $s = \sigma + j\omega$.
+\begin{center}
+    \includegraphics*[scale=0.7]{W8_22.png}
+\end{center}
+You may imagine that for signals where we know the Fourier transform, the Laplace transform merely replaces $j\omega$ with $s$.  This is sometimes the case.  Let's consider $f(t) = e^{-at} u(t)$.
+\begin{align*}
+    F(s) &= \int_0^\infty e^{at} e^{-st} \dd t\\
+    &= \int_0^\infty e^{-(a + s)t} \dd t\\
+    &= \left.-\frac{1}{a + s} e^{-(a + s)t}\right|_0^\infty\\
+    &= \frac{1}{a + s}
+\end{align*}
+As long as $e^{-(a + s)t} \rightarrow 0$ as $t \rightarrow \infty$.  When does this happen?\\\\
+If $e^{-(a+s)t}$ goes to zero, then so does $|e^{-(a+s)t}|$.
+\begin{align*}
+    |e^{-(a+s)t}| &= |e^{-(a + \sigma + j\omega)t}|\\
+    &= |e^{-(a+\sigma)t} \cdot e^{-j\omega t}|\\
+    &= |e^{-(a+\sigma)t}| \cdot |e^{-j\omega t}|\\
+    \intertext{(Fourier transform $e^{-j\omega t}$ evaluates to 1\dots)}
+    &= |e^{-(a+\sigma)t}|
+\end{align*}
+Therefore, $e^{-(a+s) t} \rightarrow 0$ if $e^{-(a + \sigma)t} \rightarrow 0$ as $t \rightarrow \infty$.\\\\
+If $\sigma > -a$, then the Laplace transform exists.
+\[\boxed{\text{Rate of Change:  } \sigma = \text{Re}(s) > -a}\]
+Hence, we have that
+\[\laplace[e^{-at} u(t)] = \frac{1}{a + s}\]
+and we know prior, for $a > 0$,
+\[\fourier[e^{-at} u(t)] = \frac{1}{a + j\omega}\]
+Here, the Laplace transform is the Fourier transform, with $j\omega$ replaced with $s$.\\\\
+A key thing to note is that with 
+\[\laplace[e^{-at} u(t)] = \frac{1}{a + s}\]
+holds for all $a$, positive or negavie, as long as $\sigma > -a$.  This means that, for all $a > 0$, 
+\[\laplace[e^{at} u(t)] = \frac{1}{s - a}\]
+Of course, this signal does not have a Fourier transform.
+
 
 \end{document}
