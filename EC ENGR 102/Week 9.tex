@@ -1,0 +1,401 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+\usepackage{mathtools}
+
+% lists
+\usepackage{enumerate}
+\usepackage{enumitem}
+
+% images
+\usepackage{graphicx} % for images
+\usepackage{multirow}
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+\graphicspath{{./assets/images}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+\newcommand{\example}{\textbf{Example: }}
+\newcommand{\sinc}{\text{sinc}}
+\newcommand{\rect}{\text{rect}}
+\newcommand{\llra}{\Longleftrightarrow}
+\newcommand{\fourier}{\mathcal{F}}
+\newcommand{\laplace}{\mathcal{L}}
+\newcommand{\absint}{\int_{-\infty}^\infty}
+\newcommand{\dd}{\text{d}}
+
+\title{EC ENGR 102 Week 9}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\subsection*{Laplace Transform of the Unit Step}
+Let $f(t) = u(t)$.
+\begin{align*}
+    F(s) &= \int_{0^-}^\infty u(t) \cdot e^{-st} \dd t\\
+    &= \int_{0^-}^\infty e^{-st} \dd t\\
+    &= \left.-\frac{1}{s} e^{-st} \right|_0^\infty\\
+    &= (0) - (-\frac{1}{s} e^{-s-0})\\
+    &= \frac{1}{s}
+    \intertext{as long as $e^{-st} \rightarrow 0$ as $t \rightarrow \infty$}
+\end{align*}
+\begin{itemize}
+    \item In this case, the R.O.C. (region of convergence): $\boxed{\text{Re}(s) = \sigma > 0}$
+\end{itemize}
+\subsubsection*{What is the ROC of the unit step Laplace transform?}
+\begin{center}
+    \includegraphics*[scale=0.5]{W9_1.png}
+\end{center}
+\begin{itemize}
+    \item This R.O.C. does NOT contain the $j\omega$ axis ($\sigma = 0$).
+    \item As a result, the Fourier transform is different from the Laplace transform for the unit step, since if $\sigma = 0$ in the Laplace transform, the integral does not converge.
+    \item The Laplace and Fourier transforms are similar though.
+    \begin{itemize}
+        \item Fourier transform of unit step is:
+        \[\fourier[u(t)] = \pi \delta(\omega) + \frac{1}{j\omega}\]
+        \item This is similar to the Laplace transform with $s = j\omega$, but with the additional $\pi \delta(\omega)$ term.
+    \end{itemize}
+\end{itemize}
+\subsection*{Laplace Transform of Cosine}
+\begin{align*}
+    f(t) &= \cos(\omega t)\\
+    &= \frac{1}{2}\big[e^{j\omega t} + e^{-j\omega t}]
+\end{align*}
+Then,
+\begin{align*}
+    F(s) &= \int_0^\infty \frac{1}{2} \big[e^{j\omega t} + e^{-j\omega t}] e^{-st} \dd t\\
+    &= \frac{1}{2} \int_0^\infty e^{(-s + j\omega)t} + e^{(-s-j\omega)t} \dd t\\
+    &= \frac{1}{2} \left(\frac{1}{s-j\omega} + \frac{1}{s + j\omega}\right)\\
+    &= \frac{s}{s^2 + \omega^2}
+\end{align*}
+\begin{itemize}
+    \item Note that in the final equation, the $\omega$ and the $j\omega$ within the $s$ are different $\omega$'s.  The $\omega$ present in the final equation is the $\omega$ of the cosine function.  The one contained in the $s$ is the Fourier transform variable.
+\end{itemize}
+The region of convergence is for when $e^{(-s\pm j\omega)t} \rightarrow 0$ as $t \rightarrow \infty$ and thus is $mathfrak{R}(s) > 0$.  Like the unit step, the Laplace and Foruier transforms disagree, as the Laplace region of convergence does not include the $j\omega$ axis.
+\subsection*{Laplace Transform of Powers of $t$}
+Let $f(t) = t^n$, for $n \geq 1$.  Then,
+\begin{align*}
+    F(s) &= \int_0^\infty t^n e^{st} \dd t\\
+    \intertext{Integrate by parts: $u(t) = t^n$, $v'(t) = e^{-st}$, $u'(t) = nt^{n - 1}$, and $v = -\frac{1}{s} e^{-st}$.}
+    \laplace[t^n] &= -\left.\frac{t^n e^{-st}}{s}\right|_{t=0}^{t=\infty} + \int_0^\infty \frac{1}{s} e^{-st} \cdot n \cdot t^{n-1} \dd t\\
+    &= \frac{-(\infty)^n e^{-s\cdot \infty}}{s} - \left(-\frac{0^n \cdot e^0}{s}\right) + \frac{n}{s} \int_0^\infty t^{n-1} e^{-st} \dd t\\
+    \intertext{$t^n e^{-st} \rightarrow 0$ as $t \rightarrow \infty$ as long as $\text{Re}\{s\} = \sigma$ is greater than zero.  (R.O.C. $\sigma > 0$)}
+    &= \frac{n}{s} \int_0^\infty t^{n-1} e^{-st} \dd t\\
+    &= \frac{n}{s} \cdot \laplace\big[t^{n-1}]
+\end{align*}
+Now, we have a recursive equation.
+\[\laplace\big[t^n] = \frac{n}{s} \laplace\big[t^{n-1}]\]
+By inspection, we get $\laplace[1]$ when $n = 1$, which is just the unit step.
+The first few $n$ terms would be:
+\begin{align*}
+    \laplace\big[t^0] &= \frac{1}{s}\\
+    \laplace\big[t^1] &= \frac{1}{s} \cdot \laplace\big[t^0] = \frac{1}{s^2}\\
+    \laplace\big[t^2] &= \frac{2}{s} \cdot \laplace\big[t^1] = \frac{2}{s^3}
+\end{align*}
+We can simplify this series to
+\[\boxed{\laplace\big[t^n] = \frac{n!}{s^{n + 1}}}\]
+The region of convergence for this Laplace transform is $\text{R.O.C. } \sigma > 0$.\\
+\begin{itemize}
+    \item For this class, we assume that $n$ is an integer.  We will not go into what happens if $n$ is not an integer; probably there will be a $\Gamma$ function involved.
+\end{itemize}
+\subsection*{Laplace Transform of the Impulse}
+Let $f(t) = \delta(t)$.  Then,
+\begin{align*}
+    F(s) &= \int_{0^-}^\infty \delta(t) e^{-st} \dd t\\
+    &= e^{-s \cdot 0}\\
+    &= 1
+\end{align*}
+Thus, 
+\[\boxed{\laplace[\delta(t)] = 1}\]
+\subsection*{Pattern for Integration and Differentiation?}
+Notice the following trends:
+\begin{align*}
+    \delta(t) \llra& 1\\
+    u(t) \llra& \frac{1}{s}\\
+    tu(t) \llra& \frac{1}{s^2}\\
+    \frac{1}{2}t^2 u(t) \llra& \frac{1}{s^3}\\
+    \frac{1}{6}t^3 u(t) \llra& \frac{1}{s^4} 
+\end{align*}
+We see a clear pattern: differentiating a signal is equivalent to multiplying the Laplace transform by $s$ while integrating is equivalent to multiplying the Laplace transform by $1/s$.
+\subsection*{Review: Basic Laplace Transforms:}
+\begin{align*}
+    \laplace\big[e^{at}u(t)] &= \frac{1}{a + s} \hspace{1.7cm} \text{as long as $\sigma > -a$}\\
+    u(t) &\llra \frac{1}{s} \hspace{1.95cm} \mathfrak{R}(s) > 0\\
+    \cos(\omega t) &\llra \frac{s}{s^2 + \omega^2} \hspace{1cm} \mathfrak{R}(s) > 0\\
+    \Aboxed{\laplace\big[t^n] &= \frac{n!}{s^{n + 1}}} \hspace{1.65cm} \mathfrak{R}(s) > 0\\
+    \Aboxed{\laplace[\delta(t)] &= 1} \hspace{2.3cm} \mathfrak{R}(s) > 0
+\end{align*}
+\subsection*{Laplace Transform Properties (copied from last week)}
+\begin{enumerate}[label=\arabic*.]
+    \item \textbf{Linearity:}
+    \[\boxed{\laplace[af_1(t) + bf_2(t)] = aF_1(s) + bF_2(s)}\]
+    \item \textbf{Time scaling:}
+    \[\boxed{\laplace[f(at)] = \frac{1}{a} F\left(\frac{s}{a}\right)}\]
+    \item \textbf{Time shift:}
+    \[\boxed{\laplace[f(t - T)] = e^{-sT} F(s)}\]
+    \item \textbf{Frequency shift:}
+    \[\boxed{\laplace[f(t) e^{s_0 t} = F(s - s_0)]}\]
+    \item \textbf{Convolution:}
+    \[\boxed{\laplace[f_1(t) * f_2(t) = F_1(s) F_2(s)]}\]
+    \item \textbf{Integration:}
+    \[\boxed{\laplace\left[\int_0^t f(\tau) \dd \tau\right] = \frac{1}{s} F(s)}\]
+    \item \textbf{Derivative:}
+    \[\boxed{\laplace[f'(t)] = sF(s) - f(0)}\]
+    \item \textbf{Multiplication by $t$:}
+    \[\boxed{\laplace[t f(t)] = -F'(s)}\]
+\end{enumerate}
+\subsubsection*{Time Scaling Property}
+\[\boxed{\laplace[f(at)] = \frac{1}{a} F\left(\frac{s}{a}\right)}\]
+\begin{itemize}
+    \item Note, we only consider $a > 0$, since if $a < 0$ and $f(t)$ is a causal signal, then $f(at)$ would be anticausal.  The unilateral Laplace transform is for causal signals only.
+    \item This is the reason why the $a$ does not have an absolute value like the Fourier transform equation.
+\end{itemize}
+\subsubsection*{Time Shift Property}
+Let $f(t) \llra F(s)$.  If we delay a signal by $T$, i.e., $f(t - T)$, then we proceed with the understanding that:
+\begin{itemize}
+    \item $T > 0$, since if $T < 0$, the signal would be noncausal.
+    \item For delays $T > 0$, the signal $f(t - T)$ is zero in the interval from $0$ to $T$.
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.6]{W9_2.png}
+\end{center}
+
+\subsubsection*{Integration Property}
+\[\boxed{\laplace\left[\int_0^t f(\tau) \dd \tau\right] = \frac{1}{s} F(s)}\]
+To derive this, we use the convolution theorem.
+\begin{align*}
+    \laplace\left[\int_0^t f(\tau) \dd \tau\right] &= \laplace[f(t) * u(t)]\\
+    &= \laplace[f(t)] \laplace[u(t)]\\
+    &= \frac{1}{s} F(s)
+\end{align*}
+
+\subsubsection*{Differentiation Property}
+Let $f'(t)$ be the derivative of $f(t)$ with respect to time.  Then,
+\[\laplace[f'(t)] = \int_0^\infty f'(t) e^{-st} \dd t\]
+Integrating by parts, we set $u = e^{-st}$ and $v' = f'(t)$.  Then, $u' = -se^{-st}$ and $v = f(t)$.  Hence,
+\begin{align*}
+    \laplace[f'(t)] &= \int_0^\infty f'(t) e^{-st} \dd t\\
+    &= f(t) e^{-st}|_0^\infty + \int_0^\infty se^{-st} f(t) \dd t\\
+    &= -f(0) + sF(s)
+\end{align*}
+if $e^{-st} \rightarrow 0$ (R.O.C. $\sigma > 0$) as $t \rightarrow \infty$.  Hence,
+\[\boxed{\laplace[f'(t)] = sF(s) - f(0)}\]
+
+\subsubsection*{Multiplication by $t$}
+If $f(t) \llra F(s)$, then we can differentiate both sides to see that:
+\begin{align*}
+    F(s) &= \int_0^\infty e^{-st} f(t) \dd t\\
+    F'(s) &= \int_0^\infty (-t)e^{-st} f(t) \dd t\\
+    &= \laplace[-t f(t)]
+\end{align*}
+Hence,
+\[\boxed{\laplace[t f(t)] = -F'(s)}\]
+
+\subsection*{General Laplace Transforms}
+\begin{center}
+\begin{tabular}{|c|c|}
+    \hline
+    $g(t)$ & $G(s)$\\
+    \hline
+    $\int_0^t f(\tau) \dd \tau$ & $\frac{1}{s} F(s)$\\
+    $f(t)$ & $F(s)$\\
+    $f'(t)$ & $sF(s) - f(0)$\\
+    $f''(t)$ & $s^2 F(s) - sf(0) - f'(0)$\\
+    \hline
+\end{tabular}
+\end{center}
+
+\subsection*{More examples: Laplace Transform of Sine}
+We know that
+\[\cos(\omega t) \llra \frac{s}{s^2 + \omega^2}\]
+We can write the sine function in terms of cosine:
+\[\frac{\dd}{\dd t} \cos(\omega t) = -\sin(\omega t) \cdot \omega \Longrightarrow \sin(\omega t) = -\frac{1}{\omega} \frac{\dd}{\dd t} \cos(\omega t)\]
+Therefore,
+\begin{align*}
+    \laplace[\sin(\omega t)] &= -\frac{1}{\omega} \laplace\left[\frac{\dd}{\dd t} \cos(\omega t)\right]\\
+    &= -\frac{1}{\omega} \left[s \cdot \laplace[\cos(\omega t)] - \cos(\omega \cdot 0)\right]\\
+    &= -\frac{1}{\omega} \left[\frac{s^2}{s^2 + \omega^2} - 1\right]\\
+    &= -\frac{1}{\omega} \left[\frac{-\omega^2}{s^2 + \omega^2}\right]\\
+    &= \frac{\omega}{s^2 + \omega^2}
+\end{align*}
+
+\subsection*{Laplace Transform to Solve Differential Equations}
+Suppose we want to solve the differential equation
+\[y'(t) + y(t) = u(t) \hspace{1cm} \text{ where $y(0) = 0$}\]
+First, we can take the Laplace transform of both sides:
+\[sY(s) - y(0) + Y(s) = \frac{1}{s}\]
+Simplifying,
+\begin{align*}
+    sY(s) - y(0) + Y(s) &= \frac{1}{s}\\
+    Y(s)(s + 1) &= \frac{1}{s}\\
+    Y(s) &= \frac{1}{s(s + 1)}\\
+    \Aboxed{Y(s) &= \frac{1}{s} - \frac{1}{s + 1}}\\
+\end{align*}
+Therefore, (refer to Laplace pairs; $u(t) \llra \frac{1}{s}$)
+\[\laplace^{-1}[Y(s)] = u(t) - e^{-t} u(t)\]
+So,
+\[y(t) = 1 - e^{-t} \hspace{1cm} \text{for $t \geq 0$}\]
+\subsubsection*{Key Take-home Point:}
+With Laplace Transform, \textit{differential equations} are turned into \textit{algebraic equations}.
+\[y(t) = (h * x)(t) \llra Y(s) = H(s) X(s) \Longrightarrow H(s) = \frac{Y(s)}{X(s)}\]
+$H(s)$ is known as the "transfer function".
+\subsection*{General Method to Solve Any-Order Differential Equations}
+Suppose $y^{(k)}(t) = \frac{\dd^k y(t)}{\dd t^k}$, and all initial conditions are zero.
+Then,
+\begin{align*}
+    a_n y^{(n)}(t) + a_{n-1} y^{(n-1)}(t) + \cdots + a_1 y^{(1)}(t) + a_0 y(t) &= b_m x^{(m)}(t) + b_m x^{(m - 1)}(t) + \cdots + b_m x^(1) (t) + b_0 x(t)\\
+    &\Bigg\Updownarrow \laplace\\
+    a_n \cdot s^n Y(s) + a_{n-1} \cdot s^{n-1} Y(s) + \cdots + a_1 \cdot s Y(s) + a_0 Y(s) &= b_m s^m X(s) + b_{m-1} s^{m-1} X(s) + \cdots + b_1 s\cdot X(s) + b_0 X(1)
+\end{align*}
+\[H(s) = \frac{Y(s)}{X(s)} = \frac{b_m s^m + b_{m - 1} s^{m - 1} + \cdots + b_1 s + b_0}{a_n s^n + a_{n - 1} s^{n - 1} + \cdots + a_1 s + a_0}\]
+
+\subsection*{Inverse Laplace Transforms We Should Know}
+\begin{align*}
+    \laplace\big[e^{-at} u(t)] &= \frac{1}{a + s}\\
+    \laplace[\cos(\omega t)] &= \frac{s}{s^2 + \omega^2}\\
+    \laplace[\sin(\omega t)] &= \frac{\omega}{s^2 + \omega^2}\\
+    \laplace\big[e^{-at} \cos(\omega t)] &= \frac{(s + a)}{(s + a)^2 + \omega^2}\\
+    \laplace\big[e^{-at} \sin(\omega t)] &= \frac{\omega}{(s + a)^2 + \omega^2}\\
+    \laplace^{-1} \left[\frac{r}{(s - \lambda)^k}\right] &= \frac{r}{(k - 1)!} t^{k - 1} e^{\lambda t}
+\end{align*}
+
+\subsection*{Partial Fraction Expansion}
+Let
+\[F(s) = \frac{b(s)}{a(s)} = \frac{b_0 + b_1 s + \cdots + b_m s^m}{a_0 + a_1 s + \cdots a_n s^n}\]
+From the fundamental theorem of algegra,
+\begin{itemize}
+    \item $b(s)$ has $m$ roots (called "zeros" of $F(s)$, since if $b(s) = 0 \Rightarrow F(s) = 0$)
+    \item $a(s)$ has $n$ roots (called "poles" of $F(s)$, since if $a(s) = 0 \Rightarrow F(s) \rightarrow \infty$)
+\end{itemize}
+For partial fraction expansion, let's first assume that no poles are repeated and that $m < n$ (i.e., more poles than zeros = "proper" rational function).  Then, $F(s)$ can be written in its \textit{partial fraction} expansion:
+\[F(s) = \frac{r_1}{s - \lambda_1} + \cdots + \frac{r_n}{s - \lambda_n}\]
+where
+\begin{itemize}
+    \item $\lambda_1, \dots, \lambda_n$ are the poles of $F$.
+    \item The numbers $r_1, \dots, r_n$ are called \textit{residues}
+    \item It turns out when $\lambda_k = \lambda_l^*$, then $r_k = r_l^*$.
+    \item Note the poles can be complex numbers
+\end{itemize}
+\subsubsection*{Inversion of a Partial Fraction}
+In partial fraction form, inverting the Laplace transform is easy because
+\begin{align*}
+    \laplace^{-1}[F(s)]  &= \laplace^{-1}\left[\frac{r_1}{s - \lambda_1} + \cdots + \frac{r_n}{s - \lambda_n}\right]\\
+    &= r_1 \cdot \laplace^{-1} \left[\frac{1}{s - \lambda_1}\right] + \cdots + r_n \cdot \laplace^{-1} \left[\frac{1}{s - \lambda_n}\right]\\
+    &= r_1 \cdot e^{-\lambda_1 t} + r_2 \cdot e^{-\lambda_2 t} + \cdots + r_n \cdot e^{-\lambda_n t}\hspace{1cm}\text{for $t \geq 0$}
+\end{align*}
+\subsubsection*{How to Find the Partial Fraction Expansion}
+To find the partial fraction expansion, we
+\begin{itemize}
+    \item Find the polds $\lambda_1, \dots, \lambda_n$, which means we find the zeros of $a(s)$.
+    \item Find the residues of $r_1, \dots, r_n$
+\end{itemize}
+There are several methods to calculate partial fraction expansions.
+\subsubsection*{Method 1: Partial Fractions via Solving Linear Equations}
+\begin{itemize}
+    \item No one actually uses this method, because Method 2 is just better.  However, it is here for completion.
+    \item In this method, we factor $a(s)$ to find the poles, then solve linear equations to find the residues.  Say $m = 2$ and $n = 3$.  Then,    
+\end{itemize}
+\[\frac{b_0 + b_1 s + b_2 s^2}{(s - \lambda_1)(s - \lambda_2)(s - \lambda_3)} = \frac{r_1}{s - \lambda_1} + \frac{r_2}{s - \lambda_2} + \frac{r_3}{s - \lambda_3}\]
+First, we clear the denominators by multiplying both sides by 
+\[(s - \lambda_1)(s - \lambda_2)(s - \lambda_3)\]
+This gives:
+\[b_0 + b_1 s + b_2 s^2 = r_1 (s - \lambda_2)(s - \lambda_3) + r_2(s - \lambda_1)(s - \lambda_3) + r_3(s - \lambda_1)(s - \lambda_2)\]
+At this point, we equate the coefficients of each power of $s$.
+\begin{align*}
+    b_0 + b_1 s + b_2 s^2 &= r_1 (s - \lambda_2)(s - \lambda_3) + r_2(s - \lambda_1)(s - \lambda_3) + r_3(s - \lambda_1)(s - \lambda_2)\\
+    &= r_1 \lambda_2 \lambda_3 + r_2 \lambda_1 \lambda_3 + r_3 \lambda_1 \lambda_2 + \dots\\
+    &+ s[r_1(-\lambda_3 - \lambda_2) + r_2(-\lambda_3 - \lambda_1) + r_3(-\lambda_2 - \lambda_1)]\\
+    &+ s^2[r_1 + r_2 + r_3]
+\end{align*}
+Thus,
+\begin{align*}
+    b_2 &= r_1 + r_2 + r_3\\
+    b_1 &= r_1(-\lambda_3 - \lambda_2) + r_2(-\lambda_3 - \lambda_1) + r_3(-\lambda_2 - \lambda_1)\\
+    b_0 &= r_1\lambda_2\lambda_3 + r_2 \lambda_1 \lambda_3 + r_3 \lambda_1 \lambda_2
+\end{align*}
+Now we have $n$ poles and $n$ equations for $n$ unknowns.
+\subsubsection*{Method 2: Partial Fractions via the "Cover-Up" Procedure}
+Here, we solve for each residual individually in the following way.  E.g., to get $r_1$, we first multiply both sides by $(s - \lambda_1)$.
+\[\frac{b_0 + b_1 s + b_2 s^2}{(s - \lambda_1)(s - \lambda_2)(s - \lambda_3)} = \frac{r_1}{s - \lambda_1} + \frac{r_2}{s - \lambda_2} + \frac{r_3}{s - \lambda_3}\]
+becomes
+\[\frac{(s - \lambda_1)(b_0 + b_1 s + b_2 s^2)}{(s - \lambda_1)(s - \lambda_2)(s - \lambda_3)} = r_1 + \frac{r_2(s - \lambda_1)}{s - \lambda_2} + \frac{r_3(s - \lambda_1)}{s - \lambda_3}\]
+Now, we set $s = \lambda_1$ to get:
+\[r_1 = \frac{b_0 + b_1 \cdot \lambda_1 + b_2 \cdot \lambda_1^2}{(\lambda_1 - \lambda_2)(\lambda_1 - \lambda_3)}\]
+In general,
+\[r_k = (s - \lambda_k)F(s) \big|_{s = \lambda k}\]
+\textbf{Example:}
+Let's find the partial fraction expansion of:
+\[\frac{s^2 - 2}{s(s + 1)(s + 2)} = \frac{r_1}{s} + \frac{r_2}{s + 1} + \frac{r_3}{s + 2}\]
+\begin{align*}
+    r_1 &= \left.\frac{s^2 - 2}{(s + 1)(s + 2)}\right|_{s = 0} = \frac{(0)^2 - 2}{(0 + 1)(0 + 2)} = -1\\
+    r_2 &= \left.\frac{s^2 - 2}{(s)(s + 2)}\right|_{s = -1} = \frac{1 - 2}{(-1)(1)} = 1\\
+    r_3 &= \left.\frac{s^2 - 2}{(s)(s + 1)}\right|_{s=-2} = \frac{4 - 2}{-2(-1)} = 1
+\end{align*}
+Therefore,
+\[F(s) = \frac{s^2 - 2}{s(s + 1)(s + 2)} = -\frac{1}{s} + \frac{1}{s + 1} + \frac{1}{s + 2}\]
+\subsubsection*{Method 3: Partial Fractions via L'Hopital's Rule}
+Another way to find the $k$th residual is to calculate:
+\[r_k = \frac{b(\lambda_k)}{a'(\lambda_k)}\]
+The idea behind this approach is to still use the cover-up method (i.e., multiply the partial fraction expansion by $(s - \lambda_k)$) and set $s$ to $\lambda_k$.  This technique finds another formula for the residual.
+\[r_k = \lim_{s \rightarrow \lambda_k} \frac{(s - \lambda_k)b(s)}{a(s)}\]
+Expanding,
+\begin{align*}
+    &= \lim_{s \rightarrow \lambda_k} \frac{s \cdot b(s) - \lambda_k \cdot b(s)}{a(s)}\\
+    &= \lim_{s \rightarrow \lambda_k} \frac{s \cdot b'(s) + 1 \cdot b(s) - \lambda_k \cdot b'(s)}{a'(s)}\\
+    &= \lim_{s \rightarrow \lambda_k} \frac{b'(s) (s - \lambda_k) + b(s)}{a'(s)}\\
+    &= \frac{b(\lambda_k)}{a'(\lambda_k)}
+\end{align*}
+\textbf{Example:} Let's do the same example as in Method 2:
+\[\frac{s^2 - 2}{s(s + 1)(s + 2)} = \frac{s^2 - 2}{s^3 + 3s^2 + 2s}\]
+Differentiating the denominator, we get:
+\[a'(s) = 3s^2 + 6s + 2\]
+Therefore,
+\begin{align*}
+    r_1 &= \left.\frac{s^2 - 2}{3s^2 + 6s + 2}\right|_{s = 0} = \frac{-2}{2} = -1\\
+    r_2 &= \left.\frac{s^2 - 2}{3s^2 + 6s + 2}\right|_{s = -1} = \frac{1-2}{3-6+2} = 1\\
+    r_3 &= \left.\frac{s^2 - 2}{3s^2 + 6s + 2}\right|_{s = -2} = \frac{4-2}{12-12+2} = 1\\
+\end{align*}
+\subsection*{ODE Example}
+Let's solve the following ODE:
+\[v'''(t) - v(t) = 0\]
+where
+\begin{itemize}
+    \item $v(0) = 1$
+    \item $v'(0) = 0$
+    \item $v''(0) = 0$
+\end{itemize}
+Following the General Laplace Transform list, we get 
+\begin{align*}
+    f'''(t) &\llra s \cdot (s^2 F(s) - sf(0) - f'(0)) - f''(0)\\
+    &= s^3 F(s) - s^2 f(0) - s f'(0) = f''(0)
+\end{align*}
+Therefore,
+\begin{align*}
+\laplace[v'''(t)] &= s^3 V(s) -- s^2 v(0) - s v'(0) - v''(0)\\
+&= s^3 V(s) - s^2
+\end{align*}
+From our equation, we get:
+\begin{align*}
+    s^3 V(s) - s^2 - V(s) &= 0\\
+    V(s)(s^3 - 1) &= s^2\\
+    V(s) &= \frac{s^2}{s^3 - 1}
+\end{align*}
+Now, we do partial fraction decomposition.
+
+
+
+\end{document}
