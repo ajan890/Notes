@@ -1,0 +1,401 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate, enumitem}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+\graphicspath{{./assets/images}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+\newcommand{\example}{\textbf{Example:}}
+
+\title{COM SCI M151B Week 9}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Memory Consistency}
+\subsection*{Consistency Problem}
+\begin{itemize}
+    \item if initially \texttt{M[Z] = M[Y] = 0, x3 = 100, x4 = 200},
+    \begin{center}
+        \includegraphics*[scale=0.8]{W9_1.png}
+    \end{center}
+    \item What are the potential values for \texttt{x1} and \texttt{x2}?
+    \item RAW?
+    \item Correctness?
+    \item LSQ?
+    \begin{itemize}
+        \item If the addresses are not the same, why wait?
+        \item Compiler can reorder, too!
+    \end{itemize}
+    \item SW and LW (to different addresses) within one core can be reordered and that will mess up assumptions in OTHER cores.
+    \item The timing between cores might be off! (even without ordering).
+\end{itemize}
+
+\subsection*{Memory Consistency vs. Coherency}
+\begin{itemize}
+    \item Consistency is about ordering of parallel accesses between \textit{different} addresses.
+    \item Coherency is about ordering of parallel accesses to the \textit{same address}.
+    \item How do we fix this?
+\end{itemize}
+
+\subsection*{The Timing Problem}
+\begin{itemize}
+    \item Timing between two cores is not the hardware or reordering problem, so it's the programmer's job to fix that using synchronization strategies
+    \item We will discuss this later!
+\end{itemize}
+\subsection*{The Reordering Problem}
+\begin{itemize}
+    \item That is the optimization done by hardware and/or compiler and programmer cannot do anything about this!
+\end{itemize}
+
+\subsection*{Memory Model}
+\begin{itemize}
+    \item We first need to know what are the possibilities.
+    \item \textbf{Memory Model:} Interactions between threads and the shared memory.  In other words, \textit{what are the possible values for a load?}
+\end{itemize}
+
+\subsection*{Sequential Consistency}
+\begin{enumerate}
+    \item Processors see their own loads and stores in program order.
+    \item Processors see others' loads and stores in program order.
+    \item All processors see the same global load/store ordering.
+    \item Sequential Consistency is the simplest scenario!
+    \item SC makes multicore systems indistinguishable from multi-programmed in-order uniprocessor.
+    \item However, it is \textbf{too slow!}
+    \begin{itemize}
+        \item Too many restrictions!
+    \end{itemize}
+\end{enumerate}
+
+\subsection*{Memory Operation Ordering}
+\begin{itemize}
+    \item Four types of memory operation orderings:
+    \begin{itemize}
+        \item W \textrightarrow~R: write must complete before subsequent read.
+        \item R \textrightarrow~R: read must complete before subsequent read.
+        \item R \textrightarrow~W: read must complete before subsequent write.
+        \item W \textrightarrow~W: write must complete before subsequent write.
+        \item (This is for \textit{different} addresses, so now RAW hazards!)
+    \end{itemize}
+    \item \textbf{What can we do?}
+    \begin{itemize}
+        \item We really need to be able to re-order memory addresses.
+        \begin{itemize}
+            \item Most lines are not even shared!
+            \item Store does not need to even wait.
+            \item We have the ability to do so!
+        \end{itemize}
+        \item We need to compromise, and use a "weaker" or "relaxed" model.
+        \begin{itemize}
+            \item Not all loads and stores need to be in-order.
+        \end{itemize}
+    \end{itemize}
+    \item Sequential consistency maintains all four orderings.
+    \item Relaxed memory consistency models allow \textit{\textbf{certain}} orderings to be violated.
+\end{itemize}
+
+\subsection*{Total Store Order Model}
+\begin{itemize}
+    \item What do we need?  
+    \begin{itemize}
+        \item Sequential Consistency
+    \end{itemize}
+    \item What do we get?
+    \begin{itemize}
+        \item Store Buffer Model
+    \end{itemize}
+\end{itemize}
+The Total Store Order (TSO) Model is as follows:
+\begin{itemize}
+    \item Processor P can read B before its write to A is seen by all processors.
+    \begin{itemize}
+        \item Each processor can move its own reads in front of its own writes.
+        \item Remember LSQs?
+        \begin{center}
+            \includegraphics*[scale=0.6]{W9_2.png}
+        \end{center}
+    \end{itemize}
+    \item NOTE: Read by other processors \textbf{cannot} return new value of A until the write to A is observed by all processors.
+\end{itemize}
+\subsubsection*{How TSO helps?}
+Let \texttt{a = 0, flag = 0}.
+\begin{center}
+    \includegraphics*[scale=0.4]{W9_3.png}
+\end{center}
+\begin{itemize}
+    \item Can \texttt{load} read 0?
+\end{itemize}
+\subsubsection*{TSO vs. SC}
+\begin{itemize}
+    \item if initially, \texttt{M[Z] = M[Y] = 0}
+    \begin{center}
+        \includegraphics*[scale=0.3]{W9_4.png}
+    \end{center}
+    \item What are the potential values for \texttt{x1} and \texttt{x2}?
+\end{itemize}
+\subsubsection*{TSO Summary}
+\begin{itemize}
+    \item Improving the per-core performance by allowing the reordering within the core!
+    \item Still not observable by other cores (timing problem)
+\end{itemize}
+
+\subsection*{Weak Consistency}
+\begin{itemize}
+    \item Different assumptions
+    \begin{itemize}
+        \item What and when a memory access is visible to the other cores.
+    \end{itemize}
+    \item Performance vs. Complexity
+    \item Different architectures use different models.
+    \item More about it soon!
+\end{itemize}
+
+\subsection*{RISC-V Memory Model}
+\begin{itemize}
+    \item RISC-V OoO (BOOM) follows the RVWMO memory consistency model (RISC-V weak memory ordering).
+    \item Loads are optimistically fired to memory on arrival to the LSU (for performance)
+    \item Simultaneously, the load instruction compares its address with all of the store addresses that it depends on
+    \begin{itemize}
+        \item If there is a match, the memory request is killed.
+        \item If the corresponding store data is present, then the store data is forwarded to the load and the load marks itself as having succeeded.
+        \item If the store data is not present, then the load goes to sleep.
+        \begin{itemize}
+            \item Loads that have been put to sleep are retried at a later time.
+        \end{itemize}
+    \end{itemize}
+    \item BOOM currently exhibits the following behavior:
+    \begin{itemize}
+        \item Write \textrightarrow~Read constraint is relaxed (newer loads may execute before older stores).
+        \item Read \textrightarrow~Read constraint is maintained (loads to the same address appear in order).
+        \item A thread can read its own writes early.
+    \end{itemize}
+\end{itemize}
+\subsection*{How to write a correct program?}
+\begin{itemize}
+    \item The memory model is given.
+\end{itemize}
+\subsubsection*{The Simple Solution}
+\begin{itemize}
+    \item Let it be!
+    \begin{itemize}
+        \item Race-free programming
+    \end{itemize}
+\end{itemize}
+\subsubsection*{The Not-Very-Simple Solution}
+\begin{itemize}
+    \item Have the hardware to track potential violations!
+    \begin{itemize}
+        \item Each core reorders but if another core needs that data, it should recover.
+        \item Very costly!
+    \end{itemize}
+\end{itemize}
+\subsubsection*{More Realistic Solution}
+\begin{itemize}
+    \item Use synchronization!
+    \begin{itemize}
+        \item The programmer (and/or hardware) use some primitives to synchronize different programs.
+        \item This solves both timing and ordering problems.
+    \end{itemize}
+\end{itemize}
+\subsection*{Synchronization}
+\begin{itemize}
+    \item There are two major solutions:
+    \begin{enumerate}
+        \item Producer-Consumer Model
+        \item Mutual Exclusiveness.
+    \end{enumerate}
+    \begin{center}
+        \includegraphics*[scale=0.6]{W9_5.png}
+    \end{center}
+    \item \textbf{Solution:}
+    \begin{itemize}
+        \item Use \textit{\textbf{fences!}}
+        \begin{itemize}
+            \item FENCE is an instruction that enforces all memory operations \textit{before} it to complete before fence is executed
+            \item All memory operations \textit{after} FENCE must wait for FENCE to be finished.
+            \item This happens \textit{within} each core!
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+\subsubsection*{FENCE in RISC-V}
+\begin{itemize}
+    \item FENCE (rwio)
+    \begin{itemize}
+        \item fence r, r
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.6]{W9_6.png}
+\end{center}
+What about between cores?
+\begin{itemize}
+    \item Use semaphores!
+\end{itemize}
+\subsubsection*{Semaphores}
+\begin{itemize}
+    \item Create some barriers!
+    \item This will synchronize all the processors.
+    \item Typically implemented in software.
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.4]{W9_7.png}
+\end{center}
+\textbf{How to implement barrier/semaphore in hardware?}
+\begin{itemize}
+    \item Hardware-or with one-hot encoding \textrightarrow~ set a flag to one when a core reaches the barrier.  Wait until all flags are one!
+\end{itemize}
+\subsection*{Mutual Exclusiveness}
+\begin{itemize}
+    \item Making sure only one process has access to the shared region at any given time.
+    \item To do this, use Mutex/Locks!
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.4]{W9_8.png}
+\end{center}
+\subsection*{Release Consistency}
+\begin{itemize}
+    \item It is guaranteed that all reads and writes are executed and visible to all cores when the lock is released.
+    \item Other than this guarantee, any ordering outside the acquire/release blocks is possible.
+\end{itemize}
+\subsubsection*{How to implement \texttt{acquire/release}?}
+In code:
+\begin{minted}{c++}
+void acquire(lock) {
+    while (lock != 0) {}  //spin lock!
+    // lock is acquired at the point this executes.
+    lock = 1; // set to 1 to make sure no one else can get it
+}
+
+void release(lock) {
+    lock = 0;
+}
+\end{minted}
+In assembly:
+\begin{verbatim}
+acquire:
+    lw ra, 0(x1)
+    bnez ra, acquire     # <- loops to the beginning
+    addi ra, x0, 1
+    sw ra 0(x1)
+
+release:
+    st r0 -> 0(&lock)
+\end{verbatim}
+
+\subsubsection*{Problem?}
+\begin{tabular}{ll}
+\textcolor{red}{(Core 1)} & \textcolor{blue}{(Core 2)}\\ 
+\texttt{acquire:} & \texttt{acquire:}\\
+\texttt{~~~~lw ra, 0(x1)} & \texttt{~~~~lw ra, 0(x1)}\\
+\texttt{~~~~bnez ra, acquire} & \texttt{~~~~bnez ra, acquire}\\
+\texttt{~~~~addi ra, x0, 1} & \texttt{~~~~addi ra, x0, 1}\\
+\texttt{~~~~sw ra 0(x1)} & \texttt{~~~~sw ra 0(x1)}
+\end{tabular}\\\\
+The locks aren't always exclusive!  Since the \texttt{addi ra, x0, 1} is executed after the check for the lock, two cores can both claim the lock at the same time!\\\\
+\textbf{The solution: } atomic instructions!
+\subsection*{Atomic Instructions}
+\begin{itemize}
+    \item A hardware primitive that guarantees instructions are executed in-order and without interruption.
+\end{itemize}
+\subsection*{How to implement Mutex?}
+\begin{itemize}
+    \item Hardware-enforce instruction (called test and set).
+    \begin{verbatim}
+TS(int x) {
+    oldval = SWAP(x, 1); // atomic swap
+    return oldavl;
+}
+    \end{verbatim}
+    \item Other variants: compare-and-swap, fetch-and-add
+\end{itemize}
+\subsubsection*{How SWAP is implemented?}
+\begin{itemize}
+    \item \textbf{Load-reserved, store-conditional} (in RISC-V)
+    \begin{verbatim}
+Label:
+    load-link x2, 0(x1)
+    addi x2, x0, 1
+    store-conditional x2, 0(x0)
+    branch-not-zero label           # check for failure
+    \end{verbatim}
+\end{itemize}
+
+\subsection*{LR and SC}
+\begin{itemize}
+    \item On load-link, processor remembers address.
+    \item Then checks for writes by other processors.
+    \begin{itemize}
+        \item If write is detected, store-conditional will fail.
+    \end{itemize}
+    \item For MESI:
+    \begin{itemize}
+        \item Load-Reserved ensures line in cache in Exclusive/Modified state.
+        \item Store-Conditional succeeds if line still in Exclusive/Modified state.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Recap}
+\begin{itemize}
+    \item Locks:
+    \begin{itemize}
+        \item Test-and-set
+        \item Atomic
+        \item LR and SC
+    \end{itemize}
+    \item This can be combined with a very weak consistency model (called release consistency).
+\end{itemize}
+
+\subsection*{Optimizations?}
+\begin{itemize}
+    \item Too many \texttt{SW}s when waiting/spinning.
+    \begin{itemize}
+        \item Use test-test-and-set
+    \end{itemize}
+    \item Unfairness?
+    \begin{itemize} 
+        \item Use queues
+    \end{itemize}
+    \item Multiple/Parallel Locks
+\end{itemize}
+\textbf{Bottom Line:}
+\begin{itemize}
+    \item There is a range of possibilities!
+    \item The burden is (mostly) on the developer!
+\end{itemize}
+
+\subsubsection*{Test-test-and-set}
+\begin{verbatim}
+TTS(int x) {
+    oldval = x;
+    if (oldval == 0)
+        oldval = SWAP(x, 1);
+    return oldval;
+}
+\end{verbatim}
+\begin{itemize}
+    \item To check for lock:
+    \item \texttt{while (TTS(lock) == 1);}
+\end{itemize}
+
+\end{document}
