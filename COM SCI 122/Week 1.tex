@@ -1,0 +1,310 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+\graphicspath{{./assets/images}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+\newcommand{\example}{\textbf{Example: }}
+\newcommand{\R}{\mathbb{R}}
+
+\title{COM SCI 122 Week 1}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Short Read Sequencing Problem}
+Suppose we have my full DNA sequence of ~3B base pairs, and are given reads about 10 base pairs in length.  How do you figure out where in the full DNA sequence each read comes from?
+\begin{itemize}
+    \item A major issue is that there are only four types of base pairs (A, T, C, G), and therefore only $4^{10} \approx 1000000$ different sequences of length 10.  This means each sequence will appear approximately 3000 times in the genome!    \item To counter this, we use a \textit{reference}.  This takes a long time to compute.
+\end{itemize}
+We know that \textit{my} genome is very close to the Human genome.
+\begin{center}
+    \includegraphics*[width=\textwidth]{W1_1.png}
+\end{center}
+Now, we need a \textbf{map} to speed up the computation time, essentially a table listing positions where sequence reads may be located.
+\subsection*{A Trivial Mapping Algorithm}
+\begin{itemize}
+    \item Suppose we are given a human genome:
+    \begin{center}
+    \texttt{TACATGAGATCCACATGAGATCTGTAGAGCTGTGAGATC}
+    \end{center}
+    \item and a read:
+    \begin{center}
+    \texttt{TCGACATGAGATCGGTAGAGCCGT}
+    \end{center}
+    \item We can simply loop every possible alignment location and find the position under a threshold of mismatches.  If the position is below the threshold, we count it as a match.
+    \begin{verbatim}
+    
+    TACATGAGATCCACATGAGATCTGTAGAGCTGTGAGATC
+    TCGACATGAGATCGGTAGAGCCGT
+     || |||  |||||| ||||| ||  = 18 mismatches
+
+    TACATGAGATCCACATGAGATCTGTAGAGCTGTGAGATC
+     TCGACATGAGATCGGTAGAGCCGT
+     | ||| |||||| |||   | |   = 15 mismatches
+
+    ... eventually ...
+
+    TACATGAGATCCACATGAGATCTGTAGAGCTGTGAGATC
+             TCGACATGAGATCGGTAGAGCCGT
+               |          |       |   = 3 mismatches, below threshold
+    \end{verbatim}
+    \item Such an algorithm is easy to implement, but will take forever to run.
+\end{itemize}
+\subsubsection*{Complexity of Trivial Algorithm}
+\begin{itemize}
+    \item 3,000,000,000 length genome (N)
+    \item 300,000,000 reads to map (M)
+    \item Reads are of length 30 (L)
+    \item Number of mismatches allowed is 2 (D)
+    \item Each comparison of match vs. mismatch takes 1/1,000,000 seconds (t)
+    \item Total time = N * M * L * t = 27,000,000,000,000 seconds = 854,164 years!
+\end{itemize}
+\subsection*{How to improve}
+Some observations we can make are:
+\begin{itemize}
+    \item Most positions in the genome match very poorly.
+    \item We are looking for only a few mismatches (D is small).
+    \item Therefore, a substring of our read will match perfectly.
+\end{itemize}
+\subsubsection*{Perfect Matching Read Substrings}
+The three "worst" possible cases for placement of mutations.
+\begin{center}
+    \includegraphics*[scale=0.4]{W1_2.png}
+\end{center}
+Importantly, in each case, there's a perfect match of L/3.\\\\
+
+\noindent Intuition: Create an index for the whole genome that maps every sequence of length L/3 to the positions it appears.
+\begin{center}
+    \includegraphics*[scale=0.5]{W1_3.png}
+\end{center}
+Now, for each read, we look at each third chunk in the index.
+\subsection*{Complexity of Indexing Algorithm}
+\begin{itemize}
+    \item We need to look up each third of the read in the index.
+    \item For L = 30, our index will contain entries of length 10.  Each entry will contain on average $N / (4^{L / 3})$ or 3,000 positions.
+    \item For each position, we need to compute the number of mismatches.
+    \item Our running time is $L \cdot M \cdot 3 \cdot N / (4^{L / 3}) \cdot T = 81,000,000$ seconds, or 937 days.
+    \item This is a massive improvement from the 854,164 years!  If we make L longer, for example, if L = 45, then the time is 81,000 seconds, or 22.5 hours.
+\end{itemize}
+\section*{More Problems}
+\subsection*{Read Errors}
+\begin{itemize}
+    \item Each sequence read can have some random errors, on top of mutations of the genome.
+    \begin{center}
+        \includegraphics*[scale=0.5]{W1_4.png}
+    \end{center}
+    \item The issue here is that we cannot differentiate between errors and mutations.
+    \item To fix this, we collect redundant data.  Then, errors may only appear in one of the reads, while mutations would appear in most of the reads (not all because there is always a chance an error was made at the same location as the mutation).
+\end{itemize}
+\subsubsection*{How much coverage do we need to prevent errors?}
+\begin{itemize}
+    \item If error rate is $\varepsilon$, and we are going to predict the consensus sequence, what is the error rate if the coverage is 3?
+    \item We will make a prediction with an error if two out of our three reads have an error in the same place.
+    \item This is approximately $3\varepsilon^2$. 
+\end{itemize}
+\subsection*{Repeated Regions}
+\begin{itemize}
+    \item Sometimes, we may encounter two regions where the sequence is repeated.
+    \item If the reads have a mutation, which region is the mutation at?
+    \item This is a difficult problem that can sometimes be solved by using longer reads.  However, in cases where the two regions are long and far apart, there is not a good way to determine the correct region.
+\end{itemize}
+\subsection*{Many Mutations}
+\begin{itemize}
+    \item What happens if there are a lot of mutations right next to each other?
+    \item Too many mismatches to match the read to the reference,  Since we don't know where it came from, we can't identify the difference in the target sequence.
+\end{itemize}
+\subsection*{Insertions}
+\begin{itemize}
+    \item Suppose in your genome, there was a insertion.  Then, compared to the human genome reference, all the bases before the insertion may be incorrect, or all the bases after the insertion may be incorrect.
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.4]{W1_5.png}
+\end{center}
+\begin{itemize}
+    \item To fix this, we add an insertion to the human genome.
+    \item How do we do this using the thirds technique we discussed earlier?
+\end{itemize}
+\subsubsection*{Finding Insertions}
+\begin{itemize}
+    \item We can assume that the indel is always in the middle third of a read.  This is because of the redundancy of reads; it is very likely at least one read will have the insertion in the middle.
+    \item Therefore, both outside regions of size L/3 will match perfectly
+    \item Since the middle read has an insertion, the middle distance will be L/3 + 1 or L/3 - 1.
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.4]{W1_6.png}
+\end{center}
+\subsubsection*{Indel Algorithms}
+\begin{itemize}
+    \item Trivial Algorithm
+    \begin{itemize}
+        \item Try all insertion points for a read
+        \item If read matches (with insertion) below number of mismatches, then we declare a match and identify and indel
+    \end{itemize}
+    \item More Efficient Algorithm
+    \begin{itemize}
+        \item Look for perfect match in first part of read
+        \item Try insertion point at point of first mismatch
+        \item More complicated but faster
+    \end{itemize}
+    \item More Accurate Algorithm
+    \begin{itemize}
+        \item Perform alignment between read and reference
+    \end{itemize}
+    \item Extremely Accurate Algorithm
+    \begin{itemize}
+        \item Align all reads with indel together.
+        \item Multiple Sequence Alignment
+    \end{itemize}
+\end{itemize}
+\subsection*{Other Challenges}
+\begin{itemize}
+    \item \textbf{Coverage of sequence reads is not uniform}: Some places we have many reads, while some we have fewer.  How do we design an approach so we can always recover the sequence?
+    \item \textbf{Large memory requirements}: We need to fit our index into RAM.  Often tens of Gigabytes or greater.
+\end{itemize}
+\section*{Read Mapping Project}
+\begin{center}
+    \includegraphics*[scale=0.5]{W1_7.png}
+\end{center}
+\begin{itemize}
+    \item Project predicts mutations using donor reads and reference genome
+    \item Evaluated using true mutations
+\end{itemize}
+\subsection*{Mutations Format}
+\begin{itemize}
+    \item ">" then reference position
+    \item "S" - Substitution (original new)
+    \item "I" - Insertion (new)
+    \item "D" - Deletion (deleted original)
+    \item Also format for prediction
+\end{itemize}
+For example, 
+\begin{verbatim}
+    >S125 A A
+    >S369 C T
+    >S625 C C
+    >S630 G A
+    >S812 T A
+    >S841 T T
+    >S845 G C
+    >S880 A T
+    >S937 A A
+    >I447 G
+    >D633 G
+\end{verbatim}
+\subsection*{Reference / Read Format}
+These are stored in FASTA files.
+\begin{itemize}
+    \item Reference:
+    \begin{verbatim}
+>genome_1000
+TCCCTACACTTGGCGATTGAACGGAGACACTGTTCATGCCACCCCGTGCCCTAGCCTGCTTTACCTTGCTGGCGCCCCCT
+CACTTAAATTATAATCTTAGCCCCTTCTCCTCTCCCAGTCGTGTCAGCGTTTTCGGTGAGGACCCGGGGTAAGTTCACGT
+GCGTTGTCTAACTTGAAACAACTTTCTTTCTTGCCGCATCCGTACTCATTCGCAGTCGCTGTGTCTCTAACCCAACTTCC
+TAAGTGCTTGCAGCTAAATCTGAACAGCATTGCCTATTTCTCAGTTAATCTAGCAGTTTAGGTAAGTTAGTACCACTTCC
+    \end{verbatim}
+    \item Reads:
+    \begin{verbatim}
+>read_0
+GGTAAGTTAGTACCACTTCCAATAACAAGCTGATAGACATGGACTTGAAC
+>read_1
+CAAGATTCGGTATCTTACAAACCTTTCCCGAATTGTTCGATTTGGGACAC
+>read_2
+CGAAGTTCTTGCCGCGCATTTGCGAGAAGCAGATAGAGCGACTCCTGGCT
+>read_3
+GAATCTGTCACTCCGATCGATAGCTTATTGCCCAACACGATCCCGGTCGG
+    \end{verbatim}
+\end{itemize}
+\subsection*{Paired reads}
+\begin{itemize}
+    \item 2 reads separated by "insert"
+    \item "insert" size is drawn from a distribution
+    \item Paired reads:
+    \begin{verbatim}
+>read_0/1
+TTCCTAAGTGCTTGCAGCTAAATCTGAACAGCATTGCCTATTTCTCAGTT
+>read_0/2
+ATAGACATGGACTTGAACGATTTTAGACAGATATACCTCGATGTAAGGGA
+>read_1/1
+TTCCCAGCTGCAAACGATTTGATTCGCTGTCAGGTTACGTCAACGCGGGA
+>read_1/2
+GCGGCCGTAATTGTCATAGCAACGTATGTTTGCCGGCAGTCGTAATCTCT            
+    \end{verbatim}
+\end{itemize}
+\subsection*{Simulator Details}
+\begin{itemize}
+    \item Mutation Process
+    \begin{itemize}
+        \item Substitution Rate
+        \item Insert Rate
+        \item Deletion Rate
+    \end{itemize}
+    \item Read sampled uniformly from genome
+    \item Insert sizes drawn uniformly
+    \begin{itemize}
+        \item Minimum Insert
+        \item Maximum Insert
+    \end{itemize}
+    \item Error rates for reads
+    \begin{itemize}
+        \item Substitution Rate
+        \item Insert Rate
+        \item Deletion Rate
+    \end{itemize}
+\end{itemize}
+\subsection*{Read Mapping Sample Genome}
+\begin{itemize}
+    \item Small genome is available with correct answers
+    \item Reads are available with and without errors:
+    \begin{itemize}
+        \item Paired no errors
+        \item Paired with errors
+    \end{itemize}
+\end{itemize}
+\subsection*{Assignment Details}
+\begin{itemize}
+    \item Starter - 10,000 length genome
+    \item Assignment:
+    \begin{itemize}
+        \item 1,000,000 length genome for undergrad
+        \item 100,000,000 length genome for grad (or extra credit)
+    \end{itemize}
+    \item Scoreboard will evaluate F-score for substitutions, insertions, deletions
+\end{itemize}
+\section*{Sequence Mapping Coverage}
+\begin{itemize}
+    \item If a genome is length N (human is 3,000,000,000), and the total length of all sequence reads collected is M, the coverage ratio is defined at M / N.
+    \item Often written with an "x".  For example, 10x or 20x coverage.
+    \item Number of reads spanning a specific location follows a distribution with a mean of the coverage.
+    \item Most positions close to coverage.
+\end{itemize}
+\subsection*{Sequencing Coverage Statistics}
+\begin{itemize}
+    \item If length of the genome is N the probability of the event that a single read position starts at a single position in the genome is 1/N (very small).
+    \item If the number of reads is K, the total number of read positions that start at a single genome position is the number of times that an event with probability 1/N happens out of K trials.
+    \item Poisson distribution.
+\end{itemize}
+
+\end{document}
