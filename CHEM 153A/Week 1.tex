@@ -24,7 +24,12 @@
 
 \newcommand{\solution}{\textbf{Solution:}} 
 \newcommand{\example}{\textbf{Example: }}
-\newcommand{\water}{H$_2$O}
+\newcommand{\water}{\text{H$_2$O}}
+\newcommand{\hydroxide}{\text{OH$^-$}}
+\newcommand{\hydronium}{\text{H$_3$O$^+$}}
+\newcommand{\proton}{\text{H$^+$}}
+\newcommand{\pc}{$^+$}
+\newcommand{\nc}{$^-$}
 
 \title{CHEM 153A Week 1}
 
@@ -145,6 +150,7 @@ During this event, a few things happened:
 \end{center}
 \subsection*{Hydrogen Bonds}
 \begin{itemize}
+    \item Hydrogen bonds are crucial for the unique properties of water, enabling its role as a solvent and in biochemical reactions.
     \item Water molecules can form hydrogen bonds because of the polarity in their O-H bonds.  Oxygen, being more electronegative, pulls shared electrons closer, creating a partial negative charge on the oxygen and partial positive charges on the hydrogen atoms
     \item This polarity allows water to generate a cohesive hydrogen-bond network, resulting in phenomena such as high surface tension and capillary action, and enabling it to dissolve many polar substances effectively.  Hydrogen bonding also stabilizes biological macromolecules (e.g., proteins, nucleic acids)
     \item Water has a higher melting point, boiling point, and heat of vaporization than most other common solvents (due to polarity and H-bonds)
@@ -166,10 +172,147 @@ During this event, a few things happened:
         \item when one hydrogen bond breaks, another forms
     \end{itemize}
 \end{itemize}
-\subsection*{Number of Hydrogen Bonds Formed}
+\subsubsection*{Number of Hydrogen Bonds Formed}
 \begin{itemize}
     \item In liquid, each H$_2$O molecule forms hydrogen bonds with an average of 3.4 other molecules
     \item In ice, each H$_2$O molecule forms 4 hydrogen bonds.
 \end{itemize}
+\subsubsection*{Water and Polar Solutes}
+\begin{itemize}
+    \item Hydrogen bonds form between:
+    \begin{itemize}
+        \item Hydrogen acceptor: Electronegavie atom (e.g., O or N)
+        \item Hydrogen donor: H covalently bonded to another electronegative atom
+    \end{itemize}
+    \item Important note: H atoms bonded to carbon do not participate in hydrogen bonding
+\end{itemize}
+\subsection*{Acids and Bases and Water}
+\begin{itemize}
+    \item The concept of acids and bases is entirely mediated by water.
+\end{itemize}
+\begin{center}
+    \includegraphics[width=\textwidth]{L3_1.png}
+\end{center}
+\fbox{
+    \parbox{\textwidth}{
+        The \textbf{autoionization of water} is the process by which two water
+        molecules interact to form a hydronium ion (H$_3$O$^+$) and a hydroxide
+        ion (OH$^-$). This occurs even in pure water, albeit at a very low rate,
+        leading to an equilibrium concentration of H$_3$O$^+$ and OH$^-$ ($10^{-7}$ M
+        each at 25$^\circ$C, corresponding to a neutral pH of 7)
+    }
+} 
+\subsection*{Acids and Bases: Brønsted-Lowry Definitions}
+\begin{itemize}
+    \item \textbf{Acids} are \textbf{proton donors}
+    \item \textbf{Bases} are \textbf{proton acceptors}
+    \item \textbf{Acid-base reactions} are \textbf{proton transfers}
+\end{itemize}
+Many reactions that occur in nature are \textbf{\textit{\underline{reversible}}} and do not proceed to completion.
+Instead, they come to an apparent halt or \textbf{\textit{\underline{equilibrium}}} at some point between 0 and 100\% completion.
+\textbf{\textit{\underline{At equilibrium, the net}}} \textbf{\textit{\underline{velocity is zero}}} because the absolute velocity in the forward direction exactly
+equals the absolute velocity in the reverse direction.
+The position of equilibrium is conveniently described by an equilibrium constant, K$_{\text{eq}}$.
+For example, consider the dissociation of a weak acid:
+\subsection*{Ionization Constants}
+\begin{itemize}
+    \item the tendency for any acid (HA) to lose a proton and form
+    its conjugate base (A$^-$) is defined by the equilibrium
+    constant (K$_{\text{eq}}$) for the reversible reaction
+\end{itemize}
+\begin{center}
+HA $\rightleftharpoons$ H$^+$ + A$^-$
+\end{center}
+for which
+\[K_{eq} = \frac{\text{[H\pc][A\nc]}}{[\text{HA}]} = K_a\]
+The acid dissociation constant ($K_a$) is a measure of the extent to which an acid dissociates in solution and therefore its \textbf{\underline{strength}}.  The less an acid dissociates, the smaller the value of $K_a$.  The stronger the acid, the higher the value of $K_a$.\\\\
+The ionization behavior of water and of weak acids and bases dissolved in water can be represented by one or more equilibrium constants.
+Most biomolecules are ionizable; their structure and function depend on their ionization state, which is characterized by equilibrium constants.\\\\
+In general:
+\[K = \frac{\text{[P]}}{\text{[R]}}\]
+\[aA + bB \rightleftharpoons cC + dD\]
+\subsubsection*{The Ion Product of Water}
+\[K_w = K_{\text{\water}} = \text{[H$_3$O$^+$][OH$^-$]} = 1 \times 10^{-14} \text{M}^2\]
+As a consequence, neutral pH = exactly equal concentrations of H\pc and OH\nc as in pure water.\\\\
+At neutral pH:
+\begin{align*}
+K_w &= \text{[H$^+$][OH$^-$]} = \text{[H$^+$]}^2 = \text{[OH$^-$]}^2\\
+\text{[H$^+$]} &= \sqrt{K_w} = \sqrt{1.0 \times 10^{-14} \text{ M}^2}\\
+\text{[H$^+$]} &= \text{[OH$^-$]} = 10^{-7} \text{M}
+\end{align*}
+\subsection*{The pH Scale Designates the H\pc and OH\nc Concentrations}
+\begin{itemize}
+    \item the pH scale is based on the ion product of water, $K_w$
+    \item the term pH is defined by the expresson:
+    \[\text{pH} = \log\frac{1}{\text{[H$^+$]}} = -\log \text{[H$^+$]}\]
+    where
+    [H$^+$] = [OH$^-$] = $10^{-7}$ M
+    \item for a precisely neutral solution at 25$^\circ$C, pH = 7.0
+\end{itemize}
+\subsection*{The Mechanism of Autoionization}
+\begin{center}
+    \includegraphics[width=\textwidth]{L3_2.png}
+\end{center}
+\subsection*{Lewis Acids and Lewis Bases}
+\begin{itemize}
+    \item \textbf{Lewis base} - Any molecule (or ion) that can form a new covalent bond by \underline{donating a pair of electrons}
+    \begin{itemize}
+        \item Also called a \textbf{nucleophile} ("nucleus loving")
+        \item Electron rich (-, $\delta^-$, lone pairs, pi-bonds)
+        \item \underline{Examples:} \water, \hydroxide, H$_2$C$=$CH$_2$
+    \end{itemize}
+    \item \textbf{Lewis acid} - Any molecule (or ion) that can form a new covalent bond by \underline{accepting a pair of electrons}
+    \begin{itemize}
+        \item Also called an \textbf{electrophile} ("electron loving")
+        \item Electron poor (+, $\delta^+$, unfilled octet)
+        \item \underline{Examples:} \hydronium, \pc CH$_3$, H$_3$C$-$Cl
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics[scale=0.5]{L3_3.png}
+\end{center}
+\subsection*{The pH of Some Aqueous Fluids}
+\begin{itemize}
+    \item pH values > 7:
+    \begin{itemize}
+        \item alkaline or basic
+        \item concentration of \hydroxide is greater than that of \proton
+    \end{itemize}
+    \item pH values < 7:
+    \begin{itemize}
+        \item acidic
+        \item concentration of \proton is greater than that of \hydroxide
+    \end{itemize}
+\end{itemize}
+\begin{center}
+\includegraphics[scale=0.5]{L3_4.png}
+\end{center}
+\subsection*{pH and Medical Diagnoses}
+\begin{itemize}
+    \item acidosis = pH of blood plasma below the normal value of 7.4
+    \begin{itemize}
+        \item common in people with severe, uncontrolled diabetes
+    \end{itemize}
+    \item alkalosis = pH of blood plasma above the normal value of 7.4
+    \item extreme acidosis or alkalosis can be life-threatening
+\end{itemize}
+\subsection*{Conjugate Acid-Base Pairs}
+\begin{itemize}
+    \item conjugate acid-base pair = a proton donor and its corresponding proton acceptor
+    \item the stronger the acid, the greater its tendency to lose its proton
+\end{itemize}
+\begin{center}
+    \includegraphics[width=\textwidth]{L3_5.png}
+\end{center}
+\subsection*{p$K_a$}
+\begin{itemize}
+    \item p$K_a$ = analogous to pH and defined by the equation
+    \[\text{p}K_a = \log\frac{1}{K_a} = -\log K_a\]
+    \item the stronger the tendency to dissociate a proton, the \underline{\textbf{stronger the acid} and \textbf{the lower its p$K_a$}}
+    \item p$K_a$ can be determined experimentally
+\end{itemize}
+
+
+
 
 \end{document}
