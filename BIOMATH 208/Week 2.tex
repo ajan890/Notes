@@ -1,0 +1,276 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+\graphicspath{{./assets/images}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+\newcommand{\example}{\textbf{Example: }}
+\newcommand{\R}{\mathbb{R}}
+
+\title{BIOMATH 208 Week 2}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+\section*{Multilinear Algebra}
+\subsection*{Motivation}
+two very different types of vectors arise in imaging:
+\begin{itemize}
+    \item Tangents to curves/surfaces: Important for describing geometry and anatomy
+    \item Image gradients: Important for optimization and feature identification.
+\end{itemize}
+If we chose a new coordinate system to represent our data, these vectors transform differently.\\\\
+Next, we will apply a linear transform, a rotation matrix $A$, to some imaging data and see how these objects change.\\\\
+Then we'll apply a different linear transform, a rotation and scale $B$, to some imaging data, and see how the objects change.
+\subsection*{Example: Brain Image}
+Consider this brain image represented by ellipses:
+\begin{center}
+    \includegraphics*[scale=1]{W2_1.png}
+\end{center}
+Now, assume this is an image of a patient's brain, and a surgeon is standing directly over it.
+\begin{center}
+    \includegraphics*[scale=1]{W2_2.png}
+\end{center}
+\begin{itemize}
+    \item This is like zooming into the image, thus, Image $I$: $X \rightarrow R$
+\end{itemize}
+With this transformation, image gradients, tangents, and points are all preserved.
+\begin{center}
+    \includegraphics*[scale=0.9]{W2_3.png}
+\end{center}
+Now, suppose the surgeon turns his head, so he is viewing the head at a different angle:
+\begin{itemize}
+    \item A point in the domain of $I$ is rotated to a point in the domain of $J$ with the linear map $A\::\: X \rightarrow Y$.
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=\textwidth]{W2_4.png}
+\end{center}
+In this case, points and vectors are moved based on the rotation matrix multiplied.  However, this can be expressed in linear algebra as a change of basis, and thus, points and vectors are preseved relative to the new coordinate system.\\\\
+Finally, consider if the surgeon moved his head lower, so now he is not looking at the patient's brain from straight top-down, but rather at an angle.
+\begin{center}
+    \includegraphics*[width=\textwidth]{W2_5.png}
+\end{center}
+Now, notice that the point may be at the same place relative to the new basis, but the gradient and tangent vectors have shifted.
+\subsection*{Explanation}
+A tangent $v$ connects two nearby points, $q_0, q_1$.  We can define $v = q_1 - q_0$.  If we transform the points, $q \rightarrow Aq$, we transform the vector.
+\[Aq_1 - Aq_0 = A(q_1 - q_0) = Av\]
+A gradient points from dark to bright in an image.  If we transform the image, $I(x) \rightarrow I(A^{-1}x)$, we transform the gradient.  Let the gradient at $q$, $g = \nabla l(q)$ be a column vector, then the chain rule says:
+\[\nabla[I(A^{-1}x)]_{x = q} = A^{-T}\nabla I(A^{-1}x)_{x=q}\]
+so that the transformed gradient is $A^{-T}g$.
+\subsection*{Details}
+What is the $k$-th component of $\nabla I(A^{-1}x)$?  Let $B = A^{-1}$ and the components of $B$ be written as $B_{ij}$.\\\\
+Let $(x, y)$ map to $(B_{00} x + B_{01}y, B_{10}x + B_{11}y)$.  To find the gradient, we take the derivative.
+\begin{align*}
+    \frac{\partial}{\partial x} &I(B_{00}x + B_{01}y, B_{10}x + B_{11}y)\\
+    \intertext{By chain rule, \dots}
+    &= \partial_0 I(B_{00}x + B_{01}y, B_{10}x + B_{11}y) B_{00} + \partial_1 I(B_{00}x + B_{01}y, B_{10}x + B_{11}y) B_{10}\\
+    \intertext{$\partial_0$ means "partial derivative with respect to the 0th argument"}
+    \intertext{Now, we take the derivative in terms of $y$.}
+    \frac{\partial}{\partial y} &I(B_{00}x + B_{01}y, B_{10}x + B_{11}y)\\
+    &= \partial_0 I(B_{00}x + B_{01}y, B_{10}x + B_{11}y) B_{01} + \partial_1 I(B_{00}x + B_{01}y, B_{10}x + B_{11}y) B_{11}
+\end{align*} 
+What we have essentially done here is:
+\begin{align*}
+    \begin{pmatrix} B_{00} & B_{10} \\ B_{01} & B_{11} \end{pmatrix} &\cdot \begin{pmatrix}\partial_0 I(B_{00}x + B_{01}y, B_{10}x + B_{11}y) \\ \partial_1 I(B_{00}x + B_{01}y, B_{10}x + B_{11}y)\end{pmatrix}\\
+    &= B^T \cdot \nabla I(B_{00}x + B_{01}y, B_{10}x + B_{11}y)\\
+    &= A^{-T}\nabla I(B_{00}x + B_{01}y, B_{10}x + B_{11}y)
+\end{align*}
+$A^{-T}$ is the inverse and transpose of $A$. This is equal to $B^T$, since by our definition, $B = A^{-1}$.
+
+\subsection*{Definition of Vector Space}
+A set $V$ with two operations $+$ (plus) and $\cdot$ (times, i.e., scalar multiplication) is a vector space if the operations satisfy CANI-ADDU.  Here, let $u, v, w \in V$ and $a, b \in \R$.
+\begin{enumerate}
+    \item \textbf{C}ommutativity: $u + v = v + u$ 
+    \item \textbf{A}ssociativity: $(u + v) + w = u + (v + w) = u + v + w$
+    \begin{itemize}
+        \item $+$ needs to be a function of two variables
+    \end{itemize}
+    \item \textbf{N}eutral element: $\exists O \in V$ such that $O + u = u + O = u$
+    \begin{itemize}
+        \item This is often the zero vector, or the origin.
+    \end{itemize}
+    \item \textbf{I}nverse element: $\exists (-v)$ such that $v + (-v) = (-v) + v = 0$
+    \item \textbf{A}ssociativity: $a \cdot (b \cdot u) = (a \cdot b) \cdot u$, where $(b \cdot u) \rightarrow \R \times V \rightarrow V$, and $(a \cdot b) \rightarrow \R \times \R \rightarrow \R$
+    \item \textbf{D}istributivity over $+$ on $V$: $a \cdot (u + v) = a \cdot u + a \cdot v$
+    \item \textbf{D}istributivity over $\cdot$ on $\R$: $(a + b) \cdot u = a \cdot u + b \cdot u$
+    \item \textbf{U}nitary element: $\exists 1$ such that $1 \cdot u = u$.
+\end{enumerate}
+\subsection*{Example Vector Spaces}
+\subsubsection*{Example: Real Numbers}
+Real numbers form a vector space with the usual definition of $+$ and $\cdot$.
+\begin{itemize}
+    \item a single number, not pairs or triples
+    \item not "direction and magnitude" but still obey vector space axioms
+\end{itemize}
+\subsubsection*{Example: The Cartesian Plane}
+Set of ordered pairs, $\R \times \R$.  $(a, b) \rightarrow$ a vector in the cartesion plane.\\\\
+We can define $+$ and $\cdot$ as the following:
+\begin{itemize}
+    \item $+$: $(a, b) + (c, d) = (a + c, b + d)$, where all $a, b, c, d, a + c, b + d \in \R$.
+    \item $\cdot$: $c \cdot (a, b) = (c \cdot a, c \cdot b)$, where $a, b, c, c \cdot a, c \cdot b \in \R$.
+\end{itemize}
+Using these rules, we can build a more complex vector space, using definitions from a simpler one.
+\subsubsection*{Example: Arrows on paper with tail at a fixed origin}
+A vector is an arrow you can draw on paper.  We can define $+$ and $\cdot$ as the following:
+\begin{itemize}
+    \item $+$: "translate the second arrow so its tail lines up with the tip of the first arrow, draw a new arrow from the origin to the tip of the second."  Basically, add the vectors.
+    \item $\cdot$: "shrink or grow the vector by this factor, and if the factor is negative, reflect it over the origin"
+\end{itemize}
+\subsubsection*{Example: Functions from $\R \rightarrow \R$}
+Let $f, g$ be functions $\rightarrow$ choose a set of functions with properties we like
+\begin{itemize}
+    \item Define $f + g$ by evaluating any point $x \in \R$, define $(f+g)(x) = f(x) + g(x)$.  $f$ and $g$ are functions $\R \rightarrow \R$.
+    \item Define $a \cdot f$ by evaluating at any point $x \in \R$, define $(a \cdot f)(x) = a \cdot f(x)$, where $(a \cdot f \in V)$ and $a \cdot f(x) \in \R$.
+\end{itemize}
+\subsubsection*{Example: Probabilities}
+Let $p$ represent the probability that an event happens, and $q$ represent the probability that another event happens.
+\begin{itemize}
+    \item $+$: $p + q$ might be bigger than 1, which is not a probability!
+    \item $\cdot$: $(-1) \cdot p$ is less than 0, which is also not a probability!
+\end{itemize}
+However, if we use logits, $\log \frac{p}{1-p}$, we can define $+$ and $\cdot$ without any problems.  (This will be covered at the end of the course.)
+\subsubsection*{Example: Arrows anywhere on paper}
+The idea with this one is that we do not necessarily have a fixed origin.  Because of this, we do not have a good definition of $+$ and $\cdot$.  Or at least, that is when we imagine the vectors are on a flat sheet of paper.\\\\
+Consider if the vectors were drawn on a sphere.  
+\begin{itemize}
+    \item If two vectors are tangent to the same point, we can add them tip to tail.
+    \item If they are not, then there is no way to add the vectors.  We would consider them to be vectors in different vector spaces.
+\end{itemize}
+\section*{Linear Algebra Definitions}
+\begin{itemize}
+    \item Linear Independence: A set of vectors $v_i$ are linearly independent if 
+    \[\sum a_i v_i = 0 \Longleftrightarrow a_i = 0 \forall i\] 
+    Otherwise they are linearly dependent.
+    \item Basis: A linear independent set of vectors $B$ is called a basis if any vector in $V$ can be written as a unique linear combination of its elements.
+    \item Dimension: The number of vectors in this set is called the dimension of the vector space.
+    \item Coordinates: If the dimension is finite, we write basis elements as $e_i$, then 
+    \[v = \sum_i v^i e_i\]
+    for $v^i \in \R$.  The $v^i$ are the coordinates of the vector with respect to this basis.
+    \item Einstein summation notation: In expressions like the above we will usually remove the summation sign and write
+    \[v = v^i e_i\]
+    Any pair of indices with one up and one down is summed.
+\end{itemize}
+\subsection*{Color Convention}
+We will use the convention
+\begin{itemize}
+    \item vectors in red
+    \item scalars in black
+\end{itemize}
+The previous example will be written
+\[\textcolor{red}{v} = v^i \textcolor{red}{e_i}\]
+\subsection*{Example: Polynomials}
+\subsection*{Linear Maps}
+A linear map $L \::\: U \rightarrow V$, is a map between two vector spaces $(U, V)$ that is compatible with addition and scalar multiplication.  For $\textcolor{red}{u}, \textcolor{red}{v} \in U$, and $a \in \R$, this means:
+\begin{enumerate}
+    \item $+$: $L(\textcolor{red}{u + v}) = L(\textcolor{red}{u}) + L(\textcolor{red}{v})$
+    \begin{itemize}
+        \item "Adding the inputs is the same as adding the outputs"
+    \end{itemize}
+    \item $\cdot$: $L(a \cdot \textcolor{red}{u}) = a \cdot L(\textcolor{red}{u})$
+\end{enumerate}
+\subsubsection*{Linear Maps are a vector space.}
+\textbf{Definition: The vector space of linear maps:}\\
+The set of linear maps from $U$ to $V$ is a vector space, $\text{Hom}(U, V)$ (homomorphisms).  We define $+$ and $\cdot$ for each input, borrowing the definition from $V$.  Let $\text{Hom}(U, V) = H, A, B \in H, \textcolor{red}{u} \in U$, and $a \in \R$.
+\begin{itemize}
+    \item $+$: $A +_H B$, where $+_H$ is a homomorphism, $(A +_H B)(\textcolor{red}{u}) = A(\textcolor{red}{u}) +_V B(\textcolor{red}{u})$
+    \item $\cdot$: $a \cdot_H A$, $(a \cdot_H A)(\textcolor{red}{u}) = a \cdot_V A(\textcolor{red}{u})$
+    \item e.g., we can add matrices elementwise, and we can scale them elementwise.
+\end{itemize}
+\textbf{Definition: Endomorphism:}\\
+The set of linear maps $\text{Hom}(V, V)$ are called endomorphisms.
+\subsection*{Covectors}
+A covector is the vector space $\text{Hom}[V, \R]$, denoted $V^*$ are called covectors.  $V^*$ is called the dual space (or just dual) of $V$.  $V$ is called primal.
+\subsubsection*{Example: Row and Column Vectors}
+Often we write the components of vectors in $V$ as a column.  Then the components of $V^*$ are written as a row, and act on the left using matrix multiplication.
+\subsubsection*{Example: Derivatives}
+Partial derivatives of a function are covectors, and are often written as a row.
+
+\subsection*{Color Convention Pt. 2}
+We will expand our convention:
+\begin{itemize}
+    \item vectors in red
+    \item covectors in blue
+    \item scalars in black.
+\end{itemize}
+Vectors will generally be denoted with Roman letters near the end of the alphabet (e.g., $\textcolor{red}{u, v, w, x, y, z}$).\\\\
+Covectors will generally be denoted with Greek letters (e.g., $\textcolor{blue}{\mu, \upsilon, \omega, \chi}$)\\\\
+Scalars will generally be denoted with Roman letters near the beginning of the alphabet (e.g., $a, b, c$).
+
+\subsection*{A Basic for Covectors}
+\textbf{Definition: Dual Basis:}\\
+Once a basis for $V$ is fixed ($\textcolor{red}{e_i}$), we can uniquely define a basis of $V^*$, $\textcolor{blue}{\epsilon}^i$ by the relationship
+\[\textcolor{blue}{\epsilon^i}(\textcolor{red}{e_j}) = \delta^i_j = \begin{cases} 1 & \text{ if } i = j \\ 0 & \text{ otherwise}\end{cases}\]
+
+\subsection*{Recovering Vector Coordinates}
+If a vector is written in coordinates as $\textcolor{red}{v} = v^i \textcolor{red}{e_i}$, then the $i$-th coordinate is found by
+\[v^i = \textcolor{blue}{\epsilon^i}(\textcolor{red}{v})\]
+\textbf{Proof:}
+\begin{align*}
+    \textcolor{blue}{\epsilon^i}(\textcolor{red}{v}) &= \textcolor{blue}{\epsilon^i}(v^j \textcolor{red}{e}_j)\\
+    &= v^j \cdot \textcolor{blue}{\epsilon^i}(\textcolor{red}{e}_j)\\
+    &= v^j \delta_j^i \hspace{1.9cm} \text{Definition of dual basis}\\
+    &= v^i \hspace{2.2cm} \text{All terms are 0 except for the $i$-th term}
+\end{align*}
+
+\subsection*{Recovering Covector Coordinates}
+If a covector is written in coordinates as $\textcolor{blue}{\mu} = \mu^i \textcolor{blue}{\epsilon^i}$, then the $i$-th coordinate is found by:
+\[\mu^i = \textcolor{blue}{\mu}(\textcolor{red}{e_i})\]
+\textbf{Proof:}
+\begin{align*}
+    \textcolor{blue}{\mu}(\textcolor{red}{e_i}) &= (\mu_j \textcolor{blue}{e^j})(\textcolor{red}{e_i})\\
+    &= \mu_j \textcolor{blue}{\epsilon^j} (\textcolor{red}{e_i}) \\
+    &= \mu_j \delta_i^j \hspace{2cm} \text{Definition of dual}\\
+    &= \mu_i
+\end{align*}
+
+\subsection*{Dual of the dual}
+The vector space of linear maps from $V^* \rightarrow \R$ is denoted $V^{**}$, and is isomorphic to $V$.\\\\
+If $\textcolor{blue}{\mu} \in V^*$, and $\textcolor{red}{w} \in V^{**} \simeq V$, then we define
+\[\textcolor{red}{w}(\textcolor{blue}{\mu}) \doteq \textcolor{blue}{\mu}(\textcolor{red}{w})\]
+We may use this notation when we consider a sequence of maps acting from right to left.  Often we will leave out parentheses.
+
+\subsection*{Example: Dual Basis for Ordered Pairs}
+Let $V = \R^2$, and a basis be given by $\textcolor{red}{e_0} = \begin{pmatrix} 1 \\ 0 \end{pmatrix}$ and $\textcolor{red}{e_1} = \begin{pmatrix} 1 \\ 1 \end{pmatrix}$.  Considering $V^*$ as row vectors, find the dual basis.\\\\
+Essentially, we are solving for $\textcolor{blue}{\epsilon^0}$ and $\textcolor{blue}{\epsilon^1}$.
+\begin{align*}
+    \textcolor{blue}{\epsilon^0}(\textcolor{red}{e_0}) &= \delta_0^0\\
+    &= 1 = \epsilon^{00} \cdot 1 + \epsilon^{01} \cdot 0 \\
+    &= \epsilon^{00}\\
+    \intertext{The multiplication by 1 and 0 are the components of $\textcolor{red}{e_0}$.}
+    \textcolor{blue}{\epsilon^0}(\textcolor{red}{e_1}) &= \delta_1^0\\
+    &= 0 = \epsilon^{00} \cdot 1 + \epsilon^{01} \cdot 1\\
+    &= \epsilon^{00} + \epsilon^{01} = 0\\
+    \intertext{In this case, we multiply by 1 for both $\epsilon$ terms since the components of $\textcolor{red}{e_1}$ are both 1.}
+    \textcolor{blue}{\epsilon^1}(\textcolor{red}{e_0}) &= \delta_0^1\\
+    &= 0 = \epsilon^{10} \cdot 1 + \epsilon^{11} \cdot 0\\
+    &= \epsilon^{10}\\\\
+    \textcolor{blue}{\epsilon^1}(\textcolor{red}{e_1}) &= \delta_1^1\\
+    &= 1 = \epsilon^{10} \cdot 1 + \epsilon^{11} \cdot 1\\
+    &= \epsilon^{10} + \epsilon^{11} = 1\\
+    \intertext{At this point, we have four linear equations and four variables, $\epsilon^{00}, \epsilon^{01}, \epsilon^{11}, \epsilon^{10}$.  Solving, we get:}
+    \epsilon^0 &= (1, -1)\\
+    \epsilon^1 &= (0, 1)
+\end{align*}
+
+\end{document}
