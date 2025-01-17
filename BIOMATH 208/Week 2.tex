@@ -272,5 +272,252 @@ Essentially, we are solving for $\textcolor{blue}{\epsilon^0}$ and $\textcolor{b
     \epsilon^0 &= (1, -1)\\
     \epsilon^1 &= (0, 1)
 \end{align*}
+\subsection*{Adjoint of a Linear Map}
+\textbf{Definition:}
+\begin{itemize}
+    \item If $L\::\: U \rightarrow V$, with $\textcolor{red}{v} \in U$ and $\textcolor{blue}{\mu} \in V^*$, then we can define the map $L^* \::\: V^* \rightarrow U^*$ implicitly by:
+    \[\textcolor{blue}{\mu}(L(\textcolor{red}{v})) \doteq (L^*(\textcolor{blue}{\mu}))(\textcolor{red}{v})\]
+    \item If $f$ is a function from $U$ to $V$, then $Df$ (the derivative) is a linear map from $U$ to $V$, and $Df^*$ is a linear map from $V^*$ to $U^*$.  The latter is used for "backpropagation" when training neural networks.
+\end{itemize}
+
+\subsection*{Example: Adjoint of a Matrix}
+Let $U, V$ be vector spaces, $\textcolor{red}{u} \in U, \textcolor{blue}{v} \in V^*$, and $A \in \text{Hom}(U, V)$.  Let's identify $A^*$, using matrix multiplication:
+\begin{itemize}
+    \item Let $\textcolor{red}{u}$ be columns, and $\textcolor{blue}{v}$ be rows.
+\end{itemize}
+\[\textcolor{blue}{\mu}(A\textcolor{red}{u}) \rightarrow \R\]
+\begin{itemize}
+    \item Notice that $A$ can be applied on the left of the colum input, or ght right of the row, due to how matrix multiplication works.
+    \item "adjoint of $A$ acts to its left on a row"
+\end{itemize}
+Now, let both $\textcolor{red}{u}$ and $\textcolor{blue}{v}$ be columns.  Then,
+\[\textcolor{blue}{\mu}^T(A\textcolor{red}{u}) = (A^T \textcolor{blue}{\mu})^T \textcolor{red}{v}\]
+\begin{itemize}
+    \item "adjoint of $A$ acts with its transpose to the right on a column"
+\end{itemize}
+
+\subsection*{Coordinates of a linear map}
+\textbf{Definition:}
+\begin{itemize}
+    \item If $L$ is a linear map from $U$ to $V$, we can express its coordinates using the bases of $U$ and $V^*$.
+    \[L_j^i = \textcolor{blue}{\epsilon_V^i}[L(\textcolor{red}{e_j^U})]\]
+\end{itemize}
+To build a linear map from coordinates, we can write:
+\[L = L_j^i \textcolor{red}{e_i^V} \textcolor{blue}{\epsilon_U^j}\]
+
+\subsection*{Example: Matrix Vector Multiplication}
+What is the $i$-th coordinate of $L(\textcolor{red}{v})$?
+\begin{align*}
+    \textcolor{blue}{\epsilon^i}(L(\textcolor{red}{v})) &= \textcolor{blue}{\epsilon^i}(L(v^j\textcolor{red}{e_j}))\\
+    &= v^j \textcolor{blue}{\epsilon^i}(L(\textcolor{red}{e_j}))\\
+    &= L_j^i v^j
+\end{align*}
+Note that for any value mentioned here, exponents are rows, subscripts are columns.
+This can be written as:
+\[\begin{pmatrix} L_0^0 & L_1^0 \\ L_0^1 & L_1^1\end{pmatrix} \begin{pmatrix} v^0 \\ v^1 \end{pmatrix} = \begin{pmatrix}L_0^0 v^0 + L_1^0 v^1 \\ L_0^1 v^0 + L_1^1 v^1\end{pmatrix}\]
+
+\subsection*{Coordinates of an adjoint map}
+\textbf{Definition:}
+\begin{itemize}
+    \item If $L*$ is the adjoint of $L$ and a map from $V^*$ to $U^*$, we can express its coordinates using the bases of $V$ and $U^*$.
+    \[[L^*]_j^i = [L^*(\textcolor{blue}{\epsilon_V^i})](\textcolor{red}{e_j^U}) = \textcolor{blue}{\epsilon_V^i}[L(\textcolor{red}{e_U^j})] = L_j^i\]
+    \item These are the same coordinates as $L$, even though this is a map between different vector spaces!
+\end{itemize}
+To build an adjoint map from coordinates, we can write:
+\[L^* = L_j^i \textcolor{blue}{\epsilon_U^j} \textcolor{red}{e_i^V} \]
+We act from right to left, and identify $e_i$ with an element of $V^*$.
+
+\subsection*{Example: Matrix covector multiplication}
+What is the $i$-th coordinate of $L^*(\textcolor{blue}{\mu})$?
+\begin{align*}
+    L^*(\textcolor{blue}{\mu})(\textcolor{red}{e_i}) &= \textcolor{blue}{\mu}(L(\textcolor{red}{e_i}))\\
+    &= \mu_j \textcolor{blue}{\epsilon^j}(L(\textcolor{red}{e_i}))\\
+    &= \mu_j L_i^j
+\end{align*}
+Notice that:
+\begin{itemize}
+    \item This is the same set of formulas as for vectors.
+    \item Instead of multiplying across columns (like vectors), we are multiplying across rows.  Specifically, this is similar to multiplication with the transpose, or matrix multiplication to the right of a row vector.
+\end{itemize}
+
+\subsection*{Change of basis}
+Let $A$ and $B$ be two bases, with elements $\textcolor{red}{e_i^A}$ and $\textcolor{red}{e_i^B}$.  Their elements can be related by a linear map $L$, with
+\[L(\textcolor{red}{e_i^A}) = \textcolor{red}{e_i^B}, \hspace{0.5cm}L^{-1}(\textcolor{red}{e_i^B}) = \textcolor{red}{e_i^A}\]
+The corresponding relationship for covectors is
+\[L^*(\textcolor{blue}{\epsilon_i^B}) = \textcolor{blue}{\epsilon_i^A}, \hspace{0.5cm}L^{-*}(\textcolor{blue}{\epsilon_i^A}) = \textcolor{blue}{\epsilon_i^B}\]
+
+\subsection*{Components of Change of Basis}
+\begin{itemize}
+    \item The components are the same in either bases, $L_j^i = \textcolor{blue}{\epsilon_A^i} \textcolor{red}{e_j^B}$
+\end{itemize}
+\subsubsection*{Proof:}
+In the basis $A$:
+\[[L_A]_j^i = \textcolor{blue}{\epsilon_A^i}(L(\textcolor{red}{e_j^A})) = \textcolor{blue}{\epsilon_A^i}(\textcolor{red}{e_j^B})\]
+In the basis $B$:
+\[[L_B]_j^i = \textcolor{blue}{\epsilon_B^i}(L(\textcolor{red}{e_j^B})) = (L^*(\textcolor{blue}{\epsilon_B^i})(\textcolor{red}{e_j^B})) = \textcolor{blue}{\epsilon_A^i}(\textcolor{red}{e_j^B})\]
+Similarly for the inverse:
+\[[L^{-1}]_j^i = \textcolor{blue}{\epsilon_B^i}(\textcolor{red}{e_j^A})\]
+
+\subsection*{Components of Basis Vectors}
+We have that $\textcolor{red}{e_i^B} = L_i^j \textcolor{red}{e_j^A}$ and $\textcolor{blue}{\epsilon_A^i} = L_j^i \textcolor{blue}{\epsilon_B^j}$.
+
+\subsection*{Components of a vector under change of basis}
+If basis elements change with the map $L$, vector coordinates change with $L^{-1}$.
+\subsubsection*{Proof:}
+Let $a^i$ be components of $\textcolor{red}{v}$ in basis $A$, and $b^i$ be components in basis $B$, then
+\[b^i = \textcolor{blue}{\epsilon_B^i}(\textcolor{red}{v}) = \textcolor{blue}{\epsilon_B^i}(a^j \textcolor{red}{e_j^A}) = \textcolor{blue}{\epsilon_B^i}(\textcolor{red}{e_j^A}) a^j = (L^{-1})_j^i a^j\]
+\begin{itemize}
+    \item If the basis vectors grow, the components have to shrink to give the same vector.
+\end{itemize}
+
+\subsection*{Components of a covector under change of basis}
+Relative to vectors, components of covectors transform using the inverse transpose of $L$.
+\subsubsection*{Proof:}
+Let $\alpha_i$ be components of $\textcolor{blue}{\mu}$ in basis $A$, and $\beta_i$ be components in basis $B$, then,
+\begin{align*}
+    \textcolor{blue}{\mu} &= \textcolor{blue}{\alpha_i \epsilon_A^i} = \textcolor{blue}{\beta_i \epsilon_B^i}\\
+    \beta_i &= \textcolor{blue}{\mu}(\textcolor{red}{e_i^B}) = \alpha_j \textcolor{blue}{\epsilon_A^j}(\textcolor{red}{e_i^B}) = \alpha_j L_i^j
+\end{align*}
+Note: If $L$ is unitary, these two are the same.
+
+\subsection*{Visualizing a Change of Basis for Vectors}
+First, let's draw some vectors on a coordinate grid.  Notice that the two basis vectors are \textbf{not} orthonormal.
+\begin{center}
+    \includegraphics*[scale=0.9]{W2_6.png}
+\end{center}
+However, we can still define $v$ in terms of $e_1$ and $e_2$.\\\\
+For an example, let's stretch the basis vector $e_1$ by a factor of 2.  Note that now although $v$ is the same vector, its coordinates has changed.
+\begin{center}
+    \includegraphics*[scale=0.9]{W2_7.png}
+\end{center}
+Now, let's add some covectors.  (Note that you \textbf{cannot} add vectors and covectors.)\\
+We will also add a coordinate plane, but this time in terms of $\epsilon_1$ and $\epsilon_2$.\\
+\textbf{Additionally, note that vector $v$ is now covector $\mu$.}  Essentially, that vector is expressed in two different basis, but are the same vector.
+\begin{center}
+    \includegraphics*[scale=0.9]{W2_8.png}
+\end{center}
+Now, suppose we stretch $e_1$ again.
+\begin{center}
+    \includegraphics*[scale=0.9]{W2_9.png}
+\end{center}
+Notice now that this time, $\epsilon_1$ has also changed length.
+\subsection*{Summary of Vector and Covector identities}
+Consider vector spaces, $U$, $V$, with $u \in U$, $v \in V$, $\mu \in U^*$, and $v \in V^*$.
+\begin{center}
+    \includegraphics*[scale=0.9]{W2_10.png}
+\end{center}
+
+\subsection*{Multilinear Maps}
+\textbf{Definition: ((p, q) Tensor)}
+\begin{itemize}
+    \item A (p, q) tensor is a multilinear map that inputs $p \in \mathbb{N}$ different covectors in $V^*$, and $q \in \mathbb{N}$ different vectors in $V$, and outputs a real number.
+    \item Multilinear means it is linear in each input individually, with all the other inputs fixed.
+    \item Given a basis of $V$ and a dual basis of $V^*$, we can write coordinates
+    \[T = T_{b_1, \dots, b_q}^{a_1, \dots, a_p} \textcolor{red}{e_{a_1}} \otimes \cdots \otimes \textcolor{red}{e_{a_p}} \otimes \textcolor{blue}{\epsilon^{b_1}} \otimes \cdots \otimes \textcolor{blue}{\epsilon^{b_q}}\]
+    where $a$ and $b$ are sequences taking values in $\{0, d - 1\}$ where $d$ is the dimension of $V$.
+\end{itemize}
+\subsection*{Example: A (1, 1) Tensor}
+We can find components $T_j^i = T(\textcolor{blue}{\epsilon^i}, \textcolor{red}{e_j})$, and write $T = T_j^i \textcolor{red}{e_i} \otimes \textcolor{blue}{\epsilon^j}$.\\\\
+Its action on a pair of inputs $\textcolor{blue}{\mu}, \textcolor{red}{v}$ is:
+\begin{align*}
+    T(\textcolor{blue}{\mu}, \textcolor{red}{v}) &= T(\mu_i\textcolor{blue}{\epsilon^i}, v^i \textcolor{red}{e_j})\\
+    &= \mu_i T(\textcolor{blue}{\epsilon^i}, v^j \textcolor{red}{e_j})\\
+    &= \mu_i v^j T(\textcolor{blue}{\epsilon^i}, \textcolor{red}{e_j})\\
+    &= \mu_i v^j T_j^i
+\end{align*}
+A linear map can be thought of as a (1, 1) tensor if we allow it to act "partially" on one vector.
+
+\subsection*{Covectors and vectors as tensors}
+\begin{itemize}
+    \item A covector is an example of a (0, 1) tensor, because it inputs one vector, and outputs a real number.
+    \item A vector is an example of a (1, 0) tensor, because it inputs one covector (thinking of it in $V^{**}$, and outputs a real number.)
+    \item A scalor in $\R$ is technically a (0, 0) tensor.
+\end{itemize}
+
+\subsection*{Inner Products}
+\textbf{Definition:} An inner product is a (0, 2) tensor (which means 2 vector input, real number output), $g \::\: V \times V \rightarrow \R$, often written $g(\cdot, \cdot) = \langle \cdot, \cdot \rangle$.  It must have the following properties:
+\begin{enumerate}
+    \item Symmetry: $g(\textcolor{red}{u}, \textcolor{red}{v}) = g(\textcolor{red}{v}, \textcolor{red}{u})$
+    \item Non degeneracy: $g(\textcolor{red}{u}, \textcolor{red}{u}) \geq 0$, and it is only equal to 0, if $\textcolor{red}{\mu} = \textcolor{red}{\vec{0}}$
+\end{enumerate}
+
+\subsection*{Lengths and Angles}
+\begin{itemize}
+    \item \textbf{Definition: Length}: We define $\sqrt{g(\textcolor{red}{u}, \textcolor{red}{u})} = |\textcolor{red}{u}|$ as the length of vector $\textcolor{red}{u}$.
+    \item \textbf{Definition: Angle}: The angle between $\textcolor{red}{u}$ and $\textcolor{red}{v}$ is given by $\cos(\theta) = g\left(\frac{\textcolor{red}{u}}{|\textcolor{red}{u}|}, \frac{\textcolor{red}{v}}{|\textcolor{red}{v}|}\right)$
+\end{itemize}
+Note that $g(\textcolor{red}{u}, \textcolor{red}{v}) = |\textcolor{red}{u}||\textcolor{red}{v}| \cdot \cos(\theta) = \textcolor{red}{u} \cdot \textcolor{red}{v}$.
+
+\subsection*{Euclidian Distance}
+Often the specification of a dot product is ignored, and is chosen implicitly as "multiply the components and add them up".  This corresponds to:
+\[g(\textcolor{red}{u}, \textcolor{red}{v}) = \delta_{ij} \textcolor{red}{u^i v^i} = \sum_i \textcolor{red}{u^i v^i}\]
+This depends on a choice of basis!
+\begin{itemize}
+    \item We cannot write that sum down in Einstein convention, because there is no up/down index!
+    \item We can 'fix' the definition by adding the components of a (0, 2) tensor, $T_{ij} = \delta_{ij}$, where $T_{ij}$ is like an identity matrix.
+\end{itemize}
+
+\subsection*{Example: Polynomials on [0, 1]}
+Let $V$ be the space of order $d - 1$ polynomials from $[0, 1] \rightarrow \R$, with basis vectors $\textcolor{red}{e_i}(x) = x^i$.  Let $\textcolor{red}{f}, \textcolor{red}{h} \in V$ and define
+\[\langle \textcolor{red}{f}, \textcolor{red}{h} \rangle = \int_0^1 \textcolor{red}{f}(x) \textcolor{red}{h}(x) \text{d}x\]
+This integral is basically multiply the components (f and h), and add them up (the integral)\\\\
+What are the components?
+\begin{align*}
+    g_{ij} &= g(\textcolor{red}{e_i}, \textcolor{red}{e_j})\\
+    &= \int_0^1 x^i x^j \text{d}x\\
+    &= \int_0^1 x^{i + j} \text{d}x\\
+    &= \left.\frac{1}{i + j + 1} x^{i + j + 1} \right|_0^1\\
+    &= \frac{1}{i + j + 1}
+\end{align*}
+In this example, we get $g_{ij} = \frac{1}{i + j + 1}$, which is not the identity matrix.
+
+\subsection*{Change of Basis for Inner Products}
+An inner product matrix transforms under a change of basis differently than a linear map.\\\\
+\subsubsection*{Proof:}
+For a metric $g$,
+\begin{align*}
+    g_{ij}^B &= g(\textcolor{red}{e_i^B, e_j^B})\\
+    &= g(L_i^k \textcolor{red}{e_k^A}, L_j^l \textcolor{red}{e_l^A})\\
+    &= L_i^k L_j^l g(\textcolor{red}{e_k^A}, \textcolor{red}{e_l^A})\\
+    &= L_i^k L_j^l g_{kl}
+\end{align*}
+But for a linear map $M$, 
+\begin{align*}
+    (M^B)_j^i &= \textcolor{blue}{\epsilon_B^i}(M(\textcolor{red}{e_j^B}))\\
+    &= \textcolor{blue}{\epsilon_B^i}(M(L_j^k \textcolor{red}{e_k^A}))\\
+    &= L_j^k \textcolor{blue}{\epsilon_B^i} M(\textcolor{red}{e_k^A})\\
+    &= (L^{-1})_l^i \textcolor{blue}{\epsilon_n^l}(M(L_j^k \textcolor{red}{e_k^m}))\\
+    &= (L^{-1})_l^i L_j^k \textcolor{blue}{\epsilon_A^l}(M(\textcolor{red}{e_k^A}))\\
+    &= (L^{-1})_l^i L_j^k M_k^l
+\end{align*}
+Notice that when you change components, these turn out to be very different.
+
+\subsection*{Example: The Mahalanobis Distance}
+Choosing an inverse covariance matrix as a metric distance is called the Mahalanobis distance.\\\\
+Principal Component Analysis (PCA) allows us to find a basis in which this metric is the identity matrix.
+\begin{itemize}
+    \item E.g., find a new basis, such that in this basis, the metric is the identity
+\end{itemize}
+
+\subsection*{The Musical Map (something we use an inner product for)}
+\textbf{Definition: The Musical Map}: Given an inner product, $g$, we define the flat map $\flat \::\: V \rightarrow V^*$ by
+\[\flat(\textcolor{red}{u})(\textcolor{red}{v}) = g(\textcolor{red}{u}, \textcolor{red}{v})\]
+In coordinates, we write
+\begin{align*}
+    \flat(\textcolor{red}{u})_i &= \flat(\textcolor{red}{u})(e_i)\\
+    &= g(\textcolor{red}{u}, e_i)\\
+    &= g(\textcolor{red}{u^j} e_j, e_i)\\
+    &= \textcolor{red}{u^j} g(e_j, e_i)\\
+    &= \textcolor{red}{u^j} g_{ij}
+\end{align*}
+It lowers indices from up to down (like a flat lowers a musical note).\\\\
+The sharp map $\sharp \::\: V^* \rightarrow V$ is defined as its inverse.
+\subsubsection*{Uses of the Musical Map}
+\begin{enumerate}
+    \item Convert between covectors (gradients) and vectors (parameter perturbations) for "natural gradient descent".  
+    In complicated spaces, we can specify this instead of the inner product.
+\end{enumerate}
+
+
 
 \end{document}
