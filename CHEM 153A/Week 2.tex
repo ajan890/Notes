@@ -10,6 +10,8 @@
 
 % lists
 \usepackage{enumerate}
+\usepackage{tabularx}
+\usepackage{multicol}
 
 % images
 \usepackage{graphicx} % for images
@@ -507,7 +509,7 @@ Attractive forces that occur between polar molecules, where permanent dipoles ar
 \subsection*{Gibbs Free Energy (G)}
 \begin{itemize}
     \item \textbf{Gibbs free energy (G)} represents the maximum amount of energy available to perform work in a system. It's the key to understanding how cells manage energy.
-    \item The \textbf{Gibbs free energy change ($\Delta$G)} tells us the difference in available free energy between reactants and products. It determines whether a process will occur spontaneously (i.e., without needing an external energy input).
+    \item The \textbf{Gibbs free energy change ($\Delta G$)} tells us the difference in available free energy between reactants and products. It determines whether a process will occur spontaneously (i.e., without needing an external energy input).
     \item $\Delta$G determines the spontaneity of a process
 \end{itemize}
 
@@ -522,9 +524,9 @@ Attractive forces that occur between polar molecules, where permanent dipoles ar
     \includegraphics*[scale=0.6]{L3_8.png}
 \end{center}
 
-\subsection*{Spontaneity and $\Delta$G: What it Really Means}
+\subsection*{Spontaneity and $\Delta G$: What it Really Means}
 \begin{itemize}
-    \item \textbf{If $\Delta$G > 0, the process is non-spontaneous} (it requires an input of energy to occur).  This type of reaction is called \textbf{endergonic}.
+    \item \textbf{If $\Delta G$ > 0, the process is non-spontaneous} (it requires an input of energy to occur).  This type of reaction is called \textbf{endergonic}.
     \begin{itemize}
         \item \textbf{Example:} The synthesis of \textbf{glucose} from CO$_2$ and water during \textbf{photosynthesis} is endergonic ($\Delta$G > 0).  Plants need energy from sunlight to drive this process because it doesn't happen spontaneously
     \end{itemize}
@@ -534,7 +536,7 @@ Attractive forces that occur between polar molecules, where permanent dipoles ar
     \includegraphics*[scale=0.9]{L3_9.png}
 \end{center}
 \begin{itemize}
-    \item \textbf{If $\Delta$G < 0, the process is spontaneous} (it can occur naturally without additional energy input).  This is called an \textbf{exergonic} process.
+    \item \textbf{If $\Delta G$ < 0, the process is spontaneous} (it can occur naturally without additional energy input).  This is called an \textbf{exergonic} process.
     \begin{itemize}
         \item \textbf{Example:} The breakdown of \textbf{glucose} during \textbf{cellular respiration} is exergonic ($\Delta$G < 0).  When glucose is metabolized into CO$_2$ and \water, energy is released that cells can use to drive other processes (like making ATP).
     \end{itemize}
@@ -550,7 +552,7 @@ Attractive forces that occur between polar molecules, where permanent dipoles ar
     \item If equilibrium were reached, the system would be in a \textbf{low-energy state}, and no further work could be done. This is why biological systems keep reactions away from equilibrium to continue performing work
 \end{itemize}
 \begin{itemize}
-    \item \textbf{If $\Delta$G = 0, the system is at equilibrium}, meaning there's no net change in the reactants or products, and no work can be done.  This happens when the forward and reverse reactions occur at the same rate.
+    \item \textbf{If $\Delta G = 0$, the system is at equilibrium}, meaning there's no net change in the reactants or products, and no work can be done.  This happens when the forward and reverse reactions occur at the same rate.
     \begin{itemize}
         \item \textbf{Example:} Consider \textbf{ATP} in equilibrium with \textbf{ADP} and inorganic phosphate (P$_\text{i}$) in a cell.  If the reaction reaches equilibrium, no energy would be released or consumed, making it impossible for the cell to do any work involving ATP.
     \end{itemize}
@@ -559,7 +561,7 @@ Attractive forces that occur between polar molecules, where permanent dipoles ar
     \includegraphics[scale=0.9]{L3_11.png}
 \end{center}
 
-\subsection*{How Cells Use $\Delta$G to Perform Work: Reaction Coupling}
+\subsection*{How Cells Use $\Delta G$ to Perform Work: Reaction Coupling}
 \begin{itemize}
     \item Cells often use \textbf{reaction coupling} to make non-spontaneous processes occur.  By coupling a reaction with \textbf{positive $\Delta$G} (endergonic) to one with \textbf{negative $\Delta$G} (exergonic), the overall process can still be spontaneous
     \begin{itemize}
@@ -580,7 +582,7 @@ Attractive forces that occur between polar molecules, where permanent dipoles ar
     \includegraphics[width=\textwidth]{L3_12.png}
 \end{center}
 
-\subsection*{Quantifying $\Delta$G - Enthalpy}
+\subsection*{Quantifying $\Delta G$ - Enthalpy}
 \[\Delta G^\circ = \Delta H^\circ - T\Delta S^\circ\]
 \begin{itemize}
     \item H, enthalpy is the heat content locked in a system
@@ -592,7 +594,7 @@ Equivalent to the difference between bonds/interactions formed and bonds/interac
     \item \textbf{Bond breaking} generally \textbf{requires energy input} because energy must be provided to overcome the stability of the bond and separate the atoms, moving them to a higher energy state
 \end{itemize}
 
-\subsection*{Quantifying $\Delta$G - Entropy}
+\subsection*{Quantifying $\Delta G$ - Entropy}
 \begin{itemize}
     \item S, entropy is the degree of disorder in a system
     \item $\Delta$S is the change in entropy
@@ -604,4 +606,241 @@ Equivalent to disorder of products minus disorder of reactants
 \begin{center}
     \includegraphics[width=\textwidth]{L3_13.png}
 \end{center}
+\subsection*{Why Temperature Matters: $\Delta G$ and Temperature Dependency}
+\begin{itemize}
+    \item $\Delta G$ is temperature-dependent, as shown by the equation
+\end{itemize}
+\[\Delta G = \Delta H - T\Delta S\]
+As temperature (T) increases, the \textbf{entropy} term ($T\Delta S$) becomes more significant:
+\begin{itemize}
+    \item \textbf{Example:} At low temperatures, the \textbf{melting of ice} is non-spontaneous ($\Delta G > 0$) because the $T \Delta S$ term is too small to offset the positive $\Delta H$ (heat obsorption).  But as temperature increases, the $T \Delta S$ term becomes large enough to make the overall $\Delta G$ negative, and the ice melts spontaneously
+    \item In biochemistry, temperature can impact reaction spontaneity as well.  Consider \textbf{protein denautration:} At high temperatures, proteins unfold because the entropy term ($T \Delta S$) becomes large, overpowering the stabilizing interactions that keep the protein folded.
+\end{itemize}
+\subsection*{$\Delta G$ under different conditions}
+\begin{itemize}
+    \item Whether a reaction is spontaneous or not can depend on temperature
+    \begin{itemize}
+        \item \underline{Entropically} driven ($\Delta H > 0, \Delta S > 0$)
+        \item \underline{Enthalpically} driven ($\Delta H < 0, \Delta S < 0$)
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics[scale=0.9]{L4_1.png}
+\end{center}
+\subsection*{Key Points}
+\begin{itemize}
+    \item \textbf{Exergonic Reactions ($\Delta G < 0$):} Spontaneous and release energy that can be used to drive work in the cell. Examples include \textbf{ATP hydrolysis, glucose oxidation}, and \textbf{protein folding}
+    \item \textbf{Endergonic Reactions ($\Delta G > 0$):} Non-spontaneous and require an input of energy. In cells, they are often coupled with exergonic processes to proceed. Examples include \textbf{photosynthesis, DNA synthesis}, and \textbf{fatty acid synthesis}
+    \item \textbf{Coupling of Reactions:} Many cellular processes rely on the coupling of endergonic and exergonic reactions. For example, \textbf{glucose phosphorylation} has a positive $\Delta G$ (+13.8 kJ/mol), but it proceeds because it is coupled with \textbf{ATP hydrolysis} ($\Delta G$ = -30.5 kJ/mol), resulting in a net negative $\Delta G$ for the overall process
+    \item \textbf{Temperature and $\Delta G$:} The values of $\Delta G$ can vary depending on temperature, reactant concentrations, and the cellular environment. The \textbf{standard free energy change ($\Delta G^\circ$)} assumes standard conditions (1M concentrations, 25$^\circ$C, 1 atm pressure), but actual $\Delta G$ values in cells can differ due to non-standard conditions
+\end{itemize}
+
+\subsection*{Biology and $\Delta G$}
+\begin{itemize}
+    \item Generating and maintaining order requires work and energy
+    \item How do living organisms fight against entropy?
+    \item They use \textbf{catabolic} pathways to harvest external sources of energy (larger molecules to smaller molecules)
+    \begin{itemize}
+        \item e.g., C$_6$H$_{12}$O$_6$ + 6O$_2 \rightarrow$ 6CO$_2$ + 6H$_2$O + energy
+    \end{itemize}
+    \item And they use \textbf{anabolic} pathways to build up functional biomolecules (smaller molecules to larger molecules)
+    \begin{itemize}
+        \item e.g., formation of polypeptides
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics[scale=0.6]{L4_2.png}
+\end{center}
+
+\subsection*{Chemical Equilibrium}
+\begin{itemize}
+    \item Another way of viewing the thermodynamic endpoint of a reaction is by using an \textbf{equilibrium constant} $(K_{eq})$
+    \item $K_{eq}$ equals the ideal ratio of products to reactants
+    \item Depending on conditions (like temperature) $K_{eq}$ has different values
+    \item At equilibrium, a reaction is \underline{macroscopically static, but microscopically dynamic}.
+    \item At equilibrium, the forward rate and reverse rate of the reaction are equilivalent
+    \begin{itemize}
+        \item i.e., nothing happens
+    \end{itemize}
+\end{itemize}
+Generic reaction formula:
+\[aA + bB \rightleftharpoons pP + qQ\]
+Reaction quotient $Q$:
+\[Q = \frac{[P]^p[Q]^q}{[A]^a[B]^b}\]
+\begin{itemize}
+    \item If $Q < K$: The concentration of products is too low, and the reaction will proceed in the \textbf{forward direction} to reach equilibrium.  Reaction drives $\rightarrow$
+    \item If $Q > K$: The concentration of products is too high, and the reaction will proceed in the \textbf{reverse direction} to reach equilibrium.  Reaction drives $\leftarrow$
+    \item If $Q = K_{eq}$: The system is already at equilibrium, and no net change will occur in the concentrations of reactants or products.
+\end{itemize}
+The reaction quotient ($Q$) is similar to $K_{eq}$, but it is used to determine the state of the reaction at any point, not just at equilibrium.
+
+\subsection*{Equilibrium and $\Delta G$}
+\begin{itemize}
+    \item An equilibrium constant ($K_{eq}$) and $\Delta G$ both deal with the final thermodynamic state of a system
+    \begin{itemize}
+        \item As such there are several equations that describe the relationship between them
+    \end{itemize}
+    \item $\Delta G^\circ$ is the standard free energy change (relates directly to $K_{eq}$)
+    \item $\Delta G$ is the free energy change for a given mopment ($\Delta G = 0$ at equilibrium)
+    \begin{itemize}
+        \item $\Delta G < 0$, reaction moves towards products (same as $Q < K$)
+        \item $\Delta G > 0$, reaction moves towards reactants (same as $Q > K$)
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \fbox{
+        \parbox{4cm}{
+            \begin{align*}
+                \Delta G &= \Delta G^\circ + RT \ln Q\\
+                \Delta G^\circ &= -RT \ln K\\
+                \Delta G &= RT \ln \frac{Q}{K}
+            \end{align*}
+        }
+    }
+\end{center}
+\subsection*{Chemical Equilibrium}
+\textbf{Chemical equilibrium} is the state in a reversible chemical reaction where the \textbf{rate of the forward reaction} equals the \textbf{rate of the reverse reaction.}  At equilibrium, the concentrations of the reactants and products remain constant over time, though the reaction continues to occur in both directions.
+\begin{center}
+    \includegraphics[width=\textwidth]{L4_3.png}
+\end{center}
+
+\pagebreak
+\setlength{\columnsep}{1cm}
+\subsection*{Equilibrium vs. Steady state}
+\begin{multicols}{2}
+\textcolor{red}{\textbf{Equilibrium}}
+\begin{itemize}
+    \item Time invariant concentrations
+    \item Forward and reverse rates are equal
+    \item No differences between environment\\
+     and system (equally disordered)
+\end{itemize}
+\begin{center}
+    \includegraphics[scale=0.3]{L4_4.png}
+\end{center}
+\columnbreak
+\textcolor{red}{\textbf{Steady State}}
+\begin{itemize}
+    \item Hypothetically, time invariant\\
+    concentrations
+    \item Input into the system is equivalent\\
+    to output from the system
+    \item System is in higher state of order\\
+    than surroundings
+\end{itemize}
+\begin{center}
+    \includegraphics[scale=0.3]{L4_5.png}
+\end{center}
+\end{multicols}
+\begin{itemize}
+    \item \textbf{Equilibrium:} A state where the system is at its lowest energy, no net change occurs, and the system is stable with no energy flow.  Common in \textbf{closed systems} and \textbf{reversible reactions.}
+    \item \textbf{Steady State:} A dynamic state where concentrations of substances are constant but maintained by continuous flows of energy and matter.  This occurs in \textbf{open systems} and is typical of \textbf{living systems} like metabolism, which require continuous energy input to sustain life.
+\end{itemize}
+\subsection*{Key Characteristics of Steady State}
+\begin{itemize}
+    \item \textbf{Dynamic Process:} Even though the concentrations or amounts of certain substances remain constant, the system is not static.  Processes such as reactions or flows are continuously happening
+    \item \textbf{Input and Output:} Steady state requires continuous input and output of materials and energy to maintain constant conditions
+    \item \textbf{Energy Requirement:} Many steady-state systems, especially in biology, require a constant energy supply to maintain steady conditions.  For example, maintaining ATP levels in cells requires continuous metabolic activity
+\end{itemize}
+\subsection*{Body Temperature Regulation}
+\begin{itemize}
+    \item \textbf{What happens:} The human body maintains a constant internal temperature of about \textbf{37$^\circ$C} (98.6$^\circ$F), despite changes in the external environment (e.g., cold or hot weather)
+    \item \textbf{Steady state:} The body is constantly producing heat (through metabolism) and losing heat (through sweating, radiation, etc.).  Even though these processes are dynamic, the \textbf{internal temperature} remains steady
+\end{itemize}
+\begin{center}
+    \fbox{
+        \parbox{6cm}{
+            The internal temperature is kept constant, but energy (in the form of heat) is continuously produced and lost.  This makes it a steady state.
+        }
+    }    
+\end{center}
+\section*{Protein Structure}
+\begin{center}
+    \includegraphics[width=\textwidth]{L4_6.png}
+\end{center}
+\begin{itemize}
+    \item Proteins are formed of chains of amino acids (peptides).  
+    \item Review the section Peptides and Proteins above.
+\end{itemize}
+\subsection*{The Peptide Bond is Rigid and Planar}
+\begin{itemize}
+    \item 3 covalent bonds separate $\alpha$ carbons of adjacent amino acid residues: C$_\alpha$---C---N---C$_\alpha$
+    \item double-bond character due to resonance between the carbonyl oxygen and the amide nitrogen
+    \item partial negative charge and partial positive charge sets up a small electric dipole
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L4_7.png}
+\end{center}
+\subsection*{Polypeptde Chains - Primary Structure}
+\begin{itemize}
+    \item 3 covalent bonds separate the $\alpha$ carbons of adjacent amino acid residues: C$_\alpha$---C---N---C$_\alpha$
+    \begin{itemize}
+        \item The N-C$_\alpha$ bond and the C$_\alpha$-C bond can be described with dihedral angles phi $\Phi$ and psi $\Psi$ (why are we ignoring C-N?  See below.)
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L4_8.png}
+\end{center}
+\subsection*{Why are we ignoring C-N?}
+\begin{itemize}
+    \item The \textbf{C-N bond} in a polypeptide chain is typically \textbf{ignored} when considering protein folding and secondary structure formation because it has \textbf{partial double-bond character.}  This is due to \textbf{resonance} between the lone pair of electrons on nitrogen and the adjacent carbonyl group (C=O).  This resonance restricts rotation around the \textbf{C-N bond}, making it \textbf{planar and rigid}, and thus not as flexible as the \textbf{N-Ca} (phi, $\Phi$) and \textbf{Ca-C} (psi, $\Psi$) bonds, which allow for more rotational freedom.
+    \item The C-N bond is an $\omega$ (omega) bond.
+\end{itemize}
+
+\subsection*{Dihedral Angles Define Peptide Conformations}
+There are 3 dihedral angles:
+\begin{itemize}
+    \item $\phi$ (phi) = between -180 and +180 degrees
+    \item $\psi$ (psi) = between -180 and +180 degrees
+    \item $\omega$ (omega) = -180 and +180 degrees for trans
+    \begin{itemize}
+        \item The peptide bond is almost always (99.6\% of the time) in the trans configuration, constraining $\omega$ to a value of $-180^\circ < \omega < +180^\circ$.  For a rare cis peptide bond, $\omega = 0^\circ$.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Prohibited Conformations}
+Many $\phi$ (phi) and $\psi$ (psi) values are prohibited by steric interference
+\begin{itemize}
+    \item For example, $\phi$ and $\psi$ cannot both be 0 degrees.
+\end{itemize}
+
+\subsection*{How does a loose polypeptide chain become a functional biomolecule?}
+\begin{itemize}
+    \item Christian Anfinsen demonstrated that proteins could spontaneously refold after disruption.
+    \item \textbf{Anfinsen's Theorem:}
+    \begin{itemize}
+        \item The information determining the tertiary structure of a protein is present in its sequence
+        \item i.e., going from protein chain to functional structure requires no external input.
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics[scale=0.8]{L4_10.png}\\
+    \includegraphics[width=\textwidth]{L4_11.png}
+\end{center}
+
+\subsection*{Challenges to Anfinsen}
+This is a \textbf{chaperone}.
+\begin{center}
+    \includegraphics[scale=0.7]{L4_12.png}
+\end{center}
+
+\begin{itemize}
+    \item Chaperone proteins help assist other proteins in their folding (or re-folding)
+    \item Often expressed under certain stress conditions, like heat shock
+    \item While chaperones contest a hard-line Anfinsen dogma, the broader point still stands - proteins fold based on the thermodynamics of their sequence
+    \item Besides the assembly of protein complexes and de novo folding of nascent polypeptides, chaperones play a role in protein translocation across membranes, stabilization of protein-protein interactions, and ribosome biogenesis.  Regardless of their exact function, different chaperones provide assistance in the same assignment: \textbf{proteins have to maintain their designated function in the right place at the right time}
+\end{itemize}
+\subsection*{More Questions - Levinthal's Paradox}
+\begin{itemize}
+    \item Other experiments like Anfinsen's raised more questions
+    \begin{itemize}
+        \item Denatured proteins refold in 0.1-1000 seconds
+        \item Take a hypothetical protein with 100 amino acids
+        \item Due to allowed rotations, amino acids can have 3 conformations
+        \item That's roughly $3^{100}$ possibilities ($\approx 5 \times 10^{47}$)
+    \end{itemize}
+    \item If the protein can visit one conformation every picosecond ($10^{-12}$ s), searching every possibility would take $5 \times 10^{47} \times 10^{-12}$ seconds, or $1.6 \times 10^{28}$ years.
+\end{itemize}
+
+
 \end{document}
