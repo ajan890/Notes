@@ -12,6 +12,7 @@
 \usepackage{enumerate}
 \usepackage{tabularx}
 \usepackage{multicol}
+\usepackage[table,xcdraw]{xcolor}
 
 % images
 \usepackage{graphicx} % for images
@@ -102,9 +103,32 @@
         \item Enthalpy decrease
     \end{itemize}
     \item \textbf{\underline{London dispersion forces}} hold together the hydrophobic core (enthalpy decrease)
+    \item \textbf{\underline{Electrostatic forces}} can form between charged R groups (enthalpy decrease)
 \end{itemize}
 
+\subsection*{Protein folding is enthalpically driven}
+Although folding a protein reduces its entropy, the process is driven by the \textbf{enthalpy gain} from forming stabilizing interactions.  These forces - hydrogen bonding, van der Waals interactions, and electrostatic forces - make folding energetically favorable, leading to a stable, functional protein.
+\begin{itemize}
+    \item \textbf{Conclusion:} Protein folding is \textbf{enthalpically favorable} ($\Delta H < 0$) but \textbf{entropically unfavorable} ($\Delta S < 0$)
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L1_7.png}
+\end{center}
 
+\subsection*{Summary of protein folding}
+\begin{itemize}
+    \item Unfolded protein rapidly collapses (hydrophobic collapse) to increase entropy of surrounding water
+    \item Molten globule state(s) form, with some early secondary structure
+    \begin{itemize}
+        \item Serves as pre-folded state, serving to constrain energetic possibilities
+        \item \textbf{"Cooperative" effect} emerges, once one interaction forms, the next interaction is easier to form
+    \end{itemize}
+    \item Molten globule state then slowly works its way to the final native structure.
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.5]{L1_8.png}
+    \includegraphics*[scale=0.5]{L1_9.png}
+\end{center}
 
 
 \section*{Protein Structures}
@@ -114,14 +138,17 @@
     \item All of the $\phi$ and $\psi$ values for a given protein structure can be visualized using a Ramachandran plot.
 \end{itemize}
 
-\subsection*{Secondary Structure}
+\subsection*{Protein Secondary Structure}
 \begin{itemize}
     \item \textbf{secondary structure =} describes the spatial arrangement of the main-chain atoms in a segment of a polypeptide chain
     \begin{itemize}
-        \item \textit{regular} secondary structure = $\phi$ and $\psi$ remain the sae throughout the segment
+        \item \textit{regular} secondary structure = $\phi$ and $\psi$ remain the same throughout the segment
         \item common types = $\alpha$ helix, $\beta$ conformation, $\beta$ turn, random coils
     \end{itemize}
 \end{itemize}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L2_1.png}
+\end{center}
 
 \subsubsection*{The $\alpha$ Helix is a Common Protein Secondary Structure}
 \begin{itemize}
@@ -132,6 +159,71 @@
         \item Each helical turn = 3.5 residues, $\sim$5.4 \r{A}
     \end{itemize}
 \end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.4]{L2_2.png}
+\end{center}
 
+\subsection*{Dihedral Angles Define Protein Conformations}
+The following table shows idealized $\phi$ and $\psi$ angles for common secondary structures in proteins
+\begin{center}
+\begin{tabular}{lcc}
+\rowcolor[HTML]{D0E7D2} 
+\textbf{Structure}                                    & $\phi$                            & $\psi$                            \\ \hline
+\multicolumn{1}{|l|}{$\alpha$ Helix}                  & \multicolumn{1}{c|}{$-57^\circ$}  & \multicolumn{1}{c|}{$-47^\circ$}  \\ \hline
+\multicolumn{1}{|l|}{Conformation: Antiparallel}      & \multicolumn{1}{c|}{$-139^\circ$} & \multicolumn{1}{c|}{$+135^\circ$} \\ \hline
+\multicolumn{1}{|l|}{$\beta$ Conformation: Parallel}  & \multicolumn{1}{c|}{$-119^\circ$} & \multicolumn{1}{c|}{$+113^\circ$} \\ \hline
+\multicolumn{1}{|l|}{Collagen triple helix}           & \multicolumn{1}{c|}{$-51^\circ$}  & \multicolumn{1}{c|}{$+153^\circ$} \\ \hline
+\multicolumn{1}{|l|}{$\beta$ Turn type I: $i + 1$}    & \multicolumn{1}{c|}{$-60^\circ$}  & \multicolumn{1}{c|}{$-30^\circ$}  \\ \hline
+\multicolumn{1}{|l|}{$\beta$ Turn type I: $i + 2$}    & \multicolumn{1}{c|}{$-90^\circ$}  & \multicolumn{1}{c|}{$0^\circ$}    \\ \hline
+\multicolumn{1}{|l|}{$\beta$ Turn type II: $i + 1$}   & \multicolumn{1}{c|}{$-60^\circ$}  & \multicolumn{1}{c|}{$+120^\circ$} \\ \hline
+\multicolumn{1}{|l|}{$\beta$ Turn type II: $i + 2$}   & \multicolumn{1}{c|}{$+80^\circ$}  & \multicolumn{1}{c|}{$0^\circ$}    \\ \hline
+\end{tabular}
+\end{center}
+
+\subsection*{Handedness of the $\alpha$ Helix}
+\begin{itemize}
+    \item Right-handed:
+    \begin{itemize}
+        \item R groups protruding away from the helical backbone
+        \item most common
+    \end{itemize}
+    \item extended left-handed: theoretically less stable, not observed in proteins
+\end{itemize}
+
+\begin{center}
+    \includegraphics[scale=0.4]{L2_3.png}
+    \includegraphics[scale=0.4]{L2_4.png}
+\end{center}
+
+\subsection*{Intrahelical Hydrogen Bonds}
+\begin{itemize}
+    \item Between hydrogen atom attached to the electronegative nitrogen atom of residue $n$ and the electronegative carbonyl oxygen atom of residue $n + 4$
+    \item Confers significant stability
+\end{itemize}
+
+\subsection*{Amino Acid Sequence Affects Stability of the $\alpha$ Helix}
+\begin{itemize}
+    \item amino acid residues have an intrisic propensity to form an $\alpha$ helix
+    \item $\alpha$ helix = simplest arrangement, maximum number of hydrogen bonds
+    \begin{itemize}
+        \item backbone wound around an imaginary longitudinal axis
+        \item R groups protrude out from the backbone
+        \item each helical turn = 3.6 residues, ~5.4 \r{A}
+    \end{itemize}
+    \item Interactions between R chains spaced 3-4 residues apart can stabilize or destabilize $\alpha$ helix
+    \begin{itemize}
+        \item charge, size, and shape of R chains can destabilize
+        \item formation of ion pairs and hydrophobic effect can stabilize
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.7]{L2_5.png}
+\end{center}
+\subsection*{Amphipathic $\alpha$-helices}
+Can be found at the surface of a water-soluble globular protein, whereas hydrophobic helices are on the inside.
+\begin{itemize}
+    \item As the name implies, an \textbf{amphipathic (or amphiphilic) helix is an $\alpha$-helix with both hydrophobic and hydrophilic amino acid residues} arranged in such a way as to create two faces on opposite sides of the helix, one face being hydrophobic.
+    \item An example is the bottom left image above (yellow is nonpolar, green is polar)
+\end{itemize}
 
 \end{document}
