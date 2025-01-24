@@ -1,0 +1,133 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+\graphicspath{{./assets/images}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+\newcommand{\example}{\textbf{Example: }}
+\newcommand{\R}{\mathbb{R}}
+
+\title{BIOMATH 208 Week 3}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+\section*{Curves and Surfaces in the Brain}
+\begin{itemize}
+    \item The cortex and subcortical structures of the brain can be well represented by surfaces.
+    \item The gyri and sulci of the cortex can be well represented by curves.
+\end{itemize}
+\begin{center}
+    [FILL 5]
+\end{center}
+\section*{Discrete Curves}
+Curves are modeled as piecewise linear, parameterized by a list of vertices, e.g.:
+\begin{center}
+    [FILL 6]
+    [FILL 7]
+\end{center}
+The first graph is actually in 3D!  Notice how the $z$-coordinate of all the coordinates is zero.
+
+\subsection*{Goal}
+\begin{itemize}
+    \item Build a vector space structure for discrete curves and surfaces.
+    \item Design an inner product and associated norm that is small when two curves (resp. surfaces) and their tangents (normals) are close.
+    \item With a norm and inner product, we will be able to use many standard machine learning algorithms.
+    \item We follow the approach of "Large Deformation Diffeomorphic Metric Curve Mapping" (2008) or "Surface Matching via Currents" (2005).
+\end{itemize}
+
+\subsection*{Curves as Integral Operators}
+\textbf{Definition: (Action of a curve on a smooth vector field)}\\
+Let our curve be parameterized by a function $\gamma \::\: [0, 1] \rightarrow \mathbb{R}^3$.  Let $v \::\: \R^3 \rightarrow \R^3$ be a smooth vector valued function.  The curve acts:
+\[\int_0^1 v(\gamma(t)) \cdot \gamma'(t) \text{d} t\]
+where $\cdot$ is the "standard" dot product in $\R^3$.  The term $\gamma'(t)$ is the derivative of $\gamma$ at the point $t$, which can be thought of as a vector tangent to the curve whose magnitude is its speed.
+
+\subsection*{Example: Action close to 0 because far away}
+[FILL 9]
+
+\subsection*{Example: Action close to 0 because orthogonal}
+[FILL 10]
+
+\subsection*{Example: A large action}
+[FILL 11]
+
+\subsection*{Curves are covectors dual to smooth functions}
+This action is linear, and therefore curves are covectors.
+\begin{itemize}
+    \item $+$: [FILL 12]
+    \item $\cdot$: [FILL 12]
+\end{itemize}
+
+\subsection*{Parameterization Invariance}
+If $\gamma \::\: [0, 1] \rightarrow [0, 1]$ is an increasing differentiable function with $\varphi(0) = 0$ and $\varphi(1) = 1$, then a different parameterization could be $\kappa(t) = \gamma(\varphi(t))$.  Parameterization invariance means that
+\[\int_0^1 v(\gamma(t)) \cdot \gamma'(t) \text{d}t = \int_0^1 v(\kappa(t)) \cdot \kappa'(t) \text{d}t\]
+
+\subsubsection*{Proof.}
+[FILL 13]
+
+\subsection*{Changing Direction}
+If $\varphi(t) = 1 - t$ (i.e., we change direction), then a different parameterization could be $\kappa(t) = \gamma(\varphi(t))$.  Then we have, $\kappa = -\gamma$:
+\[\int_0^1 v(\gamma(t)) \cdot \gamma'(t) \text{d}t = - \int_0^1 v(\kappa(t)) \cdot \kappa'(t) \text{d}t\]
+
+\subsubsection*{Proof.}
+[FILL 14]
+
+\subsection*{Distance between curves}
+\begin{itemize}
+    \item Two curves are close if their action on all smooth vector fields are similar.  They are (weakly) equal if their action on all smooth vector fields are equal.
+    \item How do we deal with the "all" part of this statement?  Consider them all and take the worst one.
+\end{itemize}
+\textbf{Definition: Operator norm for curves}\\
+We will use the operator norm
+\[\Vert \gamma \Vert v^* = \sup_{v \in V, \Vert v \Vert_{v = 1}} \gamma(v)\]
+
+\subsection*{The Maximizer}
+The maximizer of the previous expression is given by a unit vector in the direction of $\gamma^\sharp$
+\[v_{\text{max}} = \frac{\gamma^\sharp}{\vert \gamma^\sharp \vert v}\]
+
+\subsubsection*{Proof.}
+[FILL 16]
+
+\subsection*{The Explicit Norm}
+Plugging in the maximizer gives
+\[\Vert \gamma \Vert v^* = \Vert \gamma^\sharp \Vert v\]
+This means we can define a norm on $V^*$, as long as we can define on $V$!
+\subsubsection*{Proof.}
+[FILL 17]
+
+\subsection*{Why smooth vector fields?  Example: Importance of Smoothness}
+[FILL 18]
+
+\subsection*{Enforcing Smoothness}
+We will use two approaches to make sure the above cannot occur:
+\begin{enumerate}
+    \item Parameterize our vector fields as a superposition of smooth functions
+    \item Build an inner product so that non-smooth (or rough) functions have an infinite norm
+\end{enumerate}
+
+\subsection*{Parameterization}
+We restrict ourselves to vector fields that are a superposition of Gaussians, $K(x) = \exp(-\frac{1}{2\sigma^2} |x|^2)$ where $\sigma^2$ controls smoothness.
+\[V = \left\{ f \::\: f(x) = \sum_{i = 1}^N p_i K(x - x_i), \hspace{0.5cm} \forall x_i, p_i \in \mathbb{R}^3, \hspace{0.5cm} \forall N \in \mathbb{N}\right\}\]
+Any vector field can be parameterized by a list of centers ($x_i$) and positions ($p_i$).
+\end{document}
