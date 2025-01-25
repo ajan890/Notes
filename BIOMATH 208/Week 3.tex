@@ -39,15 +39,26 @@
     \item The gyri and sulci of the cortex can be well represented by curves.
 \end{itemize}
 \begin{center}
-    [FILL 5]
+    \includegraphics*[width=\textwidth]{W3_1.png}
 \end{center}
 \section*{Discrete Curves}
 Curves are modeled as piecewise linear, parameterized by a list of vertices, e.g.:
 \begin{center}
-    [FILL 6]
-    [FILL 7]
+    \includegraphics*[scale=0.4]{W3_2.png}
 \end{center}
-The first graph is actually in 3D!  Notice how the $z$-coordinate of all the coordinates is zero.
+Surfaces are modeled as piecewise linear, parameterized by a list of vertices and triangles.
+\begin{center}
+    \includegraphics*[scale=0.4]{W3_3.png}
+\end{center}
+\begin{itemize}
+    \item The first row states the number of vertices, followed by the number of vertices (2D) or faces (3D).
+    \item Each vertex is in 3D.  Notice in the first graph, the $z$-coordinate of each vertex is 0.
+    \item For the 2D plot, each row in the last four represent an edge.  For the 3D plot, each row in the last four represent a triangle.
+    \begin{itemize}
+        \item For the surfaces in the 3D plot, the order of the vertices mattrers!  The order represents the vertices following a clockwise rotation, and therefore the orientation of the face.
+    \end{itemize}
+\end{itemize}
+
 
 \subsection*{Goal}
 \begin{itemize}
@@ -58,40 +69,84 @@ The first graph is actually in 3D!  Notice how the $z$-coordinate of all the coo
 \end{itemize}
 
 \subsection*{Curves as Integral Operators}
+In this case, the integral is a line integral that integrates over a vector valued function.
 \textbf{Definition: (Action of a curve on a smooth vector field)}\\
 Let our curve be parameterized by a function $\gamma \::\: [0, 1] \rightarrow \mathbb{R}^3$.  Let $v \::\: \R^3 \rightarrow \R^3$ be a smooth vector valued function.  The curve acts:
 \[\int_0^1 v(\gamma(t)) \cdot \gamma'(t) \text{d} t\]
 where $\cdot$ is the "standard" dot product in $\R^3$.  The term $\gamma'(t)$ is the derivative of $\gamma$ at the point $t$, which can be thought of as a vector tangent to the curve whose magnitude is its speed.
 
+\pagebreak
 \subsection*{Example: Action close to 0 because far away}
-[FILL 9]
+\begin{center}
+    \includegraphics*[scale=0.6]{W3_4.png}
+\end{center}
+\begin{itemize}
+    \item In this example, the magnitude of the vectors in the field are determined by a gaussian.  
+    \item Note that since the curve (blue line) is far away from the center of the vector field, the total magnitude of all the vectors along the curve is near 0.
+    \item e.g., the line integral along that line is near 0.
+\end{itemize}
+
 
 \subsection*{Example: Action close to 0 because orthogonal}
-[FILL 10]
+\begin{center}
+    \includegraphics*[scale=0.6]{W3_5.png}
+\end{center}
+\begin{itemize}
+    \item In this example, the gaussian is located directly on top of the curve, but the line integral is still close to zero, since the vectors are pointed perpendicular to the curve.
+    \item Remember that the dot product of two perpendicular vectors is 0.
+\end{itemize}
 
 \subsection*{Example: A large action}
-[FILL 11]
+\begin{center}
+    \includegraphics*[scale=0.6]{W3_6.png}
+\end{center}
+\begin{itemize}
+    \item In this last example, the gaussian is on top of the curve, and it is pointing in generally the same direction as the curve.  As a result, the action would be large in magnitude.
+    \item The dot product of two parallel vectors is the maximum dot product possible, equal to the product of the two magnitudes.
+\end{itemize}
 
 \subsection*{Curves are covectors dual to smooth functions}
 This action is linear, and therefore curves are covectors.
 \begin{itemize}
-    \item $+$: [FILL 12]
-    \item $\cdot$: [FILL 12]
+    \item $+$: 
+    \begin{align*}
+        \int(u + v) (\gamma(t)) \cdot \gamma'(t) \text{d}t &= \int u(\gamma(t)) \cdot \gamma'(t) + v(\gamma(t)) \cdot \gamma'(t) \text{d}t \\
+        &= \int u(\gamma(t)) \cdot \gamma'(t) \text{d}t + \int v(\gamma(t)) \cdot \gamma'(t) \text{d}t \\
+        &= \gamma(u) + \gamma(v)
+    \end{align*}
+    \item $\cdot$:
+    \begin{align*}
+        \int(a \cdot v)(\gamma(t)) \cdot \gamma'(t) \text{d}t &= a \int v(\gamma(t)) \cdot \gamma'(t) \text{d}t \\
+        &= a \cdot \gamma(v)
+    \end{align*}
+    \begin{itemize}
+        \item it is a linear map, computible with addition and scalar multiplication
+    \end{itemize}
+\end{itemize}
+Integrals act linearly, and these curves are linear maps.
+\begin{itemize}
+    \item They input smooth vector fields, and output a real number, dual to the space of the vector fields.
 \end{itemize}
 
 \subsection*{Parameterization Invariance}
 If $\gamma \::\: [0, 1] \rightarrow [0, 1]$ is an increasing differentiable function with $\varphi(0) = 0$ and $\varphi(1) = 1$, then a different parameterization could be $\kappa(t) = \gamma(\varphi(t))$.  Parameterization invariance means that
 \[\int_0^1 v(\gamma(t)) \cdot \gamma'(t) \text{d}t = \int_0^1 v(\kappa(t)) \cdot \kappa'(t) \text{d}t\]
-
+Essentially, the same curve but parameterized differently will yield the same result.
 \subsubsection*{Proof.}
-[FILL 13]
+Let $s = \phi(t)$, $\text{d}s = \phi'(t) \text{d}t$, and $s = 0 \Rightarrow t = 1$, $s = 1 \Rightarrow t = 1$.  Substituting these values into the left integral yields the right integral.  This is true by the chain rule.
 
 \subsection*{Changing Direction}
 If $\varphi(t) = 1 - t$ (i.e., we change direction), then a different parameterization could be $\kappa(t) = \gamma(\varphi(t))$.  Then we have, $\kappa = -\gamma$:
 \[\int_0^1 v(\gamma(t)) \cdot \gamma'(t) \text{d}t = - \int_0^1 v(\kappa(t)) \cdot \kappa'(t) \text{d}t\]
 
 \subsubsection*{Proof.}
-[FILL 14]
+We use a similar change of variables.  
+\begin{align*}
+    &\int_0^1 v(\gamma(\phi(t))) \cdot \frac{\text{d}}{\text{d}t}[\gamma(\phi(t))] \text{d}t\\
+    &= \int_0^1 v(\gamma(1 - t)) \cdot \gamma'(1 - t) (-1) \text{d}t\\
+    &= \int_1^0 v(\gamma(s)) \cdot \gamma'(s) \text{d}s \\
+    &= -\int_0^1 v(\gamma(s)) \cdot \gamma'(s) \text{d}s \\
+\end{align*}
 
 \subsection*{Distance between curves}
 \begin{itemize}
@@ -101,33 +156,141 @@ If $\varphi(t) = 1 - t$ (i.e., we change direction), then a different parameteri
 \textbf{Definition: Operator norm for curves}\\
 We will use the operator norm
 \[\Vert \gamma \Vert v^* = \sup_{v \in V, \Vert v \Vert_{v = 1}} \gamma(v)\]
+In math, sup or "supremum", means to pick the value that results in the largest element to the right.  Similar to $\sum$, iterate through all the values, and the value of the expression is the largest one.
+
 
 \subsection*{The Maximizer}
 The maximizer of the previous expression is given by a unit vector in the direction of $\gamma^\sharp$
 \[v_{\text{max}} = \frac{\gamma^\sharp}{\vert \gamma^\sharp \vert v}\]
 
 \subsubsection*{Proof.}
-[FILL 16]
+\[\gamma(\nu) = \langle \gamma^\sharp, \nu\rangle_v \leq \Vert \gamma^\sharp \Vert_v \Vert \nu \Vert_v\]
+\begin{itemize}
+    \item The left equality is the definition of musical map.  
+    \item The subscript $v$ denotes that it is in the space of vector fields.  
+    \item The less than or equals is only equal if $\gamma^\sharp$ and $\nu$ are collinear.
+    \item This essentially means the optimizer $N$ is parallel to $\gamma^\sharp$, and by definition, it is norm 1.
+\end{itemize}
+
+
 
 \subsection*{The Explicit Norm}
 Plugging in the maximizer gives
 \[\Vert \gamma \Vert v^* = \Vert \gamma^\sharp \Vert v\]
-This means we can define a norm on $V^*$, as long as we can define on $V$!
-\subsubsection*{Proof.}
-[FILL 17]
+Essentially, the norm in the space of curves (left of equation) is equal to the norm in the space of vector fields (right of equation)
 
-\subsection*{Why smooth vector fields?  Example: Importance of Smoothness}
-[FILL 18]
+\subsubsection*{Proof.}
+\begin{align*}
+    \Vert \gamma \Vert^2_v &= \langle \gamma^\sharp, \frac{\gamma^\sharp}{\Vert \gamma^\sharp \Vert_v} \rangle_v\\
+    &= \frac{1}{\Vert \gamma^\sharp \Vert_v} \langle \gamma^\sharp, \gamma^\sharp \rangle_v\\
+    &= \frac{1}{\Vert \gamma^\sharp \Vert_v} \cdot \Vert \gamma^\sharp \Vert_v^2 \\
+    &= \Vert \gamma^\sharp \Vert_v
+\end{align*}
+This means we can define a norm on $V^*$ (space of curves), as long as we can define on $V$ (space of vector fields)!
 
 \subsection*{Enforcing Smoothness}
-We will use two approaches to make sure the above cannot occur:
+We will use two approaches to make sure our vector field solution is smooth, without any discontinuities:
+\begin{itemize}
+    \item We want the curve to be smooth so we don't end up with too many sign changes along our curve.
+    \item A sign change means that as two curves approach each other, they are not equal, since one would produce the negative result of the other.
+    \item We want it to be the case where two curves infinitely close to each other are the same curve.
+\end{itemize}
 \begin{enumerate}
-    \item Parameterize our vector fields as a superposition of smooth functions
+    \item Parameterize our vector fields as a superposition of smooth functions (gaussian blobs)
     \item Build an inner product so that non-smooth (or rough) functions have an infinite norm
 \end{enumerate}
 
 \subsection*{Parameterization}
 We restrict ourselves to vector fields that are a superposition of Gaussians, $K(x) = \exp(-\frac{1}{2\sigma^2} |x|^2)$ where $\sigma^2$ controls smoothness.
+\begin{itemize}
+    \item $\sigma^2$ represents variance.  ($\sigma$ is standard deviation.)
+\end{itemize}
 \[V = \left\{ f \::\: f(x) = \sum_{i = 1}^N p_i K(x - x_i), \hspace{0.5cm} \forall x_i, p_i \in \mathbb{R}^3, \hspace{0.5cm} \forall N \in \mathbb{N}\right\}\]
-Any vector field can be parameterized by a list of centers ($x_i$) and positions ($p_i$).
+Any vector fied can be parameterized by a list of centers ($x_i$) and directions ($p_i$).
+
+\subsubsection*{Plus}
+Plus can be written by concatenating two lists.
+\begin{align*}
+    u &= \sum_{i = 1}^m a_i k(\cdot - a_i)\\
+    \intertext{Let $v = \sum_{i = 1}^n b_i k(\cdot - y_i)$}
+    (u + v)(x) &= u(x) + v(x)  \hspace{1cm} \text{(normal definition of space of functions)}\\
+    &= \sum_{i = 1}^m a_i k(x - x_i) + \sum_{i = 1}^m b_i k(x - y_i)\\
+    &= \sum_{i = 1}^{m + n} c_i k(x - z_i)
+\end{align*}
+\begin{itemize}
+    \item The $\cdot$ represents some function
+    \item $c = \begin{pmatrix} a \\ b \end{pmatrix}$
+    \item $z = \begin{pmatrix} x \\ y \end{pmatrix} \rightarrow +$ is concatenation
+\end{itemize}
+
+\subsubsection*{Times}
+Times can be written by multiplying the directions, and leaving the centers the same.
+\begin{align*}
+    u &= \sum_{i = 1}^m a_i k(\cdot - x_i)\\
+    (b u)(x) &= b \cdot u(z)\\
+    &= b \cdot \sum_{i = 1}^m a_i k(x - x_i)\\
+    &= \sum_{i = 1}^m (b \cdot a_i) k(x - x_i)
+\end{align*}
+\begin{itemize}
+    \item $b$ is a constant.
+\end{itemize}
+
+\subsection*{An inner product for smooth functions}
+We will NOT use the "natural" $L^2$ inner product.  $\langle u, v \rangle = \int u(x) \cdot v(x) \text{d}x$.  Instead, we will use a reproducing kernel.\\\\
+Let
+\[\langle a K( \cdot - x), bK(\cdot - y) \rangle v = K(x - y) \langle a, b \rangle_{\mathbb{R}^3}\]
+Then we can use linearity for arbitrary vector fields
+\begin{align*}
+    &\left\langle \sum_i a_i K(\cdot - x_i), \sum_j b_j K(\cdot - y_j) \right\rangle_v\\
+    \intertext{$K(x - y)\langle a, b \rangle$ represents the distance between two points}
+    &= \sum_i \sum_j a_i \cdot b_j K(x_i - y_j)
+\end{align*}
+In this example, the $\cdot$ is dot product.
+
+\subsection*{Example: Norm of Smooth Functions}
+Let's consider a rectangle function generated from sigmoids
+\[s(t) = 1 / (1 + \exp(-t / e))\]
+\begin{center}
+    \includegraphics*[scale=0.5]{W3_7.png}
+\end{center}
+The smaller the $e$ value, the more "rough" the function is.
+
+\subsection*{Norm as a function of e}
+With $K$ having a width $\sigma = 0.1$, the norm blows up as $e \rightarrow 0$.
+\begin{center}
+    \includegraphics*[scale=0.5]{W3_8.png}
+\end{center}
+This graph shows the $e$ value versus the norm.  As $e$ gets smaller, the graph becomes rougher.  At small values of $e$, the V norm diverges to infinity.  Meanwhile, the L2 norm stays nearly constant.
+
+\pagebreak
+\subsection*{Intuition for the Kernel Norm}
+The kernel inner product is equivalent to the following steps:
+\begin{enumerate}
+    \item "Sharpen" the vector field by replacing the Gaussian kernels with half the variance
+    \item Calculate the $L^2$ inner product of the resulting "sharp" function, and multiply by a constant.
+\end{enumerate}
+
+\subsubsection*{Proof.}
+Let $u = a \exp(-\frac{1}{2\sigma^2} | \cdot - x |^2)$ and $v = b\exp(-\frac{1}{2\sigma^2} |\cdot - x|^2)$.  (These are gaussians.)
+\begin{align*}
+    &\int a \exp \left(-\frac{1}{\sigma^2}|z - x|^2\right) \cdot b\exp\left(-\frac{1}{\sigma^2}|z - x|^2\right) \text{d}z\\
+    &= (a \cdot b) \int \exp \left(-\frac{1}{\sigma^2}(|z - x|^2 + |z - y|^2)\right) \text{d}z
+\end{align*}
+If we expand $|z - x|^2 + |z - y|^2$, complete the square, and collect the like terms, we can simplify this section to:
+\[|z - x|^2 + |z - y|^2 = 2|z - \frac{x + y}{2}|^2 + \frac{1}{2}|x - y|^2\]
+Therefore, we can continue simplifying the integral:
+\begin{align*}
+    &= (a \cdot b) \int \exp \left(-\frac{2}{\sigma^2}(|z - \frac{x + y}{2}|^2)\right) \cdot \exp\left(-\frac{1}{2\sigma^2}|x - y|^2\right) \text{d}z\\
+    &= (a \cdot b) K(x - y) \int \exp \left( -\frac{2}{\sigma^2} |z - \frac{x + y}{2}|^2\right) \text{d}z\\
+    &= (a \cdot b) K(x - y)C
+\end{align*}
+where $C$ is the area under a Gaussian, and only depends on $\sigma$ and $D$ (dimension of the space).
+\begin{itemize}
+    \item Notice that $(a \cdot b)K(x - y)$ is our kernel norm.
+\end{itemize}
+To build sharp corners out of smooth blobs, we require cancellations which go away when the blobs get smaller.
+\begin{center}
+    \includegraphics*[scale=0.4]{W3_9.png}
+\end{center}
+The above image shows the same curve stacked with curves of smaller and smaller $e$ values.  Notice that the smaller the $e$-value, the more sharp the curve is.
 \end{document}
