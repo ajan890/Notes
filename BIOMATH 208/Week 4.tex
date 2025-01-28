@@ -1,0 +1,176 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+\graphicspath{{./assets/images}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+\newcommand{\example}{\textbf{Example: }}
+\newcommand{\R}{\mathbb{R}}
+
+\title{BIOMATH 208 Week 4}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+\section*{Review}
+We chose to use the reproducing kernel inner product for our space of smooth functions, and parameterize them as $v(x) = \sum_{i = 1}^N p_i k(x - c_i)$.  ($p_i$ is the direction, not normalized, and $c_i$ is the center of the vector.)  
+[FILL]
+
+\subsection*{The Flat Map}
+While there are mayn objects included in the dual space, we will focus on the ones that result from the flat map.\\\\
+The flat map is given by 
+\[\flat(aK(\cdot - x)) = a \delta_x\]
+\begin{itemize}
+    \item $K$ is a gaussian blob
+    \item $a$
+\end{itemize}
+\subsubsection*{Definition (Linear evaluation functional)}
+$\delta_x$ acts linearly on a function, and returns its value at a point.
+\[\delta_x(v) = v(x)\]
+We define the action of $a\delta_x$ as
+\[a\delta_x(v) = a \cdot v(x)\]
+\begin{itemize}
+    \item The $\cdot$ is a dot product in $\R^3$.
+\end{itemize}
+\subsubsection*{The flat map for smooth vector fields}
+We can expand our definition using linearity
+\[\flat\left(\sum_i a_i K(\cdot - x_i)\right) = \sum_i \flat(a_i K(\cdot - x_i)) = \sum_i a_i \delta_{x_i}\]
+\subsubsection*{Proof}
+This flat map is the one defined by our inner product
+\begin{align*}
+    [FILL]
+\end{align*}
+
+\subsection*{The Sharp Map}
+By definition, the sharp map is the inverse of the flat map:
+\[\sharp(a \delta_x) = aK(\cdot - x)\]
+It is extended to all ("nice") linear evaluation functionals by linearity.
+
+\subsection*{Discrete Line Integrals}
+Approximate our curve $\gamma$ with a sequence of points $x_1, \dots, x_N$.  The center of the $i$th edge is $c_i \frac{x_i + x_{i + 1}}{2}$ for $i \in \{1, \dots, N - 1\}$.  The tangent to the $i$th edge is $\tau_i = x_{i + 1} - x_i$.  Then:
+\[\gamma(v) = \int v(\gamma(t)) \cdot \gamma'(t) \text{d}t \simeq [FILL]\]
+[FILL]
+
+\subsection*{Integrals as evaluation functionals}
+We can rewrite this as:
+\[\sum_{i = 1}^{N - 1} v(c_i) \cdot \tau_i = \left(\sum_{i = 1}^{N - 1} \tau_i \delta_{c_i}\right)(v)\]
+[FILL]
+
+\subsection*{Sharp map for discrete curves}
+If $\gamma$ is a discrete curve, then its sharp map is given by
+\[\delta^\sharp(x) = \sum_{i = 1}^N \tau_i K(x - c_i)\]
+[FILL]
+
+\subsection*{Inner product for discrete curves}
+Let $\mu = \sum_{i = 1}^n^{\mu - 1}$... [FILL]
+
+\subsection*{Distance between discrete curves}
+The distance between two curves is the norm of their difference.
+\begin{align*}
+    &\Vert \mu - \nu \Vert^2_{V^*}\\
+    &= g_{V^*}(\mu, \mu) - 2g_{V^*}(\mu, \nu) + g_{V^*}(\nu, \nu)\\
+    &= \sum_{i, i' = 1}^{n^\mu - 1} K [FILL]
+\end{align*}
+
+\section*{The Corpus Callosum}
+\begin{center}
+    [FILL IMG]
+\end{center}
+\begin{itemize}
+    \item One of the most well-studied parts for the brain is the Corpus Callosum, because it contains such a large amount of white matter
+    \item In the past, a common treatment for epilepsy was to sever the Corpus Callosum, as it prevents positive feedback loops between the two sides.
+    \item Its shape changes depending on different diseases, phenotypes, etc.
+\end{itemize}
+
+\section*{Review - Curve Fitting and Interpolation}
+Consider a curve fitting problem:  You have a lot of data points.  The goal is to find a "nice" $f(x)$ that passes through my data.\\\\ 
+What does "nice" mean?  It is a curve with no cusps or discontinuities.\\\\
+To do this, we first find the minimizer of $f$.
+\[\text{argmin}_{f \in V} \langle f, f\rangle_v \text{ such that } f(x_i) = y_i \hspace{1cm} \forall i \in \{1, \dots, N\}\]
+This is a costumed plurization, use Lagrange multipliers $p_i$.
+\begin{align*}
+    L &= \sum_{i = 1}^N p_i \cdot (y_i - f_i) + \langle f, f \rangle_v\\
+    &= \sum_{i = 1}^N p_i f(x_i) + \frac{1}{2}\langle f, f \rangle_v + \sum_{i = 1}^N p_i y_i
+\end{align*}
+for a fixed $p$, find the best $f$.
+\begin{align*}
+    &= \sum_{i = 1}^N [FILL]
+\end{align*}
+Therefore, the optimal $f$ is $f(x) = \sum_{i = 1}^N p_i K(x - x_i)$.
+\begin{itemize}
+    \item We now need to solve for $p$.
+    \item In these types of problems, $p$ is a lagrange multiplier, so we would have to refer to the constraints.
+\end{itemize}
+$y_{j} = f(x_j) = \sum_{i = 1}^N p_i K(x_j - x_i)$
+solve for $p$ by solving linear equations!
+
+\section*{Smooth Manifolds}
+Motivation: Many useful data types in medical imaging are not elements of a vector space.  (Not closed under $+$ and $\cdot$.)
+\begin{itemize}
+    \item Rotation matrices
+    \item Diffusion tensors
+    \item Probabilities
+\end{itemize}
+We can still analyze them quantitatively by modeling them as elements of a manifold.\\\\
+We will discuss two main types of data
+\begin{enumerate}
+    \item Pixels that are manifold valued objects
+    \item Manifold valued objects that act on imaging data
+\end{enumerate}
+\subsection*{Intuition for Smooth Manifolds}
+A manifold is a set (possibly curved), such that if you zoom in close it looks like a (flat) vector space (i.e., $\mathbb{R}^d$ for some $d$).
+\begin{itemize}
+    \item A classic example is a sphere like the earth.  When we walk around in a small area it looks flat.
+\end{itemize}
+
+
+\subsection*{Example - Not Manifolds}
+\begin{center}
+    [FILL]
+\end{center}
+
+\subsection*{Definition of a Smooth Manifold}
+A smooth manifold is a triple
+\begin{enumerate}
+    \item A set $\mathcal{M}$
+    \item A topology $\mathcal{O}$
+    \item A collection of smoothly compatible charts called an atlas $\mathcal{A}$, where every point is in at least one chart.
+\end{enumerate}
+
+\subsection*{Topologies}
+\begin{itemize}
+    \item We will not cover topologies in detail in lecture.  Please see the notes if you are interested.
+\end{itemize}
+Working definition of topologies:  We can think of a topology as a collection of open sets (including $\mathcal{M}$ and $\emptyset$), that allow us to define continuous functions:
+\begin{itemize}
+    \item A function $f$ is continuous if the inverse image of any open set is also open set.
+\end{itemize}
+
+\subsection*{Charts}
+Charts will make precise what "looks like $\mathbb{R}^d$ means.
+Definition: A chart is a pair $(U, x)$ in $\mathcal{A}$, where $U$ is an open subset of $\mathcal{M}$
+[FILL]
+
+
+\end{document}
