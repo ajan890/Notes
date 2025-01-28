@@ -1,0 +1,315 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+\usepackage{tabularx}
+\usepackage{multicol}
+\usepackage[table,xcdraw]{xcolor}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+\graphicspath{{./assets/images/Week 4}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+\newcommand{\example}{\textbf{Example: }}
+\newcommand{\water}{\text{H$_2$O}}
+\newcommand{\hydroxide}{\text{OH$^-$}}
+\newcommand{\hydronium}{\text{H$_3$O$^+$}}
+\newcommand{\proton}{\text{H$^+$}}
+\newcommand{\pc}{$^+$}
+\newcommand{\nc}{$^-$}
+\newcommand{\ka}{\text{$K_\text{a}$}}
+
+\title{CHEM 153A Week 4}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Protein Tertiary and Quarternary Structure}
+\begin{itemize}
+    \item \textbf{tertiary structure} = overall three-dimensional arrangement of all the atoms in a protein
+    \begin{itemize}
+        \item weak interactions and covalent bonds hold interacting segments in position
+    \end{itemize}
+    \item \textbf{quaternary structure} = arrangement of 2+ separate polypeptide chains in three-dimensional complexes
+    \begin{center}
+        \textbf{Shape \textrightarrow~Function}
+    \end{center}
+\end{itemize}
+
+\subsection*{Tertiary Structure - What holds it together?}
+\begin{itemize}
+    \item The global interactions of tertiary structure are formed through the interaction of amino acid side chains
+    \item \underline{Electrostatic interactions} forming between charged side chains
+    \item \underline{London dispersion forces} forming between nonpolar side chains
+    \item \underline{Hydrogen bonds} forming between polar/charged side chains
+    \item \underline{Covalent bonds} forming through disulfide bridges
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L1_1.png}
+\end{center}
+
+\section*{Categories of Tertiary Structure - Globular proteins}
+\begin{itemize}
+    \item \textbf{Globular proteins} polypeptide chains folded into a \underline{spherical or globular shape}
+    \begin{itemize}
+        \item fold back on each other
+        \item more compact than fibrous proteins
+        \item \underline{soluble in water}
+        \item mixture of different secondary structures
+        \item quaternary structure usually held together by noncovalent forces
+        \item regulatory and metabolic roles (basically most proteins you can think of)
+        \begin{itemize}
+            \item enzymes
+            \item transport proteins
+            \item motor proteins
+            \item regulatory proteins
+            \item immunoglobulins
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L1_2.png}
+\end{center}
+\subsection*{Myoglobin Provided Early Clues about the Complexity of Globular Protein Structure}
+\begin{itemize}
+    \item several structural representations of myoglobin's tertiary structure:
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L1_3.png}
+    \includegraphics*[width=\textwidth]{L1_4.png}
+\end{center}
+The bottom picture depicts the original model of the myoglobin molecule, constructed in plasticine in 1957.
+\begin{itemize}
+    \item This was the first ever model of a protein molecule.  (Won a nobel prize)
+    \item In modern day, we have so much information about protein structure that we can train AIs to simulate protein folding.
+\end{itemize}
+
+\subsection*{Globular Proteins Have a Variety of Tertiary Structures}
+Each globular protein has a distinct structure, adapted for its biological function
+\begin{center}
+    \includegraphics*[scale=0.4]{L1_5.png}
+\end{center}
+
+\section*{Categories of Tertiary Structure - Fibrous proteins}
+\begin{itemize}
+    \item \textbf{Fibrous proteins} are long (often) rope-like proteins \underline{adapted for strength}.
+    \begin{itemize}
+        \item Extended structure
+        \item Insoluble in water
+        \item Simple repetitive structure (often the same secondary structure throughout)
+        \item Quaternary structure usually held together by disulfide bonds
+        \item Famously involved in a lot of extracellular structures (incl. Tendons, bones, hair, skin)
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L1_6.png}
+\end{center}
+
+\subsection*{Fibrous Proteins are Adapted for a Structural Function}
+\begin{itemize}
+    \item give strength and/or flexibility to structures
+    \item simple repeating element of secondary structure
+    \item \water~insoluble due to high concentrations of hydrophobic residues
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.4]{L1_7.png}
+\end{center}
+
+\subsection*{Membrane Proteins} 
+\textbf{Membrane proteins} are proteins with polypeptide chains embedded into lipid membranes
+\begin{itemize}
+    \item Multiple types, commonality is that they contain hydrophobic regions so as to embed themselves
+    \item Defined patterns of secondary structure
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L1_8.png}
+\end{center}
+
+\section*{Quaternary Structure}
+\begin{itemize}
+    \item Folded proteins can associate forming multi-subunit complexes
+    \begin{itemize}
+        \item Adds even more informational complexity to proteins as functional units
+        \item Variety of possibilities, anything from small oligomeric complexes to massive complexes made from many different proteins
+    \end{itemize}
+    \item Subunits can be identical or different
+    \begin{itemize}
+        \item Subunits are symmetrically arranged
+    \end{itemize}
+    \item \textbf{oligomer = multimer} = multi-subunit protein
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.6]{L1_9.png}\\
+    \includegraphics*[scale=0.4]{L1_10.png}
+\end{center}
+
+\subsection*{Quaternary Structure - What holds it together?}
+\begin{itemize}
+    \item Quaternary structure is built by interactions between protein subunits
+    \item These take on the same characteristics as tertiary structure (this should make sense if you consider it)
+    \item \underline{Electrostatic interactions} forming between charged side chains (more prevalent in quaternary)
+    \item \underline{London dispersion forces} forming between nonpolar side chains
+    \item \underline{Hydrogen bonds} forming between polar/charged side chains
+    \item \underline{Covalent bonds} forming through disulfide bridges (less prevalent in quaternary)
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.6]{L1_11.png}
+\end{center}
+
+\subsection*{Visualizing Protein Structure}
+Quaternary structure describes the interactions between components of a multisubunit assembly
+\begin{center}
+    \includegraphics*[scale=0.5]{L1_12.png}
+\end{center}
+
+\subsection*{The Protein Data Bank}
+The \textbf{Protein Data Bank (PDB)}: www.rcsb.org
+\begin{itemize}
+    \item archive of experimentally determined three-dimensional structures
+    \item structures assigned an identifier called the PDB ID
+    \item PDB data files describe:
+    \begin{itemize}
+        \item the spatial coordinates of each atom
+        \item information on how the structure was determined
+        \item information on its accuracy (how good the model is)
+        \item structure visualization software can convert atomic coordinates to an image of the molecule
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Folding Patterns of Proteins}
+\begin{itemize}
+    \item \textbf{motif = fold =} recognizable folding pattern involving 2+ elements of secondary structures and the connections(s)
+    \begin{itemize}
+        \item can be simple, such as in a $\beta-\alpha-\beta$ loop
+        \item can be elaborate, such as in a $\beta$-barrel
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.5]{L1_13.png}
+\end{center}
+
+\subsection*{Protein Domains}
+\begin{itemize}
+    \item \textbf{domain} = part of a polypeptide chain that is independently stable or could undergo movements as a single entity
+    \begin{itemize}
+        \item domains may appear as distinct or be difficult to discern
+        \item small proteins usually have only one domain
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.5]{L1_14.png}
+\end{center}
+
+\subsection*{Complex Motifs are Built from Simple Motifs}
+\textbf{$\alpha / \beta$ barrel} = series of $\beta-\alpha-\beta$ loops arranged such that the $\beta$ strands form a barrel
+\begin{center}
+    \includegraphics*[scale=0.5]{L1_15.png}
+\end{center}
+
+\subsection*{Intrinsically disordered proteins:}
+\begin{itemize}
+    \item lack definable structure
+    \item often lack a hydrophobic core
+    \item high densities of charged residues (Lys, Arg, Glu, and Pro)
+    \item facilitates a protein to interact with multiple binding partners
+\end{itemize}
+
+\begin{center}
+    \includegraphics*[scale=0.5]{L1_16.png}
+\end{center}
+
+\section*{Protein Families and Superfamilies}
+\begin{itemize}
+    \item proteins with significant similarity in primary structure and/or tertiary structure and function are in the same \textbf{protein family}
+    \begin{itemize}
+        \item $\sim$4000 different protein families in the PDB
+        \item strong evolutionary relationship within a family
+    \end{itemize}
+    \item \textbf{superfamilies} = 2+ families that have little sequence similarity, but the same major structural motif and have functional similarities.
+\end{itemize}
+
+\subsection*{Globins are a Family of Oxygen-Binding Proteins}
+\begin{itemize}
+    \item Globins like myoglobin and hemoglobin belong to the same protein family: \textbf{Globin Family}
+    \item Globins are a widespread protein family:
+    \begin{itemize}
+        \item highly conserved tertiary structure: eight $\alpha$-helical segments connected by bends (\textbf{globin fold})
+        \item most function in O$_2$ transport or storage
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.5]{L1_17.png}
+\end{center}
+
+\subsection*{Types of Globins}
+\begin{itemize}
+    \item Four types in humans and other mammals:
+    \begin{itemize}
+        \item \textbf{myoglobin} = monomeric, facilitates O$_2$ diffusion in muscle tissue
+        \item \textbf{hemoglobin} = tetrameric, responsible for O$_2$ transport in the bloodstream
+        \item \textbf{neuroglobin} = monomeric, expressed largely in neurons to protect the brain from low O$_2$ or restricted blood supply
+        \item \textbf{cytoglobin} = monomeric, regulates levels of nitric oxide, a localized signal for muscle relaxation
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Globins and Prosthetic Groups}
+\begin{itemize}
+    \item \textbf{Myoglobin} and \textbf{hemoglobin} are examples of \underline{conjugated proteins}
+    \begin{itemize}
+        \item Simple proteins only have a polypeptide chain
+        \item \textbf{Conjugated proteins} have a non-protein component called a \underline{prosthetic group}
+        \item Myoglobin and hemoglobin have a heme prosthetic group that provides them with oxygen binding functionality (amino acids can't bind oxygen well)
+    \end{itemize}
+    \item The globins are examples of \textbf{hemoproteins} (proteins with heme prosthetic groups) which are subsets of metalloproteins (proteins with metal prosthetic groups)
+    \begin{itemize}
+        \item This is because heme contains \underline{ferrous iron} (Fe$^{2+}$)
+    \end{itemize}
+\end{itemize}
+
+\begin{center}
+    \includegraphics*[scale=0.5]{L1_18.png}
+\end{center}
+
+\subsection*{Oxygen-carrying proteins}
+\begin{itemize}
+    \item \underline{Myoglobin (Mb)}
+    \begin{itemize}
+        \item O$_2$ acts as a ligand (can bind max 1 O$_2$)
+        \item Only one subunit
+        \item Acts as oxygen storage and facilitates diffusion in muscular cells
+        \item $\approx$ 64 g of Mb present in an average human body
+    \end{itemize}
+    \item \underline{Hemoglobin (Hb)}
+    \begin{itemize}
+        \item O$_2$ acts as a ligand (can bind up to 4 O$_2$)
+        \item Four subunits, two subunits of $\alpha$-globin, and two subunits of $\beta$-globin
+        \item Transports O$_2$ from lungs to peripheral tissues (carried in erythrocytes)
+        \item $\approx$ 775 g of Hb present in an average human body
+    \end{itemize}
+    \item Both rely on the heme prosthetic group
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.5]{L1_19.png}
+\end{center}
+
+\pagebreak
+\end{document}
