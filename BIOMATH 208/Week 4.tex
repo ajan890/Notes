@@ -34,16 +34,43 @@
 \begin{document}
 \maketitle
 \section*{Review}
-We chose to use the reproducing kernel inner product for our space of smooth functions, and parameterize them as $v(x) = \sum_{i = 1}^N p_i k(x - c_i)$.  ($p_i$ is the direction, not normalized, and $c_i$ is the center of the vector.)  
-[FILL]
+\subsection*{Curves and Surfaces}
+On a computer:
+\begin{itemize}
+    \item list of points (vertices)
+    \item list of connectivity elements (line segments, triangles)
+    \begin{itemize}
+        \item Integers (2 for segment, 3 for traingle), which are indices for the array of vertices
+        \item orientation matters (we often want consistent tangent or normal vectors)
+    \end{itemize}
+\end{itemize}
+In a vector space:
+\begin{itemize}
+    \item consider them as integral operators, compute path or flux integrals when acting on a smooth vector field.
+    \item Therefore, these are covectors in the space dual to smooth vector fields
+    \item We looked at the operator norm 
+    \[|\delta|_{v^*} = \sup_{v \in V, |v|_v = 1} \gamma(v) = \Vert \gamma^\sharp \Vert_v\]    
+    \item We can model smooth functions instead of weird curves
+\end{itemize}
+We chose to use the reproducing kernel inner product for our space of smooth functions, and parameterize them as $v(x) = \sum_{i = 1}^N p_i k(x - c_i)$.  ($p_i$ is the direction, not normalized, and $c_i$ is the center of the vector.), for any $N \in \mathbb{N}$.
+\begin{itemize}
+    \item $k$ as a gaussian with a fixed width 
+\end{itemize}
+The reproducing kernel inner product is:
+\[\langle ak(\cdot - a), bk(\cdot - y) \rangle_v = a \cdot b k(x - y)\]
+\begin{itemize}
+    \item The $\cdot$ on the right hand side is a dot product in $\mathbb{R}^3$.
+    \item This shows that non-smooth functions will have an infinite norm.
+\end{itemize}
 
 \subsection*{The Flat Map}
-While there are mayn objects included in the dual space, we will focus on the ones that result from the flat map.\\\\
+While there are many objects included in the dual space, we will focus on the ones that result from the flat map.\\\\
 The flat map is given by 
 \[\flat(aK(\cdot - x)) = a \delta_x\]
 \begin{itemize}
     \item $K$ is a gaussian blob
-    \item $a$
+    \item $a$ is a vector
+    \item $x$ is a center
 \end{itemize}
 \subsubsection*{Definition (Linear evaluation functional)}
 $\delta_x$ acts linearly on a function, and returns its value at a point.
@@ -59,7 +86,11 @@ We can expand our definition using linearity
 \subsubsection*{Proof}
 This flat map is the one defined by our inner product
 \begin{align*}
-    [FILL]
+    \flat(aK(\cdot - x)) &= a \delta_x \\
+    \intertext{By the definition of inner product,}
+    \langle ak(\cdot - x), bk(\cdot - y)\rangle_v &= a \cdot b k(x - y)\\
+    &= b(ak(\cdot - x))(bk(\cdot - y))\\
+    &= a \delta_x(bk(\cdot - y))
 \end{align*}
 
 \subsection*{The Sharp Map}
@@ -69,36 +100,61 @@ It is extended to all ("nice") linear evaluation functionals by linearity.
 
 \subsection*{Discrete Line Integrals}
 Approximate our curve $\gamma$ with a sequence of points $x_1, \dots, x_N$.  The center of the $i$th edge is $c_i \frac{x_i + x_{i + 1}}{2}$ for $i \in \{1, \dots, N - 1\}$.  The tangent to the $i$th edge is $\tau_i = x_{i + 1} - x_i$.  Then:
-\[\gamma(v) = \int v(\gamma(t)) \cdot \gamma'(t) \text{d}t \simeq [FILL]\]
-[FILL]
+\[\gamma(v) = \int v(\gamma(t)) \cdot \gamma'(t) \text{d}t \simeq \sum_{i=1}^{N-1} v(c_i)\cdot \tau_i\]
+\begin{itemize}
+    \item Centers: average of two consecutive points
+    \item Tangent: difference between two consecutive points
+    \item This is like a riemann sum.
+    \item We can evaluate the right side of the equation (the summation) with evaluation functionals.
+\end{itemize}
 
 \subsection*{Integrals as evaluation functionals}
 We can rewrite this as:
 \[\sum_{i = 1}^{N - 1} v(c_i) \cdot \tau_i = \left(\sum_{i = 1}^{N - 1} \tau_i \delta_{c_i}\right)(v)\]
-[FILL]
+The right side element $\left(\sum_{i = 1}^{N - 1} \tau_i \delta_{c_i}\right) \in V^*$, and is a discrete curve that can be written as a "nice" covector, a weighted sum of evaluation functions. 
 
 \subsection*{Sharp map for discrete curves}
 If $\gamma$ is a discrete curve, then its sharp map is given by
 \[\delta^\sharp(x) = \sum_{i = 1}^N \tau_i K(x - c_i)\]
-[FILL]
+\begin{itemize}
+    \item We just replaced the $\delta_x$ with a $K$.
+    \item In the below image, the vector field (black) is the sharp map applied to our curve.
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.7]{W4_1.png}
+\end{center}
+
 
 \subsection*{Inner product for discrete curves}
-Let $\mu = \sum_{i = 1}^n^{\mu - 1}$... [FILL]
+Let $\mu = \sum_{i = 1}^{n^{\mu} - 1} \tau_i^\mu \delta_{c_i^\mu}$ and $\nu = \sum_{i = 1}^{n^\nu - 1} \tau_i^\nu \delta_{c_i^\nu}$.  The inner product is:
+\[g_{V^*} (\mu, \nu) = \sum_{i = 1}^{n^\mu - 1} \sum_{j = 1}^{n^\nu - 1} K(c_i^\mu - c_j^\nu)(\tau_i^\mu \cdot \tau_j^\nu)\]
+This equation works due to bilinearity, since
+\[\langle\tau_1 \delta_{c_1}, \tau_2\delta_{c_2}\rangle = \langle \tau_1 k(\cdot - c_1), \tau_2 k(\cdot - c_2) \rangle_v = \tau_1 \cdot \tau_2 k(c_1 - c_2)\] 
+The double sum we take in this formula represents the sum of all possible pairs of $i$ and $j$.  Think: nested for loops.
 
 \subsection*{Distance between discrete curves}
 The distance between two curves is the norm of their difference.
 \begin{align*}
     &\Vert \mu - \nu \Vert^2_{V^*}\\
     &= g_{V^*}(\mu, \mu) - 2g_{V^*}(\mu, \nu) + g_{V^*}(\nu, \nu)\\
-    &= \sum_{i, i' = 1}^{n^\mu - 1} K [FILL]
+    &= \sum_{i, i' = 1}^{n^\mu - 1} K(c_i^\nu - c_{i'}^\nu)(\tau_i^\nu \cdot \tau_{i'}^\nu) \\
+    &~~- 2 \sum_{i = 1}^{n^\mu - 1} \sum_{j = 1}^{n^\nu - 1} K(c_i^\mu - c_j^\nu)(\tau_i^\mu \cdot \tau_j^\nu)\\
+    &~~+ \sum_{j, j' = 1}^{n^\nu - 1} K(c_j^\nu - c_{j'}^\nu)(\tau_j^\nu \cdot \tau_{j'}^\nu)
 \end{align*}
+We are essentially summing
+\begin{itemize}
+    \item All the pairs in the first curve, $g_{V^*}(\mu, \mu)$,
+    \item all the pairs between the two curves, $2g_{V^*}(\mu, \nu)$,
+    \item and all the pairs in the second curve, $g_{V^*}(\nu, \nu)$
+\end{itemize}
+
 
 \section*{The Corpus Callosum}
 \begin{center}
-    [FILL IMG]
+    \includegraphics*[width=\textwidth]{W4_2.png}
 \end{center}
 \begin{itemize}
-    \item One of the most well-studied parts for the brain is the Corpus Callosum, because it contains such a large amount of white matter
+    \item One of the most visible and well-studied parts for the brain is the Corpus Callosum, because it contains such a large amount of white matter
     \item In the past, a common treatment for epilepsy was to sever the Corpus Callosum, as it prevents positive feedback loops between the two sides.
     \item Its shape changes depending on different diseases, phenotypes, etc.
 \end{itemize}
@@ -113,16 +169,26 @@ This is a costumed plurization, use Lagrange multipliers $p_i$.
     L &= \sum_{i = 1}^N p_i \cdot (y_i - f_i) + \langle f, f \rangle_v\\
     &= \sum_{i = 1}^N p_i f(x_i) + \frac{1}{2}\langle f, f \rangle_v + \sum_{i = 1}^N p_i y_i
 \end{align*}
-for a fixed $p$, find the best $f$.
+for a fixed $p$, find the best $f$.  (Notice the last term in the above equation is not dependent on $f$.)
 \begin{align*}
-    &= \sum_{i = 1}^N [FILL]
+    &= \sum_{i = 1}^N P_i \delta_{x_i} (f) + \langle f, f \rangle_v + \sum_{i = 1}^N p_i y_i\\
+    &= \langle \sum_{i = 1}^N p_i \cdot K(\cdot - x_i), f \rangle_v + \langle f, f \rangle_v + \cdots\\
+    &= \langle g, f \rangle_v + \langle f, f \rangle_v + \cdots
 \end{align*}
+We can solve this by completing the square.  The result would look something like
+\[\langle f - g, f - g \rangle_v + \cdots\]
+The constants of this equation are independent of $f$.  This equation is minimized when $f = g$.\\\\
 Therefore, the optimal $f$ is $f(x) = \sum_{i = 1}^N p_i K(x - x_i)$.
 \begin{itemize}
     \item We now need to solve for $p$.
     \item In these types of problems, $p$ is a lagrange multiplier, so we would have to refer to the constraints.
 \end{itemize}
 $y_{j} = f(x_j) = \sum_{i = 1}^N p_i K(x_j - x_i)$
+\begin{itemize}
+    \item $p_i$ is a N by 1 array
+    \item $k(x_j - x_i)$ is an N by N array.
+    \item Therefore, the right side can be thought of as matrix multiplication.
+\end{itemize}
 solve for $p$ by solving linear equations!
 
 \section*{Smooth Manifolds}
@@ -144,11 +210,17 @@ A manifold is a set (possibly curved), such that if you zoom in close it looks l
     \item A classic example is a sphere like the earth.  When we walk around in a small area it looks flat.
 \end{itemize}
 
-
 \subsection*{Example - Not Manifolds}
-\begin{center}
-    [FILL]
-\end{center}
+\begin{enumerate}
+    \item A line segment:
+    \begin{itemize}
+        \item Imagine you are standing at the end of a line segment.  You see a cliff!  The segment ends, but $\mathbb{R}$ doesn't.
+    \end{itemize}
+    \item An "x":
+    \begin{itemize}
+        \item Consider the intersection between two lines.  If you zoom in on the intersection, it always looks the same!  It does not smooth out.
+    \end{itemize}
+\end{enumerate}
 
 \subsection*{Definition of a Smooth Manifold}
 A smooth manifold is a triple
@@ -169,8 +241,8 @@ Working definition of topologies:  We can think of a topology as a collection of
 
 \subsection*{Charts}
 Charts will make precise what "looks like $\mathbb{R}^d$ means.
-Definition: A chart is a pair $(U, x)$ in $\mathcal{A}$, where $U$ is an open subset of $\mathcal{M}$
-[FILL]
+Definition: A chart is a pair $(U, x)$ in $\mathcal{A}$, where $U$ is an open subset of $\mathcal{M}$ and $x \::\: \mathcal{M} \rightarrow \mathbb{R}^d$ is a continuous and invertible map, with continuous inverse (a homeomorphism), called the coordinate map, for some $d \in \mathbb{N}$.
+Definitiion: $d$ is called the dimension of the manifold.
 
 
 \end{document}
