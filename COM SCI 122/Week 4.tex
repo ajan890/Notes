@@ -409,5 +409,82 @@ To do this, we can define an \textit{overlap function}.
     \item Find Eulerian Path (or as many long paths as possible)
 \end{itemize}
 
+\section*{Project 2 - Sequence Assembly}
+\begin{itemize}
+    \item Given reads - reconstruct the genome using assembly
+    \item Project 2a - Input is "spectrum" of a sequence.
+    \item Project 2b - Input is "reads" of a sequence.
+    \item Output - Sort the "input" in order on the reconstructed sequence.
+\end{itemize}
+
+\subsection*{Practical Genome Assembly}
+\begin{itemize}
+    \item Convert reads to spectrum
+    \begin{itemize}
+        \item Convert reads to kmers
+        \item Error corretion and copy number count
+    \end{itemize}
+    \item Obtain Sequence from Spectrum
+    \begin{itemize}
+        \item Generate de Bruijn graph using spectrum
+        \item Find Eulerian Path and obtain sequence
+        \item Use original reads to resolve sequence ambiguities
+    \end{itemize}    
+\end{itemize}
+
+\subsection*{Reads to Kmers}
+\begin{itemize}
+    \item Break up reads into kmers
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.8]{W4_19.png}
+\end{center}
+
+\subsection*{Kmer Error Correction and Copy Number}
+\begin{itemize}
+    \item Assume Coverage is 30x
+\end{itemize}
+\begin{center}
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{Kmers} & \textbf{Count} & \textbf{True Count} \\ \hline
+        ACTAG & 29 & 1 \\
+        AGGAC & 1 & 0 \\
+        CGATC & 61 & 2 \\
+        TCAGA & 31 & 1 \\
+        TGATC & 2 & 0 \\ \hline
+        \end{tabular}
+\end{center}
+\begin{itemize}
+    \item Since coverage is 30x, each kmer that appears in 30 reads would show up in the genome once.
+    \item Kmers that show up once or twice likely result from read errors.
+\end{itemize}
+
+\subsection*{Spectrum to Sequence}
+\begin{itemize}
+    \item De Bruijn Graph Approach
+    \item Build Graph
+    \item Find Eulerian Paths
+    \item Use reads to "Correct graph/paths" and choose the best path.
+    \begin{itemize}
+        \item De Bruijn Graph used only kmers - less information
+        \item Reads contain how the kmers go together
+        \item Paired reads contain even more information
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Difficulties}
+\begin{itemize}
+    \item Exponential number of paths through the graph
+    \item Errors in the spectrum/graph
+    \begin{itemize}
+        \item No Eulerian Path
+        \item Many dead ends in graph
+        \item Unconnected graph
+    \end{itemize}
+    \item Read information/paired end sequences
+\end{itemize}
+
+
 
 \end{document}

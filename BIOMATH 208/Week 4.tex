@@ -244,5 +244,251 @@ Charts will make precise what "looks like $\mathbb{R}^d$ means.
 Definition: A chart is a pair $(U, x)$ in $\mathcal{A}$, where $U$ is an open subset of $\mathcal{M}$ and $x \::\: \mathcal{M} \rightarrow \mathbb{R}^d$ is a continuous and invertible map, with continuous inverse (a homeomorphism), called the coordinate map, for some $d \in \mathbb{N}$.
 Definitiion: $d$ is called the dimension of the manifold.
 
+\subsection*{Components}
+Definition: We call $x^i$ the $i$-th component map.  It can be thought of as first applying $x$, then identifying the $i$-th component in a basis $x^i = \epsilon^i \circ x$. \textcolor{red}{Note components have an index up!}
+\begin{itemize}
+    \item We will always choose a standard basis for $\epsilon^i$.
+    \item $x$ will input a point on the manifold and output a list of $d$ numbers
+    \begin{itemize}
+        \item Each item on the list is a component.
+    \end{itemize}
+    \item Note that a set here refers to a set of functions (which vary with $p$, the point picked), rather than a basis which is a set of vectors.
+\end{itemize}
+
+\subsection*{Example: The Open Interval}
+Consider the interval $(0, 1) \in \mathbb{R}$.  We can choose $x$ as the "natural" chart.  If $p \in \mathcal{M}$m then $x(p) = p$, and the domain is all of $\mathcal{M}$
+\begin{itemize}
+    \item We are essentially choosing $x(p)$ as a point on a number line from 0 to 1.  We can represent $x(p)$ by the number $p$.
+\end{itemize}
+Or we could use the logit (log of odds) chart, $y(p) = \log \left(\frac{p}{1 - p}\right)$.  The domain is again all of $\mathcal{M}$, and the image is all of $\mathbb{R}$. 
+\begin{itemize}
+    \item In these lectures, log refers to natural log.
+\end{itemize}
+Note the inverse:
+\begin{itemize}
+    \item If we represent data this way, we don't have to worry about constraints.
+    \[y'(q) = \frac{1}{1 + e^{-q}}\]
+    \item This is a (sigmoid) logistic function, derived from the $y(p)$ equation above, setting $y(p) = q$, and solving for $p$.
+    \item Any function can be used, this is just an example, as long as the function has a domain from 0 to 1, and is continuous.
+\end{itemize}
+
+\subsection*{Example: The Plane}
+Consider the ordered tuples in $\mathbb{R}^2$.  We could use the "natural" chart with $x(p) = 0$.  Here, $x^0(p) = p^0$, and $x^1(p) = p^1$.  The domain is all of $\mathcal{M}$.\\\\
+Or, we could consider rotated and translated charts.
+\begin{align*}
+    y^0 &= \cos(\theta) p^0 + \sin(\theta) p^1 + h\\
+    y^1 &= -\sin(\theta) p^0 + \cos(\theta) p^1 + k
+\end{align*}
+for $\theta \in [0, 2\pi]$ and $h, k \in \R$.
+\begin{itemize}
+    \item $(h, k)$ is a shift, $\theta$ is a rotation.
+    \item Given one chart, we could immediately construct an infinite amount of new charts!
+    \item Our atlas and charts will never be unique.
+\end{itemize}
+Or, we could consider the "polar" chart, with
+\[z(p) = \left(\sqrt{(p^0)^2 + (p^1)^2}, \text{sign}(p^1) \arccos\left(\frac{p^0}{\sqrt{(p^0)^2 + (p^1)^2}}\right)\right)\]
+\begin{itemize}
+    \item This coordinate, $z(p)$ is in the format, (radius, angle).
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.9]{W4_3.png}
+\end{center}
+Here, the domain is $U = \mathbb{R}^2$, minus the "nonpositve $x$-axis".  Since it doesn't cover $\mathcal{M}$, this can't be the only chart in our atlas.
+\begin{itemize}
+    \item Notice that the theta graph is noncontinuous.  Also at the origin, it is not invertible.
+\end{itemize}
+
+\subsection*{Example: The Circle}
+Consider a circle with radius 1, centered at the origin in the Cartesian plane:
+\[S = \{p \in \R^2\::\: (p^0)^2 + (p^1)^2 = 1\}\]
+We will cover the circle with two "polar" charts.\\\\
+First, $U = S \backslash (-1, 0)$, $x(p) = \text{sign}(p^1) \arccos(p^0)$.  This is the signed angle counterclockwise from positive $x$-axis.\\
+Second, $V = S \backslash (0, -1)$, $y(p) = \text{sign}(p^0) \arccos(o^1)$.  Signed angle clockwise from positive $y$-axis.
+\begin{itemize}
+    \item The backslash (\textbackslash) represents subtraction of sets.
+    \begin{itemize}
+        \item e.g., $U$ covers every point on the circle except (-1, 0).
+    \end{itemize}
+    \item With these two definitions, $U \cup V = \mathcal{M}$.  This makes a nice atlas for the circle using continuous and invertible functions.
+\end{itemize}
+For another insightful pair of charts, consider the circle sitting on the real line, with a lightbulb on top.  We assign a coordinate where our point casts a shadow.  For points in $U = S \backslash (0, 1)$, we have
+\[z(p) = \frac{2p^0}{1 - p^1}\]
+\begin{center}
+    \includegraphics*[scale=0.9]{W4_4.png}
+\end{center}
+\begin{itemize}
+    \item Here, the bottom half of the circle would cause a shadow between $-2 < x < 2$, and the points on the top half of the circle going to infinity on both sides
+    \item The only point not responsible for a shadow is (0, 2)
+\end{itemize}
+This gives insight as to the meaning of $\pm \infty$!  It's just the one point missing from the top of the circle.
+\begin{itemize}
+    \item Importantly, this mapping maps all of $\mathbb{R}$ to a circle!  (With one point gone).
+\end{itemize}
+\subsubsection*{Question: Can the circle be covered with one chart?}
+Answer: NO!\\\\
+This is pretty easy to prove.  Suppose that there is a function $x$ that maps a circle to $\mathbb{R}$, which is continuous and invertible on the whole circle.
+\begin{itemize}
+    \item Consider if you remove one point from the circle.  
+    \item The circle is still a connected set, with one point removed.
+    \item However, $\mathbb{R}$ must have a discontinuity if the point was removed.
+    \item Since continuity is always preserved by all continuous functions, the function must not be continuous.  This is a contradiction, and therefore, the mapping cannot exist.
+\end{itemize}
+
+\subsection*{Example: The Hemisphere}
+Consider the surface of a human skull as a hemisphere,
+\[\mathcal{M} = \{p \in \mathbb{R}^3 \::\: (p^0)^2 + (p^1)^2 + (p^2)^2 = 1, p^2 > 0\}\]
+\subsubsection*{Example: Parallel Projections}
+Imagine a camera high above the patient's head, recording their skull with a video camera.  Points on the head will map to the screen using their "xy coordinate".  This chart can be written as $(U, x)$, where $U = \mathcal{M}$, and $x(p) = (p^0, p^1)$.
+\begin{itemize}
+    \item The head will look like a circle.  
+    \item We don't consider the boundary of the head as part of our set, because it will not be a function with respect to the $z$-axis.
+    \begin{itemize}
+        \item Essentially, the sides of the head are perpendicular to our camera's view, which violates the vertical line test.
+    \end{itemize}
+\end{itemize}
+In this case, the inverse of $x(p)$ can be written as:
+\[x^{-1}(q) = (q^0, q^1, \sqrt{1 - (q^0)^2 - (q^1)^2})\]
+The $z$-coordinate represents the height of the pixel.
+
+\subsubsection*{Example: Xray Projection}
+Imagine a radiotracer in the center of their head.  A detector (the plane $p^2 = 1$) lies above their head and forms an image of their skull.  This corresponds to the chart (V, y), where $V = \mathcal{M}$ and $y = (p^0 / p^2, p^1 / p^2)$
+\begin{center}
+    \includegraphics*[scale=0.8]{W4_5.png}
+\end{center}
+Note this maps he hemisphere to all of $\mathbb{R}^2$, in a similar way the lightbulb on a circle worked.
+
+\subsubsection*{Example: Latitude and Longitude}
+Since this is a hemisphere (like part of the earth), it might be natural to work with latitude and longitude.  This corresponds to the chart (W, z), where $W = \mathcal{M} \backslash$ "nonpositve $x$ axis", and 
+\[z = \left(\frac{\pi}{2} - \arccos(p^2), \text{sign}(p^1) \arccos(\frac{p^0}{\sqrt{(p^0)^2 + (p^1)^2}})\right)\]
+This cannot be our only chart.
+
+\subsubsection*{Summary}
+We build three very different charts to describe the same (hemisphere) object.  First we thought of the hemisphere as a graph of a function of two variables.  Then, a map onto all of $\R^2$.  Then, a map onto a finite subset of $\R^2$.  (angles)
+
+\subsection*{Example: The Sphere}
+The sphere also cannot be covered with one chart.  One classic approach is to cover it with 6 parallel projection hemisphere charts.
+\begin{itemize}
+    \item $+x, -x$
+    \item $+y, -y$
+    \item $+z, -z$
+\end{itemize}
+Another is latitude and longitude (as above), but we'll have to choose two neighborhoods.\\\\
+Another choice is to place a light on the north pole, and cast the shadow of a point onto the plane:
+\[x(p) = (2p^0 / (1 - p^2), 2p^1 / (1 - p^2))\]
+with $U$ the sphere minus the north pole.\\\\
+A fun choice is to use the arcsine function sine $p^i \in (-1, 1)$, $(\mathcal{M}, y)$ where $y = (\arcsin(p^0), \arcsin(p^1))$
+\begin{itemize}
+    \item You end up with the same problem with the lightbulb on the circle.
+\end{itemize}
+
+\subsection*{Atlases}
+An atlas is a collection of charts (coordinate neighborhood and homeomorphism to $\R^2$), such that every point on the manifold is in at least one chart.
+\subsection*{Chart Transition Maps}
+This is essentially a change of basis.  For any two chart (U, x), (V, y) with $U \cap V \neq \emptyset$, the mappings $x \circ y^{-1}$ and $y \circ x^{-1}$ are called chart transition maps.  Note these are maps from $\R^d \rightarrow \R^d$.  There is no $\mathcal{M}$ involved, and these can be studied with regular calculus.
+
+\subsection*{Compatible Atlases}
+For a property $\mathcal{P}$, two charts $x$ and $y$ are called $\mathcal{P}$-compatible if $x \circ y^{-1}$ and $y \circ x^{-1}$ have the property $\mathcal{P}$.  If every chart transition map has property $\mathcal{P}$, this is called a $\mathcal{P}$-compatible atlas.
+
+\subsubsection*{Smooth manifolds}
+A smooth manifold is one where every chart transition map is a smooth map.  That is, its derivative is a smooth function from $\R^d \rightarrow \R^d$.
+\begin{itemize}
+    \item We want continuous derivatives so we can do gradient based optimization.
+\end{itemize}
+
+\subsection*{Example: The Interval}
+\subsubsection*{Example: Smoothly Compatible Charts}
+Using two charts: $(, x)$ and $(V, y)$, with $x(p) = p$ and $y(p) = \log(p / (1 - p))$, we have:
+\begin{itemize}
+    \item $x \circ y^{-1}(u) = \frac{1}{1 + e^{-u}}$ 
+    \item $y \circ x^{-1}(u) = \log \frac{u}{1 - u}$
+\end{itemize}
+These are both smooth maps from $\R \rightarrow \R$.
+
+\subsubsection*{Example: Incompatible Atlas}
+Consider a second chart $(W, z)$, with $z(p) = p^3$ in addition to the first chart, $x(p) = p$.  Then,
+\begin{itemize}
+    \item $x \circ z^{-1}(u) = u^{1/3}$
+    \item $z \circ x^{-1}(u) = u^3$
+\end{itemize}
+These are not both differentiable everywhere.
+
+\subsection*{Example: The Plane}
+\subsubsection*{Example: Smoothly Compatible Charts}
+Consider the identity chart $(U, x)$ for $U = \mathcal{M}$ and $x(p) = 0$, and the polar chart $(V, y)$ for $V = \mathcal{M} \backslash$ "nonpositive $x$ axis" and $y(p) = \left(\sqrt{(p^0)^2 + (p^1)^2}, \text{sign}(p^1) \arccos(p^0 / \sqrt{(p^0)^2 + (p^1)^2})\right)$.  Then,
+\begin{itemize}
+    \item $y \circ x^{-1} = y(p)$ (as defined above)
+    \item $x \circ y^{-1} = (r \cos(\theta), r \sin(\theta))$, or the inverse of $y(p)$.
+\end{itemize}
+These are differentiable everywhere except for the slit we cut out.
+
+\subsection*{Example: The Hemisphere}
+\subsubsection*{Compatible Charts on the Hemisphere}
+Consider $(U, x)$ parallel projection, and $(V, y)$ arcsine angles.\\\\
+First, find the inverse of parallel projection
+\[x^{-1}(u) = (u^0, u^1, \sqrt{1 - (u^0)^2 - (u^1)^2})\]
+Then the inverse of arcsine angles
+\[y^{-1}(u) = (\sin u^0, \sin u^1, \text{height})\]
+
+\subsubsection*{Example: Chart Transition Maps 1:}
+Consider the map $y \circ x^{-1}$:
+\[(x^1, x^0) \rightarrow (\arcsin(x^1), \arcsin(x^2))\]
+The derivatives are a 2x2 (diagonal) matrix:
+\[\begin{pmatrix}\frac{1}{\sqrt{1 - (x^1)^2}} & 0 \\ 0 & \frac{1}{\sqrt{1 - (x^2)^2}}\end{pmatrix}\]
+Similarly, this does not include the boundary.
+
+\subsubsection*{Example: Chart Transition Maps 2:}
+Consider the map $x \circ y^{-1}$:
+\begin{itemize}
+    \item $x$ is the parallel projection, and $y$ is the sines.
+\end{itemize}
+\[(y^1, y^2) \mapsto (\sin(y^1), \sin(y^2))\]
+The derivatives are again a 2x2 (diagonal) matrix.
+\[\begin{pmatrix}
+-\cos(y^1) & 0 \\ 0 & -\cos(y^0)
+\end{pmatrix}\]
+This function exists everywhere.  This matrix is continuous and invertible, there it is a smoothly compatible atlas.
+\begin{itemize}
+    \item A hemisphere with this choice of atlas is a smooth manifold.
+\end{itemize}
+
+\subsection*{Extrinsic Coordinates}
+Often we will consider manifolds that are subsets of a larger space, such as surfaces in 3D, or matrix groups in $\R^{3\times 3}$.\\\\
+It is natural to associate each $p \in \mathcal{M}$ as a point, an "extrinsic coordinate" (e.g., a point in 3D), as well as a chart (e.g., a coordinate in 2D).\\\\
+A danger is that the result of computations may not lie in the manifold.
+
+\subsection*{Averages}
+\subsection*{Example: Points on a hemisphere}
+Find the average of 5 points on a hemisphere.
+\begin{center}
+    \includegraphics*[width=\textwidth]{W4_6.png}
+\end{center}
+The easiest way is the way we were taught in middle school - add them up and divide by $n$.  This is the \textbf{average in extrinsic coordinates}.
+\begin{itemize}
+    \item Summing all the coordinates and dividing by 5 gives \texttt{[-0.111, -0.155, 0.528]}.
+    \item Note the distance of this point from the origin is 0.562, so it is not on the hemisphere.
+    \item Therefore, this calculation is inappropriate!
+\end{itemize}
+\subsubsection*{Example: Parallel Projection}
+Project all the points onto the $x, y$-plane.  In this case, we just drop the $z$-coordinate.
+\begin{itemize}
+    \item Finding the average this way (dropping $z$, summing points and dividing by 5), gives \texttt{[-0.111, -0.155, 0.982]}.  The first two cooridnates are the same as before, except the $z$ coordinate is picked so it is on the hemisphere.
+    \item This is a better answer.
+\end{itemize}
+\subsubsection*{Example: Angular Coordinates}
+For this one, we use the angle from the north pole and the angle from the $x$-axis.  This gives the following (five, 2D) coordinates:
+\begin{verbatim}
+    [[ 0.479,  0.839,  0.335,  0.331,  0.9  ]
+     [-0.956,  1.908, -2.177,  2.853, -0.281]]
+\end{verbatim}
+and the following average: \texttt{[0.577, 0.269]}, which, converting back to cartesian coordinates, corresponds to the 3D point \texttt{[0.808, 0.223, 0.545]}.
+\begin{itemize}
+    \item This is another different answer. 
+    \item The first answer (straight average) is wrong.  The other two may be useful, depending on the case.
+\end{itemize}
+
+
+
+
+
 
 \end{document}
