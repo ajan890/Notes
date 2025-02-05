@@ -1,0 +1,681 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+\usepackage{tabularx}
+\usepackage{multicol}
+\usepackage[table,xcdraw]{xcolor}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+\graphicspath{{../images/Week 5}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+\newcommand{\example}{\textbf{Example: }}
+\newcommand{\water}{\text{H$_2$O}}
+\newcommand{\hydroxide}{\text{OH$^-$}}
+\newcommand{\hydronium}{\text{H$_3$O$^+$}}
+\newcommand{\proton}{\text{H$^+$}}
+\newcommand{\pc}{$^+$}
+\newcommand{\nc}{$^-$}
+\newcommand{\ka}{\text{$K_\text{a}$}}
+
+\begin{document}
+\section*{Carbohydrates}
+\begin{itemize}
+    \item \textbf{Carbohydrates} = aldehydes or ketones with at least two hydroxyl groups, or substances that yield such compounds on hydrolysis
+    \item many carbohydrates have the empirical formula (CH$_2$O)$_n$
+    \item \textbf{monosaccharides} = simple sugars, consisting of a single polyhydroxy aldehyde or ketone unit
+    \begin{itemize}
+        \item Example: D-glucose
+    \end{itemize}
+    \item \textbf{disaccharides} = oligosaccharides with two monosaccharide units
+    \begin{itemize}
+        \item Example: sucrose (D-glose and D-fructose)
+    \end{itemize}
+    \item \textbf{Oligosaccharides} = short chains of monosaccharide units, or residues, joined by glycosidic bonds
+    \item \textbf{Polysaccharides} = sugar polymers with 10+ monosaccharide units
+    \begin{itemize}
+        \item Examples: cellulose (linear), glycogen (branched)
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Functions of Carbohydrates}
+\begin{itemize}
+    \item Energy sources (e.g., large polymers for energy storage)
+    \item Protein targeting
+    \item Cell identification/recognition (e.g., determination of blood type)
+    \item Protection/structure (e.g., call walls and insect shells)
+    \item Components of other biomolecules (e.g., antibiotics, enzyme cofactors, nucleic acids, etc.)
+    \item Other (e.g., lubrication in joints)
+\end{itemize}
+
+\subsection*{From previous courses:}
+\begin{itemize}
+    \item What a carbohydrate is
+    \item Different kinds of sugars (mono-, di-, poly-)
+    \item Basic structures of a few monosaccharides
+    \item Basic nomenclature
+    \begin{itemize}
+        \item Aldoses vs. Ketoses (functional group)
+        \item C$_3$ = triose
+        \item C$_4$ = tetraose
+        \item C$_5$ = pentose
+        \item C$_6$ = hexose
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Aldoses and Ketoses}
+\begin{itemize}
+    \item \textbf{aldose} = carbonyl group is at an end of the carbon chain (in an aldehyde group)
+    \item \textbf{ketose} = carbonyl group is at any other position (in a ketone group)
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L1_1.png}
+\end{center}
+
+\subsection*{Basic Trioses - D and L}
+\begin{itemize}
+    \item The below structures are all \textbf{trioses} (three carbon sugars) - basically the simplest sugars possible
+    \item For $n$ stereocenters, there are $2$ possible stereoisomers (making $2^n$ stereoisomers total)
+    \item Glyceraldehyde has $1$ stereocenter, hence $2$ stereoisomers, notated as D and L
+    \begin{itemize}
+        \item If the OH on the last chiral carbon points to the right, the sugar is D
+        \item If the OH on the last chiral carbon points to the left, the sugar is L
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L1_2.png}
+\end{center}
+
+\subsubsection*{Enantiomers of Glyceraldehyde}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L1_3.png}
+\end{center}
+
+\subsection*{D Isomers and L Isomers}
+\begin{itemize}
+    \item \textbf{reference carbon} = chiral center \textit{most distant} from the carbonyl carbon
+    \item two groups of stereoisomers:
+    \begin{itemize}
+        \item D isomers = configuration at reference carbon is the same as D-glyceraldehyde
+        \begin{itemize}
+            \item on the right (dextro) in a projection formula
+            \item most hexoses of living organisms
+        \end{itemize}
+        \item L isomers = configuration at reference carbon is the same as L-glyceraldehyde
+        \begin{itemize}
+            \item on the left (levo) in a projection formula
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Fischer Projection Review}
+\begin{itemize}
+    \item \textbf{Fischer projections are the preferred representation of linear carbohydrates}
+    \item \underline{Vertical lines} represent dashes angled away from you
+    \item \underline{Horizontal lines} represent wedges angled towards you
+    \item Fischer projections of longer sugars are set up in such a way as to easily transition to cyclic molecules
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L1_4.png}
+\end{center}
+
+\subsection*{Ketose Family}
+The carbons of a sugar are numbered beginning at the end of the chain nearest the carbonyl group
+\begin{itemize}
+    \item C$_3$ = triose
+    \item C$_4$ = tetraose
+    \item C$_5$ = pentose
+    \item C$_6$ = hexose
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.6]{L1_5.png}
+\end{center}
+3 stereocenters, so $2^3$ stereoisomers, but we're excluding L sugars so $8/2=4$.
+
+\subsection*{Aldose Family}
+\begin{center}
+    \includegraphics*[scale=0.6]{L1_6.png}
+\end{center}
+
+\subsection*{The Common Monosaccharides Have Cyclic Structures}
+\begin{itemize}
+    \item in aqueous solution, aldotetroses and all monosaccharides with 5+ backbone carbon atoms occur as cyclic structures
+    \begin{itemize}
+        \item covalent bond between the carbonyl group and the oxygen of a hydroxyl group $\rightarrow$ cyclic hemiacetal
+    \end{itemize}
+    \item Linear sugars cyclize via intramolecular hemiacetal formation
+    \item Favored ring sizes: 5- and 6-membered rings (furanoses and pyranoses)
+\end{itemize}
+
+\subsection*{Formation of the Two Cyclic Forms of D-Glucose}
+\begin{itemize}
+    \item Reaction between the aldehyde group at C-1 and the hydroxyl group at C-5 forms a \textbf{hemiacetal linkage}
+    \item \textbf{mutarotation} = the interconversion of $\alpha$ and $\beta$ anomers
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.6]{L1_7.png}
+\end{center}
+Mutarotation is the interconversion of $\alpha$ and $\beta$ anomers
+
+\subsection*{Cyclization of Monomeric Sugars}
+\begin{itemize}
+    \item Previous linear molecule had four stereocenters
+    \begin{itemize}
+        \item \textbf{Cyclization generates a new stereocenter at C$_1$}
+    \end{itemize}
+    \item Two possiblities can form, $\alpha$ and $\beta$ anomers
+    \begin{itemize}
+        \item Notation denotes whether -OH is on the same side of ring as C$_6$
+        \begin{itemize}
+            \item $\alpha$ is opposite side
+            \item $\beta$ is same side
+        \end{itemize}
+    \end{itemize}
+    \item For D-sugars, C$_6$ is above the ring so always the same behavior
+    \begin{itemize}
+        \item $\alpha$, -OH is down (trans)
+        \item $\beta$, -OH is up (cis)
+    \end{itemize}
+    \item Cyclization is a \textbf{reversible} process
+    \begin{itemize}
+        \item This means anomers can interchange
+        \begin{itemize}
+            \item This is called \textbf{mutarotation}
+        \end{itemize}
+        \item \textbf{C$_1$ is now the \underline{anomeric carbon}}
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Mutarotation}
+\begin{itemize}
+    \item In aqueous solution, cyclic sugars like glucose exist in equilibrium with their open-chain form.
+    \item  When a sugar molecule opens up, \textbf{the hemiacetal bond at the anomeric carbon is broken}, forming the linear aldehyde (or ketone) form.
+    \item This open-chain form can then reclose to form either the $\alpha$- or $\beta$-anomer.
+    \item The direction from which the hydroxyl group attacks the carbonyl carbon determines whether the -OH at the anomeric carbon ends up in the axial ($\alpha$) or equatorial ($\beta$) position. Under acidic or basic conditions, this equilibrium is established more rapidly, but it occurs spontaneously even in pure water. Thus, mutarotation is the chemical process by which the configuration at the anomeric center interconverts, switching the $\alpha$- and $\beta$-anomeric forms.    
+\end{itemize}
+
+\subsection*{Cyclization of monomeric sugars produces either of two stereoisomeric configurations: $\alpha$ and $\beta$}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L1_8.png}
+\end{center}
+The anomeric carbon serves as the \textbf{connection} to other monosaccharides\\\\
+The \textbf{anomeric carbon} is highly reactivev because it retains some of the original reactivity of the carbonyl group from the linear form.  This makes it ideal for forming \textbf{glycosidic bonds,} which are the covalent linkages between sugars or between a sugar and another molecule (such as a protein or lipid)
+
+\subsection*{Cyclization of Linear Monosaccharides Mechanism}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L1_9.png}
+\end{center}
+
+\subsection*{Pyranoses and Furanoses}
+\begin{center}
+    \includegraphics*[scale=0.6]{L1_10.png}
+\end{center}
+\begin{itemize}
+    \item Six-membered ring compounds are called \textbf{pyranoses} because they resemble the six-membered ring compound pyran.  The systematic names for the two ring forms of D-glucose are therefore $\alpha$-D-glucopyranose and $\beta$-D-glucopyranose
+    \item Ketohexoses (such as fructose) also occur as cyclic compounds with $\alpha$ and $\beta$ anomeric forms.  In these compounds, the hydroxyl group at C-5 (or C-6) reacts with the heto group at C-2 to form a \textbf{furanose} (or pyranose) ring containing a hemiketal linkage.
+    \item D-Fructose readily forms the furanose ring the more common anomer of this sugar in combined forms or in derivatives is $\beta$-D-fructofuranose
+\end{itemize}
+
+\subsection*{Furanoses can exist in equilibrium with pyranoses}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L1_11.png}
+\end{center}
+
+\subsection*{Hemoglobin Glycation}
+(so named to distinguish it from glycosylation, the enzymatic transfer of glucose to a protein)
+
+\begin{itemize}
+    \item A person's glycated hemoglobin fraction (HbA1c) reflects the average concentration of glucose in the blood (AG) over the past 2-3 months and is the gold standard measure for establishing risk for diabetes-related complications in patients with type 1 or type 2 diabetes
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L1_12.png}
+\end{center}
+
+\subsection*{Glycosidic Bond Formation}
+\begin{itemize}
+    \item \textbf{Glycosidic bonds} are covalent bonds that form between the hemiacetal group of a carbohydrate and a hydroxyl group on another compound (for us, other carbohydrates)
+    \item This is how disaccharides, oligosaccharides, and polysaccharides form
+    \begin{itemize}
+        \item \underline{Glycosidic bonds are notated with:} The carbon they come from, the carbon they're going to, and the $\alpha/\beta$ arrangement (determined by the anomeric carbon)
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L1_13.png}
+\end{center}
+
+\subsection*{Nomenclature for Glycosidic Bonds}
+\begin{itemize}
+    \item Anomeric Configuration:
+    \begin{itemize}
+        \item $\alpha$: In a Haworth projection of a D-pyranose, the -OH on the anomeric carbon is positioned on the side opposite the CH$_2$OH group (typically shown "down" or in an axial orientation)
+        \item $\beta$: The -OH on the anomeric carbon is on the same side as the CH$_2$OH group (typically shown "up" or in an equatorial orientation)
+    \end{itemize}
+    \item Linkage Positions:
+    \begin{itemize}
+        \item The notation (e.g., 1$\rightarrow$4) indicates that the bond forms between the anomeric carbon (C1) of one sugar and a specific carbon (e.g., C4) on the adjacent sugar
+        \item Other common linkages include:
+        \begin{itemize}
+            \item 1$ \rightarrow$ 6: For example, in glycogen, the main chain is formed by $\alpha$(1$\rightarrow$4) linkages with branch points at $\alpha$(1$\rightarrow$6) bonds
+            \item 1$\rightarrow$ 2: In sucrose, the glycosidic bond links the anomeric carbon of glucose to the anomeric carbon of fructose (commonly described as $\alpha$-D-glucopyranosyl-(1$\rightarrow$2)-$\beta$-D-fructofuranoside)
+        \end{itemize}
+    \end{itemize}
+    \item Examples:
+    \begin{itemize}
+        \item Amylose (starch): Composed of $\alpha$(1$\rightarrow$4) glycosidic bonds
+        \item Cellulose: Consists of $\beta$(1$\rightarrow$4) glycosidic bonds
+        \item Glycogen: Features $\alpha$(1$\rightarrow$4) bonds in its main chain with $\alpha$(1$\rightarrow$6) bonds at branch points
+        \item Sucrose: Has an $\alpha$(1$\rightarrow$2) glycosidic bond linking the two monosaccharides
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.6]{L1_14.png}
+\end{center}
+Note that the glycosidie bond can be alpha or beta, and that the second carbohydrate can be linked at any of the carbon atoms that contain an -OH.  The glycosidic bond is named as alpha or beta, followed by numbers that correspond to the locations of the carbons involved in the glycosidic bond.
+
+\section*{Polysaccharides}
+\textbf{Monomeric subunits, monosaccharides, serve as the building blocks of large carbohydrate polymers.}  The specific sugar, the way the units are linked, and whether the polymer is branched determine its properties and thus its function
+\begin{itemize}
+    \item Most carbohydrates in nature occur as polysaccharides ($M_r > 20000$)
+    \item also called \textbf{glycans}
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.8]{L1_15.png}
+\end{center}
+
+\subsection*{Homopoolysaccharides and Heteropolysaccharides}
+\begin{itemize}
+    \item \textbf{Homopolysaccharides} = contain only a single monomeric sugar species
+    \begin{itemize}
+        \item Serve as storage forms and structural elements
+    \end{itemize}
+    \item \textbf{Hetoropolysaccharides} = contain 2+ kinds of monomers
+    \begin{itemize}
+        \item provide extracellular support
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=0.6\textwidth]{L1_16.png}
+\end{center}
+
+\subsection*{Polsaccharides Generally Do Not Have Defined Lengths or Molecular Weights}
+\begin{itemize}
+    \item This distinction between proteins and polysaccharides is a consequence of the mechanisms of assembly
+    \item There is no template for polysaccharide synthesis
+    \item The program for polysaccharide synthesis is intrinsic to the enzymes that catalyze the polymerization of monomer units
+\end{itemize}
+The sequences of complex polysaccharides are determined by the intrinsic properties of the biosynthetic enzymes that add each monomeric unit to the growing polymer.
+
+\subsection*{Some Homopolysaccharides are storage forms of fuel}
+\begin{itemize}
+    \item storage polysaccharides = starch in plant cells and glycogen in animal cells
+    \item \textbf{starch and glycogen molecules are heavily hydrated because they have many exposed hydroxyl groups available to hydrogen bond}
+\end{itemize}
+
+\subsection*{Starch (Amylose)}
+\begin{itemize}
+    \item \textbf{Amylose (starch)} is a \underline{polysaccharide} if $\alpha$-D-glucose that's used for \textbf{energy storage in plants}
+    \item Standard 1,4 linkage, no branches
+    \item Human enzymes can break down $\alpha$ linkages and utilize for energy
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=0.8\textwidth]{L1_17.png}
+\end{center}
+Starch (amylose) isn't a straight chain!
+\begin{itemize}
+    \item On average, 8 glucose residues per turn.
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=0.8\textwidth]{L1_18.png}
+\end{center}
+
+\subsection*{Glycogen}
+\begin{itemize}
+    \item \textbf{Glycogen} is a \underline{polysaccharide} of $\alpha$-D-glucose that's used for \textbf{energy storage in animals}
+    \item Main linkage is 1,4 but after 8-10 residues there's a 1,6 linkage as well
+    \item Multiple branches reduce time it takes for breakdown and utilization
+    \item Human enzymes can more easily break down $\alpha$ linkages
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=0.8\textwidth]{L1_19.png}\\
+    \includegraphics*[width=0.7\textwidth]{L1_20.png}
+\end{center}
+Glycogen isn't a straight chain either!
+\begin{center}
+    \includegraphics*[width=\textwidth]{L1_21.png}
+\end{center}
+
+\subsection*{Some Homopolysaccharides Serve Structural Roles}
+\textbf{Cellulose} = tough, fibrous, water-insoluble substance
+\begin{itemize}
+    \item linear, unbranched homopolysaccharide, consisting of 10000 to 15000 D-glucose units
+    \item glucose residues have the $\beta$ configuration
+    \item linked by ($\beta 1 \rightarrow 4$) glycosidic bonds
+    \item animals do not have the enzyme to hydrolyze ($\beta 1 \rightarrow 4$) glycosidic bonds
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=0.6\textwidth]{L1_22.png}
+\end{center}
+\textbf{Chitin} = linear homopolysaccharide composed of $n$-acetylglucosamine residues in ($\beta 1 \rightarrow 4$) linkage
+\begin{itemize}
+    \item Acetylated amino group makes chitin more hydrophobic and water-resistant than cellulose
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=0.6\textwidth]{L1_23.png}
+\end{center}
+
+\subsection*{Cellulose}
+\begin{itemize}
+    \item \textbf{Cellulose} is a \underline{polysaccharide} of $\beta$-D-glucose that's used \textbf{for structure in plants}
+    \item Human enzymes can't break down $\beta$ linkages!  No way to use for energy
+    \item \textbf{Cellulose has an alternating structure!}  (every other glucose is inverted)
+    \item Cellulose chains can form strong intrachain and interchain hydrogen bonds: High tensile strength
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=0.6\textwidth]{L1_24.png}\\
+    \includegraphics*[width=\textwidth]{L1_25.png}
+\end{center}
+
+\subsection*{Chitin}
+\begin{itemize}
+    \item \textbf{Chitin} is a \underline{polysaccharide} of N-acetyl-D-glucosamine connected through a $\beta$($1 \rightarrow 4$) linkage
+    \item Structure of chitin differs from cellulose because of acetamide groups
+    \item Also has alternating structure and strong interchain/intrachain hydrogen bonding
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=0.6\textwidth]{L1_26.png}
+\end{center}
+It is a \textbf{structural polysaccharide} found in the exoskeletons of \textbf{insects, crustaceans} (like crabs and shrimp), and the \textbf{cell walls of fungi.}  Chitin is the second most abundant polysaccharide in nature after cellulose.
+\begin{center}
+    \includegraphics*[width=0.6\textwidth]{L1_27.png}
+\end{center}
+
+\section*{Lipids and Membranes}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L2_1.png}
+\end{center}
+
+\subsection*{Lipids}
+\begin{itemize}
+    \item \textbf{Lipids} are a class of organic compounds that are \textbf{insoluble in water}, and soluble in organic solvents
+    \begin{itemize}
+        \item Note that this is a definition based around solubility, not so much structure
+    \end{itemize}
+    \item Energy storage: Longer term in comparison with carbohydrates  (hydrocarbon tails store lots of energy)
+    \item Structural components: Cell membranes!  (e.g., phospholipid bilayer)
+    \item Signaling molecules: Both intracellular and intercellular  (e.g., testosterone)
+\end{itemize}
+
+\subsection*{Lipidomics Seeks to Catalog All Lipids and their Functions}
+\textbf{LIPID MAPS Lipidomics Gateway} = database analogous to the Protein Data Bank
+\begin{itemize}
+    \item has its own classification system of eight chemical categories
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L2_2.png}
+\end{center}
+
+\subsection*{Lipids Overview}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L2_3.png}
+\end{center}
+
+\subsection*{Fatty Acids}
+\begin{itemize}
+    \item \textbf{Fatty acids} are carboxylic acids with aliphatic chains (hydrocarbon chains) ranging from 4 to 36 carbons long (C4 to C36)
+    \item In some fatty acids, this chain is unbranched and fully saturated (contains no double bonds)
+    \item In others, the chain contains one or more double bonds.  A few contain three-carbon rings, hydroxyl groups, or methly-group branches
+    \item A \textbf{polyunsaturated} fatty acid contains \textbf{more than one double bond} in its backbone
+    \item Naturally occurring components of triacylglycerols and phospholipids
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L2_4.png}
+\end{center}
+
+\subsection*{Cis and Trans Configuration}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L2_5.png}
+\end{center}
+\textbf{Unsaturated fats} haev one or more \textbf{double bonds} between carbon atoms.  These double bonds can exist in two configurations:
+\begin{itemize}
+    \item \textbf{Cis configuration:} The hydrogen atoms attached to the carbon atoms of the double bond are on the \textbf{same side} of the molecule.  This creates a kink in the fatty acid chain, making it more difficult for the fats to pack together tightly.  Cis fats are generally liquid at room temperature (e.g., oils)
+    \item \textbf{Trans configuration:} The hydrogen atoms are on \textbf{opposite sides} of the double bond, resulting in a straighter chain, similar to saturated fats.  This straight structure allows trans fats to pack together tightly, making them more solid at room temperature
+\end{itemize}
+
+\subsection*{Common Patterns in Fatty Acids}
+Several naming schemes exist for fatty acids:
+\begin{itemize}
+    \item most common fatty acids have even numbers of carbon atoms in an unbranched chain of 12 to 24 carbons: \textbf{the mode of synthesis, which involves successive condensations of two-carbon (acetate) units}
+    \item In \textbf{monosaturated} fatty acids, the double bond is usually between \textbf{C-9 and C-10 ($\Delta^9$)}
+    \item in \textbf{polyunsaturated} fatty acids:
+    \begin{itemize}
+        \item the double bonds are usually \textbf{$\Delta^{12}$ and $\Delta^{15}$}
+        \item double bonds are usually separated by a methylene group
+    \end{itemize}
+    \item double bonds are usually in the cis configuration
+\end{itemize}
+
+\subsection*{Nomenclature for Unbranched Fatty Acids}
+\begin{itemize}
+    \item the chain length and number of double bonds, separated by a colon
+    \item numbering begins at the carboxyl carbon
+    \item positions of double bonds are indicated by $\Delta$ and a superscript number
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=0.7\textwidth]{L2_6.png}
+\end{center}
+
+\subsection*{Polyunsaturated Fatty Acids (PUFAs)}
+\begin{itemize}
+    \item \textbf{polyunsaturated fatty acids (PUFAs)} = contain more than one double bond in their backbone
+    \begin{itemize}
+        \item \textbf{omega-3 ($\omega-3$) fatty acids} = double bond between C-3 and C-4 relative to the most distant carbon ($\omega$)
+        \item \textbf{omega-6 ($\omega-6$) fatty acids} = double bond between C-6 and C-7 relative to $\omega$
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=0.7\textwidth]{L2_7.png}
+\end{center}
+
+\subsection*{PUFAs and Human Nutrition}
+\begin{itemize}
+    \item humans must obtain the \textbf{omega-3} PUFA $\alpha$-linolenic acid (ALA; 18:3($\Delta^{9, 12, 15}$)) \textbf{from their diet}
+    \item humans use ALA to synthesize:
+    \begin{itemize}
+        \item eicosapentaenoic acid (EPA; 20:5($\Delta^{5, 8, 11, 14, 17}$))
+        \item dicosahexaenoic acid (DHA; 22:6($\Delta^{4, 7, 10, 13, 16, 19}$))
+    \end{itemize}
+    \item the optimal dietary ratio of omega-6 and omega-3 PUFAs is between 1:1 and 4:1
+\end{itemize}
+\textbf{EPA} and \textbf{DHA} are essential omega-3 fatty acids that play critical roles in \textbf{reducing inflammation}, supporting \textbf{cardiovascular health, brain function, eye health}, and \textbf{immune regulation}.  DHA is particularly important for brain development and structure, while EPA is more involved in reducing inflammation and maintaining heart health.
+
+\subsection*{Naming Fatty Acids}
+\begin{itemize}
+    \item Several naming schemes exist for fatty acids
+    \begin{itemize}
+        \item \textbf{Omega Naming:}
+        \item The \# of carbons in the fatty acid (e.g., 18)
+        \item The \# of double bonds (2 or 3, for our examples)
+        \item The position of the first double bond from the methyl end (e.g., 6 and 3)
+        \begin{itemize}
+            \item Omega ($\omega$) carbon is the final carbon in the fatty acid chain.  We'll count backwards from $\omega$ to the first carbon in the double bond.
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L2_8.png}
+\end{center}
+
+\subsection*{Omega Naming}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L2_9.png}
+\end{center}
+
+\subsection*{Fatty acid MPs - Length}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L2_10.png}
+\end{center}
+The \textbf{melting point} of a substance is the temperature at which it transitions from a \textbf{solid} to \textbf{liquid} state.
+\begin{itemize}
+    \item The same phenomenon happens in hydrocarbons
+\end{itemize}
+
+\subsection*{Melting Points of Fatty Acids}
+At room temperature:
+\begin{itemize}
+    \item saturated fatty acids have a waxy consistency
+    \item unsaturated fatty acoids are oily liquids
+    \item extent of packing depends on degree of saturation: kinks disrupt packing
+\end{itemize}
+Fully saturated fatty acids in the extended form pack into nearly crystalling arrays, stabilized by extensive hydrophobic interaction.  The presence of one or more fatty acids with cis double bonds (red) interferes with this tight packing and results in less stable aggregates.
+\begin{center}
+    \includegraphics*[scale=0.8]{L2_11.png}
+\end{center}
+
+\subsection*{Fatty acid MPs - Unsaturation}
+\begin{itemize}
+    \item Melting points decrease as we increase unsaturation
+    \item Has implications for biological regulation of membranes
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.5]{L2_12.png}
+\end{center}
+
+\subsection*{Triacylglycerols (TAGs)}
+\begin{itemize}
+    \item \textbf{Triaglycerols} are esters derived from glycerol and three fatty acids
+    \item Constitute $\approx 90\%$ of dietary lipids, and the vast majority of fat in the body
+    \item \textbf{Major form of metabolic energy storage in humans:}
+    \begin{itemize}
+        \item Glycogen (the storage form of glucose in the body) < 200 \textbf{grams} of in most people 
+        \item Human body fat is measured in whole percentages (\textbf{kilograms})
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.5]{L2_13.png}
+\end{center}
+
+\subsection*{Triacylglycerols Provide Stored Energy}
+\begin{itemize}
+    \item vertebrates store triacylglyceros as lipid droplets in adipocytes (fat cells)
+    \item plants store triacylglycerols in the seeds
+    \item Carbohydrates (like glycogen) are \textbf{short-term} storage, TAGs are \textbf{long-term} storage.
+\end{itemize}
+
+\subsection*{More on TAGs}
+\begin{itemize}
+    \item Less oxidized than carbohydrates and amino acids (more reduced $\rightarrow$ better energy storage)
+    \begin{itemize}
+        \item CH$_4$ (most reduced) $\rightarrow$ CO$_2$ (most oxidized)
+    \end{itemize}
+    \item AG Composition:
+    \begin{itemize}
+        \item Simple TAGs: All three fatty acids are identical
+        \item Mixed TAGs: Contain different fatty acids
+    \end{itemize}
+    \begin{center}
+        \includegraphics*[scale=0.8]{L2_14.png}
+    \end{center}
+\end{itemize}
+In biochemistry, a molecule that is more reduced carries a greater number of electrons that can be transferred to another acceptor (for instance, in an oxidation reaction).  When such a molecule is oxidized, those electrons are released, allowing the cell to harness energy (e.g., through cellular respiration).  Therefore, a more reduced molecule has a higher potential to yield energy upon oxidation.
+
+\subsection*{TAG Catabolism}
+\begin{itemize}
+    \item TAGs are broken down during \textbf{lipolysis}, generating glycerol and three fatty acids
+    \item The resulting fatty acids are then fed into \textbf{beta oxidation} (catabolic cycle that \underline{oxidizes} the fatty acid - \underline{reducing} NAD\pc/FAD\nc and generates acetyl-CoA)
+    \begin{itemize}
+        \item During beta-oxidation, fatty acids are sequentially broken down through a series of reactions.  \textbf{These reactions shorten the fatty acid chain by two carbons each cycle.}
+        \item Fatty acids go through cycles until they are spent \textbf{(i.e., the longer the fatty acid, the more energy it can produce: more carbons = more oxidation cycles $\rightarrow$ More ATP)}
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Lipids vs. Polysaccharides}
+\begin{center}
+    \includegraphics*[width=0.5\textwidth]{L2_15.png}
+\end{center}
+\begin{itemize}
+    \item \textbf{Lipids} are ideal for \textbf{long-term energy storage}  in a compact, water-free form, but they are slower to access and require oxygen to be metabolized.  
+    \item \textbf{Polysaccharides} are better for \textbf{short-term, quick energy} due to their rapid mobilization, ability to function anaerobically, and role in immediate energy needs, despite their lower storage efficiency.
+\end{itemize}
+\begin{itemize}
+    \item \textbf{Polysaccharides} are stored as large polymers to avoid increasing osmotic pressure; however, when broken down into glucose units, they can increase osmotic pressure, especially if rapidly mobilized.
+    \item \textbf{Lipids} do not affect osmotic pressure due to their hydrophobicity and storage in non-aqueous environments, making them ideal for high-capacity energy storage without impacting cellular water balance.
+\end{itemize}
+
+\subsection*{Eicosanoids - Local Hormones}
+\begin{itemize}
+    \item \textbf{Eicosanoids} are a family of biologically active molecules derived from arachidonic acid (specifically an arachidonate phospholipid)
+    \item Considered "local" hormones - all autocrine and paracrine signaling:
+    \begin{itemize}
+        \item \textbf{Paracrine Signaling:} Hormone acts on \textbf{neighboring cells} (prostaglandins released in response to tissue damage act on nearby cells to mediate inflammation)
+        \item \textbf{Autocrine Signaling:} Hormones act on the \textbf{same cell} that produced them (certain \textbf{growth factors} can act on the cells that secrete them to regulate cell growth or survival)
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=0.8\textwidth]{L2_16.png}
+\end{center}
+
+\subsection*{Sterols - Global Hormones}
+\begin{itemize}
+    \item \textbf{Sterols} are a subset of steroids that play several roles in eukaryotes
+    \begin{itemize}
+        \item Components of membranes
+        \item Signaling compounds
+    \end{itemize}
+    \item "Global" hormones, also known as \textbf{endocrine hormones:} signaling molecules that are released into the \textbf{bloodstream} and travel throughout the body to exert their effects on \textbf{distant target organs} or tissues
+    \item Bind to nuclear receptors
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=0.9\textwidth]{L2_17.png}
+\end{center}
+A diet rich in certain types of fatty acids, particularly saturated fats and trans fats, can contribute to cardiovascular proteins and lead to vein or artery clogging due to several factors, including:\\
+\textbf{Build-Up of Plaque in Arteries (Atherosclerosis):}
+\begin{itemize}
+    \item \textbf{Saturated fats} (commonly found in animal products like butter, cheese, and fatty meats) and \textbf{trans fats} (found in processed and fried foods) can raise levels of \textbf{low-density lipoprotein (LDL)} cholesterol in the blood
+    \item High levels of \textbf{LDL cholesterol} can lead to the formation of \textbf{plaque} (a mixture of cholesterol, fats, calcium, and other substances) on the walls of arteries
+    \item This plaque build-up narrows the arteries and \textbf{restricts blood flow}, which is called \textbf{atherosclerosis}.  Over time, this can cause the arteries to harden and lose flexibility, making it difficult for blood to flow through smoothly.
+\end{itemize}
+
+\subsection*{Cholesterol}
+Cholesterol and triglycerides are insoluble in water and therefore these lipids must be transported in association with proteins as lipoproteins.  The two main types of lipoproteins that carry cholesterol are:
+\begin{itemize}
+    \item \textbf{Low-Density Lipoprotein (LDL):} Often reffered to as "bad cholesterol" because high levels of LDL can lead to cholesterol accumulation in the arteries
+    \item \textbf{High-Density Lipoprotein (HDL):} Referred to as "good cholesterol" because it helps remove excess cholesterol from the bloodstream and takes it back to the liver for elimination
+\end{itemize}
+Lipoproteins are complex particles with a central core containing cholesterol esters and triglycerides surrounded by free cholesterol, phospholipids, and apolipoproteins, which facilitate lipoprotein formation and function.
+
+\subsection*{Lipoproteins}
+\begin{itemize}
+    \item How do we transport all those lipids through our aqueous transportation networks?  (circulatory system and lymph)
+    \item \textbf{Lipoproteins} are a composite structure, a phospholipid monolayer with several apolipoproteins (specialized proteins that bind lipids to form and regulate lipoproteins)
+    \item Inside is packed with various lipids - TAGs and cholesterol for the most part
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=0.8\textwidth]{L2_18.png}
+\end{center}
+
+\subsection*{Classes of Lipoproteins}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L2_19.png}
+\end{center}
+
+
+
+
+\end{document}
