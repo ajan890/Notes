@@ -270,4 +270,126 @@ To prove:
     \item Show that it is a group
     \item Show that matrix multiplication and inverse are differentiable in some chart.
 \end{enumerate}
+First, we want to show that this is a smooth manifold.  In this case, $\R^{n \times n}$ is a smooth manifold.  What happens when we remove matrices that are not invertible?\\\\
+To do this, we introduce $f \::\: \R^{n \times n} \rightarrow \R$, and $f(A) - \text{det}(A) \rightarrow 0$ if and only if $A$ is not invertible.
+\[\mathcal{M} = f^{-1}(\R \backslash \{0\})\]
+$f$ is continuous (polynomial).  $\R \backslash \{0\}$ is an open set, and since the inverse of an open set is an open set, $\mathcal{M}$ is also an open set.  To define an atlas for the sqwuare matrices, just intersect coordinate neighborhoods with this $n$.  This produces a smooth manifold of dimension $n^2$.\\\\
+Next, we want to show that this is a group.  In this case, we define:
+\begin{itemize}
+    \item $\circ$: matrix multiplication
+    \item neutral element: identity matrix
+    \item inverse element: $A^{-1}$  (by construction we know it exists)
+\end{itemize}
+Finally, we want to show that matrix multiplication and inverse are differentiable in some chart.  $\circ$ and $A^{-1}$ are smooth functions of parameters, so we can use the "natural" chart.  (write down the $n^2$ numbers in an array)\\\\
+Therefore, $AB$ (matrix multiplcation) is a quadratic function of the matrix entries, which is differentiable.\\\\
+Additionally, $A^{-1}$ is a rational function (ratio of polynomials) of the matrix entries.\\\\
+Therefore, this is a matrix Lie group!
+
+\subsubsection*{Example: Affine Transformations}
+Affine transformations consist of a linear transformation and a translation.  They can be represented by matrix multiplication in homogeneous coordinates.  (Also mentioned in graphics classes, homogeneous coordinates is when you take the vector to be transformed, and add a 1 at the bottom.  You would add a 0 at the bottom of points.)
+\begin{align*}
+    \begin{pmatrix} L & T \\ 0 & 1 \end{pmatrix} \begin{pmatrix} v \\ 1 \end{pmatrix} &= \begin{pmatrix} Lv + T \\ 1 \end{pmatrix}
+\end{align*}
+\begin{itemize}
+    \item In the above example, $T$ is a vector, and $L$ is a square matrix.  $v$ is the vector to be transformed.
+    \item The $0$ added below the $L$ is a zero row vector. 
+    \item In this case, judging by the end product, we applied a translation.  The vector $v$ has been translated by vector $T$ (after being transformed by $v$).
+    \item Note that this transformation is \textit{not linear} in terms of $v$, but it \textit{is linear} in terms of $\begin{pmatrix} v \\ 1 \end{pmatrix}$.
+    \item The result is also a Lie group, just like the input.
+\end{itemize}
+
+\subsubsection*{Example: Translations}
+Restricting $L = I$ (identity matrix) gives the translation group, with matrix multiplication as the binary operation.  Translation group could also be modeled as vectors with addition.
+\[\begin{pmatrix} I & T \\ 0 & 1 \end{pmatrix} \begin{pmatrix} v \\ 1 \end{pmatrix} = \begin{pmatrix} v + T \\ 1 \end{pmatrix}\]
+$+$ can also be written as a matrix group with matrix multiplication as the composition law.
+\begin{itemize}
+    \item Recall that $+$ is normally not a linear map.
+\end{itemize}
+It turns out that every Lie group, with finite dimension, can be expressed as matrix multiplication.
+
+\subsection*{Example: Sizes}
+Images can be transformed by scaling (e.g., magnification factors), and imaging data can represent scales (e.g., multiples of some standard size).
+\begin{center}
+    \includegraphics[width=\textwidth]{W5_4.png}
+\end{center}
+The above image shows 287 structures in the brain, and the color shows how different that part of the brain is compared to the average person's brain, in terms of size.  (1.00 means it is the same as a normal brain.)
+\begin{itemize}
+    \item Notice that there are no negative numbers.  (0 means the structure is not present)
+\end{itemize}
+
+\subsubsection*{Example: Charts for Sizes}
+In extrinsic coordinates, we can write these transforms as $sI$, for $x \in \R^+$ and $I$ the identity matrix.  We can use two charts we've seen before $x(p) = p$ or $y(p) = \log(p)$.  The chart transition maps are:
+\[y \circ x^{-1}(u) = \log(u)\]
+and
+\[x \circ y^{-1}(u) = \exp(u)\]
+These are both smooth functions.  So we can make a smoothly compatible atlas.
+
+\subsubsection*{Example: Rotations}
+Images transformed by rotation correspond to different views of the same objects.  Modern imaging techniques visualize average orientation in microstructure (e.g., pyramidal cells in cortical columns).
+\begin{itemize}
+    \item e.g., each pixel shows angle (how is a polorized cell oriented)
+    \item Recall we can use periodic colormaps to visualize this data.
+\end{itemize}
+
+\subsubsection*{Example: Matrix groups acting on point sets}
+Let $X$ be a set of points describing features in an image, represented as a $d \times n$ matrix (for $n$ points in $d$ dimensions).  For $f, g \in G$ (some matrix group) we have
+\begin{enumerate}
+    \item Identity: $I_{d \times d} X_{d \times n} = X_{d \times n}$
+    \item Compatibility: $B \cdot (A \cdot X) = BAX = (BA)X = (B \circ A)X$
+    \begin{itemize}
+        \item Since $B$ is on the left side, this is a left action.
+    \end{itemize}
+\end{enumerate}
+
+\subsubsection*{Example: Matrix groups acting on discrete curves and surfaces}
+These are transformed by acting on their \textbf{point} sets, and leaving their \textbf{connectivity} unchanged.\\\\
+For curves, segment centers and tangents can also be transformed this way.
+\[A \left(\frac{p_1 + p_2}{2}\right) = \frac{Ap_1 + Ap_2}{2}, \hspace{1cm} A(p_0 - p_1) = Ap_0 - Ap_1\]
+For surfaces, face centers can, but area weighted face normals cannot.  Transforming with inverse transpose (like a covector) will preserve orthogonality with the edges, e.g.:
+\[(A^{-T} n)^T(Ae) = 0 = n^T (A^{-T})^T (Ae) = n^T A^{-1} Ae = n^T e = 0\]
+\begin{itemize}
+    \item $e$ is an edge in our triangle
+    \item This equation must equal 0 because it has to be since tangents are normal.
+\end{itemize}
+
+\subsubsection*{Example: Matrix Groups Acting on Images}
+For $f, g \in G$ and images as functions $I(x)$, we define its action on images in terms of its action on points
+\[(f \cdot I)(x) = I(f^{-1}a)\]
+\begin{itemize}
+    \item Suppose you have the parabola $y = x^2$, and you want to shift it one to the right.  The resulting equation is $y = (x - 1)^2$.  Notice that we used the inverse here.
+    \item We use the inverse on the matrix groups due to the same principle.
+\end{itemize}
+We now define the following two points:
+\begin{enumerate}
+    \item Identity: $i \cdot I(x) = I(i^{-1} x) = I(x)$.  We get the same image.
+    \item Compatibility (e.g., left or right action):  Even though $f$ appears on the right of $I$, it is the inverse function.  Therefore, it is actually a left action.
+    \begin{align*}
+        f \cdot I(x) &= I(f^{-1} x)\\
+        \intertext{We now act on both sides with matrix $g$:}
+        g \cdot (f \cdot I(x)) &= g \cdot I(f^{-1} x) = g \cdot J(x) = J(g^{-1} x)\\
+        &= I (f^{-1} g^{-1} x) \\
+        &= I ((gf)^{-1} x)\\
+        &= ((gf) \cdot I)(x)
+    \end{align*}
+    Since $g$ appears on the left of $f$, this is a left action.
+\end{enumerate}
+
+\subsubsection*{Example: Matrix groups acting on discrete images}
+If we represent images using an interpolation kernel $I(x) = \sum_{i, j, k} I[i, j, k] k(x - x[i, j, k])$ then they can be transformed as
+\[(g \cdot I)(x) = \sum_{ijk} I[i, j, k] k(g^{-1} x - x[i, j, k])\]
+\begin{itemize}
+    \item This doesn't give us a new discrete image!
+\end{itemize}
+Generally, we re-discretize images after transforming them, onto some new (or possibly the same) grid $y[i', j', k']$.
+\begin{itemize}
+    \item When we have an input image sampled on a regular grid, we typically want the output image to also be sampled on the same regular grid.  Therefore, we want the new discrete image to be defined in terms of the old discrete image.
+\end{itemize}
+\[\tilde{I}[i', j', k'] = \sum_{i', j', k'} I[i', j', k'] k(g^{-1} (y[i, j, k]) - x[i', j', k'])\]
+\begin{itemize}
+    \item What we are doing in this entire process is applying a transformation to an image, discretizing the image, applying the inverse, and discretizing the image again in the original coordinate grid.
+    \item We may not get the same image back at the beginning, thus the result is not a group action.
+    \item For intuition, consider the transformation as a 45-degree rotation.  If you rotated the image, discretized it in the original coordinate system, rotated it back 45 degrees, and discretized it again, the image has been altered.
+    \item The general rule of doing multiple transformations is to compose all the transformations, and do the action on the image once.
+\end{itemize}
+
 \end{document}
