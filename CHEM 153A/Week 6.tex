@@ -1,0 +1,517 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+\usepackage{tabularx}
+\usepackage{multicol}
+\usepackage[table,xcdraw]{xcolor}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+\graphicspath{{./assets/images/Week 6}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+\newcommand{\example}{\textbf{Example: }}
+\newcommand{\water}{\text{H$_2$O}}
+\newcommand{\hydroxide}{\text{OH$^-$}}
+\newcommand{\hydronium}{\text{H$_3$O$^+$}}
+\newcommand{\proton}{\text{H$^+$}}
+\newcommand{\pc}{$^+$}
+\newcommand{\nc}{$^-$}
+\newcommand{\ka}{\text{$K_\text{a}$}}
+
+% import subfiles
+\usepackage{subfiles}
+
+\title{CHEM 153A Week 6}
+
+\begin{document}
+\maketitle
+\section*{Enzymes}
+\subsubsection*{Motivating Example: Glucose Oxidation}
+\[C_6H_{12}O_6 + 6O_2 \rightarrow 6CO_2 + 6H_2O\]
+\begin{itemize}
+    \item the oxidation of glucose has a $\Delta G'$ of -686000 calories per mole
+    \item That is, glucose in air is quite unstable in a \textbf{thermodynamic} sense.  Yet, glucose as solid crystals or in sterile solution does not break down to $CO_2 + H_2$ at a measurable rate.  
+    \item Glucose is quite stable in a \textbf{kinetic} sense
+    \begin{itemize}
+        \item Side note: kinetics measure rate, thermodynamics measures energy.  A favorable thermodynamic reaction does not imply it is fast.
+        \item A negative $\Delta G$ simply means that the existing [product]/[reactant] ratio is smaller than the equilibrium ratio
+    \end{itemize}
+    \item The oxidation of glucose to $CO_2$ and $H_2O$ is \textbf{highly exergonic}, but this doesn't just happen at room temperature.
+    \begin{itemize}
+        \item However, biological systems can pull it off at $37^\circ$C in milliseconds, through \textbf{compartmentalization} and \textbf{catalysis}.
+        \item The catalysis in biological systems is pulled off by \underline{protein enzymes}.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Enzymes use Compartmentalization}
+\textbf{Compartmentalization} is the separation or concentration of bio-components in specified subcellular sections
+\begin{itemize}
+    \item This results in a massive increase in processing efficiency.
+    \item Within cells, membrane-bound organelles subdivide the cytoplasm into chemically and physically unique reaction compartments.  These compartments are further parsed into unique environments at the level of multi-enzyme assemblies and condensates
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=0.8\textwidth]{L1_1.png}
+\end{center}
+
+\subsection*{Enzymes are highly effective catalysts}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L1_2.png}
+\end{center}
+
+\subsection*{Catalysis and Activation Energy}
+Before a molecule of reactant, or substrate, \textbf{S}, can become a molecule of product, \textbf{P}, it must possess a certain minimum energy in order to pass into a \textbf{transition state (X$\ddagger$)}
+\begin{itemize}
+    \item As we've discussed, the $\Delta G$ of a reaction doesn't tell us anything about its kinetics
+    \begin{itemize}
+        \item The \underline{activation energy} does though
+        \item The \underline{transition state} (\textbf{X$\ddagger$}) is a high energy state that the reaction has to pass through
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.5]{L1_3.png}
+\end{center}
+\begin{itemize}
+    \item A catalyst (e.g., an enzyme), \textbf{reduces the activation energy}, increasing the ability of reactants to get over the (now lowered) energetic barrier
+\end{itemize}
+
+\subsection*{Enzyme Binding Sites}
+\begin{itemize}
+    \item \underline{Active Site}
+    \begin{itemize}
+        \item \textbf{Substrate binding site + catalytic site}
+        \item In this context, the substrate is acting as a \textbf{ligand}
+    \end{itemize}
+    \item \underline{Regulatory Site}
+    \begin{itemize}
+        \item \textbf{Second binding site}
+        \item Binding by regulatory molecule impacts the active site
+        \begin{itemize}
+            \item Can increase or decrease the efficiency of catalysis
+        \end{itemize}
+        \item Provides another layer of control (besides expression or availability of substrate)
+        \item This is \textbf{allostery} in enzymes
+    \end{itemize}
+    \item \underline{General Characteristics}
+    \begin{itemize}
+        \item Small 3D space that occupies small part of enzyme volume (like a crevice)
+        \item Has geometric and electronic complementarity to ligand
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.5]{L1_4.png}
+\end{center}
+
+\subsection*{Enzyme Binding Sites}
+\begin{center}
+    \includegraphics*[width=0.8\textwidth]{L1_5.png}
+\end{center}
+\textbf{Why then are enzymes large proteins instead of small tripeptides or dodecapeptides?}
+\begin{itemize}
+    \item \textbf{The answer is obvious when we consider that the two or three essential R-groups must be perfectly juxtaposed in three-dimensional space}
+\end{itemize}
+
+\subsection*{The enzyme evolution (design) challenge}
+\begin{itemize}
+    \item \textbf{\underline{Goal 1:}} Bind with specificity to the target molecule (substrate)
+    \item \textbf{\underline{Solution:}} Provide the correct shape and set of interactions in the active site
+    \item \textbf{\underline{Goal 2:}} Stabilize transition state along path to "desired" product(s)
+    \item \textbf{\underline{Solution:}} Bind to the transition state with even higher affinity than the substrate
+    \item All accomplished by having the \textit{correct} side-chains in the right geometry
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=0.8\textwidth]{L1_6.png}
+\end{center}
+
+\subsection*{The enzymatic process}
+There are two intermediates (ES and EP)
+\begin{itemize}
+    \item The intermediates (transition state) binds to the enzymes with even higher affinity than the substrate
+\end{itemize}
+\[E + S \leftrightarrow ES \rightarrow EP \leftrightarrow E + P\]
+\begin{center}
+    \includegraphics*[scale=0.8]{L1_7.png}
+\end{center}
+\begin{itemize}
+    \item Enzymes are recovered and reused
+    \begin{itemize}
+        \item Sometimes they need to go through a process of \underline{cofactor regeneration} to do so
+        \item Cofactors are non-protein components necessary for the reaction
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.6]{L1_8.png}
+\end{center}
+
+\subsection*{Stabilization of the Transition State}
+\begin{itemize}
+    \item Below is the beginnings of the mechanism for chymotrypsin, a protease
+    \item Note how the transition state is bound tightly by the surrounding side chains
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L1_9.png}
+\end{center}
+
+\subsection*{How Enzymes Lower Activation Energy (Ea)}
+Stabilizing the Transition State
+\begin{itemize}
+    \item Enzymes stabilize the transition state, reducing the activation energy required for the reaction to proceed
+\end{itemize}
+Destabilizing the Enzyme-Substrate Complex
+\begin{itemize}
+    \item By raising the energy level of the enzyme-substrate complex, enzymes decrease the relative energy difference to the transition state, further lowering the activation energy.
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L1_10.png}
+\end{center}
+
+\subsection*{Transition State Analogs are Powerful Inhibitors}
+\begin{itemize}
+    \item Unsurprisingly, molecules that mimic the transition state are able to bind to enzyme active sites, acting as strong inhibitors
+    \item These \textbf{transition state analogs} mimic key structural features but are non-reactive
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.8]{L1_11.png}
+\end{center}
+
+\subsection*{Models of Enzyme-Substrate Binding}
+\begin{itemize}
+    \item The \textbf{lock-and-key model} is an \textit{old} model proposed in 1898 and posites that the relationship between enzyme and substrate is like that of a lock and key.
+    \begin{itemize}
+        \item Active site and substrate are perfect, complementary fits
+    \end{itemize}
+    \item The \textbf{induced-fit model}  is a \textit{~newer} model (1958) that matches reality better
+    \begin{itemize}
+        \item The enzyme goes through a conformational change upon binding with the substrate, forming a complementary fit.
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L1_12.png}
+\end{center}
+
+\subsection*{Enzyme-substrate interactions are often stereospecific}
+\begin{itemize}
+    \item \textbf{Stereospecific Binding:} Enzymes can recognize and bind substrates in a specific 3D arrangement, even if the substrate itself is not chiral
+    \item \textbf{Example: Citrate and Aconitase}
+    \begin{itemize}
+        \item \textbf{Citrate} is \textbf{prochiral} (it can become chiral through a single modification)
+        \item \textbf{Aconitase} binds citrate in a precise orientation, transforming it into \textbf{chiral isocitrate} by only acting on a specific part of the molecule
+    \end{itemize}
+    \item \textbf{Biological Significance:} This specificity ensures only the correct orientation interactions with the enzyme, explaining why enantiomers or different orientations of a molecule can have unique effects in biological systems.
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.5]{L1_13.png}\\
+    \includegraphics*[width=0.8\textwidth]{L1_14.png}
+\end{center}
+
+\subsection*{Reaction Specificity}
+\begin{itemize}
+    \item Not all enzymes are limited to acting on a single substrate.  Some enzymes, like \textbf{hexokinase}, can work on multiple substrates (e.g., glucose, fructose, and mannose) but still produce a specific product for each substrate
+    \item \textbf{Glucokinase}, however, is more specific.  It only acts on glucose to produce glucose-6-phosphate and ADP, demonstrating \textbf{substrate specificity}
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.6]{L1_15.png}
+\end{center}
+Why have both enzymes?
+\begin{itemize}
+    \item \textbf{Hexokinase} provides versatility in tissues where multiple sugars may need to be phosphorylated
+    \item \textbf{Glucokinase} is primary in the liver, where it plays a role in blood glucose regulation and is more responsive to glucose levels, providing a targeted response to glucose intake
+\end{itemize}
+
+\subsection*{Temperature Specificity}
+\begin{itemize}
+    \item \textbf{Optimal Temperature:} Enzymes function best at a specific temperature.  For humans, this is 37$^\circ$C, while organisms in extreme environments have different optimal temperatures
+    \item \textbf{High Temperatures:} Lead to enzyme denaturation, causing loss of structure and function
+    \item \textbf{Low Temperatures:} Reduce kinetic energy, leading to fewer enzyme-substrate interactions and fewer molecules with enough energy to react
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.6]{L1_16.png}
+\end{center}
+
+\subsection*{pH Specificity}
+Enzymes function best at a specific pH, where their structure and active sites are most stable
+\begin{itemize}
+    \item \textbf{Below optimal pH:} Certain side chains become protonated, disrupting enzyme function
+    \item \textbf{Above optimal pH:} Essential side chains lose protons, affecting binding and activity
+    \begin{itemize}
+        \item \textbf{Example:} Lysosomal enzymes are optimized for pH 5.  This compartmentalization protects cytosolic components if lysosomes leak, as these enzymes are inactive at the cytosol's neutral pH.0
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L1_17.png}
+\end{center}
+
+\section*{Enzymatic Classes}
+\begin{itemize}
+    \item \textbf{Oxidoreductases} - Transfer of electrons, changes oxidation state of atom
+    \item \textbf{Transferases} - Transfer of functional group from one molecule to another
+    \item \textbf{Hydrolases} - Breakdown of substrate into two products using water
+    \item \textbf{Lyases} - Removal of a group to form a double bond
+    \item \textbf{Isomerases} - Intramolecular rearrangement (isomerization) changes within a single molecule
+    \item \textbf{Ligases} - Forms one product from two substrates
+    \item \textcolor{red}{\textbf{Translocases} A new EC Class: catalyze the \textbf{movement of ions or molecules across membranes} or their separation within membranes.  Several of these involve the hydrolysis of ATP and had been previously classified as ATPases (EC 3.6.3.-), although the hydrolytic reaction is not their primary function}
+    \item \underline{Nomenclature}
+    \begin{itemize}
+        \item Usually ends in -ase
+        \item Common names
+        \begin{itemize}
+            \item Examples: Urease, Arginase, Chymotrypsin
+        \end{itemize}
+        \item Systematic names
+        \begin{itemize}
+            \item Substrate(s) or products + Enzyme class (e.g., Lactate Dehydrogenase)
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L2_1.png}
+\end{center}
+
+\section*{Enzyme Commission Number}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L2_2.png} 
+\end{center}
+
+\subsection*{EC 1: Oxidoreductases}
+\textbf{Oxidoreductases} - Transfer of electrons, changes oxidation state of atom
+\begin{itemize}
+    \item Donor is \underline{oxidized}, acceptor is \underline{reduced}
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L2_3.png} 
+\end{center}
+\begin{itemize}
+    \item \underline{Common name}
+    \begin{itemize}
+        \item Lactate Dehydrogenase
+    \end{itemize}
+    \item \underline{Systematic name}
+    \begin{itemize}
+        \item \textcolor{red}{e$^-$ donor} : \textcolor{blue}{e$^-$ acceptor} + Oxidoreductase
+        \item \textcolor{red}{Lactate} : \textcolor{blue}{NAD$^+$} Oxidoreductase
+    \end{itemize}
+\end{itemize}
+
+
+\subsection*{EC 2: Transferases}
+\textbf{Transferases} - Transfer of functional group from one molecule to another
+\begin{center}
+    \includegraphics*[width=\textwidth]{L2_4.png} 
+\end{center}
+\begin{itemize}
+    \item \underline{Common name}
+    \begin{itemize}
+        \item Phosphofructokinase
+        \item Kinase is a very common type of enzyme!  It transfers phosphate from ATP to a molecule
+    \end{itemize}
+    \item \underline{Systematic name}
+    \begin{itemize}
+        \item \textcolor{red}{compound} + \textcolor{blue}{functional group} + transferase
+        \item \textcolor{red}{D-fructose-6-phosphate} \textcolor{blue}{1-phospho}transferase
+    \end{itemize}
+\end{itemize}
+
+\subsection*{EC 3: Hydrolases}
+\textbf{Hydrolases} - Breakdown of substrate into two products \textbf{using water}
+\begin{itemize}
+    \item Single bond cleavage using water (hydrolysis)
+    \item Condensation reaction (bond formation) is reverse of this
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L2_5.png} 
+\end{center}
+\begin{itemize}
+    \item \underline{Common name}
+    \begin{itemize}
+        \item Protease
+    \end{itemize}
+    \item \underline{Systematic name}
+    \begin{itemize}
+        \item \textcolor{red}{compound} + Hydrolase
+        \item \textcolor{red}{Peptide} Hydrolase
+    \end{itemize}
+\end{itemize}
+
+\subsection*{EC 4: Lyases}
+\textbf{Lyases} - Break bonds (C-C, C-O, C-N) \textbf{without water or redox involvement}, often forming double bonds or rings
+\begin{center}
+    \includegraphics*[width=\textwidth]{L2_6.png} 
+\end{center}
+\begin{itemize}
+    \item \underline{Common name}
+    \begin{itemize}
+        \item Enolase
+    \end{itemize}
+    \item \underline{Systematic name}
+    \begin{itemize}
+        \item \textcolor{red}{compound} + Lyase
+        \item \textcolor{red}{2-phosphoglycerate} Lyase (hydrolyase in this case)
+    \end{itemize}
+\end{itemize}
+
+\subsection*{EC 5: Isomerases}
+\textbf{Isomerases} - \underline{Intramolecular} rearrangement (isomerization) changes within a single molecule
+\begin{center}
+    \includegraphics*[width=\textwidth]{L2_7.png} 
+\end{center}
+\begin{itemize}
+    \item \underline{Common name}
+    \begin{itemize}
+        \item Triose phosphate isomerase
+    \end{itemize}
+    \item \underline{Systematic name}
+    \begin{itemize}
+        \item \textcolor{red}{compound} + isomerase
+        \item \textcolor{red}{Dihydroxyacetonephosphate} isomerase
+    \end{itemize}
+\end{itemize}
+
+\subsection*{EC 6: Ligases}
+\textbf{Ligases} - Forms one product from two substrates
+\begin{itemize}
+    \item Bond formation coupled to ATP cleavage
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L2_8.png} 
+\end{center}
+\begin{itemize}
+    \item \underline{Common name}
+    \begin{itemize}
+        \item Pyruvate Carboxylas
+    \end{itemize}
+    \item \underline{Systematic name}
+    \begin{itemize}
+        \item \textcolor{red}{Compound 1} + \textcolor{blue}{Compound 2} + Ligase
+    \end{itemize}
+\end{itemize}
+
+\subsection*{EC 7: Translocases}
+The reactions catalyzed are designated as \textbf{transfers from 'side 1' to 'side 2'} (the designations 'in' and 'out' (or 'cis' and 'trans'), which had been used previously, lack clarity and can be ambiguous)
+\begin{center}
+    \includegraphics*[width=0.7\textwidth]{L2_9.png} 
+\end{center}
+
+\section*{Enzyme Mechanisms}
+Enzymes are highly specialized biological catalysts that accelerate and control biochemical reactions by lowering activation energy.  They achieve this through \textbf{specific mechanisms}, which allow them to precisely direct molecules through complex pathways critical for life
+\begin{itemize}
+    \item \textbf{Proximity and orientation} - Substrates confined in proper orientation for reaction to occur
+    \item \textbf{Acid catalysis} - An enzyme active site donates a proton to stabilize a leaving group
+    \item \textbf{Base catalysis} - An enzyme active site accepts a proton to create a strong nucleophile
+    \item \textbf{Covalent catalysis} - Enzyme forms a temporary covalent bond with the substrate
+    \item \textbf{Electrostatic catalysis} - Charges in the active site stabilize the transition state
+    \item \textbf{Metal-ion catalysis} - Metal ion in the active site participates in catalysis
+\end{itemize}
+
+\subsection*{Proximity and Orientation}
+Enzymes accelerate reactions through two key effects:
+\begin{itemize}
+    \item \textbf{Proximity Effect:} Enzymes bring reactants into a confined active site, increasing their local concentration and reducing the time required for a successful encounter
+    \item \textbf{Orientation Effet:} Enzymes correctly align reactants, preventing inefficient collisions and ensuring bonds form in the optimal configuration
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=0.7\textwidth]{L2_10.png} 
+\end{center}
+\textbf{Orientation Effect in Enzyme Catalysts:}
+\begin{itemize}
+    \item Enzymes not only bring reactants together but also ensure they are aligned in the correct spatial arrangement to facilitate bond formation
+    \item Proper alignment of substrates in the active site minimizes steric hindrance and maximizes reaction efficiency
+    \begin{center}
+        \includegraphics*[width=0.7\textwidth]{L2_11.png} 
+    \end{center}
+    \item The SN2 reaction requires a strict \textbf{linear} orientation between the nucleophile (Y$^-$) and the leaving group (R').  This reaction proceeds via a \textbf{backside attack,} leading to an inversion of configuration at the carbon center.  Even slight deviations (as little as 10$^\circ$) from the ideal alignment can \textbf{drastically slow down} the reaction or even prevent it from occurring.
+\end{itemize}
+
+\subsection*{Acid Catalysis and Base Catalysis}
+\begin{itemize}
+    \item \textbf{Active sites have residues that can transfer hydrogen ions}
+    \item \textbf{Acid catalysis} involves the \textbf{donation} of a proton (by a residue in the active site) in order to stabilize a leaving group
+    \begin{center}
+        \includegraphics*[width=0.8\textwidth]{L2_12.png} 
+    \end{center}
+    \item \textbf{Base catalysis} involves the \textbf{removal} of a proton (also by a residue in the active site), increasing the nucleophilicity of a functional group for an imminent attack
+    \begin{itemize}
+        \item This is demonstrated below by a \textbf{catalytic triad}.
+    \end{itemize}
+    \begin{center}
+        \includegraphics*[width=0.8\textwidth]{L2_13.png} 
+    \end{center}
+\end{itemize}
+The enzyme's active sites generate a unique \textbf{microenvironment} that can change the behavior of amino acids
+
+\subsubsection*{Histidine}
+\begin{itemize}
+    \item Histidine is \textbf{one of the most common catalytic residues} in enzyme active sites, largely due to the unique properties of its imidazole side chain
+    \item With a pKa in the range of 6 to 7, histidine's \textbf{imidazole group} is close to neutral pH, \textbf{allowing it to accept or donate a proton readily}
+    \item This ionization level (estimated to be between 9-50\%) enables \textbf{histidine to act as a general acid or base}, facilitating proton transfer during catalysis
+    \item The electron-withdrawing inductive effect of the protonated amino group on the histidine side chain stabilizes its protonation state, further enhancing its role in catalysis under physiological conditions
+\end{itemize}
+
+\subsubsection*{Propensity of Amino Acids to be Catalytic in Active Sites}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L2_14.png} 
+\end{center}
+
+\subsection*{Covalent Catalysis}
+\begin{itemize}
+    \item Residues in the active site can often \textbf{form temporary covalent bonds with the substrate}
+    \begin{itemize}
+        \item Usually formed by the attack of a nucleophile on an electrophilic moiety in the substrate
+    \end{itemize}
+    \item This alters the pathway of the reaction, generating a new intermediate and transition state (that has much lower energy than the original).
+    \item The residue making the attack also has to be a good leaving group, as the residue must be able to let go of the product (and allow the enzyme to regenerate)
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L2_15.png} 
+\end{center}
+
+\subsection*{Electrostatic Catalysis}
+\begin{itemize}
+    \item The enzyme active site can use \textbf{charged residues to stabilize the transition state of the reaction}
+    \begin{itemize}
+        \item Can be any non-covalent interaction ($+$/$-$ charges, hydrogen bonding, dipole-dipole, LDFs)
+    \end{itemize}
+    \item Some of these interactions may emerge immediately upon substrate binding, or come into play during the transition state
+    \item Electrostatic catalysis relies heavily on the specific amino acids in the enzyme's active site, meaning the primary structure directly determines the enzyme's ability to stabilize the transition state and facilitate the reaction
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.8]{L2_16.png} 
+\end{center}
+
+\subsection*{Metal-Ion Catalysis}
+Enzymes often contain \textbf{metal ions} that act as \textbf{cofactors}
+\begin{itemize}
+    \item These metal ions generally exist as \textbf{cations} within the enzyme
+\end{itemize}
+Metal ions can play critical roles in enzyme function by:
+\begin{itemize}
+    \item \textbf{Binding to substrates} to help orient them for the reaction
+    \item \textbf{Stabilizing} charged transition states and intermediate structures during the reaction
+    \item \textbf{Facilitating electron transfer} in oxidation-reduction (redox) reactions
+\end{itemize}
+Metal ions are particularly effective in stabilizing \textbf{negatively charged or nucleophilic intermediates} due to their positive charge, which attracts and stabilizes these negatively charged species
+\begin{center}
+    \includegraphics*[width=0.8\textwidth]{L2_17.png} 
+\end{center}
+\begin{itemize}
+    \item The Great Oxidation Event transformed Earth's chemical environment, affecting metal ion availability and leading to an evolutionary shift in enzyme cofactors from Iron to other metals like magnesium
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.3]{L2_18.png} 
+\end{center}
+\end{document}
