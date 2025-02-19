@@ -1,0 +1,295 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+\usepackage{tabularx}
+\usepackage{multicol}
+\usepackage[table,xcdraw]{xcolor}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+\graphicspath{{./assets/images/Week 7}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+\newcommand{\example}{\textbf{Example: }}
+\newcommand{\water}{\text{H$_2$O}}
+\newcommand{\hydroxide}{\text{OH$^-$}}
+\newcommand{\hydronium}{\text{H$_3$O$^+$}}
+\newcommand{\proton}{\text{H$^+$}}
+\newcommand{\pc}{$^+$}
+\newcommand{\nc}{$^-$}
+\newcommand{\ka}{\text{$K_\text{a}$}}
+
+% import subfiles
+\usepackage{subfiles}
+
+\title{CHEM 153A Week 7}
+
+\begin{document}
+\maketitle
+
+\section*{Enzyme Kinetics}
+\begin{itemize}
+    \item \textbf{enzyme kinetics} = the discipline focused on determining the \textbf{rate} of a reaction and how it changes in response to changes in experimental parameters
+\end{itemize}
+In enzyme kinetics, we study the \textbf{steady state} because it provides us a stable and consistent way to measure enzyme activity, allowing us to determine key kinetic parameters that describe the enzyme's efficiency and affinity for its substrate
+\begin{center}
+    \includegraphics*[width=0.7\textwidth]{L1_1.png}
+\end{center}
+
+\subsection*{Changes in Concentrations of Various Species in an Enzyme-Catalyzed Reaction Over Time}
+\begin{center}
+    \includegraphics*[width=0.6\textwidth]{L1_2.png}
+\end{center}
+
+\subsection*{Substrate Concentration Affects the Rate of Enzyme-Catalyzed Reactions}
+\begin{itemize}
+    \item \textbf{pre-steady state} = initial transient period during which ES builds up
+    \item \textbf{steady state} = period during which [ES] and other intermediates remain constant
+\end{itemize}
+\begin{center}
+    
+    \includegraphics*[scale=0.6]{L1_3.png}
+\end{center}
+
+\subsection*{Steady State}
+\begin{itemize}
+    \item During the steady state, the concentration of the enzyme-substrate complex (ES) remains relatively constant, even though substrate is being converted to product.  This allows us to measure the reaction rate without fluctuations due to changing ES concentrations, making the data more reliable
+    \item By measuring $V_0$ during the \textbf{steady state} phase and before significant product has accumulated, we minimize the effect of the reverse reaction from P to S, ensuring that we are observing the enzyme's pure catalytic activity in the forward reaction from S to P under optimal conditions
+\end{itemize}
+
+\subsection*{Goal of Enzyme Kinetics}
+The primary goal of enzyme kinetics is to quantify enzyme activity and determine parameters that describe how efficiently an enzyme converts substrate into product.\\\\
+\textbf{Key Terms in Kinetics}
+\begin{itemize}
+    \item \textbf{Vmax} - maximum reaction velocity when the enzyme is saturated with substrate
+    \item \textbf{Km} - Substrate concentration at which the reaction velocity is \textbf{half} of Vmax
+    \item \textbf{kcat} - Turnover number: how many substrate molecules an enzyme converts per second
+    \item \textbf{kcat/Km} - The best measure of enzyme efficiency
+\end{itemize}
+
+\subsection*{Initial Velocities of Enzyme-Catalyzed Reactions}
+\begin{itemize}
+    \item \textbf{initial rate (initial velocity)}, \textbf{$V_0$} = tangent to each curve taken at time = 0
+    \begin{itemize}
+        \item reflects a steady state:  (When we measure $V_0$, we are looking at the initial phase of the reaction, just after the enzyme-substrate complex (ES) has reached a steady state)
+    \end{itemize}
+    \item At the beginning of the reaction, [S] is regarded as constant.
+    \item In enzyme kinetics, we use $V_0$ or the \textbf{initial reaction velocity}, because it gives us a clear picture of how the enzyme behaves at the very start of the reaction, before any other factors start to interfere.
+    \item Each curve (refer to below) represents the \textbf{accumulation of product} ([P]) over time for a specific starting substrate concentration ([S])
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.6]{L1_4.png}
+\end{center}
+At relatively low concentrations of substrate, V0 increases almost linearly with an increase in [S]
+
+\subsubsection*{Why do we use $V_0$?}
+\begin{enumerate}
+    \item \textbf{Minimized Complications:} At the beginning of the reaction, there's plenty of substrate, and the product concentration is low.  This means we can ignore the effects of product buildup, which could slow down or reverse the reaction.  So, $V_0$ reflects the enzyme's "pure" activity with minimal interference
+    \item \textbf{Consistent Conditions:} By measuring $V_0$, we are looking at the rate when conditions (like substrate concentration) are constant.  This helps us make accurate comparisons between different enzyme reactions and understand how factors like substrate concentration affect enzyme activity
+    \item \textbf{Simple to Analyze}: Initial velocity measurements are straightforward to analyze mathematically, making it easier to determine important kinetic parameters like Vmax (maximum velocity) and Km (Michaelis constant), which describe the enzyme's efficiency and affinity for the substrate
+\end{enumerate}
+\textbf{In short, $V_0$ gives us a clear, consistent snapshot of the enzyme's performance without interference from other reaction changes over time}
+
+\subsection*{Effect of [S] on the $V_0$ of an Enzyme-Catalyzed Reaction}
+\begin{itemize}
+    \item the plateau-like $V_0$ region is close to the \textbf{maximum velocity}, $V_{max}$
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.55]{L1_5.png}
+\end{center}
+If only the \textbf{beginning of the reaction} is monitored, over a period in which only a small percentage of the available substrate is converted to product, [S] can be regarded as constnat, to a reasonable approximation.  $V_0$ can then be explored as a function of [S], which is adjusted by the investigator.  \textbf{The effect on $V_0$ of varying [S] when the enzyme concentration is held constant is shown in the graph.}
+
+\subsection*{Vmax: Maximum Reaction Rate}
+Vmax represents the maximum velocity of the reaction when all enzyme active sites are saturated with substrate
+\begin{itemize}
+    \item \textbf{Vmax is dependent on enzyme concentration.  If you double the enzyme concentration, you double Vmax}
+\end{itemize}
+Anecdote: If a restaurant can make 100 burgers per hour, adding more chefs (enzyme molecules) increases Vmax
+
+\subsection*{Effect of [S] on the $V_0$ of an Enzyme-Catalyzed Reaction}
+The Saturation Effect:
+\begin{itemize}
+    \item $V_{max}$ is observed when \textit{virtually} all the enzyme is present as the ES complex
+    \begin{itemize}
+        \item further increases in [S] have no effect on rate
+        \item responsible for the plateau observed
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.5]{L1_6.png}
+\end{center}
+
+\subsection*{A Double-Reciprocal, or Lineweaver-Burk, Plot}
+\begin{itemize}
+    \item For enzymes obeying the Michaelis-Menten relationship, a plot of 1/$V_0$ versus 1/[S] yields a straight line
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.45]{L1_7.png}
+\end{center}
+An algebraic transformation of the Michaelis-Menten equation converts the hyperbolic curve into a linear form.
+\begin{itemize}
+    \item \textbf{Lineweaver-Burk Equation:} 
+    \[\frac{1}{V_0} = \frac{K_m}{V_{max}[S]} + \frac{1}{V_{max}}\]
+\end{itemize}
+
+\subsection*{$K_m$ (Michaelis Constant): Substrate Binding Affinity}
+Km is the substrate concentration at which the enzyme operates at half of $V_{max}$.  It does not measure speed but rather the enzyme's affinity for the substrate
+\begin{itemize}
+    \item \textbf{Low Km means high substrate affinity} (enzyme binds tightly to substrate)
+    \item \textbf{High Km means low substrate affinity} (enzyme binds weakly)
+\end{itemize}
+When do we use $K_m$?
+\begin{itemize}
+    \item Comparing different enzymes that use the same substrate
+\end{itemize}
+
+\subsection*{Interpreting $K_m$ and $V_{max}$}
+\begin{itemize}
+    \item $K_m$ can vary for different substrates of the same enzyme
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=1]{L1_8.png}
+\end{center}
+Km can vary for different substrates of the same enzyme because each substrate has a unique interaction with the enzyme, leading to differences in binding affinity, catalytic efficiency, and how the enzyme accommodates each substrate
+
+\subsection*{The General Rate Constant, $k_{cat}$}
+\begin{itemize}
+    \item general rate constant, $K_{cat}$ = describes the \textbf{limiting rate of any enzyme-catalyzed reaction at saturation}
+    \item $k_{cat}$, also known as the \textbf{turnover number}, represents the \textit{maximum number of substrate molecules that a single enzyme can convert to product per unit time} when the enzyme is fully saturated with substrate
+    \item In the Michaelis-Menten equation, $k_{cat} = V_{max}/[E_t]$
+\end{itemize}
+\[V_0 = \frac{\textcolor{red}{V_{max}}[S]}{K_m + [S]} = \frac{\textcolor{red}{k_{cat}[Et]}[S]}{K_m + [S]}\]
+If an enzyme has a $k_{cat}$ of $10000 s^{-1}$, this means that each enzyme molecule, when fully loaded with substrate, can convert 10000 molecules of substrate into product every second
+
+\subsection*{$k_{cat}$ - Turnover Number (Catalytic Constant)}
+$k_{cat}$ is the turnover number, which measures how many substrate molecules an enzyme converts to product per second.\\\\
+\[k_{cat} = \frac{V_{max}}{[E]_{total}}\]
+\begin{itemize}
+    \item A high $k_{cat}$ means an enzyme works very fast
+    \item A low $k_{cat}$ means an enzyme works slowly
+\end{itemize}
+When do we use $k_{cat}$?
+\begin{itemize}
+    \item Comparing how fast different enzymes catalyze reactions in saturating conditions
+\end{itemize}
+Anecdote: If each chef (enzyme) can make 10 burgers per hour, $k_{cat}$ is 10 per hour per chef.  More chefs increase $V_{max}$, but $k_{cat}$ stays the same.
+
+\subsubsection*{$k_{cat}$ For Some Enzymes}
+\begin{center}
+    \includegraphics*[scale=1]{L1_9.png}
+\end{center}
+
+\subsection*{Catalytic Efficiency ($k_{cat} / K_m$) - The Best Enzyme Parameter}
+$k_{cat} / K_m$ is the best measure of enzyme efficiency.  It considers both speed ($k_{cat}$) and binding strength ($K_m$).
+\begin{itemize}
+    \item High $k_{cat} / K_m$ means an enzyme is fast and binds well (efficient even at low [S])
+    \item Low $k_{cat} / K_m$ means an enzyme is slow or binds poorly (inefficient at low [S])
+\end{itemize}
+When do we use $k_{cat} / K_m$?
+\begin{itemize}
+    \item When comparing enzymes that operate under non-saturating conditions, which is often the case in living cells where [S] $\ll K_m$ 
+\end{itemize}
+
+\textbf{Diffusion-limited enzyme reactions:}  If $k_{cat} / K_m$ approaches $10^8 - 10^9 M^{-1} s^{-1}$, the enzyme is operating at the \textbf{diffusion limit}, meaning every substrate molecule that collides with the enzyme is converted into product.  These are often called \textbf{"perfect enzymes"}.
+\begin{center}
+    \includegraphics*[scale=0.6]{L1_10.png}
+\end{center}
+
+\subsection*{$k_{cat} / K_m$: catalytic efficiency of the enzyme}
+High values of $k_{cat} / K_m$ indicate a highly efficient enzyme, meaning it converts substrate to product quickly, even at low substrate concentrations
+\begin{center}
+    \includegraphics*[scale=0.6]{L1_11.png}
+\end{center}
+
+\subsection*{Think of an Enzyme as a Worker on an Assembly Line:}
+\begin{itemize}
+    \item $k_{cat}$ (\textbf{turnover number}) tells you \textbf{how many products} the worker can assemble \textbf{per hour}, assuming they always have enough materials (substrate) to work at full capacity
+    \item $k_{cat} / K_m$ (\textbf{catalytic efficiency}) tells you \textbf{how good the worker is at both grabbing the materials and assembling them quickly.}  A worker who is both fast \textbf{and} good at picking materials from a moving belt is more efficient
+\end{itemize}
+\textbf{Key takeaways}
+\begin{itemize}
+    \item $k_{cat}$ is useful when substrate is abundant (measuring intrinsic catalytic power)
+    \item $k_{cat} / K_m$ is more useful under physiological conditions where substrate is often limiting
+    \item \textbf{Both parameters together give a complete picture of enzyme function} - one measures speed under saturation, the other measures efficiency under normal cellular conditions
+\end{itemize}
+
+\subsection*{Sumamry of $k_{cat}$ and catalytic efficiency}
+\begin{itemize}
+    \item \textbf{Turnover number} ($k_{cat}$) is the maximal number of molecules of substrate converted to product per second that occurs for a single enzyme (more specifically, single active site)
+    \[k_{cat} = \frac{V_{max}}{[E_{tot}]}\]
+    \item $K_m$ is essentially the degree of attraction of the substrate to the active site
+    \begin{itemize}
+        \item Lower $K_m$ is higher attraction
+    \end{itemize}
+    \item \textbf{If we combine $k_{cat}$ and $K_m$, we can get a measure for enzyme efficiency} how able the enzyme is to take substrate and produce product quickly
+    \item This is the \textbf{catalytic efficiency}
+    \[\text{cat eff} = \frac{K_{cat}}{K_m}\]
+\end{itemize}
+
+\subsection*{Enzyme Kinetics Helps Us Understand How Enzymes Function in Biological Systems}
+Key takeaways:
+\begin{enumerate}
+    \item $K_m$ measures substrate binding, not enzyme speed
+    \item $V_{max}$ depends on enzyme concentration
+    \item $K_{cat}$ measures how fast an enzyme converts substrate to product in saturating conditions
+    \item $k_{cat} / K_m$ is the best parameter for enzyme efficiency
+    \item Inhibitors alter kinetics in predictable ways, crucial for drug development
+\end{enumerate}
+
+\subsection*{Reversible Inhibition}
+\begin{itemize}
+    \item \textbf{Enzyme inhibitors} are molecules that interfere with substrate binding or catalysis, slowing or halting enzymatic reactions
+    \begin{itemize}
+        \item \textbf{Important pharmaceutical agents}
+    \end{itemize}
+    \item \underline{Reversible} enzyme inhibitors are inhibitors that can bind reversibly to an enzyme
+    \item In the context of reversible enzyme inhibition, $\alpha$ is a factor used in the Michaelis-Menten and Lineweaver-Burk equations to describe how inhibitors affect the kinetics of enzyme-catalyzed reactions.  It represents the extent to which an inhibitor affects the binding of the substrate to the enzyme
+    \begin{itemize}
+        \item $\alpha$ affects the free enzyme in competitive and mixed inhibition
+        \item $\alpha'$ affects the enzyme-substrate complex in uncompetitive and mixed inhibition
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.5]{L1_12.png}
+\end{center}
+
+\pagebreak
+\subsection*{Transition state analogs are \underline{competitive} inhibitors}
+\begin{itemize}
+    \item Unsurprisingly, molecules that mimic the transition state are able to bind to enzyme active sites, acting as strong inhibitors
+    \item These \textbf{transition state \underline{analogs}} mimic key structural features but are non-reactive
+    \item We'll revisit this when we discuss inhibition\dots
+    \item Transition state analogs bind the active site, and therefore \textbf{compete} with the substrate
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.5]{L1_13.png}
+\end{center}
+
+\subsection*{Reversible Inhibition}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L1_14.png}
+\end{center}
+
+
+
+
+
+
+
+\end{document}
