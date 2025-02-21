@@ -1,0 +1,384 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+\graphicspath{{./assets/images}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+\newcommand{\example}{\textbf{Example: }}
+\newcommand{\R}{\mathbb{R}}
+
+\title{COM SCI 122 Week 6}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Clustering}
+
+\subsection*{Central Dogma}
+\begin{center}
+    \includegraphics[scale=0.8]{W6_1.png}
+\end{center}
+\begin{itemize}
+    \item DNA is transcribed to RNA, which is translated to protein.  Proteins determine phenotype.
+    \item Phenotype is a lot easier to measure (e.g., gene expression) rather than genes themselves
+\end{itemize}
+
+\subsection*{Measuring Gene Expression}
+\begin{itemize}
+    \item Organisms typically have on the order of thousands or tens of thousands of protein coding genes (e.g., ~20000 genes in human)
+    \item Gene expression profiling used to be limited to a single gene at a time.  This changed with the publication of the first microarray in 1995.
+    \item By 1997, scaled up to measure expression of all yeast genes.
+\end{itemize}
+There are two additional major waves of technologies for measuring gene expression:
+\begin{center}
+    \includegraphics[width=0.8\textwidth]{W6_2.png}
+\end{center}
+Computational problem of clustering genes remains common accross technologies.
+
+\subsection*{Gene Expression Data}
+\begin{center}
+    \includegraphics[width=\textwidth]{W6_3.png}
+\end{center}
+\begin{itemize}
+    \item Each row is a gene.
+    \item Each column is a different experimental condition
+\end{itemize}
+
+\subsection*{Heatmap Representation of Gene Expression Data}
+\begin{center}
+    \includegraphics[scale=0.6]{W6_4.png}
+\end{center}
+
+\subsection*{Gene Expression Clustering Problem}
+\begin{itemize}
+    \item Group unlabeled data points
+    \item Informally want:
+    \begin{itemize}
+        \item Data points "near" each other in the same clusters
+        \item Data points "far" from each other in different clusters
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics[scale=0.6]{W6_5.png}
+\end{center}
+Why do we cluster genes by expression?
+\begin{itemize}
+    \item Genes with similar gene expression patterns across experimental conditions are often involved in the same biological process or co-regulated (e.g., regulated by the same transcription factor)
+    \item By identifying sets of genes with similar expression patterns can lead to insight into biological processes associated with the conditions, gene regulatory mechanism, and roles of genes with unknown function
+    \begin{itemize}
+        \item Example: identify sequence patterns around transcription start sites of genes with similar expression patterns (ch. 2)
+    \end{itemize}
+\end{itemize}
+
+\section*{Clustering Algorithms}
+\begin{itemize}
+    \item Many clustering algorithms exist.  E.g., Hierarchical clustering, K-means clustering
+\end{itemize}
+\begin{center}
+    \includegraphics[width=\textwidth]{W6_6.png}
+\end{center}
+
+\section*{Hierarchical Clustering}
+\begin{enumerate}
+    \item Initially each point is its own cluster.
+    \item Find the pair of clusters with the smallest distance between them or equivalently are the most similar.
+    \item Merge into parent cluster.
+    \item Repeat steps 2 and 3 until the desired number of clusters remain.
+\end{enumerate}
+
+\subsubsection*{How do we measure distance?}
+\begin{center}
+    \includegraphics[width=\textwidth]{W6_7.png}
+\end{center}
+\begin{itemize}
+    \item Pearson Correlation is popular since it clusters based on shape and relative changes which can often be more informative than absolute expression levels.
+    \begin{itemize}
+        \item However, the Pearson correlation can fail to provide output if the variance is 0.  In this case, it is undefined.
+        \item Typically, filter genes do not change expression before clustering.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Measuring Distance between Clusters}
+\begin{itemize}
+    \item Single Linkage Clustering:
+    \[D(X, Y) = \text{min}_{x \in X, y \in Y} d(x, y)\]
+    \item Complete Linkage Clustering:
+    \[D(X, Y) = \text{max}_{x \in X, y \in Y} d(x, y)\]
+    \item Average Linkage Clustering:
+    \[D(X, Y) = \frac{1}{|X| \cdot |Y|} \sum_{x \in X} \sum_{y \in Y} d(x, y)\]
+    \item Centroid Linkage Clustering:
+    \[D(X, Y) = \Vert c_X - c_Y\Vert\]
+    \begin{itemize}
+        \item where $c_X$ and $c_Y$ are the mean of $X$ and $Y$ and data assumed to be in $\mathbb{R}^d$
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics[scale=0.6]{W6_8.png}
+\end{center}
+
+\subsubsection*{Hierarchical Clustering Example 1}
+\begin{center}
+    \includegraphics[width=\textwidth]{W6_9.png}
+\end{center}
+
+\subsubsection*{Hierarchical Clustering Example 2}
+Suppose we want to perform hierarchical clustering with Euclidean distance using single linkage clustering to the four data points below.
+\begin{center}
+    \includegraphics[width=\textwidth]{W6_10.png}
+\end{center}
+Finding the distance between each pair of points, the left two points are the closest together.  Therefore, we merge them into one group.
+\begin{center}
+    \includegraphics[width=\textwidth]{W6_11.png}
+\end{center}
+The next closest group would be merging the (1) into the group we just created, since the distance between the (1) point is 1, and the distance between (1) and (2.5) is 1.5.
+\begin{center}
+    \includegraphics[width=\textwidth]{W6_12.png}
+\end{center}
+Finally, we merge the 2.5 point.
+\begin{center}
+    \includegraphics[width=\textwidth]{W6_13.png}
+\end{center}
+
+\subsubsection*{Hierarchical Clustering Example 3}
+Suppose we want to perform hierarchical clustering with the same points as above, but this time, we use \textbf{complete linkage clustering}.
+\begin{center}
+    \includegraphics[width=\textwidth]{W6_14.png}
+\end{center}
+\begin{itemize}
+    \item Notice that complete linkage clustering led to a different dendogram than single linkage.
+\end{itemize}
+
+\subsubsection*{Hierarchical Clustering Example 4}
+Same points, but this time with average linkage clustering.
+\begin{center}
+    \includegraphics[width=\textwidth]{W6_15.png}
+\end{center}
+
+\subsection*{Runtime Complexity of Hierarchical Clustering}
+\begin{itemize}
+    \item Let $n$ be the number of data points
+    \item O($n^2$) time to compute all pairwise distances
+    \item O($n$) iterations
+    \item O($n^3$) if all pairwise distances recomputed and/or iterated over each iteration
+    \item Depending on details of linkage method and implementation, this can run in O($n^2$) or O($n^2 \log n$) time
+\end{itemize}
+
+\subsection*{Ordering Leaves}
+Often more visual focus goes to the heatmap and the row ordering than the dendogram.  
+\begin{center}
+    \includegraphics[scale=0.5]{W6_16.png}
+\end{center}
+\textbf{Question:} Does hierarchical clustering uniquely determine an ordering of leaves (rows)?
+\begin{itemize}
+    \item No!  Two leaves can be swapped around without changing the structure of the hierarchical clustering.
+    \item The two structures below have the same hierarchical clustering, but different orders.
+\end{itemize}
+\begin{center}
+    \includegraphics[scale=0.8]{W6_17.png}
+\end{center}
+\textbf{Question:} How many possible orderings are there for a hierarchical clustering of $n$ data points?
+\begin{itemize}
+    \item $2^{n - 1}$.  This is because the hierarchical clustering always produces a binary tree.  If there are $n$ leaves, then there are $2^{n - 1}$ internal nodes.
+    \item Each internal node can be flipped.
+\end{itemize}
+\textbf{Question:} How should we select among possible orderings?
+\begin{itemize}
+    \item Idea: pick an ordering that minimizes distance between adjacent leaves or equivalently maximizes similarity.
+\end{itemize}
+
+\subsection*{Optimal Ordering Leaves}
+\textbf{Problem:} Order leaves of hierarchical clustering dendrogram to minimize sum of distances between neighboring leaves or equivalently maximize similarity of neighboring leaves.\\\\
+From Eisen et al, 1998 paper:\\
+\fbox{
+    \parbox{\textwidth}{
+        \textbf{Ordering of Data Tables.}  For any dendrogram of $n$ elements, there are $2^{n - 1}$ linear orderings consistent with the structure of the tree (at each node, either of the two elements joined by the node can be ordered ahead of the other).  An optimal linear ordering, one that maximizes the similarity of adjacent elements in the ordering, is impractical to compute.
+    }
+}
+\begin{itemize}
+    \item It turns out that solving this problem with brute force will take expoenntial time.  However, it is possible to compute this in polynomial time - O($n^3$).
+\end{itemize}
+
+\subsection*{Optimal Ordering Leaves in O($n^3$) time}
+\begin{itemize}
+    \item T($v$) - subtree rooted at $v$
+    \item M($v, i, j$) - cost of optimal tree rooted at $v$ with start and end leaves $i$ and $j$ respectively where $i, j$ are leaves in T($v$)
+    \item M($v, v, v$) = 0
+    \item $\text{M}(v, i, j) = \min_{x \in \text{T}(u), y \in \text{T}(w)} \text{M}(u, i, x) + \text{d}(x, y) + \text{M}(w, y, j)$
+    \begin{itemize}
+        \item $u$ is the left sub-child
+        \item $w$ is the right sub-child
+    \end{itemize}
+    \item Dynamic programming!
+\end{itemize}
+\begin{center}
+    \includegraphics[width=\textwidth]{W6_18.png}
+\end{center}
+\subsubsection*{Proof of O($n^3$) time}
+\begin{itemize}
+    \item Let $F(n)$ be the total time to compute $M(v, i, j)$ for all $i, j$ in a tree with $n$ leaves.
+    \item Let $r$ be the number of leaves in subtree $T(u)$
+    \item Let $s$ be the number of leaves in subtree $T(w)$
+    \[F(n) = F(r) + F(s) + O(r^2s) + O(rs^2)\]
+    \item We have $r + s = n$ and
+    \[(r^3 + s^3 + r^2s + rs^2) \leq (r + 3)^3 = n^3\]
+    \item By induction it follows that $F(n)$ is O($n^3$)
+\end{itemize}
+
+\subsection*{Ordering Leaves Optimally}
+\begin{center}
+    \includegraphics[width=\textwidth]{W6_19.png}
+\end{center}
+
+\subsection*{Getting Clusters from Hierarchical Clustering}
+How can we get $k$ clusters from hierarchical clustering?
+\begin{center}
+    \includegraphics[width=\textwidth]{W6_20.png}
+\end{center}
+\begin{itemize}
+    \item Idea: cut tree to undo last $k - 1$ merges.
+\end{itemize}
+\begin{center}
+    \includegraphics[width=\textwidth]{W6_21.png}
+\end{center}
+\begin{itemize}
+    \item This method is popular since it shows all the data in a hierarchy, but limited theoretical basis for resulting clusters
+    \begin{itemize}
+        \item (i.e., no associated optimization criteria or statistical model)
+    \end{itemize}
+\end{itemize}
+
+\section*{K-means Clustering}
+\subsection*{The K-means Objective Function}
+\[\text{argmin} \sum_{i = 1}^k \sum_{x_j \in S_i} \Vert x_j - \mu_i \Vert^2\]
+\begin{itemize}
+    \item $\mu_i$ = Mean of cluster $i$
+    \item $S_i$ = Data points assigned to cluster $i$
+\end{itemize}
+Can be motivated by minimizing loss of information in compression
+\begin{itemize}
+    \item an encoder function: $\text{ENCODE} \::\: \mathfrak{R}^d \rightarrow [1 \dots k]$
+    \item a decoder function: $\text{DECODE} \::\: [1 \dots k] \rightarrow \mathfrak{R}^d$
+    \item We define distortion to be
+    \[\text{Distortion} = \sum_{i = 1}^n(x_i - \text{DECODE}[\text{ENCODE}(x_i)])^2\]
+\end{itemize}
+After initializing clustering centers, iterate between two steps:
+\begin{itemize}
+    \item Re-assign data points to its closest cluster mean
+    \item Recompute the cluster mean of the points assigned to each cluster
+\end{itemize}
+
+\subsubsection*{K-means Algorithm Example}
+\begin{enumerate}
+    \item Ask user how many clusters they'd like.
+    \begin{itemize}
+        \item E.g., $k = 5$
+    \end{itemize}
+    \item Randomly guess $k$ cluster center locations
+    \begin{center}
+        \includegraphics*[scale=0.5]{W6_22.png}
+    \end{center}
+    \begin{itemize}
+        \item Above: blue dots are data points, red dots are randomly guessed centers.
+    \end{itemize}
+    \item Each datapoint finds out which center it's closest to.  (Thus, each center "owns" a set of datapoints)
+    \begin{center}
+        \includegraphics*[scale=0.5]{W6_23.png}
+    \end{center}
+    \item Each center finds the centroid of the points it owns, and moves there.
+    \begin{center}
+        \includegraphics*[scale=0.5]{W6_24.png}
+    \end{center}
+    \item Repeat 3-4 until the centers no longer move, or the program is terminated.
+\end{enumerate}
+
+\subsection*{K-means Convergence}
+Is the k-means algorithm guaranteed to converge (i.e., no change in objective cost)?
+\begin{itemize}
+    \item \textbf{Yes.}  The algorithm will converge since there are only a finite number of ways of partitioning the set of data points into k-groups.  Each iteration would need to visit a new configuration since it cannot increase objective value being minimized between iterations.
+\end{itemize}
+Going back to the objective function, to prove convergence, we need to claim that neither step (out of reassigning data points and moving center) would increase the objective function.\\\\
+For the reassign step:
+\begin{itemize}
+    \item For each point $x_j \in S_i$, either
+    \begin{itemize}
+        \item it is closer to its current center $i \rightarrow$ no change
+        \item it is closer to another center $m \rightarrow$ objective function improves since $\Vert x_j - \mu_m \Vert^2 < \Vert x_j - \mu_i \Vert^2$
+    \end{itemize}
+\end{itemize}
+For the recompute cluster mean step:
+\begin{itemize}
+    \item To find the minimum, take partial derivatives and set them equal to 0.
+    \[\frac{\partial}{\partial \mu_{i, d}} \sum_{i = 1}^k \sum_{x_j \in S_i} \Vert x_j - \mu_i \Vert^2 = \frac{\partial}{\partial \mu_{i, d}} \sum_{x_j \in S_i} \Vert x_j - \mu_i \Vert^2 = -2 \sum_{x_j \in S_i} (x_{j, d} - \mu_{i, d})\]
+    \item The above is 0 when $\mu_{i, d} = \frac{\sum_{x_j \in S_i} (x_{j, d})}{|S_i|}$ (i.e., cluster center)
+\end{itemize}
+
+\subsection*{K-means Optimal Solution}
+Is the k-means algorithm guaranteed to find an optimal solution?
+\begin{itemize}
+    \item \textbf{No.}  Consider if the clusters were initiallized like below:
+\end{itemize}
+\begin{center}
+    \includegraphics[width=\textwidth]{W6_25.png}
+\end{center}
+Is there a better way to initialize clusters, so this doesn't happen?
+
+\subsection*{One Idea - Furthest Point Heuristic}
+\begin{itemize}
+    \item Pick the first cluster center to be one arbitrarily selected point
+    \item Iteratively pick cluster centers to be remaining points that are furthest from any selected point
+\end{itemize}
+\begin{center}
+    \includegraphics[width=\textwidth]{W6_26.png}
+\end{center}
+Approximation algorithm to k-centers problem - minimize maximum distance of any point to its closest center\\\\
+\textbf{Question:} Can this fail to lead to a good clustering?
+\begin{itemize}
+    \item \textbf{Yes} - suppose there are two very far out points:
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=\textwidth]{W6_27.png}
+\end{center}
+\textbf{Question:} Any ideas for initializing the centers that would spread the points while being less sensitive to outliers?
+\begin{itemize}
+    \item Pick first cluster center to be one arbitrarily selected point
+    \item Iteratively select a cluster center $x'$ to be a point in the data probabilistically, where the probabilities are determined by
+    \[\frac{D(x')^2}{\sum_{x \in X} D(x)^2}\]
+    \begin{itemize}
+        \item where $D(x)$ is the distance of $x$ to its closest currently selected cluster center and $X$ is the set of all points
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Run-time of k-means algorithm}
+\begin{itemize}
+    \item Let $n$ be the number of data points
+    \item Let $d$ be the number of dimensions in the data
+    \item Let $k$ be the number of clusters
+    \item Let $i$ be the number of iterations
+    \item The run-time of the k-means algorithm is O($ndki$)
+    \item In the worst case, the number of iterations is O($2^{\Omega(\sqrt{n})}$)
+    \item in practice, we will need fewer iterations and can terminate early based on a fixed number of iterations or small changes to objective.
+\end{itemize}
+
+\end{document}
