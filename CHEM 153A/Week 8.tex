@@ -1,0 +1,178 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+\usepackage{tabularx}
+\usepackage{multicol}
+\usepackage[table,xcdraw]{xcolor}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+\graphicspath{{./assets/images/Week 8}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+\newcommand{\example}{\textbf{Example: }}
+\newcommand{\water}{\text{H$_2$O}}
+\newcommand{\hydroxide}{\text{OH$^-$}}
+\newcommand{\hydronium}{\text{H$_3$O$^+$}}
+\newcommand{\proton}{\text{H$^+$}}
+\newcommand{\pc}{$^+$}
+\newcommand{\nc}{$^-$}
+\newcommand{\ka}{\text{$K_\text{a}$}}
+
+% import subfiles
+\usepackage{subfiles}
+
+\title{CHEM 153A Week 8}
+
+\begin{document}
+\maketitle
+
+\subsection*{Metabolic Pathways and Metabolism}
+\begin{center}
+    [FILL 2]
+\end{center}
+
+\subsection*{Pathways and Regulation}
+\begin{itemize}
+    \item A \textbf{metabolic pathway} is a linked series of biochemical reactions moving towards a specific end
+    \begin{itemize}
+        \item These pathways must be able to respond to external conditions.
+    \end{itemize}
+    \item These pathways must be able to respond to external conditions
+\end{itemize}
+For example, glycolysis is tightly regulated based on the cell's energy needs.  If ATP levels are high, key regulatory enzymes such as phosphofructokinase-1 (PFK-1) are inhibited to slow down glycolysis.  Conversely, when ATP levels drop and ADP or AMP concentrations rise, glycolysis is activated to generate more energy.
+\begin{itemize}
+    \item This regulation ensures that cells efficiently balance energy production with demand, preventing wasteful metabolism
+\end{itemize}
+\begin{center}
+    [FILL 3]
+\end{center}
+
+\subsection*{Methods of Control}
+\begin{itemize}
+    \item Regulation of enzyme availability - Balancing rate of production with rate of degradation
+    \begin{itemize}
+        \item Control of gene expression
+        \item Control of protein degradation
+    \end{itemize}
+    \item Regulation of catalytic activity - Modification of protein structure $\rightarrow$ modification of protein activity
+    \begin{itemize}
+        \item Covalent modification
+        \item Non-covalent modification
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    [FILL 4]
+\end{center}
+
+\subsection*{Control of Gene Expression}
+\begin{itemize}
+    \item \textbf{Constitutive} enzymes
+    \begin{itemize}
+        \item Enzymes constantly present in the organism in constant amounts regardless of metabolic state
+        \item e.g., glycolytic enzymes (we may reduce glycolytic activity, but we'll never downregulate the proteins)
+    \end{itemize}
+    \item \textbf{Inducible} enzymes
+    \begin{itemize}
+        \item Enzymes that aren't present in the cell until a specific environmental signal is triggered
+        \item Could be presence of substrate, etc.
+        \item e.g., COX-2 in macrophages (produces inflammatory prostaglandins, but only when something's amiss)
+    \end{itemize}
+    \item \textbf{Repressible} enzymes
+    \begin{itemize}
+        \item Enzyme consistently present unless a specific condition is triggered
+        \item e.g., Enzymes of cholesterol biosynthesis (sterol accumulation inhibits pathway)
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    [FILL 5]
+\end{center}
+
+\subsection*{Control of Protein Degradation - Ubiquitination}
+\begin{itemize}
+    \item The primary ATP-dependent proteolytic pathway in eukaryotes is the \textbf{ubiquitin-proteasome system.}
+    \item \textbf{Ubiquitin} is a small protein with only 76 amino acid residues
+    \begin{itemize}
+        \item As its name suggests, it is highly conserved across eukaryotic organisms.
+    \end{itemize}
+    \item Ubiquitin is covalently attached to target proteins through a series of steps involving three enzymes: \textbf{E1, E2, and E3}.
+    \begin{itemize}
+        \item \textbf{E1 (Ubiquitin-activating enzyme)}: activates ubiquitin by attaching it to itself in an ATP-dependent reaction
+        \item \textbf{E2 (Ubiquitin-conjugating enzyme)}: E1 then transfers the activaated ubiquitin to E2
+        \item \textbf{E3 (Ubiquitin ligase)}: E2 works with E3 to catalyze the transfer of ubiquitin to the target protein.
+    \end{itemize}
+    \item E3 is responsible for recognizing and binding the specific target protein, allowing for selective tagging.  (How is the target protein recognized?  This often involves specific sequences or structural motifs on the substrate protein)
+    \item Once a protein is initially ubiquitinated, additional cycles of ubiquitin attachment can occur, resulting in a \textbf{polyubiquitin chain}.  This polyubiquitin tail serves as a signal for the protein to be directed to the proteasome, where it will undergo degradation
+\end{itemize}
+\begin{center}
+    [FILL 6]
+\end{center}
+\begin{itemize}
+    \item Recognition is achieved by protein motifs called \textbf{degrons}
+    \item Essentially degrons are tiny tags that mark a protein for degradation
+    \item There are inherent degron tags (embedded within the protein sequence) as well as acquired degron tags (added post-translationally)
+\end{itemize}
+\begin{center}
+    [FILL 7]
+\end{center}
+
+\subsection*{Proteasome}
+The target protein is then introduced to the \textbf{proteasome}, which recognizes the poly-ubiquitination signal and chews up the protein
+\begin{itemize}
+    \item Proteasome is large (dozens of subunits) and highly conserved across Eukarya.
+\end{itemize}
+\begin{center}
+    [FILL 8]
+\end{center}
+
+\subsection*{Proteasome vs. Proteases}
+The \textbf{proteasome} and \textbf{proteases} both break down protein, but they differ in structure, function, and the mechanism by which they operate.
+\begin{enumerate}
+    \item \textbf{Proteases}
+    \begin{itemize}
+        \item Proteases are individual enzymes that catalyze the cleavage of peptide bonds in proteins.
+        \item \textbf{Function:} They work by hydrolyzing peptide bonds, either at specific sequences (for some proteases) or in less selective manners (for others).  They are responsible for a wide range of processes, including digestion, cellular signaling, and apoptosis.
+        \item \textbf{Types:} There are different types of proteases (e.g., serine proteases, cysteine proteases, aspartic proteases, and metalloproteases) based on the active site residues they use for catalysis.
+        \item \textbf{Where they act:} Proteases can be found throughout the body, in various cellular compartments, and even extracellularly.  They generally function as standalone enzymes.
+    \end{itemize}
+    \item \textbf{Proteasome}
+    \begin{itemize}
+        \item The proteasome is a large, multi-subunit protein complex specifically designed for protein degradation.
+        \item \textbf{Function:} It degrades polyubiquitinated proteins in an ATP-dependent process, breaking them down into small peptides.
+        \item \textbf{Specificity:} Unlike most proteases, the proteasome is highly regulated and usually requires proteins to be tagged with ubiquitin before they can be recognized and degraded. This ensures that only specific proteins—often damaged, misfolded, or no longer needed—are broken down.
+        \item \textbf{Structure:} The proteasome is a barrel-shaped complex with multiple active sites inside it. The 20S core particle provides the proteolytic activity, while the 19S regulatory particles at each end recognize and unfold ubiquitinated proteins, feeding them into the core.
+        \item \textbf{Where It Acts:} The proteasome is primarily found in the cytoplasm and nucleus of eukaryotic cells and is part of the ubiquitin-proteasome system (UPS), which is essential for maintaining protein homeostasis
+    \end{itemize}
+\end{enumerate}
+\textbf{Key Differences}
+\begin{itemize}
+    \item \textbf{Specificity:} Proteases can act on various substrates and sometimes have broad specificity whereas the proteasome selectively degrades proteins tagged with ubiquitin
+    \item \textbf{Structure:} Proteases are single enzymes, while the proteasome is a large, multi-subunit complex.
+    \item \textbf{Energy Requirement:} Most proteases do not require ATP, while the proteasome requires ATP to recognize, unfold, and translocate proteins into its core for degradation
+    \item \textbf{Function:} Proteases are involved in diverse biological functions across the body, while the proteasome's primary role is to regulate protein turnover and remove unwanted of damaged proteins within cells
+\end{itemize}
+The proteasome is a specialized, ATP-dependent protein degradation complex within cells, part of a tightly regulated system for targeted protein degradation. Proteases, on the other hand, are individual enzymes that cleave peptide bonds and are involved in a broader range of biological processes, including general protein digestion and cellular signaling
+
+\subsection*{Methods of Control}
+\begin{itemize}
+    \item \underline{Regulation of Enzyme Availability} - 
+\end{itemize}
+
+
+\end{document}

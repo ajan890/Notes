@@ -376,8 +376,59 @@ This gives better results than the greedy algorithm, but still is not perfect.
 	\item The algorithm may converge at a local minimum instead of the global minimum.
 \end{itemize}
 
+\subsection*{Gibbs Sampling}
+\begin{enumerate}
+    \item Start by placing a motif instance randomly for each sequence and create the initial motif
+    \begin{center}
+        \includegraphics*[width=0.9\textwidth]{W7_26.png}
+    \end{center}
+    \item Select a sequence at random to exclude
+    \item Update the motif
+    \begin{center}
+        \includegraphics*[width=0.9\textwidth]{W7_27.png}
+    \end{center}
+    \item Compute a probability of each position in the selected sequence containing a motif instance based on the motif
+    \item Sample a new motif instance based on the probabilities and update motif
+    \begin{center}
+        \includegraphics*[width=0.9\textwidth]{W7_28.png}
+    \end{center}
+    \item Repeat (from step 2) until termination.
+    \begin{itemize}
+        \item Termination is usually a specified number of iterations
+        \item Other strategies include e.g., limited change in motif parameters or limited change in objective function over sufficiently large number of iterations.
+        \item This can be repeated from multiple random initializations
+    \end{itemize}
+\end{enumerate}
+\begin{center}
+    \includegraphics*[width=\textwidth]{W7_29.png}
+\end{center}
 
+\subsubsection*{Gibbs Sampling in General}
+\begin{itemize}
+    \item Often difficult to sample from a distribution P($U_1, \dots, U_n$) directly but feasible to sample P($U_j | U_1, \dots, U_{j - 1}, U_{j + 1}, \dots U_n$) for each $j$
+    \begin{itemize}
+        \item In the motif example, easier to compute distribution of the motif instance in one sequence if we know where the instances are in all the other sequences than a joint distributions
+    \end{itemize}
+    \item By iteratively sampling the distribution of variables conditioned on the others can eventually approximate joint distribution,
+\end{itemize}
 
+\subsection*{EM Algorithm Optimization Problem}
+\begin{itemize}
+    \item We want to find a motif instance from each sequence and corresponding motif that optimizes our objective.  e.g. for PWM assuming uniform background,
+    \[\max_{PWM, w} \sum_{i = 1}^t \log\left(\sum_{j = 1}^{n - k + 1} w_{i, j} P(S_{i, j \::\: (j + k - 1) | PWM})\right)\]    
+    \item $t$ sequences
+    \item $n$ nucleotides per sequence
+    \item $k$ is length of motif
+    \item $S_{i, j \::\: (j + k - 1)}$ is the subsequence $i$ starting at position $j$ of length $k$.  Relax the assumption that $w_{i, j}$ need to be 0 or 1 corresponding to hard assignments and instead allow "soft-assignments" where we assume $w_{i, j}$ are between 0 and 1 and for each sequence $i$ the sum of the $w_{i, j}$ values are 1.
+\end{itemize}
+
+\begin{enumerate}
+    \item Initialize a motif matrix.  One way is by placing a motif instance randomly for each sequence and creating a motif matrix based on them.
+    \item E-step.  Compute a probability of each position in each sequence containing a motif instance based on the motif
+    \item M-step.  Update the motif matrix based on soft assignment probabilities by taking a weighted average.
+    \item Iterate until termination (number of iterations or convergence criteria, e.g., likelihood)
+\end{enumerate}
+See earlier section (Week 6) for an example on EM.
 
 \end{document}
 
