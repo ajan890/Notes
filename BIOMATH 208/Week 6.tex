@@ -356,5 +356,55 @@ Expanding, we get:
     &= g_{ij} U^I V^j [FILL]
 \end{align*}
 
+\subsection*{Change of Coordinates for Inner Products}
+We can derive a change of basis formula for inner products by applying the change of basis formula for vectors:
+\begin{itemize}
+    \item Note that $x$ and $y$ are charts.  Since a transfer function can be used to transfer between charts, $g(X, Y)$ is independent of which chart is used since they cancel out.
+\end{itemize}
+\begin{align*}
+    g(X, Y) &= g_{ij}^y X_y^i Y_y^j = g_{ij}^x X_x^i Y_x^j\\
+    &= g_{ij}^x \left(\frac{\partial x^i}{\partial y^k} X_y^k\right) \left(\frac{\partial x^j}{\partial y^l} Y_y^l\right)\\
+    &= \left[\left(\frac{\partial x^i}{\partial y^k}\right) g_{ij}^x \left(\frac{\partial x^k}{\partial y^l} [FILL]\right)\right]\\
+    &= 
+\end{align*}
+ 
+\subsubsection*{Example: "Standard" inner product in polar coordinates}
+\begin{itemize}
+    \item The "standard" inner product refers to the dot product.
+\end{itemize}
+Consider the space $\mathbb{R}^2$ with $x$ the "identity chart" and $y$ the "polar coordinates chart" $y(p) = (r, \text{sign}(p^1) \arccos(p^o/r))$.\\\\
+First find the coordinates of $g$ in the chart $x$.
+\[g_{ij}^(x) = \delta_{ij}\]
+Now, find the jacobian of the chart transition map
+\begin{align*}
+    x \circ y^{-1} &= (y^0 \cos(y^1), y^0 \sin(y^1))\\
+    \partial_j x^i \circ y^{-1} &= \begin{pmatrix} \cos(y^1) & -y^0 \sin(y^1) \\ \sin(y^1) & y^0 \cos(y^1) \end{pmatrix}
+\end{align*}
+\begin{itemize}
+    \item Each column in the matrix is a component, partial derivatives is a row.
+\end{itemize}
+Now, form the matrix product
+\begin{align*}
+    &\begin{pmatrix}
+        \cos(y^1) & \sin(y^1) \\ -y^0 \sin(y^1) & y^0 \cos(y^1)
+    \end{pmatrix} \cdot I \cdot \begin{pmatrix}
+        \cos(y^1) & -y^0 \sin(y^1) \\ \sin(y^1) & y^0 \cos(y^1)
+    \end{pmatrix}\\
+    &= \begin{pmatrix}
+        \cos^2(y^1) + \sin^2(y^1) & -y^0 \sin(y^1) \cos(y^1) + y^0 \sin(y^1) \cos(y^1) \\ 0 & (y^0)^2 \sin^2(y^1) + (y^0)^2 \cos^2(y^1) \end{pmatrix}\\
+    &= \begin{pmatrix}
+        1 & 0 \\ 0 & (y^0)^2
+    \end{pmatrix}
+\end{align*}
+
+\subsection*{Tensor Field}
+\begin{itemize}
+    \item We can define a tangent space $T_p \mathcal{M}$ for every point $p$ on a manifold.  The union of all these spaces is called the "tangent bundle".
+    \item A vector field can be defined simply as a vector at every point.  Same for covector or tensor fields.
+    \item Because we cannot add or subtract vectors from different spaces, taking the derivative of a vector field is challenging to define.
+    \item Mathematically, the tangent bundle is a type of object called a "fiber bundle" and a vector field is a "section" of this bundle.
+\end{itemize}
+\[\text{Tangent Bundle} = \bigcup_{p \::\: p \in \mathcal{M}} T_p \circ \mathcal{M}\]
+
 
 \end{document}

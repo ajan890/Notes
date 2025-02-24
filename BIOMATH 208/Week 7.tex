@@ -1,0 +1,200 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+\usepackage{dsfont}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+\graphicspath{{./assets/images}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+\newcommand{\example}{\textbf{Example: }}
+\newcommand{\R}{\mathbb{R}}
+
+\title{BIOMATH 208 Week 7}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Image Registration and Gradient Descent Optimization}
+
+
+\subsection*{Motivation}
+\begin{itemize}
+    \item Image registration consists of finding a transformation (often a member of a group) that spatially aligns a pair of images
+    \item Useful for fusing multiple modalities or timepoints, or making comparisons across members of a population.
+    \item We will use tools we developed to understand differentiation on manifolds to solve several problems analytically, and derive optimization algorithms to solve others.
+\end{itemize}
+
+\subsection*{Exact Landmark Based Registration}
+Pairs of "keypoints" or "landmark" points can be identified on imaging data, either manually or automatically (e.g., Scale Invariant Feature Transform)\\\\
+We can align them by minimizing sum of square error, resulting in analytical solutions for many problems
+\begin{center}
+    \includegraphics*[width=\textwidth]{W7_1.png}
+\end{center}
+\begin{itemize}
+    \item We will label each point, and find the same point in each image.
+\end{itemize}
+
+\subsection*{Notation}
+We will use matrix motation (Typically extrinsic coordinates), where $Q$ is a $d \times N$ array such that $Q{ij}$ stores the $i$th component of the $j$th of $N$ points.  $P$ is a set of corresponding points, and $T$ is an element of some transformation group.\\\\
+We align images by minimizing the cost
+\begin{align*}
+    f(T) == \Vert T \cdot Q - P \Vert_F^2\\
+    &= \text{tr} \left[(T \cdot Q - P)(T \cdot Q-P)^T\right]
+    &= \sum_{ij} (T \cdot Q)_{ij}^2
+\end{align*}
+\begin{itemize}
+    \item The $\cdot$ in this context means "group action" (e.g., matrix multiplication)
+    \item This equation is the sum of square error cost.
+    \item The subscript $F$ is the Frobineous norm, sum of squares of traces in a matrix.
+\end{itemize}
+\textbf{Aside: Properties of Traces:}
+\begin{itemize}
+    \item $\text{tr}(A) = -\text{tr}(A^T)$
+    \item $\text{tr}(ABC) = \text{tr}(CBA)$: (invariant to cyclic permutations)
+    \item Linear.  $\text{tr}(aA + bB) = a \cdot \text{tr}(A) + b \cdot \text{tr}(B)$
+\end{itemize}
+
+\subsection*{Translation}
+Consider $T$ is a translation vector in $\mathbb{R}^d$, with $T \cdot Q = T\mathds{1} + Q$, where $\mathds{1}$ is a row vector of $N$ ones.\\\\
+The optimal translation aligns the center of mass of two point sets.
+\[T = \frac{1}{N} \sum_{j = 1}^N P_j - \frac{1}{N} \sum_{j = 1}^N Q_j\]
+
+\subsubsection*{Proof}
+Consider a path $\gamma(t) = T + t\delta T$ for $\delta T$ an arbitrary translation, and consider the velocity
+\[\frac{\text{d}}{\text{d}t} f(T + t \delta T) \bigg|_{t = 0} \doteq v_{\gamma, t}(f).\]
+\begin{itemize}
+    \item Note that $\dot{\gamma}(0) = \delta T$
+    \item The $\dot{\gamma}$ is the derivative of $\gamma$.
+\end{itemize}
+Plugging our definition of $f$ gives:
+\begin{align*}
+    &= \frac{\text{d}}{\text{d}t} \text{tr} (Q + T\mathds{1} + t\delta T\mathds{1} - P)(Q + T\mathds{1} + t \delta T\mathds{1} - p)^T \bigg|_{t=0}\\
+    &= \text{tr}(\delta T\mathds{1})(Q + T\mathds{1} - P)^T + \text{tr}(Q + T\mathds{1} - P)(\delta T\mathds{1})^T\\
+    &= 2 \text{tr} (Q + T\mathds{1} - P)(\delta T \mathds{1})^T\\
+    &= \text{tr} (2(Q + T\mathds{1} - P) \mathds{1}^T) \delta T^T 
+\end{align*}
+\begin{itemize}
+    \item Note that $\delta T\mathds{1}$ is linear, and $(Q + T\mathds{1} - P)^T$ is constant.
+\end{itemize}
+We now set the derivative to zero.
+\[0 = \text{tr} (2(Q + T\mathds{1} - P) \mathds{1}^T) \delta T^T\]
+Therefore,
+\[2(Q + T\mathds{1} - P) \mathds{1}^T = 0\]
+If we expand this, we get
+\[Q \mathds{1}^T + T\mathds{1} \mathds{1}^T - P\mathds{1}^T = 0\]
+\begin{itemize}
+    \item $\mathds{1} \cdot \mathds{1}^T = N$, since $\mathds{1}$ is a row, $\mathds{1}^T$ is a column
+\end{itemize}
+We can condense this into a summation:
+\[\sum_{i = 1}^N Q_i + NT - \sum_{i - 1}^N P_i = 0 \Longrightarrow [FILL]\]
+
+We can identify tangent and cotangent terms to define the gradient.\\\\
+$2(Q + T\mathds{1} - P)\mathds{1}^T$ acts linearly on our velocity $\delta T$, to give a real number, therefore it is the gradient covector, $\text{d}f (T)$  (e.g., derivative at the point $T$).
+\[\dot{\partial}^i \left(\frac{\partial}{\partial_q}\right) [FILL]\]
+
+\subsubsection*{Summary}
+In summary, we
+\begin{enumerate}
+    \item Wrote down the loss function.
+    \item Consider a path, passing through $T$ with direction $\delta T$.
+    \item The components of $\delta T$ are the components of our velocity.
+    \item We worked out the time derivative, and found "something" acting linearly on $\delta T$.
+    \item Set expression to zero to find a stationary point.
+    \item Argued that the "something" = 0, if this is stationary for any $\delta T$.
+    \item The "something" is the gradient of our function, $\text{d}f$.
+\end{enumerate}
+
+\subsection*{Linear Alignment}
+Consider $T$ an element of the general linear matrix group, with $T \cdot Q = TQ$ (matrix multiplication).  Note that if $Q$ has a 0 center of mass, then so does $TQ$, so we often "preprocess" by translating the center of mass to the origin.\\\\
+The optimal transformation takes the form of "corss covariance times inverse variance":
+\[T = \Sigma_{PQ} \Sigma_{QQ}^{-1}\]
+where $\Sigma_{PQ} = \frac{PQ^T}{N}$, $\Sigma_{QQ} = \frac{QQ^T}{N}$
+\begin{itemize}
+    \item In this case, $\Sigma_{QQ}$ is a 3x3 covariance matrix.
+    \item $\Sigma_{PQ}$ is a 3x3 cross covariance matrix.
+\end{itemize}
+
+\subsubsection*{Proof}
+Consider a path $\gamma(T) = T + t\delta T$, where $\delta T$ is an arbitrary matrix.  $\delta T$ need not be invertible, as long as $\gamma(t)$ is.  This may require a small $t$, but we can always find one (why?).  Consider the velocity
+\[\frac{\text{d}}{\text{d}t} f(T + t\delta T) \bigg|_{t = 0} = v_{\gamma, t} (f)\]
+Note that $\dot{\gamma}(0) = \delta T$.\\\\
+Plugging in our definition of $f$ gives:
+\begin{align*}
+    &= \text{tr}(TQ + t\delta TQ - P)(TQ + t\delta TQ - P)^T \bigg|_{t = 0}\\
+    &= \text{tr} \delta TQ (TQ - P) + \text{tr} (TQ - P) (\delta TQ)^T\\
+    &= 2 \cdot \text{tr} (TQ - P)(\delta TQ)^T
+    &= \text{tr} \left[2(TQ - P) Q^T\right] \delta T^T
+\end{align*}
+In this case, the quantity in square brackets is our gradient.  For this entire equation to be 0 for all $\delta T$, we need the gradient to equal 0.
+\begin{align*}
+    0 &= 2(TQ - P)Q^T\\
+    &\Rightarrow TQQ^T = PQ^T\\
+    &\Rightarrow T(\frac{1}{N} QQ^T) = \frac{1}{N} PQ^T\\
+    &\Rightarrow T \Sigma_{QQ} = \Sigma_{PQ}\\
+    &\Rightarrow T = \Sigma_PQ \Sigma_{QQ}^{-1}
+\end{align*}
+We predict $P$ using a linear transform of $Q$, and minimize $\delta SE$.
+\begin{itemize}
+    \item $P$ = data (observed)
+    \item $Q$ = covariants (design)
+\end{itemize}
+
+\subsection*{Linear Alignment}
+We can identify tangent and cotangent terms to define the gradient
+\begin{itemize}
+    \item "tangent" $\rightarrow \delta T_{ij}$
+    \item "cotangent" $\rightarrow \text{d}f_{ij} = [2(T \cdot Q - P) Q^T]_{ij}$
+\end{itemize}
+[FILL]
+
+\subsection*{Affine Alignemnt}
+Consider $T$ an element of the affine transformation group in homogeneous coordinates.  If $Q$ and $P$ are also in homogeneous coordinates, then we consider $T \cdot Q = TQ$ (matrix multiplication).\\\\
+The optimal affine transform takes the form of "cross covariance times inverse variance":
+\[T = \Sigma_{PQ} \Sigma_{QQ}^{-1}\]
+where $\Sigma_{PQ}$, $\Sigma{QQ}$ are $(d + 1) \times (d + 1)$ matrices.
+\begin{itemize}
+    \item Bottom row of $P$ and $Q$ is all 1's.
+    \item Typical regression problems are affine in your covariants.
+\end{itemize}
+
+\subsubsection*{Proof}
+Consider a path $\gamma(t) = T + t\delta T$, where $\delta T$ is a matrix whose bottom row is all 0's.\\\\
+The proof is exactly the same as above, but
+\[\text{d}f (\delta T) = \text{tr} (\text{d}f \delta T^T) = 0\]
+This is because of the row of zeros.  We get no information about the sum of the components of $\text{d}f$, because we are extrinsic coordinates.  We use 16 numbers to deal with a 12-parameter Lie group.
+\begin{itemize}
+    \item Ignore the bottom row of $\text{d}f$ or set it to 0.  [FILL]
+\end{itemize}
+
+\subsection*{Scales}
+
+\subsection*{Rotations}
+We can choose a parameterization of the rotation group, and identify an optimal solution...\dots
+
+\subsection*{Gradient Descent}
+
+
+
+
+\end{document}
