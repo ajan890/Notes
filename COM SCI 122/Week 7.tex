@@ -1,0 +1,386 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+\graphicspath{{./assets/images}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+\newcommand{\example}{\textbf{Example: }}
+\newcommand{\R}{\mathbb{R}}
+
+\title{COM SCI 122 Week 7}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Motifs}
+The goal: be able to "read" the non-coding DNA sequences.  This would facilitate predicting the impact of non-coding mutations
+\subsection*{Central Dogma}
+\begin{itemize}
+    \item Recall: DNA $\rightarrow$ mRNA $\rightarrow$ protein $\rightarrow$ phenotype
+    \item The cell needs to regulate the process fo going from DNA to mRNA.
+    \item Transcription factors (TFs) binding DNA can play a major role in controlling the process by leading to the activation or repression of gene expression.
+    \item Thousands of TFs in human.
+    \item How does a transcirption factor know to only bind specific locations in the genome?
+\end{itemize}
+
+\subsection*{Gene Expression and its Regulation}
+\begin{center}
+    \includegraphics*[width=\textwidth]{W7_1.png}
+\end{center}
+
+\subsection*{Transcription factor binding to DNA}
+\begin{itemize}
+	\item Binding domain of transcription factors will preferentially recognize specific short DNA sequences based on biophysical constraints
+	\item Preferences will differ between transcription factors
+\end{itemize}
+\begin{center} 
+	\includegraphics*[scale=0.8]{W7_2.png} 
+\end{center}
+
+\subsection*{Transcription factors recognize sequence motifs in genome}
+\begin{center} 
+	\includegraphics*[scale=0.8]{W7_3.png} 
+\end{center}
+\begin{itemize}
+	\item Binding can activate or repress production of mRNA
+	\item Important for understanding non-coding variants associated with disease
+\end{itemize}
+
+\section*{Motif Representation}
+\subsection*{Motif Instances}
+\begin{itemize}
+	\item Given set of known motif instances for a transcription factor (TF), how should we represent such a set as a motif?
+\end{itemize}
+\begin{center} 
+	\includegraphics*[scale=0.7]{W7_4.png} 
+\end{center}
+Possible ideas:
+\begin{itemize}
+	\item Kmers:
+	\begin{itemize}
+        \item Define a motif to be a single consensus k-mer: e.g., ACGTATA
+        \item Question: What are potential advantages or disadvantages of this approach?
+    \end{itemize}
+    \item Kmer neighborhood
+    \begin{itemize}
+        \item ($k, d$) motifs - a kmer and all kmers with at most $d$ mismatches from 
+        \item Same question as above: potential advantages or disadvantages?
+    \end{itemize}
+    \item Degenerate sequence codes:
+    \begin{center} 
+        \includegraphics*[scale=0.8]{W7_5.png} 
+    \end{center}
+    \begin{itemize}
+        \item Question: How many non-empty combinations of four nucleotides are possible at one position?  ($2^4 - 1 = 15$)
+        \item For this example, we will follow this chart:
+    \end{itemize}
+    \begin{center} 
+        \includegraphics*[width=\textwidth]{W7_6.png} 
+    \end{center}
+    \begin{itemize}
+        \item We get \texttt{MCKWANA} to describe that example sequence
+    \end{itemize}
+    \item Positional Weight Matrix (PWM; profile matrix)
+    \begin{center} 
+        \includegraphics*[width=\textwidth]{W7_7.png} 
+    \end{center}
+    \begin{itemize}
+        \item Question: What assumptions are being made when representing an alignment as a positional weight matrix?
+        \begin{itemize}
+            \item Assuming independence between positions.  Also fixed spacing.
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\section*{Motif Scanning}
+\subsection*{Scoring with a Positional Weight Matrix}
+For the example above:
+\begin{center} 
+	\includegraphics*[width=0.8\textwidth]{W7_8.png} 
+\end{center}
+\begin{itemize}
+	\item Question: What additional assumption are we implicitly making in the scoring how likely a sequence has a motif?
+	\begin{itemize}
+        \item Each nucleotide is a priori equally likely
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Background Models}
+\begin{itemize}
+	\item Probability can be evaluated relative to background model
+	\[\log \frac{P(\text{sequence | PWM})}{P(\text{sequence | Background})}\]
+\end{itemize}
+If we assume a uniform backgroun distribution over nucleotides, then each is assumed to occur with probability 0.25.
+\begin{center} 
+	\includegraphics*[width=0.5\textwidth]{W7_9.png} 
+\end{center}
+If we assume G or C ccur with probability 0.2 and As and Ts with probability 0.3,
+\begin{center} 
+	\includegraphics*[width=0.3\textwidth]{W7_10.png} 
+\end{center}
+For simplicity we will assume a uniform background which will make the denominator the same for all sequences of a fixed length
+\begin{itemize}
+	\item We can now use this to score any sequence.  Using the PWM from above, consider \texttt{ACTTATA}.
+	\[\frac{3}{5} \times 1 \times \frac{1}{5} \times \frac{3}{5} \times 1 \times \frac{2}{5} \times 1 = \frac{18}{625}\]
+    \item Question: How can we run into problems using this PWM for scoring?
+    \begin{itemize}
+        \item Any sequence that has a nucleotide not previously observed in a position will always get a score of 0.  Consider \texttt{ACTTATC}.
+        \[\frac{3}{5} \times 1 \times \frac{1}{5} \times \frac{3}{5} \times 1 \times \frac{2}{5} \times 0 = 0\]
+    \end{itemize}
+\end{itemize}
+
+\subsection*{PWM based on pseudo-counts}
+To address the problem, we add one observation for each nucleotide at each position.  (We can even add fractional observations or more than one observation).
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W7_11.png} 
+\end{center}
+Now, the sequence we had before, \texttt{ACTTATC} will get a low score instead of zero:
+\[\frac{4}{9} \times \frac{6}{9} \times \frac{2}{9} \times \frac{4}{9} \times \frac{6}{9} \times \frac{3}{9} \times \frac{1}{9} = 0.000723\]
+
+What if we had a sequence that is longer?  
+\begin{itemize}
+	\item We will score each sub-sequence that is length of the PWM and record subsequence above some threshold that depends on the PWM or in some cases the best match.
+\end{itemize}
+For example, \texttt{ACTTATCGA}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W7_12.png} 
+\end{center}
+
+\subsection*{Using PWMs for Variant Effect Prediction}
+Strategy to predict variant effect with PWM
+\begin{itemize}
+	\item Score reference and mutated sequence with PWM
+	\item Check if at least one meets a score threshold
+	\item Score change between the two sequences
+\end{itemize}
+Suppose the reference sequence is CAT, under the PWM model below how would you rank the three mutations in terms of greatest predicted impact?
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W7_13.png} 
+\end{center}
+
+\subsection*{Libraries of hundreds of PWMs exist and can be used to compute motif enrichments}
+\begin{itemize}
+	\item PWM libraries derived from aligned sets of short-curated sequences from small-scale experiments or discovered de novo from high-throughput experiments
+	\item Can be used to compute motif enrichments for a set of sequences of interest and implicate specific transcription factors
+\end{itemize}
+
+\section*{De Novo Motif Discovery}
+Problem: Give a collection of sequences identify motifs \textit{de novo}.
+\begin{center}
+    \begin{tabular}{cc}
+        Sequence 1 & \texttt{AATCAGTTATCTGTTGTATACCCGGAGTCC}\\
+        Sequence 2 & \texttt{AGGTCGAATGCAAAACGGTTCTTGCACGTA}\\
+        Sequence 3 & \texttt{GAGATAACCGCTTGATATGACTCATTGCCA}\\
+        Sequence 4 & \texttt{ATATTCCGGACGCTGTGACGATCCGGTTGT}\\
+        Sequence 5 & \texttt{GAACGCAACCAGTTCAGTGCTTATCATGAA}
+    \end{tabular}
+\end{center}
+Do you see any shared pattern in the above set of sequences?
+\begin{center}
+    \begin{tabular}{cc}
+        Sequence 1 & \texttt{\textcolor{red}{AATCAGTT}ATCTGTTGTATACCCGGAGTCC}\\
+        Sequence 2 & \texttt{AGGTCGAATGCA\textcolor{red}{AAACGGTT}CTTGCACGTA}\\
+        Sequence 3 & \texttt{GAGAT\textcolor{red}{AACCGCTT}GATATGACTCATTGCCA}\\
+        Sequence 4 & \texttt{ATATTCCGGACGCTGTGACG\textcolor{red}{ATCCGGTT}GT}\\
+        Sequence 5 & \texttt{GAACGC\textcolor{red}{AACCAGTT}CAGTGCTTATCATGAA}
+    \end{tabular}
+\end{center}
+To look for instances in motifs, we can scan the genome one kmer at a time using the sliding window technique, until we find a kmer that is close enough (use the DP algorithm!).
+
+\subsection*{Examples of sets of sequences for motif discovery}
+\begin{itemize}
+	\item Promoter regions of co-expressed genes
+	\begin{center} 
+        \includegraphics*[width=0.9\textwidth]{W7_14.png} 
+    \end{center}
+    \item Locations of TF binding across the genome from a mapping experiment
+    \begin{center}
+        \includegraphics*[width=0.9\textwidth]{W7_15.png} \\
+        \includegraphics*[width=0.9\textwidth]{W7_16.png} 
+    \end{center}
+    \item Regions across the genome where the DNA is accessible in a cell type from a mapping experiment
+    \begin{center} 
+        \includegraphics*[width=0.9\textwidth]{W7_17.png} 
+    \end{center}
+    \item Experiments designed to measure TF binding specificity
+    \begin{center} 
+        \includegraphics*[width=0.9\textwidth]{W7_18.png} \\
+        \includegraphics*[width=0.9\textwidth]{W7_19.png} 
+    \end{center}
+\end{itemize}
+
+\section*{Formulating the de novo motif discovery problem}
+\begin{itemize}
+	\item Give an input motif of length $k$ and set of $t$ sequences
+	\item Output a motif instance for each input sequence and a corresponding motif that optimizes some objective function
+	\item Assumption: each input sequence has one instance of the motif
+	\begin{itemize}
+        \item This will depend on the motif representation and the scoring function. 
+        \item Also will need a way to optimize the score.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Scoring a set of motif instances}
+\begin{itemize}
+	\item Will depend on motif representation
+	\item Need to score the selected instance from each sequence and then combine the scores
+	\item Question: If our motif representation was a k-mer string, how could we score motif instances?
+	\begin{itemize}
+        \item Hamming distance - number of mismatches.  (e.g., d(CAT, TAT) = 1)
+    \end{itemize}
+    \item Question: What could our overall optimization function be?
+    \begin{itemize}
+        \item Minimize sum across all instances.  "Median string problem."
+    \end{itemize}
+    \item Question: If our motif representation was a PWM, how could we score motif instances?
+    \begin{itemize}
+        \item Can use probabilities derived earlier or log of them
+    \end{itemize}
+    \item Question: What could our overall optimization function be?
+    \begin{itemize}
+        \item Maximize sum of the log probabilities for selected motif instances
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Optimization Problem}
+\begin{itemize}
+	\item We want to find a motif instance from each sequence and corresponding motif that optimizes our objective.
+	\item E.g., for PWM assuming uniform background:
+	\[\max_{PWM, w} \sum_{i = 1}^t \log \left( \sum_{j = 1}^{n - k + 1} w_{i, j} P(S_{i, j\::\: (j + k - 1)} | PWM)\right)\]
+    \begin{itemize}
+        \item $t$ sequences
+        \item $n$ nucleotides per sequence
+        \item $k$ is length of motif
+        \item $S_{i, j \::\: (j + k - 1)}$ is the subsequence in sequence $i$ starting at position $j$ of length $k$
+        \item $w_{i, j}$ is 1 if subsequence starting at position $j$ of sequence $i$ contains motif instance, and 0 otherwise
+        \item Will assume for now $w_{i, j}$ is 1 for exactly one $j$ for each sequence $i$.
+    \end{itemize}
+\end{itemize}
+
+\section*{De novo motif discovery - brute force strategies}
+\subsection*{Idea 1:}
+Try every possible combination of positions in each sequence.
+\begin{itemize}
+	\item Suppose we have $t$ sequences
+	\item $n$ nucleotides per sequence
+	\item $k$ is length of motif
+	\item What is the complexity of this assuming $k << n$?  (O($(n - k + 1)^t$)) 
+\end{itemize}
+
+\subsection*{Idea 2:}
+Brute force search over the motif representation
+\begin{itemize}
+	\item Suppose our motif representation is a kmer sequence with $t$ sequences
+	\item $n$ nucleotides per sequence
+	\item $k$ is length of motif
+	\item What is the complexity of trying and evaluating all k-mers?
+	\begin{itemize}
+        \item $4^k$ possible k-mers.  O($nkt$) time to evaluate each $k$-mer.
+        \item Would require O($4^k nkt$) times
+    \end{itemize}
+    \item This compares favorably to the previous approach for large $n$, because it can independently score each sequence
+\end{itemize}
+Now, what if we used a PWM for motif representation?
+\begin{itemize}
+	\item $t$ sequences
+    \item $n$ nucleotides per sequence
+	\item $k$ is length of motif
+\end{itemize}
+How cam we try to (approximately) optimize this if applying brute force on the PWM representation?
+\begin{itemize}
+    \item Discretize entries into $d$ possible values for each entry of PWM.  Could cover space of PWMs with $d = t + 1$.
+    \item The complexity of this is now O($d^{3k} nkt$)
+\end{itemize}
+
+\section*{De novo motif discovery - Non-brute force strategies}
+\begin{itemize}
+	\item Greedy Motif Search
+	\item Random Initialization + Iterative Batch Greedy Updates
+	\item Gibbs Sampling
+	\item Expectation-Maximization (EM)
+\end{itemize}
+
+\subsection*{Greedy Approach to Motif Discovery}
+\begin{enumerate}
+	\item Start by placing a motif instance at first position in first sequence.
+	\item Build motif based off of it
+	\item Identify highest scoring motif instance in the next sequence
+	\item Update motif
+	\item Repeat for remaining sequence(s), go to step 3.
+	\begin{center} 
+        \includegraphics*[width=0.9\textwidth]{W7_20.png} 
+    \end{center}
+    \item Repeat at the next starting position of sequence 1.
+    \begin{center} 
+        \includegraphics*[width=0.9\textwidth]{W7_21.png} 
+    \end{center}
+\end{enumerate}
+
+\subsubsection*{Example: Greedy Approach to Motif Discovery}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W7_22.png} \\
+    \includegraphics*[width=\textwidth]{W7_23.png} 
+\end{center}
+\begin{itemize}
+	\item With this example, starting with the \texttt{TAG} in sequence 1 would not lead to better results either.  
+	\item In this case, the Greedy Motif Search found the optimal motif.  However, is it possible that it \textit{can} miss a better motif?
+	\begin{itemize}
+        \item Yes!  Consider the case of the first sequence is GGGGG.  In this case, there is only one possible solution the greedy algorithm will output.
+    \end{itemize}
+    \item What problems are there with the Greedy method?
+    \begin{itemize}
+        \item Highly sensitive to initial sequence
+        \item May only explore a small portion of the search space and easily miss the optimal solution.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Random Initialization and Iterative Batch Greedy Updates}
+\begin{enumerate}
+	\item Start by placing a motif instance randomly for each sequence
+	\item Create a motif matrix
+	\begin{center} 
+        \includegraphics*[width=0.9\textwidth]{W7_24.png} 
+    \end{center}
+	\item Update motif instances to be highest score based on the current motif
+	\item Update motif based on current motif instances
+	\begin{center} 
+        \includegraphics*[width=0.9\textwidth]{W7_25.png} 
+    \end{center}
+	\item Iterate until convergence
+	\item Repeat for multiple different initializations.
+\end{enumerate}
+This gives better results than the greedy algorithm, but still is not perfect.
+\begin{itemize}
+	\item The algorithm may converge at a local minimum instead of the global minimum.
+\end{itemize}
+
+
+
+
+\end{document}
+
+
+
+
