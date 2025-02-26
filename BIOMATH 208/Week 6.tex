@@ -25,6 +25,7 @@
 \newcommand{\solution}{\textbf{Solution:}} 
 \newcommand{\example}{\textbf{Example: }}
 \newcommand{\R}{\mathbb{R}}
+\newcommand{\dd}{\text{d}}
 
 \title{BIOMATH 208 Week 6}
 
@@ -146,9 +147,15 @@ This leads to the pointwise definition of what we expect for linear maps.\\\\
 We define scalar multiplication by changing the speed we move along a curve.  For $c \in \R$, let $\beta(t) = \gamma(ct)$.  Then,
 \begin{align*}
     (c \cdot v{\gamma, p})(f) &= c \cdot v_{\gamma, p}(f)\\
-    &= \frac{\text{d}}{\text{d}t} f(\gamma(ct)) \bigg|_{t = 0} = c \frac{\text{d}}{\text{d}t} f()
-    [FILL]
+    \intertext{By chain rule,}
+    &= \frac{\text{d}}{\text{d}t} f(\gamma(ct)) \bigg|_{t = 0} = c \frac{\text{d}}{\text{d}t} f(\partial(t)) \bigg|_{t = 0}\\
+    &= \frac{\dd}{\dd t}f(\beta(t)) \bigg|_{t = 0}\\
+    &= \nu_{\beta, p}(f)
 \end{align*}
+\begin{enumerate}
+    \item This definition works when we consider it pointwise (for each $f$)
+    \item There is a curve corresponding to the result (closure)
+\end{enumerate}
 
 \subsection*{Action of a velocity in a chart}
 Let's evaluate the action of a velocity $v$ on a function $f$ in a coordinate neighborhood ($U, x$).  With $p \in U, \gamma(0) = p$, and $x(p) = 0$.
@@ -171,7 +178,11 @@ We rewrite the second term as
 \begin{itemize}
     \item The dot above the $\dot{\gamma}$ means "derivative with respect to time"
 \end{itemize}
-[FILL]
+\[\nu_{\partial p} (f) = \dot{\gamma_x} (0) \left(\frac{\partial}{\partial x^i}\right) (f)\]
+\begin{itemize}
+    \item $\dot{\gamma_x}(0)$ represents how fast the coordinates change in our chart
+    \item $\left(\frac{\partial}{\partial x^i}\right)_p$ are partial derivatives with respect to each of the $d$ components.
+\end{itemize}
 
 \subsection*{Identifying Components}
 We can rewrite the above action as
@@ -274,8 +285,9 @@ Solving,
     &= X_{(x)}^i \partial_i \left((f \circ y^{-1}) \circ (y \circ \phi \circ x^{-1})\right)(x(p))\\
     &= X_{(x)}^i \partial_j (f \circ y^{-1}) \bigg|_{y \circ \phi \circ x^{-1} \circ x(p)} \cdot \partial_i (y^j \circ \phi \circ x^{-1}) \bigg|_{x(p)}\\
     &= X_{(x)}^i \left(\frac{\partial f}{\partial y^j}\right)_{\phi(p)} \left(\frac{y^j \circ \phi}{\partial x^i}\right)_p\\
-    &= [FILL]
+    &= (\phi_{(p)} X)_{(y)^j} \left(\frac{\partial f}{\partial y^j}\right)_{\phi(p)}
 \end{align*}
+The components differ by matrix multiplication with Jacobian of $\phi$ (expressed in two charts, one for domain and one for range).
 
 \subsubsection*{Example: Extrinsic coordinates on the sphere}
 Here we will push forward a vector from the sphere
@@ -285,11 +297,10 @@ with the spherical coordinates chart
 into $\mathbb{R}^3$ with the identity chart, using the map $\phi(p) = p$.\\\\
 \textbf{Example: The Jacobian}\\
 $y \circ \phi \circ x^{-1}(u, v) = (\cos(u)\cos(v), \cos(u)\sin(v), \sin(u))$, so
-\[J = \begin{pmatrix}
--\sin(x^0)\cos(x^1) & -\cos(x^0)\sin(x^1) \\ -sin(x^0) \sin(x^1) & \cos(x^0) \cos(x^1) \\ [FILL] & [FILL]
-\end{pmatrix}\]
+\[J = \begin{pmatrix} -\sin(x^0)\cos(x^1) & -\cos(x^0)\sin(x^1) \\ -sin(x^0) \sin(x^1) & \cos(x^0) \cos(x^1) \\ \cos(x^0) & 0 \end{pmatrix}\]
+A vector with components in spherical coordinate chart, $(\dot{\theta}, \dot{\phi})$ gets multiplied by J, to give 3 numbers for a vector on $\R^3$.
+
 \textbf{Example: The Push Forward}\\
-~[FILL]
 Visualization:
 \begin{center}
     \includegraphics*[scale=0.8]{W6_3.png}
@@ -311,7 +322,7 @@ We define the gradient of a function $f$, denoted $\text{d}f(X)$, in a coordinat
 We can find the components of $\text{d}f$ in some chart by acting on the basis elements $\frac{\partial}{\partial x^i}$.\\
 \[(\text{d}f)_i = \text{d}f \left(\frac{\partial}{\partial x^i}\right) = \frac{\partial}{\partial x^i}(f) \doteq \partial_i (f \circ x^{-1})\]
 \begin{itemize}
-    \item We need a rchart to compute partial derivatives.
+    \item We need a chart to compute partial derivatives.
 \end{itemize}
 So in a chart induced bases, we can write
 \[\text{d}f = (\text{d}f)_i \cdot \text{d}x^i\]
@@ -332,7 +343,7 @@ Let them act on $X \in T_p \mathcal{M}$ with $X_x^j \frac{\partial}{\partial x^j
     \chi(X) &= \chi_i^y X_y^i\\
     &= \chi_i^x X_x^i \\
     &= \chi_i^x \left(\frac{\partial x^i}{\partial y^j}\right) X_y^j\\
-    \therefore \chi_j^y = \frac{\partial x^i}{\partial y^j} \chi [FILL]
+    \therefore \chi_j^y = \frac{\partial x^i}{\partial y^j} \chi_i^x
 \end{align*}
 
 \subsection*{Vector and Covector Comparison}
@@ -357,7 +368,9 @@ We can define higher order tensors as multilinear maps as before.  An inner prod
 Expanding, we get:
 \begin{align*}
     &= g_{kl} u^i v^j \delta_i^\mu \delta_j^l\\
-    &= g_{ij} U^I V^j [FILL]
+    &= g_{ij} u^i v^j
+    \intertext{In matrix notation\dots}
+    &= U^T GV
 \end{align*}
 
 \subsection*{Change of Coordinates for Inner Products}
@@ -368,9 +381,9 @@ We can derive a change of basis formula for inner products by applying the chang
 \begin{align*}
     g(X, Y) &= g_{ij}^y X_y^i Y_y^j = g_{ij}^x X_x^i Y_x^j\\
     &= g_{ij}^x \left(\frac{\partial x^i}{\partial y^k} X_y^k\right) \left(\frac{\partial x^j}{\partial y^l} Y_y^l\right)\\
-    &= \left[\left(\frac{\partial x^i}{\partial y^k}\right) g_{ij}^x \left(\frac{\partial x^k}{\partial y^l} [FILL]\right)\right]\\
-    &= 
+    &= \left[\left(\frac{\partial x^i}{\partial y^k}\right) g_{ij}^x \left(\frac{\partial x^j}{\partial y^l} \right)\right] X_y^k Y_y^l\\
 \end{align*}
+Instead of linear maps, they are Jacobians of a nonlinear map.
  
 \subsubsection*{Example: "Standard" inner product in polar coordinates}
 \begin{itemize}
@@ -409,6 +422,4 @@ Now, form the matrix product
     \item Mathematically, the tangent bundle is a type of object called a "fiber bundle" and a vector field is a "section" of this bundle.
 \end{itemize}
 \[\text{Tangent Bundle} = \bigcup_{p \::\: p \in \mathcal{M}} T_p \circ \mathcal{M}\]
-
-
 \end{document}
