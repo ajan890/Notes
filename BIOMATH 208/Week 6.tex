@@ -135,9 +135,13 @@ Let's show it has the correct action:
     v_{\gamma, p} (f) = \frac{\text{d}}{\text{d}t} f(\alpha(t)) \bigg|_{t = 0} \\
     &= \frac{\text{d}}{\text{d}t} f(x^{-1}(x(\alpha(t)) +_{\mathbb{R}^+}) x(\beta(t)))\bigg|_{t = 0}\\
     \intertext{Look at $f \circ x^{-1}\::\: \R^3 \rightarrow \R$, $x \cdot \alpha$ or $x \cdot \beta \::\: \R \rightarrow \R^d$}
-    [FILL]
+    &= \partial_i (f \circ x^{-1}) \bigg|_{x(\alpha(t)) + x(\beta(t_1))} \cdot \frac{\text{d}}{\text{d}t} (x^i (\alpha(t)) + x^i(\beta(t_1))) \bigg|_{t = 0}\\
+    &= \partial_i (f \circ x^{-1}) \bigg|_{0 \in \mathbb{R}^d} \cdot \frac{\text{d}}{\text{d}t}(x^i(\alpha(t)) + x^i(\beta(t))) \bigg|_{t = 0}\\
+    &= \partial_i (f \circ x^{-1}) \bigg|_{0} \cdot \frac{\text{d}}{\text{d}t} x^i(\alpha(t)) \bigg|_{t=0} + \partial_i (f \circ x^{-1}) \bigg|_0 \cdot \frac{\text{d}}{\text{d}t} x^i (\beta(t))\bigg|_{t=0}\\
+    \intertext{Now, undo the derivative}
+    &= \nu_{\alpha_1} \rho(f) + \nu_{\beta_1} \rho(f) 
 \end{align*}
-
+This leads to the pointwise definition of what we expect for linear maps.\\\\
 \textbf{Definition: Scalar Multiplication of Velocities}\\\\
 We define scalar multiplication by changing the speed we move along a curve.  For $c \in \R$, let $\beta(t) = \gamma(ct)$.  Then,
 \begin{align*}

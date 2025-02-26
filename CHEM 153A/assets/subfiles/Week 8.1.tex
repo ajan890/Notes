@@ -1,0 +1,604 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+\usepackage{tabularx}
+\usepackage{multicol}
+\usepackage[table,xcdraw]{xcolor}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+\graphicspath{{../images/Week 8}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+\newcommand{\example}{\textbf{Example: }}
+\newcommand{\water}{\text{H$_2$O}}
+\newcommand{\hydroxide}{\text{OH$^-$}}
+\newcommand{\hydronium}{\text{H$_3$O$^+$}}
+\newcommand{\proton}{\text{H$^+$}}
+\newcommand{\pc}{$^+$}
+\newcommand{\nc}{$^-$}
+\newcommand{\ka}{\text{$K_\text{a}$}}
+
+% import subfiles
+\usepackage{subfiles}
+
+\begin{document}
+\subsection*{Metabolic Pathways and Metabolism}
+\begin{center}
+    \includegraphics*[width=0.5\textwidth]{L1_1.png}
+\end{center}
+
+\subsection*{Pathways and Regulation}
+\begin{itemize}
+    \item A \textbf{metabolic pathway} is a linked series of biochemical reactions moving towards a specific end
+    \begin{itemize}
+        \item These pathways must be able to respond to external conditions.
+    \end{itemize}
+    \item These pathways must be able to respond to external conditions
+\end{itemize}
+For example, glycolysis is tightly regulated based on the cell's energy needs.  If ATP levels are high, key regulatory enzymes such as phosphofructokinase-1 (PFK-1) are inhibited to slow down glycolysis.  Conversely, when ATP levels drop and ADP or AMP concentrations rise, glycolysis is activated to generate more energy.
+\begin{itemize}
+    \item This regulation ensures that cells efficiently balance energy production with demand, preventing wasteful metabolism
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.5]{L1_2.png}
+\end{center}
+
+\subsection*{Methods of Control}
+\begin{itemize}
+    \item Regulation of enzyme availability - Balancing rate of production with rate of degradation
+    \begin{itemize}
+        \item Control of gene expression
+        \item Control of protein degradation
+    \end{itemize}
+    \begin{center}
+        \includegraphics*[width=0.8\textwidth]{L1_3.png}
+    \end{center}
+    \item Regulation of catalytic activity - Modification of protein structure $\rightarrow$ modification of protein activity
+    \begin{itemize}
+        \item Covalent modification
+        \item Non-covalent modification
+    \end{itemize}
+    \begin{center}
+        \includegraphics*[width=0.6\textwidth]{L1_4.png}
+    \end{center}
+\end{itemize}
+
+
+\subsection*{Control of Gene Expression}
+\begin{itemize}
+    \item \textbf{Constitutive} enzymes
+    \begin{itemize}
+        \item Enzymes constantly present in the organism in constant amounts regardless of metabolic state
+        \item e.g., glycolytic enzymes (we may reduce glycolytic activity, but we'll never downregulate the proteins)
+    \end{itemize}
+    \item \textbf{Inducible} enzymes
+    \begin{itemize}
+        \item Enzymes that aren't present in the cell until a specific environmental signal is triggered
+        \item Could be presence of substrate, etc.
+        \item e.g., COX-2 in macrophages (produces inflammatory prostaglandins, but only when something's amiss)
+    \end{itemize}
+    \item \textbf{Repressible} enzymes
+    \begin{itemize}
+        \item Enzyme consistently present unless a specific condition is triggered
+        \item e.g., Enzymes of cholesterol biosynthesis (sterol accumulation inhibits pathway)
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L1_5.png}
+\end{center}
+
+\subsection*{Control of Protein Degradation - Ubiquitination}
+\begin{itemize}
+    \item The primary ATP-dependent proteolytic pathway in eukaryotes is the \textbf{ubiquitin-proteasome system.}
+    \item \textbf{Ubiquitin} is a small protein with only 76 amino acid residues
+    \begin{itemize}
+        \item As its name suggests, it is highly conserved across eukaryotic organisms.
+    \end{itemize}
+    \item Ubiquitin is covalently attached to target proteins through a series of steps involving three enzymes: \textbf{E1, E2, and E3}.
+    \begin{itemize}
+        \item \textbf{E1 (Ubiquitin-activating enzyme)}: activates ubiquitin by attaching it to itself in an ATP-dependent reaction
+        \item \textbf{E2 (Ubiquitin-conjugating enzyme)}: E1 then transfers the activaated ubiquitin to E2
+        \item \textbf{E3 (Ubiquitin ligase)}: E2 works with E3 to catalyze the transfer of ubiquitin to the target protein.
+    \end{itemize}
+    \item E3 is responsible for recognizing and binding the specific target protein, allowing for selective tagging.  (How is the target protein recognized?  This often involves specific sequences or structural motifs on the substrate protein)
+    \item Once a protein is initially ubiquitinated, additional cycles of ubiquitin attachment can occur, resulting in a \textbf{polyubiquitin chain}.  This polyubiquitin tail serves as a signal for the protein to be directed to the proteasome, where it will undergo degradation
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.5]{L1_6.png}
+\end{center}
+\begin{itemize}
+    \item Recognition is achieved by protein motifs called \textbf{degrons}
+    \item Essentially degrons are tiny tags that mark a protein for degradation
+    \item There are inherent degron tags (embedded within the protein sequence) as well as acquired degron tags (added post-translationally)
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=0.8\textwidth]{L1_7.png}
+\end{center}
+
+\subsection*{Proteasome}
+The target protein is then introduced to the \textbf{proteasome}, which recognizes the poly-ubiquitination signal and chews up the protein
+\begin{itemize}
+    \item Proteasome is large (dozens of subunits) and highly conserved across Eukarya.
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=0.9\textwidth]{L1_8.png}
+\end{center}
+
+\subsection*{Proteasome vs. Proteases}
+The \textbf{proteasome} and \textbf{proteases} both break down protein, but they differ in structure, function, and the mechanism by which they operate.
+\begin{enumerate}
+    \item \textbf{Proteases}
+    \begin{itemize}
+        \item Proteases are individual enzymes that catalyze the cleavage of peptide bonds in proteins.
+        \item \textbf{Function:} They work by hydrolyzing peptide bonds, either at specific sequences (for some proteases) or in less selective manners (for others).  They are responsible for a wide range of processes, including digestion, cellular signaling, and apoptosis.
+        \item \textbf{Types:} There are different types of proteases (e.g., serine proteases, cysteine proteases, aspartic proteases, and metalloproteases) based on the active site residues they use for catalysis.
+        \item \textbf{Where they act:} Proteases can be found throughout the body, in various cellular compartments, and even extracellularly.  They generally function as standalone enzymes.
+    \end{itemize}
+    \item \textbf{Proteasome}
+    \begin{itemize}
+        \item The proteasome is a large, multi-subunit protein complex specifically designed for protein degradation.
+        \item \textbf{Function:} It degrades polyubiquitinated proteins in an ATP-dependent process, breaking them down into small peptides.
+        \item \textbf{Specificity:} Unlike most proteases, the proteasome is highly regulated and usually requires proteins to be tagged with ubiquitin before they can be recognized and degraded. This ensures that only specific proteins—often damaged, misfolded, or no longer needed—are broken down.
+        \item \textbf{Structure:} The proteasome is a barrel-shaped complex with multiple active sites inside it. The 20S core particle provides the proteolytic activity, while the 19S regulatory particles at each end recognize and unfold ubiquitinated proteins, feeding them into the core.
+        \item \textbf{Where It Acts:} The proteasome is primarily found in the cytoplasm and nucleus of eukaryotic cells and is part of the ubiquitin-proteasome system (UPS), which is essential for maintaining protein homeostasis
+    \end{itemize}
+\end{enumerate}
+\textbf{Key Differences}
+\begin{itemize}
+    \item \textbf{Specificity:} Proteases can act on various substrates and sometimes have broad specificity whereas the proteasome selectively degrades proteins tagged with ubiquitin
+    \item \textbf{Structure:} Proteases are single enzymes, while the proteasome is a large, multi-subunit complex.
+    \item \textbf{Energy Requirement:} Most proteases do not require ATP, while the proteasome requires ATP to recognize, unfold, and translocate proteins into its core for degradation
+    \item \textbf{Function:} Proteases are involved in diverse biological functions across the body, while the proteasome's primary role is to regulate protein turnover and remove unwanted of damaged proteins within cells
+\end{itemize}
+The proteasome is a specialized, ATP-dependent protein degradation complex within cells, part of a tightly regulated system for targeted protein degradation. Proteases, on the other hand, are individual enzymes that cleave peptide bonds and are involved in a broader range of biological processes, including general protein digestion and cellular signaling
+
+\subsection*{Irreversible Covalent Modification - Activation Through Proteolysis}
+\textbf{What is a Zymogen?}
+\begin{itemize}
+	\item A \textbf{zymogen} (or proenzyme) is an \textbf{inactive precursor} of an enzyme that requires a biochemical change (like proteolytic cleavage) to become active.  Zymogens prevent premature enzymatic activity, allowing precise regulation of when and where the enzyme is active
+\end{itemize}
+\textbf{Chymotrypsin and Zymogen Activation}
+\begin{itemize}
+	\item Chymotrypsin is synthesized in the pancreas as an inactive zymogen, \textbf{chymotrypsinogen}
+	\item Activation occurs in the small intestine, where another protease, \textbf{trypsin}, cleaves specific bonds in chymotrypsinogen, triggering a conformational change that produces active chymotrypsin
+\end{itemize}
+\begin{center} 
+	\includegraphics*[scale=0.8]{L1_9.png}
+\end{center}
+
+\subsection*{Chymotrypsin as a Model for Studying Enzyme Regulation}
+\begin{itemize}
+	\item \textbf{Controlled Activation}: By keeping chymotrypsin inactive until it reaches the digestive system, the body prevents unwanted proteolysis, protecting tissues from potential damage
+	\item \textbf{Studying Regulation Mechanisms}: The zymogen form and its controlled activation make chymotrypsin a valuable model for understanding how enzyme activity is regulated in response to specific signals or environmental conditions
+\end{itemize}
+
+Zymogens allow the enzyme to be synthesized and stored in an inactive form.  The enzyme is alreaddty present in the cell or tissue, but it only becomes active in response to specific signals (e.g., pH changes, presence of other enzymes, or tissue injury)
+
+\subsection*{Enzymatic Function Regulation}
+Zymogen activation is a common strategy in biology for regulating powerful enzymes.  In addition to digestive enzymes like chymotrypsin, several other types of zymogens exist, each serving a different biological function and activated under specific conditions.
+\begin{itemize}
+    \item \textbf{Digestion:} Prevents tissue damage from proteolytic enzymes
+    \item \textbf{Blood Coagulation:} Localized clot formation to prevent bleeding
+    \item \textbf{Apoptosis:} Controlled cell death to remove damaged or unnecessary cells
+    \item \textbf{Immune Defense:} Destroys pathogens without harming host tissues
+    \item \textbf{Hormone Activation:} Allows stable storage and controlled release of active hormones
+    \item \textbf{Tissue Remodeling:} Localized action in response to repair signals.
+	\item \textbf{Blood Pressure Regulation:} Controlled activation in response to fluid and pressure needs
+\end{itemize}
+
+\subsection*{Reversible covalent modifications}
+\begin{itemize}
+	\item There are multiple reversible modifications made to enzymes that impact their structure and function
+	\item All of these are \textbf{post-translational modifications}
+	\item Methylation and acetylation are often talked about with histones but happen to other proteins too!
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.6]{L1_10.png}
+\end{center}
+
+\subsubsection*{Phosphorylation}
+\textbf{Phosphorylation:} The addition of a phosphoryl group (PO$_4^{3-}$) to an enzyme or other protein, often at amino acids like serine, threonine, or tyrosine.  This modification is reversible and is catalyzed by kinases (add phosphates) and phosphatases (remove phosphates)
+\begin{center}
+    \includegraphics*[width=\textwidth]{L1_11.png}
+\end{center}
+\textbf{Kinases and Phosphatases:} Enzymes responsible for adding and removing phosphate groups, respectively, that are crucial in signaling and metabolic pathways.
+\textbf{Phosphorylation Sites:} Recognition depends on specific amino acid sequences surrounding the target site, which provides specificity for each kinase or phosphatase
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_12.png}
+\end{center}
+
+\subsubsection*{The Impact of Phosphorylation}
+\begin{itemize}
+	\item Phosphorylation effects: Adding a negatively charged phosphoryl group can create \textbf{new interactions within the protein}, altering its conformation, activity, and interactions with other molecules
+	\item Structural changes and functionality: Phosphorylation can \textbf{expose or hide active sites, recruit new binding partners, or stabilize specific conformations}
+	\item Impact on activity: This structural alteration can \textbf{activate} or \textbf{inhibit} enzyme function, depending on the enzyme and cellular context
+\end{itemize}
+
+\subsubsection*{Effects of Phosphorylation on Protein Structure}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_13.png}
+\end{center}
+\pagebreak
+What does protein phosphorylation do?
+\begin{itemize}
+	\item \textbf{Introduces a \underline{bulky, charged group} into a region of the protein, changing its electrostatic properties}
+	\item This leads to a significant conformational change that can either "activate" or "deactivate" the protein
+	\begin{itemize}
+        \item Essentially, it can lead to an \textbf{increase or decrease in catalytic efficiency}
+    \end{itemize}
+    \item Example below is the phosphorylation of the glycogen phosphorylase dimer
+    \item Phosphorylation of this dimer interrupts electrostatic interactions occurring between acidic and basic residues
+    \item Replaces with interactions between P and several arginines
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_14.png}
+\end{center}
+
+\textbf{Glycogen Phosphorylase:} Activated by phosphorylation to release glucose-1-phosphate from glycogen, especially under stress or energy-demanding conditions (e.g., muscle activity)
+\begin{itemize}
+    \item The substrate for glycogen phosphorylase is \textbf{glycogen}.  Specifically, glycogen phosphorylase catalyzes the phosphorolytic cleavage of \textbf{$\alpha$-1, 4-glycosidic bonds} in glycogen, releasing \textbf{glucose-1-phosphate} as the product
+\end{itemize}
+\begin{center} 
+	\includegraphics*[scale=0.5]{L1_15.png}
+\end{center}
+\begin{itemize}
+	\item The residues that are phosphorylated occur in a common structural motif (\textbf{consensus sequence}) recognized by the protein kinase
+	\begin{itemize}
+        \item Different sequences can be recognized by different kinases
+        \item A given protein can have multiple of these sequences
+        \item There can be overlap (see table below)
+    \end{itemize}
+    \item There phosphorylation events could be necessarily sequential
+    \begin{itemize}
+        \item i.e., a certain residue can only be phosphorylated if a phosphoryl group is already present nearby
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \includegraphics*[scale=0.6]{L1_16.png}
+\end{center}    
+
+\subsection*{Reversible Non-covalent modifications - Allostery}
+Allosteric Activation and Inhibition
+\begin{itemize}
+    \item \textbf{Allosteric Regulation}: the regulation of protein function by the binding of an effector molecule at a site other than the active site
+    \item Allosteric sites are \textbf{distinct from the active site} and allow molecules to bind and modulate enzyme activity by inducing a conformational change
+    \begin{itemize}
+        \item Allosteric \textbf{Activator}: Enhances enzyme activity
+        \item Allosteric \textbf{Inhibitor}: Decreases enzyme activity
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Reversible Non-Covalent Modifications - Allostery}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_17.png}
+\end{center}
+
+\subsection*{Glycogen Phosphorylase}
+The regulation of glycogen phosphorylase is a well-coordinated combination of covalent modification (\textbf{phosphorylation}) and \textbf{allosteric control}.  This dual regulation enables the enzyme to respond flexibly to the cell's changing energy needs, particularly during conditions that require rapid mobilization of glucose, like exercise or stress
+\begin{itemize}
+	\item Glycogen phosphorylase exists in two interconvertible forms: \textbf{phosphorylase a} (phosphorylated) and \textbf{phosphorylase b} (non-phosphorylated)
+	\item \textbf{Phosphorylation} makes glycogen phosphorylase less dependent on allosteric activators, allowing for a more sustained and robust glycogenolytic response, especially during high-energy demand or stress
+\end{itemize}
+\begin{center} 
+	\includegraphics*[scale=0.6]{L1_18.png}
+\end{center}
+
+\begin{itemize}
+	\item \textbf{Phosphorylation} activates the enzyme by converting it to phosphorylase a, which is less reliant on allosteric activators and allows glycogen breakdown to proceed readily
+	\item \textbf{Allosteric regulators} (AMP as an activator, ATP, G6P, and glucose as inhibitors) fine-tune the enzyme's activity in response to the cell's immediate energy needs, particularly when the enzyme is in the less-active phosphorylase b form.
+\end{itemize}
+
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_19.png}
+\end{center}
+
+\subsection*{Allosteric Regulation of Protein Function}
+\begin{itemize}
+    \item Allosteric regulation can be homotropic or heterotropic
+    \begin{itemize}
+        \item \textbf{Homotropic regulation} is when the substrate also regulates function
+        \item \textbf{Heterotropic regulation} is when a different molecule than the substrate regulates function
+        \item Can be positive, or negative
+        \begin{itemize}
+            \item \textbf{Positive} regulation increases activity/binding, \textbf{negative} decreases activity/binding
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_20.png}
+\end{center}
+
+\section*{Metabolism: Catabolism vs. Anabolism}
+\begin{itemize}
+	\item \textbf{Catabolism}:  The breakdown of complex molecules into simpler ones, releasing energy.  Example: Glycolysis breaking down glucose
+	\item \textbf{Anabolism}: The synthesis of complex molecules from simpler ones, requiring energy input.  Example: Fatty acid synthesis
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.8\textwidth]{L2_1.png}
+\end{center}
+\textbf{Protein Catabolism vs. Protein Synthesis:}  Catabolism provides amino acids for energy, while anabolism requires ATP to build new proteins
+
+\subsection*{Regulatory Points and Committed Steps}
+A committed step is an \textbf{irreversible} reaction early in a pathway that effectively "\textbf{commits}" the substrate to continue down that pathway.  \textbf{It's typically a key regulatory point}.\\\\
+\textbf{Hexokinase in Glycolysis:} Converts glucose to glucose-6-phosphate
+\begin{center} 
+	\includegraphics*[width=0.7\textwidth]{L2_2.png}
+\end{center}
+Hexokinase commits glucose to the \textbf{hexose phosphate pool} by converting glucose to glucose-6-phosphate(G6P).
+
+\subsection*{Feedback Mechanism in Metabolic Pathways}
+\begin{itemize}
+	\item \textbf{Negative Feedback:}  The end product of a pathway inhibits the enzyme at an earlier step, preventing excess product formation
+	\item \textbf{Positive Feedback:}  A product stimulates enzyme activity to accelerate production of more product when needed.
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L2_3.png}
+\end{center}
+\textbf{Branched Pathways in Amino Acid Synthesis}: Certain end products inhibit specific enzymes in the pathway, preventing overproduction of that amino acid.
+
+\subsection*{Positive and Negative Feedback Loops}
+\textbf{Negative Feedback Loops:}  
+\begin{itemize}
+    \item Serve to stabilize metabolic systems by reducing fluctuations in substrate or product levels
+    \item Help the system reach \textbf{steady state} more quickly, maintaining a dynamic equilibrium
+\end{itemize}
+\textbf{Positive Feedback Loops:}
+\begin{itemize}
+	\item Promote an \textbf{amplified response,} leading to a more bistable system (i.e., "on" or "off" states)
+	\item Tend to take longer to reach steady state due to the amplification of signals
+	\item Act as an "on switch" for critical processes, ensuring that the pathway is fully activated once triggered
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_4.png}
+\end{center}
+
+\subsection*{Bioenergetics}
+\begin{itemize}
+    \item The study of the \textbf{flow and transformation of energy within living organisms.}  It focuses on how cells and organisms obtain, convert, and utilize energy to perform essential biological functions, such as growth, reproduction, and maintenance of cellular structures.
+    \item Bioenergetics examines the biochemical pathways and processes, like cellular respiration and photosynthesis, through which \textbf{energy from nutrients is converted into adenosine triphosphate (ATP)}, the primary energy currency of the cell.  It also explores the roles of different molecules, such as ATP, NADH, FADH$_2$, in storing and transferring energy within cells.
+\end{itemize}
+
+\subsection*{ATP Structure and Energy Release}
+\textbf{ATP Structure:} Adenosine triphosphate consists of an adenine base, a ribose sugar, and three phosphate groups linked by high-energy bonds.  Each phosphate carries a negative charge, creating repulsion forces that make the molecule inherently unstable.
+\begin{center} 
+	\includegraphics*[width=0.7\textwidth]{L2_5.png}\\
+    \includegraphics*[scale=0.6]{L2_6.png}
+\end{center}
+
+\subsection*{Why Does ATP Hydrolysis Releases Energy?}
+\textbf{Breaking a bond requires energy, but ATP hydrolysis is energy-releasing because:}
+\begin{itemize}
+	\item \textbf{Resonance stabilization:} The hydrolysis products (ADP and Pi) are more stable than ATP.  Pi, in particular has multiple resonance structures that spread out its negative charge
+    \item \textbf{Electrostatic repulsion relief:} The three phosphate groups in ATP repel each other.  Breaking the bond reduces this repulsion, leading to a more stable system.
+    \item \textbf{Hydration energy:} ADP and Pi interact strongly with water, further stabilizing them
+    \item \textbf{Entropy increase:}  The breakdown of one ATP molecule into two products (ADP and Pi) releases disorder, making the reaction favorable
+\end{itemize}
+\textbf{Analogy:} ATP is like a compressed spring.  A small push (bond breaking) is needed to release it, but once released, it unleashes a large amount of energy
+\begin{center} 
+	\includegraphics*[scale=0.6]{L2_7.png}
+\end{center}
+
+\subsection*{Regulation of Metabolism by ATP, ADP, AMP}
+The \textbf{ratio} of \textbf{ATP} to \textbf{ADP} and \textbf{AMP} reflects the \textbf{cell's energy status}.  A high ratio indicates energy abundance (favoring anabolic processes), while a low ratio indicates energy scarcity (favoring catabolic processes).
+\begin{itemize}
+	\item ATP, ADP, and AMP binds to different enzymes, regulating key metabolic pathways.
+\end{itemize}
+\begin{center}
+    \includegraphics*[width=0.8\textwidth]{L2_8.png}
+\end{center}
+\textbf{AMPK (AMP-activated protein kinase)}: Detects high AMP levels (low energy) and promotes catabolic pathways to increase ATP generation.
+\begin{itemize}
+	\item Both ADP and AMP promote, and ATP suppresses, $\alpha$-Thr172 phosphorylation
+	\item Second, ATP promotes, and both ADP and AMP suppress, $\alpha$-pThr172 dephosphorylation and AMPK inactivation by phosphatases
+	\item Third, once $\alpha$-Thr172 is phosphorylated, AMPK activity is stimulated 2-5 fold by AMP, referred to as allosteric activation, and this is antagonized by ADP and ATP
+\end{itemize}
+
+\subsection*{AMPK (AMP-activated protein kinase)}
+\begin{itemize}
+    \item AMPK is a nutrient sensor, which is activated in response to low adenosine triphosphate (ATP) levels, and an increased adenosine diphosphate: adenosine monophosphate (ADP:AMP) ratio
+    \item As a result, it activates pathways that produce ATP through glucose, lipid and mitochondrial metabolism pathways, thus increasing ATP levels
+    \item Conversely, pathways that deplete ATP are inhibited by AMPK. An $\uparrow$ arrow represents an upregulation of the process and $\downarrow$ represents a downregulation of the process
+\end{itemize}
+\begin{center} 
+	\includegraphics*[scale=0.6]{L2_9.png}
+\end{center}
+AMPK = AMP-Activated Protein Kinase, ATP = Adenosine Triphosphate, ADP = Adenosine diphosphate, AMP = Adenosine Monophosphate.
+
+\subsection*{NAD$^+$ and NADP$^+$: The Electron Carriers}
+\begin{itemize}
+    \item NAD$^+$: Primarily involved in catabolic reactions, transferring electrons to generate ATP
+    \begin{itemize}
+        \item Accepts electrons and becomes NADH, a form used to drive ATP production
+    \end{itemize}
+    \item NADP$^+$: Involved in anabolic reactions, providing reducing power for biosynthetic processes
+    \begin{itemize}
+        \item accepts electrons to become NADPH, crucial for reactions like fatty acid synthesis
+        \begin{itemize}
+            \item Made up of ADP-ribose (phosphate is attached in NADP$^+$), and nicotinamide (Vitamin B3).
+        \end{itemize}
+    \end{itemize}  
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_10.png}
+\end{center}
+
+\subsection*{NAD$^+$ and NADP$^+$: Roles}
+\begin{itemize}
+	\item The basal ratio of NAD$^+$ : NADH is >1 (meaning we have more NAD$^+$) favoring the formation of NADH
+	\item The basal ratio of NADP$^+$ : NADPH is <1, favoring hydride transfer from NADPH to a substrate
+	\item This reflects their specialized metabolic roles, \textbf{NAD$^+$ generally assists} in oxidations of catabolism (example below)
+	\begin{center} 
+        CH$_3$CH$_2$OH + NAD$^+ \rightarrow$ CH$_3$CHO + NADH + H$^+$
+    \end{center}
+	\item \textbf{NADPH serves as a coenzyme in reductions, almost always in anabolism}
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_11.png}
+\end{center}
+
+\subsection*{NAD$^+$ and NADP$^+$ as regulators}
+\begin{itemize}
+	\item The basal ratios can serve as sensitive gauges of the cell's energy status
+	\begin{itemize}
+        \item e.g., Glycolysis and the citric acid cycle both make NADH
+    \end{itemize}
+    \item Many proteins use NAD$^+$ not as a redox cofactor, but as a substrate, the availability of which could be a sign of cellular stress
+    \begin{itemize}
+        \item Example, sirtuins are a class of NAD$^+$ dependent deacetylases responding to oxidative and metabolic stress that require NAD$^+$ as a \textbf{co-substrate} to catalyze deacetylation
+    \end{itemize}
+\end{itemize}
+\begin{center} 
+	\includegraphics*[scale=0.6]{L2_12.png}
+\end{center}
+
+\subsection*{Why is the hydrolysis of Acetyl-CoA favorable?}
+\begin{itemize}
+	\item Thioesters undergo less resonance stabilization than do oxygen esters
+	\begin{itemize}
+        \item It's all about the \textbf{difference} in free energy
+    \end{itemize}
+    \item Acetyl transfer can add its acetyl to compounds to compounds (adding $+2$ carbons) and also serves as a cofactor for protein acetylation..
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_13.png}\\
+    \includegraphics*[width=\textwidth]{L2_14.png}
+\end{center}
+
+\subsection*{Acetyl-CoA and its High-Energy Bond}
+\begin{itemize}
+	\item \textbf{Acetyl-CoA Structure:}  Composed of a \textbf{CoA molecule linked to an acetyl group via a thioester bond}.  This thioester bond is a high-energy linkage, meaning its hydrolysis releases significant energy
+	\item \textbf{Why Thioester Bonds are High-Energy:}  Thioesters are less stabilized by resonance than oxygen esters, so breaking the bond releases a large amount of energy.
+\end{itemize}
+\textbf{Citric Acid Cycle (TCA Cycle)}: Acetyl-CoA delivers acetyl groups, which fuel the TCA cycle to produce ATP, NADH, and FADH$_2$
+
+\subsection*{Formation of Acetyl-CoA}
+\begin{itemize}
+	\item Acetyl-CoA is synthesized by mitochondria by a number of reactions:
+	\begin{itemize}
+        \item Oxidative decarboxylation of pyruvate
+        \item Catabolism of certain amino acids
+        \item $\beta$-oxidation of fatty acids
+        \item Also can be formed from ketone bodies (reversible reaction)
+    \end{itemize}
+\end{itemize}
+\begin{center} 
+	\includegraphics*[scale=0.5]{L2_15.png}
+\end{center}
+
+\subsection*{Examples of Acetyl Delivery}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_16.png}
+\end{center}
+
+\pagebreak
+\subsection*{Flavin Adenine Dinucleotide (FAD)}
+\begin{itemize}
+	\item \textbf{Flavoproteins} are enzymes that catalyze oxidation-reduction reactions using FAD
+	\item These are embedded prosthetic groups (unlike our previous coenzymes) that are sometimes even bound covalently
+	\item Two reduction/oxidation events allows FAD to serve as a more flexible electron carrier (but same capacity)
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.8\textwidth]{L2_17.png}
+\end{center}
+
+\subsection*{Metabolism - Pathway regulation Glycolysis and gluconeogenesis}
+\begin{itemize}
+	\item The overall reaction of \underline{glycolysis}
+	\item The overall reaction of \underline{gluconeogenesis}
+	\item Why do we do both?  Seems a bit useless
+	\begin{itemize}
+        \item If both were running simultaneously and at the same time, they would create a \textbf{futile cycle}, creating no overall effect other than dissipating energy
+        \item How is metabolism regulated to prevent this?
+        \item \textbf{How can two opposing pathways share enzymes without issues?}
+        \item \textbf{How does the system know which way to go?}
+    \end{itemize}
+\end{itemize}
+\begin{center} 
+	\includegraphics*[scale=0.6]{L2_18.png}
+\end{center}
+
+\subsection*{Catabolism and Anabolism are Separated (in a sense)}
+\begin{itemize}
+	\item Catabolic and anabolic pathways are \textbf{regulated separately}
+	\begin{itemize}
+        \item First clue to our puzzle, if glycolysis and gluconeogenesis shared too many regulatory elements, it would lead to a futile cycle
+    \end{itemize}
+    \item A \textbf{futile cycle}, also known as a \textbf{substrate cycle}, occurs when two opposing metabolic pathways run simultaneously, resulting in then continuous synthesis and breakdown of a molecule without any net productive outcome.  This cycling wastes energy, typically in the form of ATP or other high-energy compounds, and generates heat instead.
+\end{itemize}
+\begin{center} 
+	\includegraphics*[scale=0.4]{L2_19.png}
+\end{center}
+
+\subsection*{How Futile Cycles Work}
+Futile cycles often involve two opposing enzyme-catalyzed reactions:
+\begin{itemize}
+	\item \textbf{Anabolic Pathway:}  Synthesizes a compound (e.g., glycogenesis or gluconeogenesis).
+    \item \textbf{Catabolic Pathway:} Breaks down the same compound (e.g., glycolysis or glycogenolysis).
+\end{itemize}
+If both pathways are active simultaneously, they consume energy but do not achieve any useful metabolic output\\\\
+\textbf{Example:}
+\begin{itemize}
+	\item \textbf{Glycolysis} converts glucose to pyruvate, producing ATP.
+	\item \textbf{Gluconeogenesis} converts pyruvate back to glucose, consuming ATP.
+\end{itemize}
+If both pathways were active at the same time, ATP would be consumed in gluconeogenesis only to be regenerated in glycolysis, with no net gain of glucose or energy.
+\begin{itemize}
+	\item Futile cycles are generally undesirable because they:
+	\begin{itemize}
+        \item \textbf{Waste Energy:} They consume ATP or other energy stores without any productive output
+        \item \textbf{Cause Inefficiency:} They disrupt the cell's ability to efficiently manage its energy resources
+    \end{itemize}
+    \item Cells use \textbf{tight regulation} of opposing pathways to prevent futile cycle.  For instance:
+    \begin{itemize}
+        \item Enzyme in anabolic and catabolic pathways are regulated by different effectors (e.g., ATP inhibits glycolysis, while AMP activates it)
+        \item Hormonal signals like insulin and glucagon coordinate the activation and inhibition of these pathways
+    \end{itemize}
+\end{itemize}
+A futile cycle is a metabolic loop with no productive outcome, usually avoided through tight regulation. However, in specific contexts, it can play an important physiological role, such as in heat generation or rapid metabolic adjustments. Understanding how cells control futile cycles highlights the importance of precise regulatory mechanisms in maintaining energy efficiency and metabolic homeostasis
+
+\subsection*{Back to Glycolysis and Gluconeogenesis}
+\begin{center}
+    \includegraphics*[width=\textwidth]{L2_20.png}
+\end{center}
+
+\subsection*{Thermodynamics Reference}
+\textbf{Three Physiological Conditions:}
+\begin{itemize}
+	\item $\Delta \text{G}^{\circ'} <<<<<< 0$: $\Delta$G always negative.  (Example: ATP hydrolysis)
+	\item $\Delta \text{G}^{\circ'} > 0$: near equilibrium, reversible, direction depends on actual [P]/[R].  (Example: Most reactions)
+	\item $\Delta \text{G}^{\circ'} >>>>>> 0$: $\Delta$G always positive, must be coupled.  (Example: Phosphorylation of Glucose)
+\end{itemize}
+\[\Delta \text{G} = \Delta \text{G}^{\circ'}  + RT \ln([P]/[R]) \hspace{1cm} \Delta \text{G}^{\circ'} = -RT \ln \text{K}_{\text{eq}}\]
+
+\subsection*{Overview}
+\begin{itemize}
+	\item Biological systems can avoid \textbf{futile cycles} through the \textbf{differential regulation of opposing pathways}
+	\item \textbf{Glycolysis} and \textbf{gluconeogenesis} can share \textbf{reversible enzymes} because of strategic regulation of the irreversible steps of glycolysis
+	\begin{itemize}
+        \item Certain steps are \textbf{irreversible} due to a favorable dephosphorylation - their opposing steps \textbf{are also irreversible} because they are coupled with ATP/GTP hydrolysis
+    \end{itemize}
+    \item \textbf{Regulatory enzymes} are often enzymes catalyzing the first irreversible step
+    \begin{itemize}
+        \item Also cluster around branch points
+        \item Usually highly thermodynamically favorable
+        \item How is regulation achieved?  Through \textbf{enzyme availability, control of catalytic activity, or substrate availability}
+    \end{itemize}
+\end{itemize}
+\end{document}
