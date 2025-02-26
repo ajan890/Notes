@@ -1,0 +1,278 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+\usepackage{dsfont}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+\graphicspath{{./assets/images}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+\newcommand{\example}{\textbf{Example: }}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\dd}{\text{d}}
+
+\title{BIOMATH 208 Week 7}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+\section*{Review}
+[FILL]
+
+In general we cannot find analytic solutions.  We used the gradient descent algorithm, an iterative algorithm that has... [FILL]
+
+\subsection*{Natural Gradient Descent}
+\begin{enumerate}
+    \item Start with an initial guess for our parameter, $p$.
+    \item Compute $f(p)$, $\dd f(p)$, $g(p)$
+    \item Replace the $i$-th component of $p$:  $p^i \mapsto p^i - \varepsilon(g(p)^{-1ij}) \dd f_j(p)$.  (Note that $g^{ij}$ means $(g^{-1}_{ij})$)
+    \item Same as gradient descent
+    \item Same as gradient descent
+\end{enumerate}
+\begin{itemize}
+	\item This is especially helpful when compoennts of $p$ have different units
+    \item Also gives a better search direction allowing a bigger step size $\varepsilon$.
+\end{itemize}
+
+\subsection*{How to choose a metric?}
+\begin{itemize}
+	\item In a $d$ dimensional manifold, $d(d - 1)/2$ functions, and they have to always be positive definite.
+	\item Pull back metrics
+	\begin{itemize}
+        \item Find a map $\phi \::\: \mathcal{M} \rightarrow$ a nice space where choosing a metric is easy
+    \end{itemize}
+    \[g_p^{\mathcal{M}}(x, y) = g_{\phi(p)}^{\text{nice space}} (\phi_{\phi(p)}X, \phi_{\phi(p)}Y)\]
+    \item We showed how to use this metric for affine transforms acting on points, because it's easy to define a metric on the points themselves.
+    \item Invariant metric, for Lie groups:
+    \begin{itemize}
+        \item Define a metric at one point $p = I$, then for any other point $p$, we just use a pull back metric, pull back with $\phi = p^{-1}$.
+    \end{itemize}
+\end{itemize}
+
+\section*{Image Registration}
+(for images as functions, NOT landmark points.)\\\\
+Consider a piar of grayscale images $I, J \::\: \R^d \rightarrow \R$, and a transformation acting via $[T \cdot I](x) = I(T^{-1}x)$.  We will minimize the integral square error objective function
+\[f(T) = \int (I(*T^{-1} x) - J(x))^2 \dd x\]
+using gradient based methods.\\\\
+Note that even though this is a square error cost, it is \textbf{not quadratic} in $T$, (because $I$ is not a linear function of its argument) and therefore cannot be solved analytically
+
+\subsection*{Translation}
+We will start with a very simple transformation group: the translation.\\\\
+Consider $T$ as a translation in $\R^d$ with $[T \cdot I](x) = I(x - T)$.  (The $\cdot$ is a group action.)  The gradient is
+\[\dd f(T) = -2 \int [IU(x - T) - J] \dd I(x - T) \dd x\]
+\begin{itemize}
+    \item $f$ is integral square error
+    \item $I(x - T) - J$ is the error term.
+    \item $\dd I$ is the gradient of the image with respect to space
+    \item $I(x - T)$ is the transformed images, not the original
+\end{itemize}
+
+\subsubsection*{Proof}
+Consider a curve $\gamma(t) = T + t\delta T$ for $\delta T$ an arbitrary translation, and consider the velocity
+\[\frac{\dd}{\dd t} f(T + t\delta t) \bigg|_{t = 0} = v_{\gamma, T}(f)\]
+Plugging in our definition of $f$ gives:
+\begin{align*}
+    \frac{\dd}{\dd t} &\int (I(x - T - t\delta T) - J(x))^2 \dd x \bigg|_{t = 0}\\
+    \intertext{By the chain rule,}
+    &= \int 2(I(x - T) - J(x)) \dd I(x - T)(-\delta T)\\
+    &= [-2 \int(I(x - T) - J(x)) \dd I(x - T) \dd x] \delta T
+\end{align*}
+\begin{itemize}
+	\item $T$ is a vector
+	\item everything before the $\dd x$ is the direction, or $\dd f(T)$.
+\end{itemize}
+
+\subsection*{Affine Group Transformations}
+The gradient covector, as a $(d + 1) \times (d + 1)$ matrix, with bottom row all zeros, is given by
+\[\dd f(T) = -2 \int[I(T^{-1} x) - J(x)] \dd[I(T^{-1} x)] (T^{-1} x)^T \dd x\]
+This can be written in a matrix as:
+\[\begin{pmatrix} L & T \\ 0 & 1 \end{pmatrix}\]
+where
+\begin{itemize}
+	\item $L$ is linear
+	\item $T$ is translation
+	\item bottom row is fixed (homogeneous coordinates)
+	\item $[I(T^{-1} x) - J(x)]$ is the error term, transformed $I$ minus $J$.
+	\item $\dd[I(T^{-1}x)]$ is the gradient of the transformed $I$.
+\end{itemize}
+
+To prove this equation, we first need to define some other things:
+\subsubsection*{Part 1: Derivative of inverse matrix}
+\[\frac{\dd}{\dd t} (T + t \delta T)^{-1} = -T^{-1} \delta TT^{-1}\]
+where
+\begin{itemize}
+	\item $\delta T$ is direction
+	\item $t$ is time
+	\item This is very well defined if $t$ is small, and $\delta T$ has zeros on its bottom row.
+\end{itemize}
+
+The derivative of a matrix with respect to another matrix is multiplying the inverse matrix on both sides of the direction.  In this case, it is the $T^{-1} \delta T T^{-1}$ section.  We can show this because
+\[I = (T + t \delta T)(T + t\delta T)^{-1}\]
+Now, we take the derivative of both sides:
+\begin{align*}
+    0 = \frac{\dd}{\dd t} I &= \frac{\dd}{\dd t} (T + t \delta T)(T + t\delta T)^{-1}\\
+    \intertext{By product rule,}
+    &= \delta T(T + t\delta T)^{-1} + (T + t \delta T) \frac{\dd}{\dd t} (T + t \delta T)^{-1} \bigg|_{t = 0}
+    \intertext{When we evaluate at $t = 0$, a lot of things disappear}
+    &= \delta T T + T \frac{\dd}{\dd t}(T + t\ delta T)^{-1} \bigg|_{t = 0}\\
+    -\delta T T^{-1} &= T \frac{\dd}{\dd t} (T + t\ delta T)^{-1} \bigg|_{t = 0}\\
+    -T^{-1} \delta T T^{-1} &= \frac{\dd}{\dd t} (T + t \delta T)^{-1} \bigg|_{t = 0}
+\end{align*}
+If big $T$ were a scalar, this is equivalent to the "quotient rule" for taking derivatives
+
+\subsubsection*{Part 2: Derivative of image with affine}
+\[\dd I(T^{-1} x) T^{-1} = \dd[I(T^{-1}x)]\]
+\begin{itemize}
+	\item Left side: gradient of image, transformed
+	\item Right side: gradient of the transformed image
+\end{itemize}
+\textbf{Proof:}\\\\
+Start with the right side and apply the chain rule.
+\begin{align*}
+    \dd[I(T^{-1} x)] &= \dd I \bigg|_{T^{-1}x} \cdot \frac{\dd}{\dd x}T^{-1} x\\
+    &= \dd I\bigg|_{T^{-1}x} \cdot T^{-1}\\
+    &= \dd I[T^{-1}x] T^{-1}
+\end{align*}
+Note: $\dd I \doteq [\dd I] \neq [\dd][I]$
+
+\subsubsection*{Part 3: The gradient}
+Find the directional derivative
+\[\frac{\dd}{\dd t} \int [I((T + t\delta T)x) - J(x)]^2 \dd x \bigg|_{t = 0}\]
+\begin{align*}
+    &= \int 2[I((T + t \delta T)_{x}) - J(x)] \cdot \dd I((T + t \delta T)^{-1}x) \cdot (-T^{-1} \delta T T^{-1})x \dd x\\
+    &= \int 2[I(T^{-1}x) - J(x)] \dd I(T^{-1}x) T^{-1} \delta T T^{-1} x \dd x\\
+    &= \int -2[I(T^{-1}x) - J(x)] \dd [I(T^{-1}x)] \delta T T^{-1} x \dd x
+\end{align*}
+At this point, we would like to isolate $\delta T$, but it doesn't factor nicely because these are matrices.  Therefore, we will work with the trace of the matrix.\\\\
+Since the whole quantity is scalar, we can take the trace:
+\begin{align*}
+    &= -2 \int (I(T^{-1}x) - J(x)) \text{tr} \left(\dd[I(T^{-1} x)] \delta T T^{-1} x\right) \dd x
+    \intertext{With the trace, we have the cyclic permutation property, so we can rearrange the terms.}
+    &= \cdots \text{tr} \left(\delta T T^{-1} x \dd [I(T^{-1} x)]\right)\\
+    &= \cdots \text{tr} \left(\dd(I(T^{-1}x))^T (T^{-1}x)^T \delta T^T\right)\\
+    &= \det (\dd(I(T^{-1}x)) (T^{-1} x)^T, \delta T)\\
+    &[FILL]\\
+    &= \text{tr} \left(-2 \int (I(T^{-1} x) - J(x)) \dd(I(T^{-1}x))^T x^T (T^{-1})^T \dd x \cdot \delta T^T\right)
+\end{align*}
+Notice that at this point, we have factored the equation into a vector times a covector, and therefore the group action on the derivative.  This completes the proof.
+
+\subsection*{Metrics for Image Registration}
+One simple metric is to choose every voxel as a point, and use our pull back metric for point sets.  (Use what we already do for point sets.  [FILL])
+
+\subsection*{Automatic Differentiation}
+Automatic differentiation works by defining a computation graph with data as edges, and functions as nodes.\\\\
+For every function ($f(x)$), we define push forward ($f_*(x)[X]$), and a pull back ($f^*(x)[\chi]$).  The former tells us how a perturbation of inputs affects outputs.  The latter tells us how gradients should be pulled back (chain rule) for optimization.
+\begin{itemize}
+	\item The push forward represents the forward pass (calculating the gradients)
+	\item The pull back is how the nodes should be modified through backpropagation on the gradient to adjust parameters.
+	\item In some applications, the push forward isn't needed sometime.
+\end{itemize}
+
+\subsubsection*{Example: (Computation graph)}
+Build a computation graph for the function:
+\[f(x) = \cos(ax) + \sin(x^2)\]
+Forward propagation in black, backpropagation in red.
+\begin{itemize}
+	\item When you go backwards, you apply the derivative of each function.
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W8_1.png} 
+\end{center}
+\begin{itemize}
+	\item pull back, multiply by transpose of Jacobian, often can be done without computing or storing Jacobian matrix.
+\end{itemize}
+
+\section*{Riemannian Manifolds and Geodesics}
+\begin{itemize}
+	\item A Riemannian manifold is one with a metric defined at every point
+	\item Geodesics is the shortest path between two points
+\end{itemize}
+
+\subsection*{Motivation}
+\begin{itemize}
+	\item Here we consider the implications of putting an inner product on a manifold.
+	\item This will allow us to measure lengths and angles, and define straight lines.
+	\item These operations will allow us to compute a distance between any pair of points, which can serve as an input to many machine learning algorithms.
+	\item These operations will extend the definitions of a lot of familiar data processing techniques: filtering, averaging, regression 
+\end{itemize}
+
+\subsection*{Riemannian Manifolds}
+\begin{itemize}
+	\item A Riemannian manifold is a smooth manifold with a (0, 2) tensor field that describes an inner product at every point
+	\item This is usually denoted by the symbol $g_p$ for a metric tensor at the point $p$.  It is a nonlinear map $T_p \mathcal{M} \times T_p \mathcal{M} \rightarrow \R$.
+	\item [FILL]
+\end{itemize}
+
+\subsection*{The length of a curve}
+Given a curve $\gamma \::\: [0, 1] \rightarrow \mathcal{M}$, its length is given by
+\[L(\gamma) = \int_0^1 \sqrt{g_{\gamma(t)}(v_{\gamma, \gamma(t)}, v_{\gamma, \gamma(t)})} \dd t\]
+This corresponds to the familiar definition "distance equals speed times time", but note the difference between speed and velocity.\\\\
+Velocity is more fundamental, whereas speed requires us to add additional structural to our manifolds.
+
+\subsection*{Distances and Geodesics}
+We define the distance between two points on a manifold as the length of the shortest curve that connects them.
+\[d(p, q) = \min_{\gamma\::\: [0, 1] \rightarrow \mathcal{M}\\ \gamma(0) = p, \gamma(1) = q} L(\gamma)\]
+These length minimizing curves are called geodesics.\\\\
+"Geodesic" has two definitions.
+\begin{itemize}
+	\item the shortest path between two points
+	\item a stationary point in the above optimization problem
+\end{itemize}
+Most of the time, they coincide, but consider the following:
+\begin{center} 
+	\includegraphics*[scale=0.8]{W8_2.png} 
+\end{center}
+The red path meets the second definition, but not the first.
+
+\subsection*{Action Integrals}
+Because there are an infinite number of parameterizations of the same curve $\gamma$, we choose to work with a constant speed geodesics.  These are minimizers of the action integral
+\[A(\gamma) = \int_0^1 g_{\gamma(t)} (v_{\gamma, \gamma(t)}, v_{\gamma, \gamma(t)}) \dd t\]
+In a coordinate chart $x$, with $x(\gamma(t)) \doteq q(t)$ and $\dot{\gamma}_{(x)}(t) \doteq \dot{q}(t)$, and $g_{x^{-1} (q(t))} \left(\frac{\partial}{\partial x^i}, \frac{\partial}{\partial x^j}\right) \doteq g_{ij}(q(t))$, we have:
+\[A(q) = \int_0^1 g_{ij} (q(t)) \dot{q}^i(t) \dot{q}^j(t) \dd t\]
+
+\subsection*{Constant Speed Geodesics}
+With fixed endpoints minimizers of $A$ are constant speed, and are also minimizers of $L$.
+\subsubsection*{Proof:}
+Let $f(t) = \sqrt{g_{\gamma(t)}}\dots$ [FILL]
+[FILL]
+
+Now, consider another function $h(t)$ (arbitrary), and consider the $L_2$ inner product $\int_0^1 f(t) h(t) \dd t$.  By Cauchy-Schwartz, we have
+\[\left(\int_0^1 f(t) h(t) \dd t\right)^2 \leq \int |f|^2(t) \dd t \int |h|^2 (t) \dd t\]
+Choosing $h(t) = 1$ gives
+\[\left(\int_0^1 f(t) \dd t\right)^2 \leq \int_0^1 |f|^2(t) \dd t \cdot 1\]
+Notice that this is the action integral.  This implies that $L^2(\gamma) \leq A(\gamma)$.
+If $\gamma$ has a constant speed $c$, then the left and right side are equal to $c^2$, and the inequality becomes an equality ($f, h$ are colinear).\\\\
+So $A$ achieves the lower bound of $L$ over reparameterizations.
+\begin{itemize}
+	\item $L$ does not change when we reparameterize $\gamma$.
+	\item $A$ obtains its smallest value when it is constant speed \underline{and} when $A$ is using a [FILL]
+	\item Suppose for the purpose of contradiction that $\gamma$ is a minimizer of $A$ but not a minimizer of $L$.  Then there is another curve $\alpha$ with constant speed reparameterization $\tilde{\alpha}$ such that
+	\[L(\alpha) < L(\gamma)\]
+    \item But the left side is $\sqrt{A(\tilde{\alpha})}$ and the right side is $\sqrt{A(\gamma)}$, meaning $\gamma$ is not a minimizer of $A$.  We therefore reject our assumption.
+\end{itemize}
+
+\subsection*{The constant speed geodesic equation}
+In a given coordinate chart, with components of a metric tensor field $g$ written as $g_{ij}$, and its inverse written $g^{ij}$, constant speed geodesics are determined by
+\[\ddot{q^i} + \frac{1}{2} g^{ij} (-\partial_j g_{kl}) [FILL]\]
+
+
+\end{document}
