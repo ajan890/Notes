@@ -28,13 +28,197 @@
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\dd}{\text{d}}
 
-\title{BIOMATH 208 Week 7}
+\title{BIOMATH 208 Week 8}
 
 \author{Aidan Jan}
 \date{\today}
 
 \begin{document}
 \maketitle
+\subsection*{Naive Gradient Descent in Vector Spaces}
+Given a differentiable function $f \::\: \R^d \rightarrow \R$, the naive gradient descent algorithm procedes as follows:
+\begin{enumerate}
+    \item Choose an initial guess for some point $p$
+    \item Compute $f(p)$, and $\dd f(p)$  (list of partial derivatives)
+    \item Update $p \mapsto p - \varepsilon \dd f(p)$, $\varepsilon > 0 \in \R$, "small"
+    \item Repeat 2 and 3, until we converge
+    \begin{itemize}
+        \item Stop after some number of repeats
+        \item if $f(p)$ changes less than threshold, then stop
+        \item if $p$ changes less than a threshold, then stop
+        \item etc.
+    \end{itemize}
+    \item maybe, change $\varepsilon$ (step size, learning rate, etc.) based on some criteria.
+\end{enumerate}
+
+\subsection*{Gradient descent is a minimization method}
+Gradient descent converges to a stationary point for small enough $\varepsilon$.
+
+\subsubsection*{Proof}
+Taylor expand $f$ about $p_0$.
+\[f(p) = f(p_0) + \dd f(p_0) \cdot (p - p_0) + O(|p - p_0|^2)\]
+\begin{itemize}
+	\item $(p - p_0)$ is our step size.  Also, $p - p_0 = -\epsilon \dd f(p_0)$
+	\item Notice we are taking the inner product of a covector and a vector.
+	\item $f$ should be smooth, e.g., a derivative in at least one direction must be well defined.
+	\item Essentially, $f$ of the new point $p$ is equal to $f$ of the old point $p_0$, plus the change when we took a step $\dd f(p_0) \cdot (p - p_0)$, plus our loss function $O(|p - p_0|^2)$.
+\end{itemize}
+If we substitute $p - p_0 = -\epsilon \dd f(p_0)$ for $(p - p_0)$, then we get
+\[f(p_0) + (-\varepsilon) \cdot |\dd f(p_0)|^2 + O(|p - p_0|^2)\]
+$|\dd f(p_0)|^2$ is a euclidean norm, and therefore that term is always $\leq f(p_0)$.  If it is equal to $f(p_0)$, then we have converged.
+
+\subsection*{Problems with Gradient Descent}
+\begin{enumerate}
+    \item The components of $\dd f$ may have widely different scales.  Choosing "small enough" $\varepsilon$ may be dominated by the largest scale, making the algorithm impractically slow.
+    \item The components of $\dd f$ depend on a choice of chart or basis.  Some charts may have good performance and others bad.  (e.g., preconditioning)
+    \item Since $\dd f$ is a covector, it doesn't make sense to add a scalar multiple of it to a point in our vector space $\R^d$.  (you can't add a covector to a vector; they have different units!)
+    \begin{itemize}
+        \item if $f$ was unitless, and $p$ has units of length, then $\dd f(p)$ has units of "per length".
+    \end{itemize}
+\end{enumerate}
+
+\subsection*{Example: Minimization with Different Units}
+Consider a 2D vector space, where the first quantity is measured in centimeters, and the second in millimeters.  Then let 
+\[f(p) = (p^0)^2 + \frac{2}{10^2} (p^1)^2\]
+be the distance from the origin in centimeters.  The minimum is $p = 0$.
+\begin{center} 
+	\includegraphics*[scale=0.8]{W8_3.png} 
+\end{center}
+
+\subsubsection*{Example: Sequernce of Points in Gradient Descent}
+The gradient $\dd f = (2p^0, 2/10^2 p^1)$, and a sequence of points for different values of $\epsilon$ are shown.
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W8_4.png} 
+\end{center}
+\begin{itemize}
+	\item The highest point on both images are the initial points.
+	\item The $\dd f$ is the list of partial derivatives.
+	\item The red dot is the origin.
+\end{itemize}
+Because of the gradient, the gradient in the $p^1$ direction is 100x smaller than the gradient in the $p_0$ direction.  This is why the step goes down very fast, and left very slow.\\\\
+The right graph uses a much higher step size ($\varepsilon$), and therefore it takes a much larger step per iteration.
+
+\subsection*{Natural Gradient Descent in a Coordinate Chart}
+We can convert the gradient covector $\dd f$ to a vector $\dd f^\sharp$.  Its direction will be independent of the choice of chart.  This algorithm was invented by Shun'ichi Amari in the early 21st century.
+\begin{enumerate}
+    \item Choose an initial point $p$.  (On a Lie group we could pick identity)
+    \item Compute $f(p)$, $\dd f(p)$, $g(p)$.  $g(p)$ is a metric that acts on two vectors, usually just a symmetric matrix.
+    \item $x^i \mapsto x^i - \epsilon(g^{-1}(p))^{ij} \dd f_j(p)$, for small enough $\varepsilon$.
+    \item Repeat until convergence
+    \item Possibly, modify $\varepsilon$ based on same heuristic.
+\end{enumerate}
+
+\subsection*{One Problem}
+Note: while the direction (tangent vector), is independent of a choice of chart, the new point is not.  (We still have to walk along a curve in that direction, which is not unique.)
+
+\subsection*{Natural Minimization with Different Units}
+It is natural to choose a metric that takes the different units into account, and returns a length in centimeters.  For the example before, let's define
+\[g_{ij} = \begin{pmatrix} 1 & 0 \\ 0 & \frac{1}{100} \end{pmatrix}_{ij}\]
+Therefore,
+\[(g^{-1})^{ij} = \begin{pmatrix} 1 & 0 \\ 0 & 10^2 \end{pmatrix}_{ij}\]
+The components of our gradient are then
+\[(g^{-1})^{ij} \dd f(p)_j = \begin{pmatrix} 1 & 0 \\ 0 & 10^2 \end{pmatrix} \begin{pmatrix}
+2 p^0 \\ \frac{2}{100} p^1 \end{pmatrix} = \begin{pmatrix} 2 p^0 \\ 2 p^1 \end{pmatrix}\]
+\begin{center} 
+	\includegraphics*[scale=0.8]{W8_5.png} 
+\end{center}
+\begin{itemize}
+	\item Because we understand the geometry of this scenario better, we can scale the gradient of $p_1$, so now we walk straight towards the origin, instead of being dominated by the smaller component.
+	\item Our step can be big, but not overstep the valley, since we choise a better direction.
+    \item We are lucky that in this scenario, this is a quadratic optimization problem.  If it were more complicated, the results would not be as nice, but it still will help.
+    \item Note, notice that the first matrix, $\begin{pmatrix} 1 & 0 \\ 0 & 10^2 \end{pmatrix}$ is actually the Hessian of $f$ (second derivative).  So this is an example of Newton's method.  In general, H$f$ is not positive definite, and in general, $g$ and $f$ are not related.
+\end{itemize}
+
+\section*{How to Choose a Metric}
+\begin{itemize}
+	\item Affine registration is a $d \times (d + 1)$ dimensional optimization problem, e.g., 12 dimensions for 3D registration.
+	\item Choosing a metric means choosing $d(d + 1)[d(d + 1) - 1] / 2$ different numbers, e.g., 66 numbers for 3D registration.
+	\item AND, we must do this at every point on the manifold.
+	\item Luckily we have developed tools to make this problem simpler.
+	\item For the previous problem, we just used distance squared, but most of the time, the problem isn't this simple.
+\end{itemize}
+
+\subsection*{Pull back metrics}
+\begin{itemize}
+	\item There is no "natural" way to put a metric on affine transforms $T$, but there is a natural way to put a metric on the points they act on, the standard Euclidean metric.
+	\item Let $Q$ be a set of points and $\delta Q$, $\delta P$ two tangent vectors to the points at $Q$, then
+	\[g_Q^{\R^{d \times N}} (\delta Q, \delta P) = \text{tr} (\delta Q \delta P^T)\]
+    \begin{itemize}
+        \item We are multiplying the components and adding them up
+        \item $Q$ and $P$ are perturbations to points, $d \times N$ matrices for $N$ points
+    \end{itemize}
+    \item If $X$, $Y$ are tangent vectors at $T$, and $Q$ is a set of points, let $\phi(T) = T \cdot Q$.  Then we can define the pullback metric
+    \[g_T^{\text{affine}}(X, Y) = [\phi^* g_Q^{\R^{d \times N}}](x, y) = g_Q^{\R^{d \times N}} (\phi_* X, \phi_* Y) = g_Q^{\R^{d \times N}} (XQ, YQ) = \text{tr}(XQ(YQ)^T)\]
+    \begin{itemize}
+        \item The bracketed term is the pull back.  The parenthetical (right side) is the push forward.
+        \item Recall, push forward is evaluated by multiplying by the Jacobian matrix of $\phi$.
+        \item Jacobian of $\phi$ is just $Q$.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Natural Gradient Descent for Affine Registration in 1D}
+Consider aligning a set of points $Q$ to another set of points $P$, over affine transformations $T$ with $T^0$ the linear part and $T^1$ the translation.  We seek to minimize
+\[f(T) = \Vert T \cdot Q - P \Vert_F^2 = \sum_{i = 1}^N (T^0 Q_i + T^1 - P_i)^2\]
+The gradient, $\dd f(T)$, is given by
+\[\dd f_j(T) = \begin{pmatrix} 2 \sum_{i = 1}^N (T^0 Q_i + T^1 - P_i) Q_i \\ 2 \sum_{i = 1}^N (T^0 Q_i + T^1 - P_i) \end{pmatrix}\]
+\begin{itemize}
+	\item Now that we know how to evaluate the function and its gradient, we can apply naive gradient descent.
+\end{itemize}
+Points $Q$ and $P$ are shown on left, and trajectory is shown on right.
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W8_6.png} 
+\end{center}
+Notice that the points are correlated, so we can approximate one as an affine function of the other.
+\begin{itemize}
+	\item Notice that in this graph, the translation seems to be an order of magnitude larger than the transformation.
+	\item Also, notice that the graph of $P$ and $Q$ does not start at the origin.  Therefore, we need to find the center of mass of the points and scale accordingly.
+	\item We will converge in $T^2$ quickly, but $T^1$ slowly.
+\end{itemize}
+
+\subsubsection*{Example: The Pullback Metric}
+For $\phi(T) = T^0Q + T^1$, the push forward is
+\begin{align*}
+    \phi_*^T(u) &= (Q, 1)u
+\end{align*}
+\begin{itemize}
+	\item $u$ is a tangent vector
+\end{itemize}
+So the pullback metric is
+\begin{align*}
+    g_T(u, v) &= (u^0 Q + u' 1)(v^0 Q + v' 1)^T\\
+    &= \begin{pmatrix} u^0 & u^1 \end{pmatrix} \begin{pmatrix} QQ^T & Q 1^T \\ 1 Q^T & 1 \:1^t \end{pmatrix} \begin{pmatrix} v^0 \\ v^1 \end{pmatrix}\\
+    &= \begin{pmatrix} u^0 & u^1 \end{pmatrix} \begin{pmatrix} \sum_{i = 1}^N Q_i^2 & \sum_{i = 1}^N Q_i \\ \sum_{i = 1}^N Q_i & N \end{pmatrix} \begin{pmatrix} v^0 \\ v^1 \end{pmatrix}
+\end{align*}
+
+\subsubsection*{Example: The Inverse Metric}
+The inverse of the metric is then:
+\[g^{-1}(T)_{ij} = \frac{1}{N \sum_{i = 1}^N Q_i^2 - \left(\sum_{i = 1}^N Q_i\right)^2} \begin{pmatrix} N & -\sum_{i = 1}^N Q_i \\ -\sum_{i = 1}^N Q_i & \sum_{i = 1}^N Q_i^2 \end{pmatrix}\]
+Note that if the center of mass is 0, the metric is diagonal.
+
+\subsubsection*{Example: The natural gradient descent trajectory}
+Natural gradient descent improves the trajectory dramatically
+\begin{center} 
+	\includegraphics*[width=0.8\textwidth]{W8_7.png}
+\end{center}
+\begin{itemize}
+	\item We have scale on the $y$-axis and translation on the $x$-axis.  
+	\item We head straight to the origin this time!
+	\item We can choose a bigger step size and converge quickly in both parameters.
+\end{itemize}
+
+\subsection*{Invariant Metrics}
+\begin{itemize}
+	\item Above, our metrics were independent of $p \in \mathcal{M}$, but this is not generally possible.  With Lie groups, we can define the metric at $p = I$, and use a pullback to define it for any other point.
+	\item For $p, q \in \mathcal{M}$ we can define a map at each $p$ by $\phi_p (q) = p^{-1} \circ q$.
+	\begin{itemize}
+        \item If this is a matrix group, $\phi$ is matrix multiplication, so $\phi_*$ is just a matrix.  (Jacobian is just a matrix.)
+    \end{itemize}
+	\item We push forward a vector in $T_p \mathcal{M}$ to $T_I \mathcal{M}$ with $\phi_*(p)$, and define
+    \[g_p(u, v) = g_I(\phi_*(p)u, \phi_* (p)v)\]
+	\item This is called a "left invariant metric".  We could design a "right invariant metric" using $\phi_p(q) = q \circ p^{-1}$.
+\end{itemize}
+
+
 \section*{Review}
 [FILL]
 
