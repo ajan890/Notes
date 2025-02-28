@@ -1,0 +1,347 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+\graphicspath{{./assets/images}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+\newcommand{\example}{\textbf{Example: }}
+\newcommand{\R}{\mathbb{R}}
+
+\title{COM SCI 122 Week 8}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Sequence Prediction}
+\subsection*{Understnading TF Binding Important to Interpreting Sequence Variants}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W8_1.png} 
+\end{center}
+
+\subsection*{Using PWMs for Variant Effect Prediction}
+Strategy to predict variant effect with PWM
+\begin{itemize}
+	\item Score reference and mutated sequence with PWM
+	\item Check if at least one meets a score threshold
+	\item Score change between the two sequences
+\end{itemize}
+Suppose the reference sequence is \texttt{CAT}, under the PWM model below how would you rank the three mutations in terms of greatest predicted impact?
+\begin{center} 
+	\includegraphics*[width=0.8\textwidth]{W8_2.png} 
+\end{center}
+
+\subsection*{Sequence to Biochemical Assay Prediction}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W8_3.png} 
+\end{center}
+\textbf{Question:} How could such a classifier be used for variant effect prediction?
+\begin{itemize}
+	\item Compare prediction probability for reference and mutation
+\end{itemize}
+
+\subsection*{Prediction of Binding Based on a single PWM}
+\begin{itemize}
+	\item Scan a sequence based on a single PWM (known or discovered)
+	\item Predict based on recorded maximum PWM score for any sub-sequence
+\end{itemize}
+
+\subsection*{Scoring a Sequence with a PWM}
+Score each sub-sequence that is length of the PWM and record score of the subsequence with the best match.
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W8_4.png} 
+\end{center}
+In this case, the highest score is 0.000723.  Now, we apply a variant to the sequence, and do it again.
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W8_5.png} 
+\end{center}
+
+\subsection*{Limitations of Binding Predictions Based on PWM Scanning}
+\begin{itemize}
+	\item Many motif instances are not actually bound and there is additional information in sequence context for predicting binding
+	\item \textbf{Question:} Suppose we have a ChIP-seq experiment for a transcription factor, what is another strategy we could use to predict transcription factor binding?
+	\begin{itemize}
+        \item Through supervised machine learning models
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Properties of Regulatory Sequences Not Captured by a PWM}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W8_6.png} 
+\end{center}
+\begin{itemize}
+	\item \textbf{Homotypic Motif Density:}  Regulatory sequences often contain \textbf{more than one binding instance} of a TF resulting in \textbf{homotypic clusters of motifs of the same TF}
+	\item \textbf{Heterotypic Motif Combinations:} Regulatory sequences often bound by \textbf{combinations of TFs} resulting in \textbf{heterotypic clusters of motifs of different TFs}
+	\item \textbf{Spatial Grammars of Heterotypic Motif Combinations:} Regulatory sequences are often bound by \textbf{combinations of TFs} with specific \textbf{spatial and positional constraints} resulting in distinct \textbf{motif grammars}
+\end{itemize}
+
+\section*{K-mer based / Logistic Regression}
+\subsection*{Defining Features for Classification}
+\begin{itemize}
+	\item Many standard machine learning classifiers take an explicit set of features.
+	\item \textbf{Question:} How to define features for a DNA sequence?
+\end{itemize}
+\subsubsection*{K-mer Features}
+\begin{itemize}
+	\item K-mer features - count for each substring of length $k$ of how often it occurs in the sequence.
+	\item Consider sequence \texttt{ACACCATTAGACCA}, and $k = 2$.
+	\begin{itemize}
+        \item If we count the 2-mers, we get:
+    \end{itemize}
+    \begin{center} 
+        \includegraphics*[width=0.9\textwidth]{W8_7.png} 
+    \end{center}
+    \item \textbf{Question:} How many possible $k$-mers for a value of $k$?
+    \begin{itemize}
+        \item $4^k$.
+    \end{itemize}
+    \item A small $k$ might not be informative enough to capture some motifs, but also, a large $k$ might be observed too infrequently.
+    \item This raises scability challenges.
+\end{itemize}
+
+\subsection*{Extending K-mer Features}
+For some transcription factors there are degenerate positions between informative positions
+\begin{center} 
+	\includegraphics*[scale=0.7]{W8_8.png} 
+\end{center}
+\begin{itemize}
+	\item \textbf{Question:} What are limitations of regular k-mer features in such cases?
+	\item \textbf{Question:} What can be done instead?
+\end{itemize}
+
+\subsection*{Gapped K-mer Features}
+\begin{center}
+    \texttt{ACACCATTAGACCA}
+\end{center}
+\begin{itemize}
+	\item An alternate strategy is to define gapped $k$-mers
+	\begin{itemize}
+        \item Allow $k$ fixed characters
+        \item Allow $m$ wild card positions
+        \item $k + m$ positions total
+    \end{itemize}
+    \item Example of a gapped $k$-mer for $k = 2$ and $m = 1$; "?" denotes wild card
+    \begin{itemize}
+        \item \texttt{A?A} - what is the frequency this gapped $k$-mer in the above sequence?  (2, since \texttt{ACA} and \texttt{AGA} occur once each.)
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Classifier}
+\begin{itemize}
+	\item Many classifiers could be applied to discriminate two classes (e.g., logistic regression, random forest, SVM, etc.)
+	\item We will discuss logistic regression
+\end{itemize}
+
+\section*{Logistic Regression}
+\begin{itemize}
+	\item A probabilistic classification based on weighted linear combination of features, with two features:
+	\[z = w_0 + w_1 x_1 + w_2 x_2\]
+    \begin{center} 
+        \includegraphics*[scale=0.8]{W8_9.png} 
+    \end{center}
+    \item In the example, different combinations of feature values that lie on the same line determine by $w$ will have the same classification probability.
+    \item Labels are binary so different than the setting for linear regression.
+\end{itemize}
+
+\subsection*{Binary Logistic Regression}
+\begin{itemize}
+    \item Let $Y$ be a binary variable for the label, e.g.,
+    \begin{itemize}
+        \item $Y = 1$ is a transcription factor binds a sequence
+        \item $Y = 0$ if it does not.
+    \end{itemize}
+    \item Let $X$ be a variable for a vector $x$ of $d$ input features about the sequence based on which we want to make predictions (e.g., k-mer features)
+    \item Let $w$ be a vector of feature weights which we will learn.
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W8_10.png} 
+\end{center}
+Then, 
+\begin{align*}
+    P(Y = 1|X = x, w) &= \frac{1}{1 + e^{-(w_0 + w_1 x_1 + \cdots + w_d x_d)}}\\
+    P(Y = 0|X = x, w) &= 1 - P(Y = 1|X = x, w) = \frac{e^{-(w_0 + w_1 x_1 + \cdots + w_d x_d)}}{1 + e^{-(w_0 + w_1 x_1 + \cdots + w_d x_d)}}\\
+    \log \frac{P(Y = 1|X = x, w)}{P(Y = 0|X = x, w)} = w_0 + w_1 x_1 + \cdots + w_d x_d
+\end{align*}
+Log-odds is a linear function of the input features.
+
+\subsection*{The Logistic Loss Function}
+\[\sum_{i = 1}^t - y_i \log(P(Y = 1|X = x_i, w)) - (1 - y_i) \log(P(Y = 0|X = x_i, w))\]
+\begin{itemize}
+	\item $w$ is set to minimize the above expression.  Equivalent to maximizing the log-likelihood of the data.
+	\item $y_i$ is the label of the $i$-th data point.
+	\item If $y_i = 1$, the above expression within sum simplifies to 
+	\[-\log(P(Y = 1 | X = x_i, w))\]
+    \item If $y_i = 0$, the above expression within sum simplifies to
+    \[-\log(P(Y = 0 | X = x_i, w))\]
+    \item \textbf{In general, requires numerical methods such as gradient descent to optimize.}
+\end{itemize}
+
+\subsection*{Gradient Descent}
+\[w_{n + 1} = w_n + \gamma \frac{\partial L(w)}{\partial w}\]
+\begin{itemize}
+	\item $\gamma$ is the learning rate
+	\item $L$ is the loss function
+	\item $w$ are the weight(s)
+\end{itemize}
+\begin{center} 
+	\includegraphics*[scale=0.8]{W8_11.png} 
+\end{center}
+
+\subsection*{Logistic Loss Function with Ridge ($L_2$) Regularization}
+\[\sum_{i = 1}^t - y_i \log(P(Y = 1|X = x_i, w)) - (1 - y_i) \log(P(Y = 0|X = x_i, w)) + \lambda \sum_{i = 1}^d w_i^2\]
+\begin{itemize}
+	\item Compared to the original logistic loss function, we added an extra 'regularization' term.
+	\item $\lambda$ is a non-negative parameter
+\end{itemize}
+Without regularization weights could be arbitrarily large in magnitude both positive and negative and may not generalize well to unseen data.
+
+\subsection*{Logistic Loss Function with Lasso ($L_1$) Regularization}
+\[\sum_{i = 1}^t - y_i \log(P(Y = 1|X = x_i, w)) - (1 - y_i) \log(P(Y = 0|X = x_i, w)) + \lambda \sum_{i = 1}^d |w_i|\]
+Lasso encourages sparsity meaning typically only a subset of features have non-zero weight.
+
+\subsection*{Limitations}
+What are potential limitations of $k$-mer based approach and/or logistic regression that we may want to address for classification?
+\begin{itemize}
+	\item Does not offer flexibility of PWM like representation
+	\item Does not capture spatial constraints
+	\item May not capture certain types of combinatorial relationships
+\end{itemize}
+
+\section*{Convolutional Neural Networks (CNNs) / Deep Learning}
+\begin{itemize}
+	\item Convolutional Neural Networks exploit structure of problem with specially designed hidden layers
+	\item Transformed computer vision field
+	\item Applications found in many other domains
+	\item Avoids pre-specifying features
+	\item Can potentially learn higher level features
+\end{itemize}
+
+\subsection*{CNN for Sequence Based Prediction}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W8_12.png} 
+\end{center}
+\begin{itemize}
+	\item Bottom of image: One-hot encoding
+	\item Next layer: Convolutional Filters
+	\item Next layer: CNN Filters
+	\item Next two layers: ReLU() and maxpool()
+	\item Top layer: Fully saturated neural network
+\end{itemize}
+
+\subsubsection*{One-Hot Encoding}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W8_13.png} 
+\end{center}
+
+\subsubsection*{Convolutional Filters}
+\begin{itemize}
+	\item Matrix of real values where rows correspond to nucleotides and columns correspond to motif widths
+	\item Analogous to PWMs but values can be outside of a range 0 and 1 and will be combined additively instead of multiplicatively
+	\item More similar to position-specific scoring matrix (PSSM) in values but unlike in PSSM values are not explicitly tied to a background distribution
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W8_14.png} 
+\end{center}
+To score a sequence:
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W8_15.png} 
+\end{center}
+
+\subsubsection*{Thresholding}
+We use the ReLU() function, which keeps positive numbers the same, and sets all negative numbers to 0.
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W8_16.png} 
+\end{center}
+
+\subsubsection*{Representing a Motif with an Artificial Neuron}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W8_17.png} 
+\end{center}
+
+\subsubsection*{Max Pooling}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W8_18.png} 
+\end{center}
+\begin{itemize}
+	\item Pooling can be done over only part of a sequence leading to multiple pooling outputs per sequence and convolution filter.
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W8_19.png} 
+\end{center}
+\begin{itemize}
+	\item Average pooling is an alternative to max pooling, or both could be done.
+\end{itemize}
+
+\subsubsection*{Predict Probabilities with Logistic Neuron}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W8_20.png} 
+\end{center}
+\begin{itemize}
+	\item Returns True or False (Positive or Negative), depending if the value is in the section where the logistics curve is 0 or 1.
+\end{itemize}
+
+\subsection*{Training Model Parameters}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W8_21.png} 
+\end{center}
+\begin{itemize}
+	\item Gradients can be computed for model parameters with Back-propagation algorithm through gradient descent
+\end{itemize}
+
+\subsection*{Hyperparameter Tuning}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W8_22.png} 
+\end{center}
+\begin{itemize}
+	\item Various hyper-parameters need to be set (number of motifs, motif length, number of hidden layers, learning rate, etc.)
+	\item Selected based on empirical performance of model for different combinations
+\end{itemize}
+
+\subsection*{Single-Task vs. Multitask Training}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W8_23.png} 
+\end{center}
+
+\subsection*{Transfer Learning}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W8_24.png} 
+\end{center}
+
+\subsection*{Multimodal Training}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W8_25.png} 
+\end{center}
+Note: usually not best strategy for learning sequence variant effect prediction models since can short-circuit sequence information
+
+\subsection*{Transformers for Sequence-Based Predictions}
+\begin{itemize}
+	\item Transformers, the architecture behind large language models (LLMs) such as ChatGPT, also have been used in some more recent DNA sequence-based prediction models
+\end{itemize}
+\begin{center} 
+	\includegraphics*[scale=0.8]{W8_26.png} 
+\end{center}
+
+
+
+\end{document}
