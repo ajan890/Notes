@@ -1,0 +1,241 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+\usepackage{dsfont}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+\graphicspath{{./assets/images}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+\newcommand{\example}{\textbf{Example: }}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\dd}{\text{d}}
+
+\title{BIOMATH 208 Week 8}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+\section{Review}
+[FILL]
+
+\subsubsection*{Image Registration}
+\begin{itemize}
+	\item Minimize the sum of square error:
+	\[\text{SSE} (T \cdot I, J)\]
+    \item $T$ is a translator or affine transformation
+    \item For $T$ translator:
+    \[\dd f(T) = \int(I(x - T) - J(x)) \cdot \dd I(x - T) \dd x\]
+    \item For affine:
+    \[\dd f(T) = \int(I(T^{-1}x) - J(x)) \cdot \dd[I(T^{-1}x)]^T \cdot [T^{-1} x]^T \dd x\]
+\end{itemize}
+
+\subsubsection*{Metric Manifolds (Riemannian Manifolds)}
+[FILL manifold drawing]
+\begin{align*}
+    L(\gamma) &= \int_0^1 g_{\gamma(t)} (\dot{\gamma} (t), \dot{\gamma}(t)) \dd t\\
+    A(\gamma) &= \int_0^1 \text{no square root} \dd t
+\end{align*}
+\begin{itemize}
+	\item Any minimizer of $A$ is also a minimizer of $L$
+	\item Any minimizer of $A$ is constant speed
+	\item Optimizing over $A$ makes things easier (no square root) and gives a unique parameterization: constant speed geodesics
+\end{itemize}
+
+\subsection*{The Constant Speed Geodesic Equation}
+In a given coordinate chart, with components of a metric tensor field $g$ written as $g_{ij}$, and its inverse written $g^{ij}$, constant speed geodesics are determined by
+\[\ddot{q}^i + \frac{1}{2} g^{ij} (-\partial_j g_{kl} + \partial_k g_{jl} + \partial_l g_{kj}) \dot{q}^k \dot{q}^l = 0\]
+
+\subsubsection*{Proof}
+\begin{itemize}
+	\item We will consider a path $q(t)$ and a perturbation $q \mapsto q + \epsilon \delta q$.
+	\item This denotes a corresponding perturbation in the components of velocity $\dot{q} \mapsto \dot{q} + \epsilon \delta \dot{q}$ (with $\delta \dot{q} = \frac{\dd}{\dd t} \delta q$).
+	\item We seek to find stationary solutions via
+	\[\frac{\dd}{\dd \epsilon} A(q + \epsilon \delta q) \bigg|_{\epsilon = 0}\]
+    \begin{itemize}
+        \item e.g., find the directional derivative in the direction of $\delta q$.
+    \end{itemize}
+\end{itemize}
+First, we plug into our equation
+\begin{align*}
+    &= \frac{\dd}{\dd \epsilon} A(q + \epsilon \delta q) \bigg|_{\epsilon = 0}\\
+    \intertext{We'll apply chain rule and get derivatives of $g$}
+    &= \frac{\dd}{\dd \epsilon} \int_0^1 g_{ij} (q(t) + \epsilon \delta q(t)) (\dot{q}^i(t) + \epsilon \delta \dot{q}^i(t)) (q^{ij}(t) + \epsilon \delta \dot{q}^{j}(t))
+    \intertext{Notice that the last two terms are quadratic in velocity.}
+    \intertext{Not trivial: We will apply integration by parts to write things as gradient dot direction for direction = $\delta q$.  e.g., $\delta q(0) = \delta q(1) = 0$ (fixed endpoints).  The boundary terms are zero in integration by parts.}
+    &= \int \partial_k g_{ij} (q(t)) \delta g^k(t) \dot{q}^i(t) \dot{q}^j (t) + g_{ij}(q(t)) \delta \dot{q}^i(t) \dot{q}^j(t) + g_{ij} (g(t)) \dot{q}^i(t) \delta \dot{q}^j (t) \dd t
+    \intertext{The first term is something acting linearly on the direction.  The next two terms are not, since $\delta \dot{q}^i(t)$ is the time derivative of the direction.}
+    &= \int_0^1 \partial_k g_{ij} \dot{q}i (t) \dot{q}^j(t) \delta q^k(t) - \frac{\dd}{\dd t} (g_{ij}(q)\dot{q}^j) \delta q^i - \frac{\dd}{\dd t} (g_{ij}(q) \dot{q}^i) \delta q^j \dd t
+    \intertext{Note that $\delta q$ has 3 different indices, but they are just dummy variables}
+    &= \int_0^1 \partial_k g_{ij} \dot{q}^i \dot{q}^j \delta q^k - \frac{\dd}{\dd t} (g_{kj}(q) \dot{q}^j) \delta q^k - \frac{\dd}{\dd t} (g_{ik}(q) \dot{q}^i) \delta q^k \dd t\\
+    &= \int partial_k g_{ij} (q) \dot{q}^i \dot{q}^j \delta q^k - \partial_i g_{kj}(q) \dot{q}^i \dot{q}^j \delta q^k - g_{kj} (q) \ddot{q} + \delta q^k \\
+    &\hspace{0.5cm}- \partial_j g_{ik}(q) \dot{q}^j \dot{q}^i \delta q^k - g_{ik}(q) \dot{q}^i \delta \dot{q}^k \dd t
+    \intertext{Now we simplify the equation.  We want to simplify to the form}
+    \int_0^1 \text{something} (t)^k \cdot q^k (t) \dd t = 0
+    \intertext{Since every term has a $q^k$, we can factor that out.}
+    0 &= \partial_k g_{ij} (q) \dot{q}^i \dot{q}^j - \partial_i g_{kj} (q) \dot{q}^i \ddot{q}^j - g_{kj} (q) \ddot{q}^j - \partial_j g_{ik}(g) \dot{q}^j \dot{q}^k - g_{ik}(q) \ddot{q}^i
+    \intertext{Now, we can (1) combine the pairs of items that look the same, and (2) act with the matrix inverse of $g$ (sharp map.)}
+    0 &= g_{ik}(q) \ddot{g}^i + \frac{1}{2}(-\partial_k g_{ij}(q) + \partial_i g_{kj} (q) + \partial_j g_{ik}(q)) \dot{q}^i \dot{q}^j\\
+    0 &= \ddot{q}^l + \frac{1}{2} (g^{-1})^{kl} (-\partial_k g_{ij}(q) + \partial_i g_{kj}(q) + \partial_j g_{ik}(q)) \dot{q}^i \dot{q}^j
+\end{align*}
+[FILL]
+
+\subsection*{Christoffel Symbols}
+We simplify by introducing the notation $\ddot{q}^k + \Gamma_{ij}^k \dot{q}^i \dot{q}^j = 0$.
+\textbf{Definition: Christoffel Symbol of the first kind}
+\[\Delta_{kij} = \frac{1}{2} (-\partial_k g_{ij} + \partial_i g_{kj} + \partial_j g_{ik})\]
+\textbf{Definition: Christoffel symbol of the second kind}
+\begin{align*}
+    \Gamma_{ij}^l = g^{lk} \Gamma_{kij}\\
+    &= \frac{1}{2} g^{lk} (-\partial_k g_{ij} + \partial_i g_{kj} + \partial_j g_{ik})
+\end{align*}
+Note they are symmetric in the last two indices.
+
+\subsection*{Geodesics in Euclidean Space}
+If $g$ is constant everywhere in some chart, then the resulting geodesics are linear equations in this chart
+\[q^i(t) = a^i t + b^i\]
+\subsubsection*{Proof:}
+If $g$ is constant then $\partial_k g_{ij} = 0$ for all $i, j, k$.  The equation becomes
+\[\ddot{q}^i = 0\]
+Integrating once gives
+\[\dot{q}^i = a^i\]
+for some $a$.  Integrating again gives the solution for arbitrary $b$.
+
+\subsection*{Geodesics in polar coordinates}
+Earlier we showed that the Euclidean dot product in polar coordinates is
+\[g_{ij} (r, \theta) = \begin{pmatrix} 1 & 0 \\ 0 & r^2 \end{pmatrix}_{ij}\]
+Geodesics in this coordinate system are given by
+\begin{align*}
+    \ddot{r} - r \dot{\theta}^2 &= 0\\
+    \ddot{\theta} + \frac{2}{r} \dot{r} \dot{\theta} &= 0
+\end{align*}
+
+\subsubsection*{Proof}
+[FILL]
+
+Now, start calculating partial derivatives.  Note they are only nonzero when we take the derivative of the $\theta - \theta$ component ($i = 1, j = 1$), with respect to $r$.
+\begin{align*}
+    [FILL]
+\end{align*}
+
+Now Christoffel symbols of the first kind.
+\begin{align*}
+    \Gamma_{kij} &= -\frac{1}{2}(-\partial_k g_{ij} + \partial_i g_{kj} + \partial_j g_{ik})\\
+    \Gamma_{000} &= 0\\
+    \Gamma_{010} &= 0\\
+    \Gamma_{100} &= 0\\
+    \Gamma_{110} &= \Gamma_{101} = r
+    \Gamma_{001} &= [FILL]
+    \Gamma_{011} &= 
+    \Gamma_{101} &=
+    \Gamma_{111} &=
+\end{align*}
+
+Now, Christoffel symbols of the second kind
+\begin{align*}
+    \Gamma_{ij}^l &= g^{lk} \Gamma_{kij}\\ 
+    \Gamma_{00}^0 = g^{00} \Gamma_{000} + g^{01} \Gamma_{100} &= 0 \\ 
+    \Gamma_{01}^0 = g^{00} \Gamma_{001} + g^{01} \Gamma_{101} &= 0 \\
+    \Gamma_{10}^0 = g^{00} \Gamma_{001} + g^{01} \Gamma_{101} &= 0 \\
+    \Gamma_{10}^0 = g^{00} \Gamma_{010} + g^{01} \Gamma_{110} &= -r \\
+    \Gamma_{00}^1 = g^{10} \Gamma_{000} + g^{11} \Gamma_{100} &= 0 \\
+    \Gamma_{01}^1 = g^{10} \Gamma_{001} + g^{11} \Gamma_{101} &= y_r \\
+    \Gamma_{10}^1 = g^{10} \Gamma_{001} + g^{11} \Gamma_{101} &= y_r \\
+    \Gamma_{10}^1 = g^{10} \Gamma_{010} + g^{11} \Gamma_{110} &= 0
+\end{align*}
+
+An example of geodesic curves are shown below:
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W9_1.png} 
+\end{center}
+
+\subsection*{Christoffel Symbols are not Tensors}
+Why?  Because a tensor that is 0 in one chart induced basis will be 0 in all others.
+\begin{itemize}
+	\item Change of basis involved multiplying by Jacobians, these are always invertible matrices (smoothly compatible atlas).
+\end{itemize}
+
+\subsection*{Size Data}
+Size data is very common in medical imaging, where it is often called volumetry or morphometry.  It gives a means to quantify data in structural images.
+
+\textbf{Geodesics on size}
+Consider $\mathcal{M}$ the space of sizes (or the scale group), with the "natural" coordinate chart (i.e., a number in $\R^+$).  Let $g(q) = \frac{1}{q^2}$, and so $g^{-1}(q) = q^2$.  Note this metric is left invariant.  To see this, just push forward vectors with $q^{-1}$.
+\[g(q)(u, v) = \frac{1}{q^2}uv = g(I) (\frac{1}{q}u, \frac{1}{q}v)\]
+\begin{itemize}
+	\item e.g., we push forward, back to identity, with $q^{-1}$.
+\end{itemize}
+For $a, b \in \R$, geodesics are given by
+\[q(t) = \exp(at + b)\]
+
+\subsubsection*{Proof}
+First calculate $g^{-1}$
+\[\left(\frac{1}{q^2}^{-1}\right) = q^{2} \hspace{1cm} \rightarrow \text{ sharp map}\]
+Now, calculate the derivative of $g$.
+\[\partial_0 g_{00} = \frac{\dd}{\dd q} \frac{1}{q^2} = -2q^{-3}\]
+Now calculate the Christoffel symbol of the first kind.
+\[\Gamma_{000} = \frac{1}{2} (-2 q^{-3})\]
+Note, in 1D, two of the terms cancel out because of a minus sign.\\\\
+Now,calculate the Christoffel symbol of the second kind.
+[FILL]
+
+Write the geodesic equation:
+\[\ddot{q} - \frac{1}{q} \dot{q}^2 = 0\]
+Notice that the coefficients are the Christoffel symbols.\\\\
+Show exponentials are a solution:
+\begin{align*}
+    q(t) &= \exp(at + b)\\
+    \dot{q}(t) &= a \exp(at + b)\\
+    \ddot{q}(t) &= a^2 \exp(at + b)\\
+\end{align*}
+Plugging in,
+\[a^2 \exp(at + b) - \frac{1}{\exp(at + b)} (a \exp(at + b))^2 = 0\]
+
+\subsection*{Distances on Size Data}
+The Riemannian distance between two points $0 < a < b$ is given by the log of their ration
+\[d(a, b) = \log(b/a) = \log(b) - \log(a)\]
+Note the distance between $sa$ and $sb$ is the same as that between $a$ and $b$ (left invariance).
+
+\subsubsection*{Proof}
+Let $q(t)$ be any increasing function with $q(0) = a$ and $q(1) = b$.  Then,
+\begin{align*}
+    d(a, b) = \int_0^1 \sqrt{\frac{\dot{q}^2(t)}{q^2(t)}} \dd t\\
+    [FILL]
+\end{align*}
+
+\subsection*{Normal coordinates on sizes}
+We chose a base of point 1, and use a chart where
+\[x(p) = d(1, p) \text{sign}(p - 1) = \log(p)\]
+This chart has the property that the Euclidean distance from $1$ to $p$ in the chart, is the Riemnanian distance on the manifold.\\\\
+This property defines "normal coordinates" on a manifold.
+
+\subsection*{Probability data}
+Probability data shows up in image segmentation/classification tasks, where an image or a pixel is assigned to a given category with some probability (e.g., foreground vs. background)
+\begin{itemize}
+	\item Consider $\mathcal{M}$ the space of probabilities, with the "natural" coordinate chart (i.e., a number in (0, 1)).  Let's choose the metric tensor $g(q) = \frac{1}{q^2 (1-q)^2}$ which says that the parameter changes near the endpoints are larger than those near the middle.  Note, $g$ is invariant under $q \mapsto 1 - q$.\\\\
+	\item For $a, b \in \mathcal{R}$, geodesics are given by the logistic function (sigmoid)
+	\[q(t) = \frac{1}{1 + \exp(at + b)}\]
+\end{itemize}
+
+
+
+
+\end{document}
