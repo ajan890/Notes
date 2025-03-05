@@ -235,7 +235,256 @@ Probability data shows up in image segmentation/classification tasks, where an i
 	\[q(t) = \frac{1}{1 + \exp(at + b)}\]
 \end{itemize}
 
+\section*{Review}
+\underline{Geodesics}: Shortest path between two endpoints on a Riemannian manifold (metric tensor at every $p \in \mathcal{M}$)
+[FILL drawing/equations]
+\[A[\gamma] = \int_0^1 \text{no square root} \dd t\]
+Minimizers of $A$ also minimize $L_1$ and are constant speed.  We optimized the action integral by taking a directional derivative (in the space of curves), and setting the result to 0.\\\\
+For a curve $g(t)$ in a chart, $\Rightarrow \ddot{q}^i(t) + \Gamma_i$ [FILL]
 
+\subsubsection*{Examples of Geodesics}
+\begin{itemize}
+	\item Euclidean space, linear functions of time
+	\item Polar coordinates, it was hard, but we did get the same answer.
+	\item Scale group, left invariant metric $g_q(x, y) = \frac{1}{q^2} xy$
+	\item A solution:
+    \[q(t) = \exp(at + b)\]
+    \begin{itemize}
+        \item $a$ and $b$ describe initial velocity and position (although they are not exactly initial velocity and position)
+    \end{itemize}
+    \[\text{distance}(p, q) = \log(q/p) \hspace{1cm}\{q > p\}\]
+\end{itemize}
+
+\subsection*{Probability data}
+Probability data shows up in image segmentation/classification tasks, where an image or a pixel is assigned a to a given category with some probability (e.g. foreground versus background).\\\\
+Consider $\mathcal{M}$ in the space of probabilities, with the "natural" coordinate chart (i.e., a number in (0, 1)).  Let's choose the metric tensor $g(q) = \frac{1}{q^2 (1 - q)^2}$, which says that marameter changes near the endpoints are larger than those near the middle.  Note, $g$ is invariant under $q \mapsto 1 - q$.\\\\
+For $a, b \in \mathcal{R}$, geodesics are given by the logistic function (sigmoid)
+\[q(t) = \frac{1}{1 + \exp(at + b)}\]
+
+\subsubsection*{Proof:}
+[FILL]
+
+\subsection*{Distances on Probabilities}
+For $a < b \in (0, 1)$, the distance between two probabilities is the difference between their log of odds
+\[d(a, b) = \log\left(\frac{b}{1 - b}\right) - \log\left(\frac{a}{1 - a}\right)\]
+\begin{itemize}
+	\item Each term here is called a "log of odds", aka a "logit"
+\end{itemize}
+
+\subsubsection*{Proof:}
+Note $\log(q / (1 - q))$ is the inverse of the logistic function (function inverse, not matrix inverse).  Let $q(t) = 1 / (1 + \exp(ct + d))$ (for $c < 0$).\\\\
+Consider the sigmoid curve:
+\[d(a, b) = \int \sqrt{\frac{\dot{q}^2(t)}{q(t) (1 - q(t))}}\dd t\]
+If we define:
+\begin{align*}
+    \dot{q} &= cq(1 - q)\\
+    \dot{q}^2 &= c^2 q^2 (1 - q^2)
+\end{align*}
+then, we can simplify:
+\begin{align*}
+    &= \int_0^1 \sqrt{c^2} \dd t\\
+    &= \int_0^1 c \dd t
+\end{align*}
+Note that $c$ must be negative for an increasing curve.  (Take the correct sign when doing a square root)\\\\
+Now, work out $c$ as a function of $a$ and $b$.\\\\
+\begin{itemize}
+	\item If $t = 0$, then $q(0) = \frac{1}{1 + \exp(d)} = a \Rightarrow d = \log(a / 1 - q)$.
+	\item If $t = 1$, then $q(t) = \frac{1}{1 + \exp(c + d)} = b$
+\end{itemize}
+Therefore,
+\begin{align*}
+    c + d &= \log\left(\frac{b}{1 - b}\right)\\
+    -c &= d - (c + d) = \log\left(\frac{b}{1 - b}\right) - \left(\frac{a}{1 - a}\right)
+\end{align*}
+
+\subsection*{Normal Coordinates on Probabilities}
+Choose a base point of 0.5 and write
+\[x(p) = \text{sign}(p - 0.5)\dd (0.5, p) = \log\left(\frac{p}{1 - p}\right)\]
+These are normal coordinates for this 1D manifold.  A statistics, this is called the "canonical parameterization" (of a Bernoulli random variable)
+\begin{itemize}
+	\item In normal coordinates, every straight line moving away from the base point is a constant speed geodesic
+\end{itemize}
+
+\subsection*{Positive Definite Symmetric Matrix Data}
+Diffusion tensor imaging outputs a positive definite symmetric matrix at each pixel.  This helps us understand local orientation of tissue microstructure, which is crucial for identifying white matter tracts in the brain, or fiber orientations in muscle such as heart.\\\\
+With $A$ a square matrix, we denote its exponentail as $\exp(A)$.  It can be defined using a Taylor series
+\[\exp(A) = \sum_{n = 0}^\infty \frac{1}{n!} A^n\]
+or with a "compound interest formula"
+\[\exp(A) = \lim_{n \rightarrow \infty} \left(I + \frac{1}{n}A\right)^n\]
+
+\subsection*{Properties of the Matrix Exponential}
+\begin{enumerate}
+    \item $\exp(A)A = A \exp(A)$
+    \item $\frac{\dd}{\dd t} \exp(At) = A \exp(At) = \exp(At)A$
+    \item If $A$ and $B$ commute, then 
+    \[\exp(A + B) = \exp(A)\exp(B) = \exp(B)\exp(A)\]
+\end{enumerate}
+
+\subsection*{Positive Definite Symmetric Matrix Data}
+The matrix logarithm is the inverse of the matrix exponential, i.e., $\exp(\log(A)) = A$.  It can also be defined by a Taylor series
+\[\log(I + A) = \sum_{n = 1}^\infty (-1)^{n + 1} \frac{1}{N} A^n\]
+
+\subsection*{Geodesics on Positive Definite Symmetric Matrices}
+Consider $\mathcal{M}$ the set of positive definite symmetric matrices, with the metric
+\begin{align*}
+    g_A(U, V) &= \text{tr} [(A^{-\frac{1}{2}}UA^{-\frac{1}{2}})(A^{-\frac{1}{2}}VA^{-\frac{1}{2}})]\\
+    &= \text{tr}[(A^{-1}U)(A^{-1}V)]
+\end{align*}
+Here $U, V$ are symmetric, but not necessarily positive definite.  Geodesics take the form $A(t) = b^{\frac{1}{2}} \exp(at) b^{\frac{1}{2}}$, where $a$ is symmetric and $b$ is symmetric positive definite.
+
+\subsubsection*{Proof}
+We will work in \underline{extrinsic coordinates}, and find stationary paths of the action integral directly.  Consider a path $A(t)$, perturbed to $A(t) + \epsilon \delta A(t)$.  Here, $\delta A$ is symmetric, with $\delta A(0) = \delta A(1) = 0$.  Take the derivative of our action integral
+\begin{align*}
+    &\frac{\dd}{\dd \epsilon}\int_0^1 \text{tr} \left[(A + \epsilon \delta A)^{-1} (\dot{A} + \epsilon \delta \dot{A})(A + \epsilon \delta A)^{-1} (\dot{A} + \epsilon \delta \dot{A})\right] \dd t \bigg|_{\epsilon = 0}\\
+    &= \int \text{tr} \left[-A^{-1} \delta AA^{-1} \dot{A} A^{-1} \dot{A}\right] + \text{tr} \left[A^{-1} \delta \dot{A} A^{-1} \dot{A}\right] + \text{tr}\left[-A^{-1} \dot{A} A^{-1} \delta AA^{-1} \dot{A}\right] + \text{tr} \left[A^{-1} \dot{A} A^{-1} \delta \dot{A}\right] \dd t\\
+    &= \int_0^1 \partial \text{tr}[-A^{-1} \dot{A} A^{-1} \dot{A} A^{-1} \delta A + A^{-1} \dot{A} A^{-1} \delta \dot{A}] \dd t\\
+    \intertext{By integration by parts:}
+    &= \int_0^1 \partial \text{tr} \left[(-A^{-1} \dot{A} A^{-1} \dot{A} A^{-1} - \frac{\dd}{\dd t} A^{-1} \dot{A} A^{-1}) \delta A\right] \dd t\\
+    &= \frac{\dd}{\dd t} \left(A^{-1} \dot{A} A^{-1}\right)\\
+    &= -A^{-1} \dot{A} A^{-1} \dot{A} A^{-1} + A^{-1} \ddot{A} A^{-1} - A^{-1} \dot{A} A^{-1} \dot{A} A^{-1}\\
+    \intertext{Now, we can rewrite the whole expression and set it to 0.}
+    0 &= A^{-1} \ddot{A} A^{-1} - A^{-1} \dot{A} A^{-1} \dot{A} A^{-1}
+    \intertext{We can multiply all the terms by $A^{-\frac{1}{2}}$ to further simplify:}
+    0 &= A^{-\frac{1}{2}} \ddot{A} A^{-\frac{1}{2}} - (A^{-\frac{1}{2}} \dot{A} A^{-\frac{1}{2}})(A^{-\frac{1}{2}} \dot{A} A^{-\frac{1}{2}}) \\
+    0 &= \ddot{A} - \dot{A} A^{-1} \dot{A}
+\end{align*}
+Now we show our solution satisfies this equation:
+\[A(t) = b^{\frac{1}{2}} \exp(at) b^{\frac{1}{2}}\]
+\begin{align*}
+    \dot{A}(t) &= b^{\frac{1}{2}} a \exp(at) b^{\frac{1}{2}} - b^{\frac{1}{2}} a^{\frac{1}{2}} \exp(at) a^{\frac{1}{2}} b^{\frac{1}{2}}\\
+    \ddot{A} &= b^{\frac{1}{2}} [FILL]
+\end{align*}
+
+\subsection*{Distances on Positive Definite Matrices}
+If $A$ and $B$ are two positive definite symmetric matrices, then the Riemannian distance between them is
+\[d(A, B) = \sqrt{\text{tr} \left[\log(A^{-\frac{1}{2}}BA^{-\frac{1}{2}}) \log(A^{-\frac{1}{2}}BA^{-\frac{1}{2}})\right]}\]
+
+\subsubsection*{Proof}
+Consider the path $C(t) = A^{\frac{1}{2}} \exp(\log(A^{-\frac{1}{2}}BA^{-\frac{1}{2}})t)$.  Note that
+\[C(0) = [FILL]\]
+and that
+\[C(1) = [FILL]\]
+
+The initial velocity is then
+\[\dot{C}(0) = A^{\frac{1}{2}} \log(A^{-\frac{1}{2}}BA^{-\frac{1}{2}}) A^{\frac{1}{2}}\]
+Its initial speed squared is then:
+\begin{itemize}
+	\item the velocity times $A^{-1}$, then product with itself, then trace.
+\end{itemize}
+\[\text{tr} \left[A^{-\frac{1}{2}} \dot{C}(0) A^{-\frac{1}{2}} A^{-\frac{1}{2}} \dot{C}(0)A^{-\frac{1}{2}}\right]\]
+To find distance squared from $A$ to $B$, it is $\dot{C}(0)$.  Constant speed, integrating for 1 unit of time, then initial speed squared is equal to distance squared.
+
+\subsection*{The Riemannian Exponential}
+We have seen two examples where geodesics turn out to be exponentials.  This motivates the use of this language in other situations.  We define the Riemannian exponential as
+\[\exp_p(v)\]
+for $p \in \mathcal{M}$ and $v \in T_p\mathcal{M}$ to be the endpoint of a constant speed geodesic starting at $p$ with initial velocity $v$.  Note that the square distance between endpoints is given by
+\[d^2(p, \exp_p(v)) = g_p(v, v)\]
+
+\subsection*{Normal Coordinates}
+We can use the matrix exponential to build a coordinate system.  Given a base point $p_0$, we chose a coordinate map
+\[x^i(p) = \dd x^i (\log_{p_0}(p))\]
+With this chart all straight lines through the origin are geodesics!
+\begin{itemize}
+	\item Note that $\log_{p_0}(p)$ is the inverse of the Riemannian exponential
+\end{itemize}
+
+\section*{Averaging, Filtering, and Regression}
+\subsection*{Motivation}
+\begin{itemize}
+	\item Here we show how the Riemannian exponential and logarithm can be used to define averages by minimizing sum of square distance problems
+	\item These averages will be used to define means, interpolation and extrapolation, and regression.
+\end{itemize}
+
+\subsection*{Sample Mean in Vector Spaces}
+For $x_i$ a set of $N$ points in a vector space $V$, and using the definitions of plus and times, we define the sample mean
+\[\bar{x} = \frac{1}{N} \sum_{i = 1}^N x_i\]
+or the weighted sample mean
+\[\bar{x}_w = \frac{\sum_{i = 1}^N w_i x_i}{\sum_{i = 1}^N w_i}\]
+for weights $w_i \in \R^+$.  (Note subscript does not refer to covector components here).\\\\
+\textbf{This is the common definition of 'mean' that was taught in high school.}
+
+\subsection*{Locally weighted averages}
+In imaging, locally weighted averages are used for processing such as denoising or antialiasing, for example
+\[\bar{I}[i, j] = \frac{1}{5} (I[i, j] + I[i + 1, j] + I[i - 1, j] + I[i, j + 1] + I[i, j - 1])\]
+This is a weighted average where weights are 0 for pixels away from $(i, j)$.  These types of local averages are usually called "filters".
+
+\subsection*{Denoising}
+Here is an example of the above filter applied to denoising
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W9_2.png} 
+\end{center}
+
+\subsection*{Antialiasing}
+Filtering before downsampling is critical, otherwise we will end up with noise aliasing.
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W9_3.png} 
+\end{center}
+
+\subsection*{The Frechet Mean in Metric Spaces}
+A metric space is one where we can define a distance between any two points.  An alternative definition is to find a point that minimizes the sum of square distances to our sample
+\[\bar{x} = \arg \min_y \sum_{i = 1}^N w_i d^2(y, x_i)\]
+
+\subsection*{The Frechet Mean in Vector Spaces}
+If data lies in a vector space with the Euclidian metric, this definition is equivalent to the previous.
+
+\subsubsection*{Proof.}
+Search for a stationary point:
+\begin{align*}
+    &\frac{\dd}{\dd \epsilon}\sum_{i = 1}^N w_i |y + \epsilon \delta y - x_i|^2 \bigg|_{\epsilon = 0}\\
+    &= \sum_{i = 1}^N w_i (y - x_i)^T \delta y\\
+    \intertext{The part before the $\delta y$ acts linearly on the velocity to give the directional derivative}
+    \intertext{Next, we find a stationary point by setting it to 0}
+    &= \sum_{i = 1}^N w_i y = \sum_{i = 1}^N [FILL]
+\end{align*}
+
+\subsection*{Averages on Manifolds}
+On a Riemannian Manifold we can't apply the first definition because we have no plus or times, but we can apply the second:
+\textbf{Frechet Mean on Riemannian Manifolds:}\\\\
+For $N$ samples, $p_i \in \mathcal{M}$, the Frechet mean is characterized by 
+\[\sum_{i = 1}^N w_i \log_{\bar{p}_w} (p_i) = 0\]
+That is, we find a point such that our samples are $0$ mean in normal coordinates.
+
+\subsubsection*{Proof}
+Let $f_i(p) = d^2(p, p_i)$, and $f(p) = \sum_{i = 1}^N f_i (p)$ and work out
+\[\frac{\dd}{\dd \epsilon} f_i (p + \epsilon \delta p) \bigg|_{\epsilon = 0}\]
+In a chart, let $q(t) + \epsilon \delta q(t)$ be a geodesic curve such that $q(1) = p_i$ and $q(0) = p + \epsilon \delta p$ (i.e., $\delta p = \delta q(0)$).  Note this curve has a fixed endpoint, but not a fixed start point.\\\\
+Plug in the definition of distance
+\[= \frac{\dd}{\dd \epsilon} \int_0^1 g_{ij} (q + \epsilon \delta q)(\dot{q}^i +\epsilon \delta \dot{q}^i) (\dot{q}^j + \epsilon \delta \dot{q}^j) \dd t \bigg|_{\epsilon = 0}\]
+This is the same calculation we already did to derive the geodesic equation.  BUT there is an extra term that comes from integration by parts without fixed endpoints.  We can continue to simplify:
+\begin{align*}
+    &= \int_0^1 \partial_k g_{ij} (q) \delta q^k \dot{q}^i \dot{q}^j + g_{ij}(q) \delta \dot{q}^i \dot{q}^j + g_{ij}(q) \dot{q}^i \delta \dot{q}^j \dd t\\
+    &= 0 - g_{ij} (q) \delta q^i(0) \dot{q}^j (0) - g_{ij} (q) q^i(0) \delta q^j(0)
+\end{align*}
+Since $\delta q(0) = \delta p$, and $\dot{q}(0) = \log_p(p_i)$, we must have [FILL].\\\\
+Therefore,
+\[\dd f(p) = [FILL]\]
+and since the flat map is always invertible we recover our definition by setting the gradient to 0 for a stationary solution
+\[\sum_{i = 1}^N \log_p(p_i) = 0\]
+
+\subsection*{Interpolation by Weighted Averaging}
+When we have only two datapoints, this equation is very easy to solve.  With $w_i \in [0, 1]$ and $w_0 = 1 - w_1$, this corresponds to linear interpolation between the two points.\\\\
+When $w_1 = 1$ this will give $p_1$, when $w_1 = 0$ this will give $p_0$.  If $w_1$ is outside of [0, 1] this corresponds to extrapolation.\\\\
+The weighted average interpolation between two points $p_0$ and $p_1$ is found by minimizing
+\[(1 - w_1)d^2(\bar{p}_w, p_0) + w_1 d^2 (\bar{p}_w, p_1)\]
+is given by a point a fraction $w_1$ along the geodesic from $p_0$ to $p_1$.
+
+\subsubsection*{Proof}
+With two points, the above solution gives
+\[(1 - w_1) \log_{\bar{p}_w}(p_0) + w_1 \log_{\bar{p}_w} (p_1) = 0\]
+This means the initial velocities are colinear and correspond to a single geodesic connecting $p_0$ to $p_1$.\\\\
+Also, the distance from $\bar{p}_w$ to $p_0$ is $w_1 / (1 - w_1)$ times as long as the distance from $\bar{p}_w$ to $p_1$.  This is true when $\bar{p}_w$ is a fraction $w_1$ of the way from $p_0$ to $p_1$.
+
+\subsection*{Weighted avverages in a chart will leave the manifold}
+Here we show an interpolation between two 2D rotation matrices, through their action on an image.  Simple weighted averages in a chart leave the manifold.
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W9_4.png} 
+\end{center}
+
+\subsection*{Interpolation between PDS Matrices}
+If $A$ is PDS, then $x^T A^{-1} x = 1$ defines an ellipse(oid) to be visualized.  Note $A^{\frac{1}{2}} (\cos(\theta), \sin(\theta))^T$ is a solution for all $\theta$.
+\begin{center} 
+	\includegraphics*[width=0.7\textwidth]{W9_5.png} 
+\end{center}
 
 
 \end{document}

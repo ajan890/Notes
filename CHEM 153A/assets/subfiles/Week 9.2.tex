@@ -1,0 +1,424 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+\usepackage{tabularx}
+\usepackage{multicol}
+\usepackage[table,xcdraw]{xcolor}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+\graphicspath{{../images/Week 9}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+\newcommand{\example}{\textbf{Example: }}
+\newcommand{\water}{\text{H$_2$O}}
+\newcommand{\hydroxide}{\text{OH$^-$}}
+\newcommand{\hydronium}{\text{H$_3$O$^+$}}
+\newcommand{\proton}{\text{H$^+$}}
+\newcommand{\pc}{$^+$}
+\newcommand{\nc}{$^-$}
+\newcommand{\ka}{\text{$K_\text{a}$}}
+
+% import subfiles
+\usepackage{subfiles}
+
+\begin{document}
+
+\section*{Cellular Respiration}
+\textbf{cellular respiration} = process by which the pyruvate produced by glycolysis is further oxidized to \water and CO$_2$
+
+\subsection*{Stage 1 of Cellular Respiration}
+\begin{itemize}
+	\item Stage 1: Oxidation of fuels to acetyl-CoA
+	\begin{itemize}
+        \item geberates ATP, NADH, FADH$_2$
+    \end{itemize}
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.5\textwidth]{L3_1.png}
+\end{center}
+
+\subsection*{Stage 2 of Cellular Respiration}
+\begin{itemize}
+	\item Stage 2: oxidation of acetyl groups to CO$_2$ in the \textbf{citric acid cycle (tricarboxylic acid (TCA) cycle, Krebs cycle)}
+	\begin{itemize}
+        \item generates NADH, FADH$_2$, and one GTP
+    \end{itemize}
+\end{itemize}
+
+\begin{center} 
+	\includegraphics*[width=0.5\textwidth]{L3_2.png}
+\end{center}
+
+\subsection*{Stage 3 of Cellular Respiration}
+\begin{itemize}
+	\item Stage 3: electron transfer chain and oxidative phosphorylation
+	\begin{itemize}
+        \item generates the vast majority of ATP from catabolism
+    \end{itemize}
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.5\textwidth]{L3_3.png}
+\end{center}
+\textbf{Pyruvate is the metabolite that links two central catabolic pathways, glycolysis, and the citric acid cycle.}  It is therefore a logical point for regulation that determines the rate of catabolic activity and the partitioning of pyruvate among its possible uses.
+
+\subsection*{Pyruvate is Oxidized to Acetyl-CoA and CO$_2$}
+\begin{itemize}
+	\item \textbf{Mitochondrial pyruvate carrier (MPC)} = an \proton-coupled pyruvate specific symporter in the inner mitochondrial membrane
+	\item \textbf{pyruvate dehydrogenase (PDH) complex} = highly ordered cluster of enzymes and cofactors that oxidizes pyruvate in the mitochondrial matrix to acetyl-CoA and CO$_2$
+	\begin{itemize}
+        \item the series of chemical intermediates remain bound to the enzyme subunits
+        \item regulation results in precisely regulated flux
+    \end{itemize}
+\end{itemize}
+
+\subsection*{The Mitochondrion}
+\begin{itemize}
+	\item Energy production: Site of \textbf{aerobic respiration}, oxidizing pyruvate to CO$_2$ and generating ATP
+	\item Diverse biochemical processes:
+	\begin{itemize}
+        \item Protein synthesis
+        \item Amino acid and nucleotide metabolism
+        \item Fatty-acid catabolism
+        \item Lipid, quinone, and steroid biosynthesis
+        \item Iron-sulfur (Fe/S) cluster biogenesis
+        \item Apoptosis (programmed cell death)
+    \end{itemize}
+    \item The mitochondrian proteome contains over 1000 proteins, all (ETC subunits) contributing to many cellular pathways beyond ATP synthesis
+\end{itemize}
+\begin{center} 
+    \includegraphics*[width=0.4\textwidth]{L3_4.png}
+	\includegraphics*[width=\textwidth]{L3_5.png}
+\end{center}
+
+\subsection*{The Endosymbiotic Origin of Mitochondria}
+\textbf{Lynn Margulis and the Endosymbiotic Theory (1967)}
+\begin{itemize}
+	\item Mitochondria evolved from an \textbf{endosymbiotic relationship} with an ancestral organism
+	\item Phylogenetic analyses confirmed:
+	\begin{itemize}
+        \item Mitochondria originated from a lineage related to \textbf{alphaproteobacteria}
+        \item The host lineage is closely related to \textbf{Asgard Archaea}
+    \end{itemize}
+    \item Early controversy turned into widespread acceptance with advances in sequencing and proteomics
+\end{itemize}
+\textbf{Prokaryotic Feature of Mitochondria:}
+\begin{itemize}
+	\item Double membrane
+	\item Circular DNA similar to bacteria
+	\item Prokaryote-like ribosomes
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.6\textwidth]{L3_6.png}
+\end{center}
+
+\subsection*{Mitochondria and the Evolution of Eukaryotes}
+\begin{itemize}
+	\item \textbf{The Last Eukaryotic Common Ancestor (LECA)}
+	\begin{itemize}
+        \item All modern eukaryotes are descended from a mitochondrion-containing ancestor
+        \item LECA had many features of modern eukaryotes, including a fully functional mitochondrion
+    \end{itemize}
+	\item \textbf{Mitochondria's Evolutionary Role:}
+	\begin{itemize}
+        \item Enabled eukaryotes to thrive in oxygen-rich environments through efficient ATP production
+        \item Supported the evolution of multicellularity and cellular complexity
+    \end{itemize}
+	\item \textbf{Ongoing Research:}
+	\begin{itemize}
+        \item Genomic and cell biology studies reveal diversity in mitochondrial structure and function across
+        \item Controversy remains regarding the exact bacterial lineage that gave rise to mitochondria
+    \end{itemize}
+\end{itemize}
+
+\subsection*{The Mitochondrion}
+\begin{itemize}
+	\item \textbf{Double Membrane Structure}
+	\begin{itemize}
+        \item The mitochondrion is enclosed by an \textbf{outer membrane} and an \textbf{inner membrane (IMM)}
+        \item Both membranes are \textbf{semi-permeable}, with the IMM being \textbf{impermenable to charged molecules} like protons, ensuring the separation of compartments necessary for energy production
+    \end{itemize}
+	\item \textbf{Cristae - Maximizing Efficiency:}
+	\begin{itemize}
+        \item Cristae are the \textbf{folded structures of the IMM}, significantly increasing its surface area
+        \item This expanded surface area accommodates more \textbf{Electron Transport Chain (ETC) complexes} and \textbf{ATP synthase}, enhancing the mitochondrion's capacity for ATP production
+        \item Cristae also facilitate the \textbf{compartmentalization and concentration of protons}, creating a stronger electrochemical gradient for ATP synthesis
+    \end{itemize}
+	\item \textbf{Mitochondrial Matrix:}  The \textbf{matrix} is the internal space of the mitochondrion.  It houses the enzymes of the \textbf{TCA cycle (Krebs cycle)}, which generate NADH and FADH$_2$, essential electron carriers for the electron transport chain.
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.6\textwidth]{L3_7.png}
+\end{center}
+
+\subsection*{Pyruvate Transport}
+\begin{itemize}
+	\item The transport of pyruvate into the mitochondria involves crossing \textbf{two membranes}: the \textbf{outer mitochondrial membrane (OMM)} and the \textbf{inner mitochondrial membrane (IMM)}
+	\begin{itemize}
+        \item The OMM contains \textbf{porins}, which are large, non-selective protein channels.  These porins allow \textbf{small molecules like pyruvate} (and other metabolites up to $\sim$5 kDa) to diffuse freely between the cytosol and the \textbf{intermembrane space (IMS)}
+        \item \textbf{Mechanism:} Pyruvate diffuses through the porins in a passive manner, driven by its concentration gradient
+    \end{itemize}
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L3_8.png}
+\end{center}
+\begin{itemize}
+	\item The IMM is impermeable to charged or polar molecules, including pyruvate, so it requires a \textbf{specific transporter} for pyruvate to enter the matrix.  Transport is mediateed by the \textbf{Mitochondrial Pyruvate Carrier (MPC)}, a protein complex embedded in the IMM:
+	\item Pyruvate is transported into the mitochondrial matrix together with a proton (\proton) via the MPC
+	\item This symport is powered by the \textbf{proton gradient} across the IMM:
+	\begin{itemize}
+        \item The \textbf{intermembrane space (IMS)} has a lower pH (7.0-7.4), while the \textbf{matrix} has a higher pH (7.8)
+        \item Protons moving down their gradient into the matrix drive the transport of pyruvate into the matrix
+    \end{itemize}
+\end{itemize}
+\textbf{Energy Source:}
+\begin{itemize}
+	\item The transport is \textbf{secondary active transport}, as it indirectly uses the energy from the proton gradient created by the electron transport chain (ETC)
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.8\textwidth]{L3_9.png}
+\end{center}
+Pyruvate is imported into the mitochondrial matrix for oxidation by the TCA cycle
+\begin{itemize}
+	\item \textbf{What happens?}  Pyruvate and \proton symport into the matrix via mitochondrial pyruvate carrier (MPC)
+	\item \textbf{What powers the transport?}  Driven by the pH gradient: matrix (pH 7.8) vs. IMS (pH 7.0-7.4)
+	\item \textbf{Why is it important?}  Essential for TCA cycle and ATP production
+\end{itemize}
+\textbf{Symport mechanism:}
+\begin{itemize}
+	\item Pyruvagte is transported into the matrix together with a proton (\proton) via the MPC in a process called \textbf{symport}
+	\item The inward flow of protons (driven by the gradient) provides the energy to "pull" pyruvate into the matrix, even if the pyruvate concentration is higher inside the matrix than in the IMS.  Ths pH gradient (a component of the proton-motive force) is the \textbf{driving force} for this transport, leveraging the natural movement of protons down their gradient to "power" the symport of pyruvate
+\end{itemize}
+
+\subsection*{The PDH Complex Catalyzes an Oxidative Decarboxylaion}
+\begin{itemize}
+	\item \textbf{oxidative decarboxylation:} an irreversible oxidation process in which the carboxyl group is removed, forming CO$_2$.
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L3_10.png}
+\end{center}
+
+\subsection*{The PDH Complex Employs Three Enzymes and Five Coenzymes to Oxidize Pyruvate}
+Three enzymes:
+\begin{itemize}
+	\item pyruvate dehydrogenase, E$_1$
+	\item dihydrolipoyl transacetylase, E$_2$
+	\item dihydrolipoyl dehydrogenase, E$_3$
+\end{itemize}
+Five coenzymes:
+\begin{itemize}
+	\item thiamine pyrophosphate (TPP)
+	\item lipoate
+	\item coenzyme A (CoA, CoA-SH)
+	\item flavin adenine dinucleotide (FAD)
+	\item nicotinamide adenine dinucleotide (NAD)
+\end{itemize}
+
+\subsection*{Lipoate}
+\textbf{Lipoate} is a coenzyme with two thiol groups that can undergo reversible oxidation to a disulfide bond (-S-S-)
+\begin{itemize}
+	\item serves as an electron (hydrogen) carrier and an acyl carrier
+	\item covalently linked to E$_2$ via a lysine residue
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L3_11.png}
+\end{center}
+
+\subsection*{Thiamine Pyrophosphate (TPP)}
+\begin{itemize}
+	\item \textbf{thiamine pyrophosphate:} coenzyme derived from vitamin B$_1$
+	\begin{itemize}
+        \item the thiazolium ring plays an important role in the cleavage of bonds adjacent to a carbonyl group
+    \end{itemize}
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_15.png} 
+\end{center}
+
+\subsection*{Coenzyme A (CoA-SH)}
+\begin{itemize}
+	\item coenzyme A has a reactive thiol (-SH) group that is critical to its role as an acyl carrier
+	\begin{itemize}
+        \item the -SH group forms a \textbf{thioester} with acetate in acetyl-CoA
+    \end{itemize}
+\end{itemize}
+\begin{center} 
+    \includegraphics*[width=\textwidth]{L3_12.png}
+\end{center}
+
+\subsection*{NAD and NADP Undergo Reversible Reduction of the Nicotinamide Ring}
+\begin{center} 
+    \includegraphics*[width=\textwidth]{L3_13.png}
+\end{center}
+
+\subsection*{Oxidized and Reduced FAD and FMN}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L3_14.png}
+\end{center}
+
+\subsection*{Coenzyme and Prosthetic Group Roundup}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L3_15.png}
+\end{center}
+
+\subsection*{The PDH Complex Enzymes}
+\begin{itemize}
+	\item the PDH complex contains multiple copies of:
+	\begin{itemize}
+        \item pyruvate dehydrogenase (E$_1$)
+        \item dihydrolipoyl transacetylase (E$_2$)
+        \item dihydrolipoyl dehydrogenase (E$_3$)
+    \end{itemize}
+	\item an E$_2$ core (of 24-60 copies) is surrounded by multiple and variable numbers of E$_1$ and E$_3$ copies
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.6\textwidth]{L3_16.png}
+\end{center}
+Enzymes have evolved to form complexes to efficiently achieve a series of chemical transformations without releasing the intermediates into the bulk solvent.  This strategy, seen in the pyruvate dehydrogenase complex of the metabolions of the citric acid cycle, is ubiquitous in other pathways of metabolism, in respiration, and in the many complexes.
+
+\subsection*{The PDH Complex Enzymes}
+\begin{itemize}
+	\item \textbf{E1: Pyruvate Dehydrogenase (Decarboxylase)}
+	\begin{itemize}
+        \item Catalyzes the decarboxylation of pyruvate, releasing CO$_2$ and forming hydroxyethyl-TPP (a covalent intermediate with thiamine pyrophosphate, TPP)
+        \item Association: E1 binds to E2 non-covalently, allowing close interaction with E2's lipoyl domain
+    \end{itemize}
+	\item \textbf{Dihydrolipoyl Transacetylase}
+	\begin{itemize}
+        \item Transfers the acetyl group from hydroxyethyl-TPP to coenzyme A (CoA) forming acetyl-CoA
+        \item Structure: E2 forms the \textbf{core structure} of the complex, providing a scaffold for E1 and E3 to associate
+        \item The flexible \textbf{lipoyl arms} of E2 (with covalently attached lipoic acid cofactor) shuttle intermediates between the active sites of E1, E2, and E3
+    \end{itemize}
+	\item \textbf{Dihydroilpoyl Dehydrogenase}
+	\begin{itemize}
+        \item Reoxidizes the reduced lipoyl group of E2 and transfers electrons to NAD\pc, forming NADH
+        \item Association: E3 is non-covalently attached to the E2 core and interacts with the lipoyl domain during electron transfer
+    \end{itemize}
+\end{itemize}
+
+\subsection*{The PDH Complex Integrates Five Reactions to Convert Pyruvate into Acetyl-CoA}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L3_17.png}
+\end{center}
+
+\subsection*{Oxidative Decarboxylation of Pyruvate}
+Pyruvate dehydrogenase, E$_1$, with bound TPP catalyzes:
+\begin{itemize}
+	\item Step 1: decarboxylation of pyruvate to the hydroethyl derivate
+	\begin{itemize}
+        \item Rate-limiting step
+    \end{itemize}
+	\item Step 2: Oxidation of the hydroethyl derivate to an acetyl group
+	\begin{itemize}
+        \item Electrons and the acetyl group are transferred from TPP to the lipoyllysyl group of $E_2$
+    \end{itemize}
+\end{itemize}
+Dihydrolipoyl Transacetylase, E$_2$, catalyzes:
+\begin{itemize}
+	\item Step 3: esterification of the acetyl moiety to one of the lipoyl-SH groups, followed by transesterification to CoA to form acetyl-CoA
+\end{itemize}
+Dihydrolipoyl dehydrogenase, E$_3$, catalyzes:
+\begin{itemize}
+	\item Step 4: Electron transfer to regenerate the oxidized form of the lipoyllysyl group
+	\item Step 5: Electron transfer to regenerate the oxidized FAD cofactor, forming NADH
+\end{itemize}
+
+\subsection*{The Five-Reaction Sequence of the PDH Complex is an Example of Substrate Channeling}
+\begin{itemize}
+	\item \textbf{Substrate Channeling} = the passage of intermediates from one enzyme directly to another enzyme without release
+	\item the long lipoyllysyl arm of E$_2$ channels the substrate from the active site of E$_1$ to E$_2$ to E$_3$
+	\begin{itemize}
+        \item tethers intermediates to the enzyme complex
+        \item increases the efficiency of the overall reaction
+        \item minimizes side reactions
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Regulation of the PDH Complex Ensures Cellular Energy Balance}
+\begin{itemize}
+    \item \textbf{Activation by Dephosphorylation (via PDP)}
+    \item \textbf{Inactivation by Phosphorylation (via PDK)}
+\end{itemize}
+Activators of PDC (Promote Dephosphorylation):
+\begin{itemize}
+	\item Ca$^{2+}$: Directly activates PDP; important in muscle contraction and energy demand
+	\item Insulin: Stimulates PDP; promotes glucose utilization in the fed state
+	\item Pyruvate: Inhibits PDK, allowing PDC to stay active
+	\item ADP: Inhibits PDK, signals low energy, promoting PDC activation
+	\item NAD\pc: Competes with NADH to inhibit PDK, favoring PDC activation
+\end{itemize}
+Inhibitors of PDC (Promote Phosphorylation):
+\begin{itemize}
+	\item ATP: Activates PDK; signals high energy, reducing pyruvate usage
+	\item NADH: Activates PDK; indicates reduced state, suppressing PDC
+	\item Acetyl-CoA: Activates PDK; signals sufficient TCA cycle substrate
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L3_18.png}
+\end{center}
+
+\subsection*{Reactions of the Citric Acid Cycle}
+\textbf{Reactions of the citric acid cycle follow a chemical logic:}  In its catabolic role, the citric acid cycle oxidizes acetyl-CoA to CO$_2$ and \water.  Energy from the oxidations in the cycle drives the synthesis of ATP.  The chemical strategies for activating groups for oxidation and for conserving energy in the form of reducing power and high-energy compounds are used in many other biochemical pathways\\\\
+The Citric Acid Cycle oxidizes acetyl-CoA to CO$_2$ and conserves energy:
+\begin{itemize}
+	\item Produces 3 NADH, 1 FADH$_2$, and 1 GTP (or ATP) per cycle
+	\item Regenerates oxaloacetate, allowing continuous substrate oxidation
+	\item Feeds electrons into the electron transport chain for ATP production
+	\item Citrate formed from acetyl-CoA and oxaloacetate is oxidized to yield:
+	\begin{itemize}
+        \item CO$_2$
+        \item NADH
+        \item FADH$_2$
+        \item GTP or ATP
+    \end{itemize}
+    \item energy from the \textbf{four} oxidations is conserved as NADH and FADH$_2$
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L3_19.png}
+\end{center}
+The cycle enables the sequential oxidation of acetyl-CoA carbons, capturing high-energy electrons as NADH and FADH$_2$.  Regenerating oxaloacetate ensures that the process can continue indefinitely as long as acetyl-CoA is available, maximizing the energy yield from substrates like glucose and fatty acids.
+
+\subsection*{In Eukaryotes, the Mitochondrion is the Site of Energy-Yielding Oxidative Reactions and ATP Synthesis}
+\begin{itemize}
+	\item Isolated mitochondria contain all enzyme, coenzymes, and proteins needed for:
+	\begin{itemize}
+        \item the citric acid cycle
+        \item electron transfer and ATP synthesis by oxidative phosphorylation
+    \end{itemize}
+    \item (and also:)
+    \begin{itemize}
+        \item oxidation of fatty acids and amino acids to acetyl-CoA
+        \item oxidative degradation of amino acids to citric acid cycle intermediates
+    \end{itemize}
+\end{itemize}
+
+\subsection*{The Sequence of Reactions in the Citric Acid Cycle Makes Chemical Sense}
+\begin{itemize}
+	\item complete oxidation of acetyl-CoA and CO$_2$ extracts the maximum potential energy
+	\item direct oxidation to yield CO$_2$ and CH$_4$ is not biochemically feasible because [most] organisms cannot oxidize CH$_4$
+	\item carbonyl groups are more chemically reactive than a methylene group or methane
+	\item \textbf{each step of the cycle involves either:}
+	\begin{itemize}
+        \item an energy-conserving oxidation
+        \item placing functional groups in position to facilitate oxidation or oxidative decarboxylation
+    \end{itemize}
+\end{itemize}
+
+
+
+\end{document}
