@@ -1,0 +1,723 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+\usepackage{tabularx}
+\usepackage{multicol}
+\usepackage[table,xcdraw]{xcolor}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+\graphicspath{{../images/Week 9}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+\newcommand{\example}{\textbf{Example: }}
+\newcommand{\water}{\text{H$_2$O}}
+\newcommand{\hydroxide}{\text{OH$^-$}}
+\newcommand{\hydronium}{\text{H$_3$O$^+$}}
+\newcommand{\proton}{\text{H$^+$}}
+\newcommand{\pc}{$^+$}
+\newcommand{\nc}{$^-$}
+\newcommand{\ka}{\text{$K_\text{a}$}}
+
+% import subfiles
+\usepackage{subfiles}
+
+\begin{document}
+\section*{Glycolysis (Continued)}
+\subsection*{Importance of Phosphorylated Intermediates}
+\begin{itemize}
+	\item All nine intermediates are phosphorylated
+	\item Functions of the phosphoryl groups:
+	\begin{itemize}
+        \item Prevent glycolytic intermediates from leaving the cell
+        \item Serve as essential components in the enzymatic conservation of metabolic energy
+        \item Lower the activation energy and increase the specificity of the enzymatic reactions
+    \end{itemize}
+\end{itemize}
+
+\section*{The Preparatory Phase of Glycolysis Requires ATP}
+\begin{itemize}
+	\item In the preparatory phase of glycolysis:
+	\begin{itemize}
+        \item Two molecules of ATP are invested to activate \textbf{glucose} to fructose \textbf{1,6-bisphosphate}
+        \item The bond between C-3 and C-4 of fructose 1,6-bisphosphate is then broken to yield two molecules of triose phosphate
+    \end{itemize}
+\end{itemize}
+
+\subsection*{(Step 1) Phosphorylation of Glucose}
+\begin{itemize}
+	\item Hexokinase activates glucose by phosphorylating at C-6 to yield \textbf{glucose 6-phosphate}
+	\begin{itemize}
+        \item ATP serves as the phosphoryl donor
+        \item hexokinase requires Mg$^{2+}$ for its activity
+        \item irreversible under intracellular conditions
+    \end{itemize}
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.8\textwidth]{L1_1.png}
+\end{center}
+Hexokinase commits glucose to the hexose \underline{phosphate pool} by converting glucose to glucose-6-phosphate (G6P)
+
+\subsection*{Hexokinase mechanism basics}
+\begin{itemize}
+	\item Hexokinase relies on magnesium for stabilizing triphosphate
+	\item Shielding the negative phosphate charges allows for nucleophilic attack by hydroxyl
+	\item Example in \underline{metal-ion catalysis}
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_2.png}
+\end{center}
+\textbf{Hexokinase Reaction:}
+\begin{center}
+    Glucose + ATP $\rightarrow$ Glucose-6-Phosphate (G6P) + ADP
+\end{center}
+\textbf{Commitment to Metabolic Pool:}
+\begin{itemize}
+	\item The hexose phosphate pool
+	\item Significance:
+	\begin{itemize}
+        \item Traps glucose inside the cell (G6P cannot cross the cell membrane)
+        \item Commits glucose to further metabolism within the cell
+    \end{itemize}
+\end{itemize}
+
+\subsection*{The pool of hexoses}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_3.png}
+\end{center}
+
+\subsection*{(Step 2) Conversion of Glucose 6-Phosphate to Fructose 6-Phosphate}
+\begin{itemize}
+	\item Phosphohexose isomerase (phosphoglucose isomerase) catalyzes the reversible isomerization of glucose 6-phosphate to fructose 6-phosphate
+	\begin{itemize}
+        \item mechanism involves an enediol intermediate
+        \item reaction readily proceeds in either direction
+    \end{itemize}
+    \begin{center} 
+        \includegraphics*[width=0.9\textwidth]{L1_4.png}
+    \end{center}
+    \item The rearrangement of G6P to F6P is critical for th efficient progression of glycolysis.  \textbf{It ensures compatibility with downstream enzymes, facilitates the symmetrical cleavage of the sugar,} and \textbf{prepares the molecule for the energy-investment step catalyzed by PFK-1.}  Without this rearrangement, glycolysis could not proceed in a coordinated or efficient manner.
+\end{itemize}
+
+\subsection*{Phosphohexose isomerase mechanism}
+\begin{center} 
+	\includegraphics*[width=0.9\textwidth]{L1_5.png}
+\end{center}
+
+\subsection*{(Step 3) Phosphorylation of Fructose 6-Phosphate to Fructose 1,6-Bisphosphate}
+\begin{itemize}
+	\item Phosphofructokinase-1 (PFK-1) is a key regulatory enzyme in glycolysis
+	\item Catalyzes the transfer of a phosphoryl group from ATP to fructose 6-phosphate to yield fructose 1,6-bisphosphate
+	\begin{itemize}
+        \item Essentially irreversible under cellular conditions
+        \item The first "committed" step in the glycolytic pathway
+    \end{itemize}
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.9\textwidth]{L1_6.png}
+\end{center}
+
+\subsection*{Allosteric Regulation of PFK-1}
+\begin{itemize}
+	\item Activity increases when:
+	\begin{itemize}
+        \item ATP supply is depleted
+        \item ADP and AMP accumulate
+    \end{itemize}
+    \item Fructose 2,6-bisphosphate is a potent allosteric activator
+    \item PFK-1 acts as a metabolic "gatekeeper", integrating signals from the cell's energy status and hormonal environment.  This regulation allows glycolysis to be precisely tuned to the cell's energy demands, maintaining metabolic balance and energy homeostasis
+    \begin{center} 
+        \includegraphics*[scale=0.6]{L1_7.png}
+    \end{center}
+    \item Fructose 6-Phosphate (F6P), an intermediate of glycolysis, is phosphoylated by phosphofructokinase-2 (PFK-2) to form Fructose 2,6-bisphosphate (F2, 6BP).  F2,6BP is not an intermediate in glycolysis or gluconeogenesis but acts as a potent allosteric regulator of PFK-1, stimulating glycolysis and inhibiting gluconeogenesis.
+\end{itemize}
+
+\subsection*{(Step 4) Cleavage of Fructose 1,6-Bisphosphate}
+\begin{itemize}
+	\item Fructose 1,6-Bisphosphate aldolase (aldolase) catalyzes a reverse aldol condensation and cleaves fructose 1,6-bisphosphate to yield \textbf{glyceraldehyde 3-phosphate} and \textbf{dihydroxyacetone phosphate}
+	\item Reversible because reactant concentrations are low in the cell.
+\end{itemize}
+
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_8.png}
+\end{center}
+
+\subsection*{The Class I Aldolase Reaction}
+\begin{itemize}
+	\item Class I = found in animals and plants
+	\item Class II = found in fungi and bacteria
+	\begin{itemize}
+        \item Do not form the Schiff base intermediate
+    \end{itemize}
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_9.png}
+\end{center}
+
+\subsection*{(Step 5) Interconversion of the Triose Phosphates}
+\begin{itemize}
+	\item \textbf{Triose phosphate isomerase} converts dihydroxyacetone phosphate to glyceralehyde 3-phosphate
+	\begin{itemize}
+        \item reversible
+        \item \underline{final step of the perparatory phase of glycolysis}
+    \end{itemize}
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.9\textwidth]{L1_10.png}
+\end{center}
+
+\subsection*{Fate of the Glucose Carbons in the Formation of Glyceraldehyde 3-Phosphate}
+\begin{itemize}
+	\item After Step 5 of glycolysis, the carbon atoms derived from C-1, C-2, and C-3 of the starting glucose are chemically indistinguishable from C-6, C-5, and C-4, respectively
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_11.png}
+\end{center}
+
+\section*{The Payoff Phase of Glycolysos Yields ATP and NADH}
+In the payoff phase of glycolysis:
+\begin{itemize}
+	\item Each of the two molecules of glyceraldehyde 3-phosphate undergoes \textbf{oxidation at C-1}
+	\item Some energy from the oxidation reaction is conserved in the form of one \textbf{NADH and two ATP per triose phosphate oxidized}
+\end{itemize}
+
+\subsection*{(Step 6) Oxidation of Glyceraldehyde 3-Phosphate to 1,3-Bisphosphoglycerate}
+\begin{itemize}
+	\item \textbf{Glyceraldehyde 3-Phosphate Dehydrogenase} catalyzes the oxidation of glyceraldehyde 3-phosphate to \textbf{1,3-bisphosphoglycerate}
+	\item This is an energy-conserving reaction
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_12.png}
+\end{center}
+This reduction step stores energy with the formation of the acyl phosphate and in the form of high-energy electrons within NADH
+
+\subsection*{The First Step of the Payoff Phase is an Energy-Conserving Reaction}
+\begin{itemize}
+	\item Formation of the \textbf{acyl phosphate} group at C-1 of 1,3-bisphosphoglycerate conserves the free energy of oxidation
+	\item acyl phosphates have a very high standard free energy of hydrolysis ($\Delta G'^\circ = -49.3$ kJ/mol)
+\end{itemize}
+
+\subsection*{The Glyceraldehyde 3-Phosphate Dehydrogenase Reaction}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_13.png}
+\end{center}
+\begin{itemize}
+	\item First, the thiolate ion attacks the carbonyl group of the substrate to form a thiohemiacetal, which is then oxidized to a thioester by transfer of a hydride ion (a hydrogen with two electrons, H\nc) to an enzyme-bound NAD\pc, with concurrent release of a proton (\proton).  Thus, in effect, two hydrogen atoms are removed from the substrate.
+	\item Once NADH is formed, its affinity for the enzyme decreases, so that a free NAD\pc displaces this NADH.  The thioester is an energy-rich intermediate, and by phosphorolysis the high-energy 1,3-bisphosphoglycerate is generated with the release of the free enzyme.  Thus, the substrate aldehyde group is oxidized to a carboxylic acid group, with conservation of most of the energy of oxidation in formation of the anhydride bond between carboxylic and phosphoric acids.
+\end{itemize}
+
+\subsection*{Why This Process Works}
+\begin{itemize}
+	\item The \textbf{thioester intermediate} serves as a critical energy-rich intermediate that conserves the energy released during the oxidation of G3P.  This conserved energy is then used to drive the unfavorable phosphorylation step
+	\item NAD\pc not only acts as an electron acceptor, forming NADH, but also activates the cysteine residue for catalysis
+	\item The release of NADH ensures that the enzyme is ready to catalyze subsequent reactions efficiently
+\end{itemize}
+
+\subsection*{(Step 7) Phosphoryl Transfer from 1,3-Bisphosphoglycerate to ADP}
+\begin{itemize}
+	\item Phosphoglycerate Kinase transfers the high-energy phosphoryl group from the carboxyl group of 1,3-bisphosphoglycerate to ADP, forming ATP and \textbf{3-phosphoglycerate}
+	\item substrate-level phosphorylation
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_14.png}\\
+    \includegraphics*[width=0.8\textwidth]{L1_15.png}
+\end{center}
+
+\subsection*{Steps 6 and 7 of Glycolysis Consistute an Energy-Coupling Process}
+\begin{itemize}
+	\item The sum of the two reactions is:
+	\begin{center}
+        Glyceraldehyde 3-Phosphate + ADP + P$_{\text{i}}$ + NAD\pc $\rightleftarrows$ phosphoglycerate + ATP + NADH + \proton\\
+        $\Delta G'^\circ$ = -12.2 kJ/mol
+    \end{center}
+    \item \textbf{substrate-level phosphorylation} = the formation of ATP by phosphoryl group transfer from a substrate different from \textbf{respiration-linked phosphorylation}
+    \item G3P dehydrogenase is coupled to phsophoglycerate kinase
+    \begin{itemize}
+        \item G3P dehydrogenase is forming a high energy phosphate while phosphoglycerate kinase is removing the phosphoryl group and adding it to ADP ($\Delta G < 0$ overall)
+    \end{itemize}
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_16.png}
+\end{center}
+
+\subsection*{(Step 8) Conversion of 3-Phosphoglycerate to 2-Phosphoglycerate}
+\begin{itemize}
+	\item \textbf{phosphoglycerate mutase} catalyzes a reversible shift of the phosphoryl group between C-2 and C-3 of glycerate
+	\begin{itemize}
+        \item requires Mg$^{2+}$
+    \end{itemize}
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.9\textwidth]{L1_17.png}
+\end{center}
+
+\subsection*{The Phosphoglycerate Mutase Reaction}
+\begin{center} 
+	\includegraphics*[width=0.9\textwidth]{L1_18.png}
+\end{center}
+
+\subsection*{(Step 9) Dehydration of 2-Phosphoglycerate to Phosphoenolpyruvate}
+\begin{itemize}
+	\item \textbf{enolase} promotes reversible removal of a molecule of water from 2-phosphoglycerate to yield \textbf{phosphoenolpyruvate (PEP)}
+	\begin{itemize}
+        \item energy-conserving reaction
+        \item mechanism involves a Mg$^{2+}$-stabilized enolic intermediate
+    \end{itemize}
+\end{itemize}
+\begin{center} 
+    \includegraphics*[width=\textwidth]{L1_19.png}
+\end{center}
+
+\subsection*{(Step 10) Transfer of the Phosphoryl Group from Phosphoenolpyruvate to ADP}
+\begin{itemize}
+	\item \textbf{pyruvate kinase} catalyzes the transfer of the phosphoryl group from phosphoenolpyruvate to ADP, yielding \textbf{pyruvate}
+	\item Requires K\pc and either Mg$^{2+}$ or Mn$^{2+}$
+	\item \textbf{substrate-level phosphorylation} - the formation of ATP by phosphoryl group transfer from a substrate different from \textbf{respiration-linked phosphorylation}
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_20.png}\\
+    \includegraphics*[width=\textwidth]{L1_21.png}
+\end{center}
+
+\subsection*{Pyruvate in its Enol Form Spontaneously Tautomerizes to its Keto Form}
+\begin{itemize}
+	\item \textbf{pyruvate kinase} catalyzes the transfer of the phosphoryl group from phosphoenolpyruvate to ADP, yielding \textbf{pyruvate}
+	\begin{itemize}
+        \item requrires K\pc and either Mg$^{2+}$ or Mn$^{3+}$
+    \end{itemize}
+    \begin{center} 
+        \includegraphics*[width=0.7\textwidth]{L1_22.png}
+    \end{center}
+\end{itemize}
+
+\subsection*{The Overall Balance Sheet Shows a Net Gain of Two ATP and Two ADH per Glucose}
+\begin{itemize}
+	\item Subtracting the two ATP spent in the preparatory phase, the net equation for the overall process is:
+	\begin{center} 
+        glucose + 2 NAD\pc + 2 ADP + 2 P$_i$ $\rightarrow$ 2 pyruvate + 2 NADH + 2 \proton + 2 ATP + 2 \water
+    \end{center}
+\end{itemize}
+
+\subsection*{Glycolysis Overview}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_23.png}
+\end{center}
+
+\subsection*{Energy Remaining in Pyruvate}
+\begin{itemize}
+	\item Energy stored in pyruvate can be extracted by:
+	\begin{itemize}
+        \item \textbf{aerobic processes:}
+        \begin{itemize}
+            \item oxidative reactions in the citric acid cycle (TCA cycle)
+            \item oxidative phosphorylation
+        \end{itemize}
+        \item \textbf{anaerobic processes:}
+        \begin{itemize}
+            \item reduction to lactate
+            \item reduction to ethanol
+        \end{itemize}
+    \end{itemize}
+    \item pyruvate can provide the carbon skeleton for alanine synthesis of fatty acid synthesis
+\end{itemize}
+
+\subsection*{$\Delta$G$^\circ$' vs. $\Delta$G in Glycolysis}
+\begin{itemize}
+	\item $\Delta$G$^\circ$' (Standard Free Energy Change): 
+	\begin{itemize}
+        \item Measured under standard conditions (1 M concentrations, pH 7.0, 25$^\circ$C)
+        \item Reflects theoretical favorability of reactions
+        \item Some reactions, like \textbf{aldolase}, have positive $\Delta$G$^\circ$' (unfavorable under standard conditions)
+    \end{itemize}
+    \item $\Delta$G (Actual Free Energy Change):
+    \begin{itemize}
+        \item Reflects real cellular conditions with regulated metabolite concentrations
+        \item \textbf{Le Chatelier's Principle:} Substrate and product levels shift equilibrium to make reactions favorable
+        \item Enzymes tightly control $\Delta$G to drive the pathway forward
+    \end{itemize}
+\end{itemize}
+Steps with large, negative $\Delta$G (marked in red boxes) are \textbf{irreversible and regulate glycolysis:}
+\begin{itemize}
+	\item Hexokinase (Step 1)
+	\item PFK-1 (Step 3)
+	\item Pyruvate Kinase (Step 10)
+\end{itemize}
+These steps ensure glycolysis flows in one direction and are critical control points in the pathway
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_1.png}
+\end{center}
+
+\subsection*{Regulation of Hexokinase}
+\begin{itemize}
+	\item Hexokinase Isoforms:
+	\begin{itemize}
+        \item Type II (muscle): Inhibited by glucose-6-phosphate (G6P), which prevents the wasteful use of glucose when energy isn't needed
+        \item Type IV (glucokinase, liver): Not inhibited by G6P, has a higher Km (works at higher glucose concentrations), and is induced by insulin, helping the liver store glucose as glycogen
+    \end{itemize}
+\end{itemize}
+Muscle cells tightly regulate glucose usage to prioritize immediate energy production.  The liber adapts to blood glucose levels to balance storage (glycogen) and supply (to other tissues)
+
+\subsection*{Regulation by Glucose Levels}
+\begin{itemize}
+	\item High Glucose Levels ($\uparrow$ Insulin):
+	\begin{itemize}
+        \item Activates \textbf{glucokinase} to increase glucose uptake and storage (glycogen synthesis)
+        \item Enhances \textbf{glycolysis} to process excess glucose
+    \end{itemize}
+	\item Low Glucose Levels ($\uparrow$ Glucagon):
+	\begin{itemize}
+        \item Promotes \textbf{gluconeogenesis} and \textbf{glycogen breakdown} in the liver to release glucose into the bloodstream
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Glucose Homeostasis (Insulin/Glucagon)}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_2.png} 
+\end{center}
+
+\subsection*{Regulation of Phosphofructokinase-1 (PFK-1)}
+\begin{itemize}
+	\item \textbf{PFK-1: The "Gatekeeper" of Glycolysis}
+	\begin{itemize}
+        \item \textbf{Activated by:}
+        \begin{itemize}
+            \item AMP/ADP: Signals low energy, stimulating glycolysis to make ATP
+            \item F2,6BP: Feed-forward signal that boosts glycolysis when glucose is abundant
+        \end{itemize}
+        \item \textbf{Inhibited by:}
+        \begin{itemize}
+            \item ATP: Signals high energy, slowing glycolysis
+            \item Citrate: Indicates sufficient energy from the TCA cycle
+        \end{itemize}
+    \end{itemize}
+	\item \textbf{Fructse 2,6-Bisphosphate (F2, 6BP)}
+	\begin{itemize}
+        \item Coordinates glycolysis and gluconeogenesis
+        \begin{itemize}
+            \item High F2,6BP $\rightarrow$ Activates PFK-1 (glycolysis) and inhibits gluconeogenesis
+            \item Low F2,6BP $\rightarrow$ Slows glycolysis and releases gluconeogenesis inhibition
+        \end{itemize}
+        \item Regulated by \textbf{PFK-2} (in turn, regulated by insulin and glucagon)
+        \begin{itemize}
+            \item \textbf{Insulin:} Increases F2, 6BP (promotes glycolysis)
+            \item \textbf{Glucagon:} Decreases F2, 6BP (promotes gluconeogenesis)
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_3.png}
+\end{center}
+\begin{itemize}
+	\item PFK-1 ensures glycolysis runs only when energy is needed, or glucose is abundant
+	\item F2,6BP acts as a "metabolic switch" to balance energy needs
+\end{itemize}
+
+\subsection*{Why does PFK-2 Exist?}
+\begin{itemize}
+	\item From an evolutionary perspective, phosphofructokinase-2 (PFK-2) and its product, fructose 2,6-bisphosphate (F2,6BP), provide an additional layer of regulation that allows cells to fine-tune glycolysis and gluconeogenesis based on broader metabolic and hormonal signals. This control mechanism outside the core glycolytic pathway likely evolved to optimize energy balance and metabolic flexibility in response to environmental and physiological changes 
+	\item \textbf{Integration of metabolic and hormonal signals:}
+	\begin{itemize}
+        \item Unlike PFK-1, which is directly regulated by ATP, AMP, and citrate, PFK-2 allows glycolysis to respond to hormonal signals such as insulin and glucagon
+        \item This enables systemic control over metabolism, ensuring glucose utilization aligns with the organism's energy needs rather than just local cellular conditions
+    \end{itemize}
+	\item \textbf{Fine-tuned control of glycolysis and gluconeogenesis:}
+	\begin{itemize}
+        \item F2,6BP is a potent activator of PFK-1, enhancing glycolysis when energy is needed
+        \item Simultaneously, F2,6BP inhibits fructose-1,6-bisphosphatase (FBPase-1), suppressing gluconeogenesis when glucose breakdown is required
+        \item This dual action prevents futile cycling and ensures efficient energy management
+    \end{itemize}
+	\item \textbf{Rapid and reversible adaptation to nutritional states:}
+	\begin{itemize}
+        \item PFK-2 activity can be quickly modulated by phosphorylation (e.g., by PKA in response to glucagon), allowing immediate metabolic shifts
+        \item This regulatory mechanism is particularly crucial for organisms that experience fluctuating nutrient availability
+    \end{itemize}
+	\item \textbf{Evolutionary advantage in multicellular organisms:}
+	\begin{itemize}
+        \item As organisms evolved from unicellular to multicellular forms, systemic control over energy metabolism became essential
+        \item Hormone-driven regulation via PFK-2/F2,6BP allows coordination between tissues (e.g., liver vs. muscle) to maintain blood glucose homeostasis
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Why Control Glycolysis via an External Regulator Like F2,6BP?}
+\begin{itemize}
+	\item \textbf{Separation of Immediate Energy Sensing and Long-Term Metabolic Regulation:}
+	\begin{itemize}
+        \item PFK-1 responds to local energy levels (ATP, AMP), ensuring rapid adjustments
+        \item PFK-2/F2,6BP introduces an additional control point that responds to hormonal and systemic energy states, optimizing metabolism beyond individual cell needs
+    \end{itemize}
+	\item \textbf{Prevention of Metabolic Imbalance:}
+	\begin{itemize}
+        \item If glycolysis and gluconeogenesis were regulated solely by direct feedback loops, they might operate inefficiently in dynamic environments
+        \item F2,6BP provides a fail-safe mechanism to ensure that energy production and consumption remain synchronized across different physiological conditions
+    \end{itemize}
+\end{itemize}
+Overall, PFK-2 and F2,6BP likely evolved as a sophisticated regulatory adaptation, allowing multicellular organisms to maintain metabolic homeostasis efficiently in response to both internal energy demands and external environmental changes
+
+\subsection*{Regulation of Pyruvate Kinase}
+\begin{itemize}
+	\item \textbf{Pyruvate Kinase: The Final Step}
+	\begin{itemize}
+        \item Actiated by:
+        \begin{itemize}
+            \item \textbf{Fructose 1,6-Bisphosphate (F1,6BP):} Feed-forward activation ensures glycolysis flows efficiently, linking upstream reactions to downstream energy production
+        \end{itemize}
+        \item Inhibited by:
+        \begin{itemize}
+            \item \textbf{ATP:} Signals a high energy state, reducing unnecessary glycolysis
+            \item \textbf{Acetyl-CoA and Long-Chain Fatty Acids:} Energy-rich molecules from fatty acid oxidation signal sufficient energy, repressing glycolysis
+            \item \textbf{Alanine:} Indicates amino acid sufficiency, reducing the need for glycolysis.
+        \end{itemize}
+    \end{itemize}
+	\item \textbf{Hormonal Regulation (Liver-Specific):} 
+	\begin{itemize}
+        \item \textbf{Insulin:} Activates pyruvate kinase via dephosphorylation (promotes glycolysis)
+        \item \textbf{Glucagon:} Inhibits pyruvate kinase via phosphorylation (slows glycolysis)
+    \end{itemize}
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.8\textwidth]{L2_4.png}
+\end{center}
+Pyruvate kinase balances energy production with resource availability.  Feed forward activation ensures that glycolysis is efficient when glucose is being processed upstream
+
+\subsection*{Regulation of Glycolysis}
+\begin{itemize}
+	\item \textbf{Allosteric Regulators (AMP, ATP, citrate, F2,6BP)}
+	\begin{itemize}
+        \item Activators ramp up glycolysis when energy is needed
+        \item Inhibitors slow glycolysis to conserve energy when it's abundant
+    \end{itemize}
+	\item \textbf{Hormonal Regulation (Insulin, Glucagon)}
+	\begin{itemize}
+        \item Insulin promotes glucose use and storage during energy abundance.
+        \item Glucagon mobilizes glucose during energy scarcity
+    \end{itemize}
+	\item \textbf{Big Picture:}
+	\begin{itemize}
+        \item Glycolysis adapts to cellular and systemic needs:
+        \begin{itemize}
+            \item Muscle prioritizes energy for contraction
+            \item The liver balances glucose storage and release, regulating blood sugar for the whole body
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Entry of Dietary Glucogen, Starch, Disaccharides, and Hexoses into the Preparatory Stage of Glycolysis}
+\begin{itemize}
+	\item Glucose and other hexoses and hexose phosphates obtained from stored polysaccharides or dietary carbohydrates feed into the glycolytic pathway
+	\item By using a common pathway for a number of enzymes that must be synthesized and simplifies the regulation of the common pathway.
+\end{itemize}
+
+\begin{center} 
+	\includegraphics*[width=0.6\textwidth]{L2_5.png} \\
+    \includegraphics*[width=0.6\textwidth]{L2_6.png} 
+\end{center}
+
+\subsection*{Energy Remaining in Pyruvate}
+\begin{itemize}
+	\item Energy stored in pyruvate can be extracted by:
+	\begin{itemize}
+        \item Aerobic processes:
+        \begin{itemize}
+            \item oxidative reactions in the citric acid cycle (TCA cycle)
+            \item oxidative phosphorylation
+        \end{itemize}
+        \item Anaerobic processes:
+        \begin{itemize}
+            \item reduction to lactate
+            \item reduction to ethanol
+        \end{itemize}
+    \end{itemize}
+    \item pyruvate can provide the carbon skeleton for alanine synthesis or fatty acid synthesis
+\end{itemize}
+
+\subsection*{Three Catabolic Fates of Pyruvate}
+\begin{itemize}
+	\item NADH must be recycled to regenerate NAD\pc
+	\item under \textbf{anaerobic} conditions or low oxygen condition (\textbf{hypoxia}), pyruvate is \textbf{reduced to lactate or ethanol}
+	\item under \textbf{aerobic} conditions, \textbf{pyruvate is oxidized to acetyl-CoA}
+\end{itemize}
+\begin{center} 
+    \includegraphics*[width=0.6\textwidth]{L2_7.png}\\
+    \includegraphics*[width=\textwidth]{L2_8.png}
+\end{center}
+Pyruvate formed under anaerobic conditions is reduced to lactate with electrons from NADH, recycling NADH to NAD\pc, and allowing continued glycolysis in the processes of lactate or alcohol fermentation
+
+\subsection*{Fermentation}
+\textbf{Fermentation} = general term for processes that extract energy (as ATP) but do not consume oxygen or change the concentrations of NAD\pc or NADH
+\begin{itemize}
+	\item \textbf{lactic acid fermentation} = pyruvate accepts electrons from NADH and is reduced to lactate (one step) while regenerating the NAD\pc necessary for glycolysis
+	\item \textbf{ethanol (alcohol) fermentation} = pyruvate is further catabolized (two steps) to ethanol
+\end{itemize}
+
+\subsection*{Pyruvate is the Terminal Electron Acceptor in Lactic Acid Fermentation}
+\begin{itemize}
+	\item Organisms can regenerate NAD\pc by transferring electrons from NADH to pyruvate, forming \textbf{lactate}
+	\item \textbf{lactate dehydrogenase} = catalyzes the reduction of pyruvate to lactate
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.6\textwidth]{L2_9.png}
+\end{center}
+Binding of fructose 1,6-bisphosphate causes the enzyme to change into an active shape.
+\begin{center} 
+	\includegraphics*[width=0.6\textwidth]{L2_10.png}
+\end{center}
+
+\subsection*{Reduction of Pyruvate to Lactate Regenerates NAD\pc}
+\begin{itemize}
+	\item glycolysis converts 2NAD\pc to 2NADH
+	\item reduction of pyruvate to lactate regenerates 2NAD\pc
+	\item there is no net change in NAD\pc or NADH
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.8\textwidth]{L2_11.png}
+\end{center}
+
+\subsection*{Lactate can be Recycled}
+\begin{itemize}
+	\item Anaerobic catabolism of glucose to lactate occurs during short bursts of extreme muscular activity - for example, in a sprint - during which oxygen cannot be carried to the muscles fast enough to oxidize pyruvate
+	\item \textbf{lactate is carried in blood to the liver, where it is converted to glucose during recovery}
+	\item acidification resulting from ionization of lactic acid in muscle and blood limits the period of vigorous activity
+\end{itemize}
+
+\subsection*{Why do we need Gluconeogenesis?}
+\begin{itemize}
+	\item The brain, nervous system, and red blood cells rely exclusively on glucose for ATP production
+	\item Prolonged fasting or intense exercise depletes glycogen, \textbf{requiring glucose synthesis through gluconeogenesis}
+	\item The liver upregulates gluconeogenesis to synthesize glucose and export it to meet the energy demands of other tissues
+	\item \textbf{Lactate recycling:}  The liver converts lactate (via reversible lactate dehydrogenase, LDH), to pyruvate, which then enters the gluconeogenesis pathway to be converted into glucose, which is exported back into the bloodstream to maintain blood sugar levels - a process known as the Cori cycle
+	\begin{center} 
+        \includegraphics*[width=0.8\textwidth]{L2_12.png}
+    \end{center}
+    \item ATP for gluconeogenesis is generated through fatty acid oxidation in the liver, ensuring a continuous supply of glucose even during energy scarcity
+\end{itemize}
+
+\subsection*{Ethanol is the Reduced Product in Ethanol Fermentation}
+\begin{itemize}
+	\item yeast and other microorganisms regenerate NAD\pc by reducing pyruvate to ethanol and CO$_2$
+	\begin{center} 
+        \includegraphics*[width=0.9\textwidth]{L2_13.png} 
+    \end{center}
+    \item The overall equation is:
+    \begin{center} 
+        glucose + 2ADP + 2P$_i$ $\rightarrow$ 2 ethanol + 2 CO$_2$ + 2 ATP + 2 \water
+    \end{center}
+\end{itemize}
+\begin{itemize}
+	\item \textbf{Yeast have evolved to thrive in high-sugar, low-oxygen environments} by using fermentation.  The production of ethanol during fermentation is toxic to many competing organisms, giving yeast a competitive advantage
+	\item Fermentation is much faster than aerobic respiration, though less efficient.  In high-glucose environments, yeast prioritize speed over efficiency, allowing rapid growth and competition with other microorganisms.  For example, fermentation produces ATP quickly to support immediate cellular needs, even if it yields only 2 ATP per glucose molecule
+	\item Even in the presence of oxygen, yeast may favor fermentation when glucose is abundant.  This phenomenon, known as the Crabtree Effect, occurs because the fermentation pathway is energetically beneficial for yeast to grow and divide rapidly under high-sugar conditions.  Mitochondrial respiration is activated once glucose levels drop
+	\item Humans manipulate the oxygen levels to control yeast metabolism, promoting fermentation to achieve specific outcomes - rising bread in baking or alcohol production in brewing and winemaking.  This is an intentional application of yeast's metabolic flexibility.
+\end{itemize}
+\textbf{Why Anaerobic Conditions are Essential:}
+\begin{enumerate}
+    \item \textbf{Promotes Fermentation:} Anaerobic conditions ensure that yeast performs fermentation rather than aerobic respiration, which would fully oxidize glucose to carbon dioxide and water without producing ethanol
+    \item \textbf{Maximizes Desired Products:} In baking, the focus is on CO$_2$ for leavening.  In alcohol production, ethanol is the desired product, and fermentation under anaerobic conditions ensures its accumulation.
+\end{enumerate}
+
+\subsection*{Pyruvate Decarboxylase and Alcohol Dehydrogenase Reactions}
+\begin{itemize}
+	\item \textbf{Pyruvate decarboxylase:} catalyzes the irreversible decarboxylation of pyruvate to acetaldehyde
+	\begin{itemize}
+        \item requres Mg$^{2+}$ and the coenzyme thiamine pyrophosphate
+    \end{itemize}
+    \item \textbf{alcohol dehydrogenase:} catalyzes the reduction of acetaldehyde to ethanol
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.5\textwidth]{L2_14.png}
+\end{center}
+
+\subsection*{Thiamine Pyrophosphate (TPP) in Pyruvate Decarboxylase}
+\textbf{Thiamine Pyrophosphate:} coenzyme derived from vitamin B$_1$.
+\begin{center} 
+	\includegraphics*[width=0.8\textwidth]{L2_15.png}
+\end{center}
+\begin{itemize}
+	\item \textbf{Nucleophilic Attack:} The \textbf{thiazolium ring} in TPP acts as a nucleophile, specifically the carbon between the sulfur and nitrogen in the thiazolium ring (a highly reactive position due to resonance stabilization of the positive charge on the nitrogen), forming a covalent intermediate that allows the decarboxylation to proceed efficiently
+	\item \textbf{Stabilization of Carbanions:} During decarboxylation of the covalent intermediate, CO$_2$ is released, leaving behind a highly unstable \textbf{carbanion} TPP has a thiazolium ring with a positively charged nitrogen atom that stabilizes the negatively charged carbanion intermediate formed during decarboxylation of pyruvate. The positively charged nitrogen in the thiazolium ring of TPP \textbf{stabilizes this carbanion} via resonance
+\end{itemize}
+
+\subsection*{Some TPP-Dependent Reactions}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_16.png}
+\end{center}
+
+\subsection*{Anaerobic Glycolysis vs. Aerobic Respiration}
+\begin{center} 
+	Glucose + 2 ADP + 2 P$_i$ $\rightarrow$ 2 Lactate + 2 ATP + 2 \water + 2 \proton
+\end{center}
+This process is essential under anaerobic conditions, but it barely extracts the energy available from glucose.  To maximize energy yield, additional pathways are needed to fully oxidize glucose beyond pyruvate
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_17.png}
+\end{center}
+\begin{itemize}
+	\item Aerobic respiration releases approximately \textbf{14 times more energy} ($\Delta$G$^\circ$') than anaerobic glycolysis, highlighting the efficiency advantage of oxygen in energy production
+\end{itemize}
+
+\subsection*{Anaerobic Glycolysis vs Aerobic Respiration}
+\begin{center}
+    \begin{tabular}{|c|c|c|}
+    \hline
+    & \textbf{Anaerobic Glycolysis} & \textbf{Aerobic Respiration}\\
+    \hline
+    Oxygen Requirement & No & Yes \\
+    \hline
+    ATP Yield per Glucose & 2 ATP & 30-32 ATP \\
+    \hline
+    End Products & Lactate (or ethanol + CO$_2$) & CO$_2$ + \water \\
+    \hline
+    Energy Efficiency & Low & High \\
+    \hline
+    \end{tabular}
+\end{center}
+
+\subsection*{The Pasteur and Warburg Effects are due to the Dependence on Glycolysis Alone for ATP Production}
+\begin{itemize}
+	\item The "Pasteur effect" = effect by which the rate and total amount of glucose consumption under anaerobic conditions is many times greater than under aerobic conditions
+	\begin{itemize}
+        \item Occurs because the ATP yield from glycolysis alone is much smaller (2 ATP per glucose) than complete oxidation to CO$_2$ (30 or 32 ATP per glucose)
+    \end{itemize}
+\end{itemize}
+
+\subsection*{The Warburg Effect}
+\begin{itemize}
+	\item The "Warburg effect" = observation that tumor cells have high rates of glycolysis, with fermentation of glucose to lactate, even in the presence of oxygen
+	\begin{itemize}
+        \item The basis of PET scanning used to diagnose tumors
+    \end{itemize}
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.5\textwidth]{L2_18.png}
+\end{center}
+
+\subsection*{Tricarboxylic Acid Cycle}
+Also known as\dots
+\begin{itemize}
+	\item Citric Acid Cycle
+	\item Krebs Cycle
+	\item Szent-Gy$\ddot{\text{o}}$rgyi-Krebs Cycle
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.9\textwidth]{L2_19.png}
+\end{center}
+
+\subsection*{The Goal of the TCA cycle}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_20.png}
+\end{center}
+\end{document}
