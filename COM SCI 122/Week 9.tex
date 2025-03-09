@@ -1,0 +1,619 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+\graphicspath{{./assets/images}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+\newcommand{\example}{\textbf{Example: }}
+\newcommand{\R}{\mathbb{R}}
+
+\title{COM SCI 122 Week 9}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Applications of Hidden Markov Models (HMMs)}
+From Wikipedia:\\\\
+A \textbf{hidden Markov model} (HMM) is a is a Markov model in which the observations are dependent on a latent (or hidden) Markov process (referred to as $X$). An HMM requires that there be an observable process $Y$ whose outcomes depend on the outcomes of $X$ in a known way. Since $X$ cannot be observed directly, the goal is to learn about state of $X$ by observing $Y$. By definition of being a Markov model, an HMM has an additional requirement that the outcome of $Y$ at time $t = t_0$ must be "influenced" exclusively by the outcome of $X$ at $t = t_0$ and that the outcomes of $X$ and $Y$ at $t < t_0$ must be conditionally independent of $Y$ at $t = t_0$ given $X$ at time $t = t_0$. Estimation of the parameters in an HMM can be performed using maximum likelihood estimation. For linear chain HMMs, the Baum-Welch algorithm can be used to estimate parameters.\\\\
+Hidden Markov models are known for their applications to thermodynamics, statistical mechanics, physics, chemistry, economics, finance, signal processing, information theory, pattern recognition—such as speech, handwriting, gesture recognition, part-of-speech tagging, musical score following, partial discharges and bioinformatics.
+
+\subsubsection*{HMMs for Analyzing and Modeling Epigenetic Data}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W9_1.png} 
+\end{center}
+
+\subsubsection*{HMMs for Genotype Imputation and Phasing}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W9_2.png} 
+\end{center}
+
+\subsubsection*{HMMs for Identifying Protein Coding Genes}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W9_3.png} 
+\end{center}
+
+\subsubsection*{Profile HMMs for Protein Sequence Alignment}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W9_4.png} 
+\end{center}
+
+\subsubsection*{HMMs for Calling Copy Number Variation}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W9_5.png} 
+\end{center}
+
+\subsection*{Motivating Example}
+\begin{itemize}
+	\item In genomics problems we often want to "annotate" or "cluster" positions along a sequence
+	\item Considering each position along a sequence in isolation is often inadequate.
+	\item For example, promoter regions (i.e., regions near transcription start sites) have elevated frequency of G or C nucleotides
+	\item Would like to annotate each base of the genome as likely promoter ('P') or background ('B') based on this
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W9_6.png} 
+\end{center}
+
+\subsubsection*{Annotation Strategies for Example}
+\textbf{Idea 1:}
+\begin{itemize}
+	\item Assign all G or C nucleotides to promoter ('P') and A or T nucleotides to background ('B')
+	\item Problem: This ignores spatial context leading to many incorrect annotations and a segmentation that is overly choppy
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W9_7.png} 
+\end{center}
+\textbf{Idea 2:}
+\begin{itemize}
+	\item Bin the genome into fixed length bins.  Classify each bin indepenently based on the frequency of G or C, for example, promoter if majority nucleotides are G or C and background otherwise
+	\item Potential drawbacks: Signal could be split across consecutive bins leading to incorrect classifications.  Can be unclear how to pick length or if a single length is adequate.
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W9_8.png} 
+\end{center}
+\textbf{Idea 3:}
+\begin{itemize}
+	\item Use a sliding window.  Classify each window based on frequency of G or C, for example promoter if majority nucleotides are G or C and background otherwise.
+	\item Potential drawbacks: Different windows overlapping the same base can lead to different annotations.  Can be unclear how to pick length or if a single length is adequate
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W9_9.png} 
+\end{center}
+Under assumption any base overlapping a window that receives 'P' annotation also receives a 'P' annotation.\\\\
+\textbf{Idea 4:}
+\begin{itemize}
+	\item Use a probabilistic model that can enable principled annotation of individual nucleotides while considering the sequential context
+	\item This model we will discuss is the \textbf{Hidden Markov Model (HMMs)}.  It is used for many genomic applications
+\end{itemize}
+
+\subsection*{Markov Chain}
+Has $K$ - states, denoted $s_1, \dots, s_k$.
+\begin{center} 
+	\includegraphics*[width=0.5\textwidth]{W9_10.png} 
+\end{center}
+In this example, $K = 2$ and denote $s_1$ and $s_2$ by 'B' and 'P', respectively.
+\begin{itemize}
+	\item There are discrete sequential positions denoted $i = 1$, $i = 2$, $\dots$
+	\item At the $i$-th position the chain is in exactly one of the $K$ states, denoted by $\pi_i$, and $\pi_i \in \{s_1, s_2, \dots, s_k\}$
+	\item We start the chain ($i = 1$) based on an initial probability distribution determined by $\tau_1, \dots, \tau_k$
+	\item The current state determines the probability distribution of the next state.  We have parameters
+	\[a_{kj} = P(\pi_{i + 1} = s_j | \pi_i = s_k)\]
+    corresponding to arcs in the figure below
+    \item Probabilities out of a state sum to 1.
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W9_11.png} 
+\end{center}
+\subsubsection*{Markov Property or Assumption:}
+$\pi_{i + 1}$ is conditionally independent of $\{\pi_{i - 1}, \pi_{i - 2}, \dots, \pi_1\}$ given $\pi_i$ that is
+\[P(\pi_{i + 1 = s_j | \pi_i = s_k}) = P(\pi_{i + 1} = s_j| \pi_i = s_k, \text{ any earlier history})\]
+\subsection*{Example Path}
+Consider the path:
+\begin{center}
+\begin{tabular}{ll}
+$\pi_1 = B$ & $i = 1$ (starting)\\
+$\pi_2 = B$ & $i = 2$ (prob. 0.9)\\
+$\pi_3 = P$ & $i = 3$ (prob. 0.1)
+\end{tabular}
+\end{center}
+\begin{itemize}
+	\item HMMs extend Markov chains by allowing states to "emit" observations with different probabilities that depend on the state
+	\item Let $\{\sigma_1, \dots, \sigma_M\}$ be a set of symbols that are possible observations (e.g., $\{A, C, G, T\}$)
+	\item Let $x = x_1 x_2 \dots x_n$ denote a sequence of observations (e.g., AACGGC)
+	\item We have emission parameters corresponding to probability of observing a symbol emitted in a given state:
+	\[b_k(\sigma_m) = P(x_i = \sigma_m | \pi_i = s_k)\]
+    for $m = 1, \dots, M$ possible symbole $\sigma_m$ and $k = 1, \dots, K$ states
+\end{itemize}
+We will use the following emission parameters for this example:
+\begin{center} 
+	\includegraphics*[scale=0.4]{W9_12.png} 
+\end{center}
+\begin{itemize}
+	\item First, we start from $\pi_1$.  $\pi_1 = B, i = 1$.  Therefore, the probability is $1/4$.  Suppose we generate $x_1 = A$; according to our emission parameters, the probability is $1/4$
+    \item When we move to the next base, $\pi_2 = B, i = 2$.  The probability is $9/10$, according to our model.  ($B \rightarrow B$)  Suppose we generate $x_2 = G$; according to our emission parameters, the probability is $1/4$.
+    \item Finally, to the third base, $\pi_3 = P, i = 3$.  The probability is $1/10$, according to our model.  ($B \rightarrow P$)  Suppose we generate $x_3 = C$; according to our emission parameters, the probability is $1/3$.
+\end{itemize}
+
+\subsection*{HMM Definition}
+An HMM, $\lambda$, is a 5-tuple consisting of:
+\begin{itemize}
+	\item $\Sigma$ - alphabet of $M$ emitted of symbols $\{\sigma_1, \dots, \sigma_M\}$
+	\item A set $S$ of $K$ hidden states $\{s_1, \dots, s_k\}$
+	\item A set $S$ of $K$ initial state probabilities $\{\tau_1, \dots, \tau_K\}$
+	\item A $K$ by $K$ set of state transition probabilities
+	\[a_{kj} = P(\pi_{i + 1} = s_j | \pi_i = s_k)\]
+    \item A $K$ by $M$ set of state emission probabilities
+    \[b_k(\sigma_m) = P(x_i = \sigma_m|\pi_i = s_k)\]
+\end{itemize}
+
+\subsection*{HMM Problems and Algorithms}
+\begin{enumerate}
+    \item State Emission (Forward-Backward Algorithm, Dynamic Programming)
+    \item Most Probable Path (Viterbi, Dynamic Programming)
+    \item Learning a HMM (Baum-Welch, Expectation-Maximization)
+\end{enumerate}
+
+\section*{Problem 1: State Emission}
+Given a sequence of observations of length $n$, $x = x_1 x_2 \dots x_n$, and a model $\lambda$ we want to compute:
+\[P(\pi_i = s_k | x, \lambda)\]
+that is the probability at position $i$ the state is $s_k$ given the observation sequence.\\\\
+For example, we observe the sequence AGC and want to infer what is the probability at position 3 we are in state 'P'?
+\[P(\pi_3 = P|x=AGC, \lambda)\]
+
+\subsection*{Brute Force Approach to State Estimation}
+\begin{align*}
+    &P(\pi_i = s_k | x, \lambda)\\
+    &= \sum_{\pi s.t. \pi_i = s_k} P(\pi|x, \lambda)\\
+    &= \sum_{\pi s.t. \pi_i = s_k} P(\pi, x | \lambda) / P(x | \lambda)\\
+    &= \frac{\sum_{\pi s.t. \pi_i = s_k} P(\pi|\lambda) P(x|\pi, \lambda)}{\sum_\pi P(\pi, x|\lambda)}\
+    &= \frac{\sum_{\pi s.t. \pi_i = s_k} P(\pi|\lambda) P(x|\pi, \lambda)}{\sum_\pi P(\pi|\lambda) P(x|\pi, \lambda)}
+\end{align*}
+\begin{itemize}
+	\item $\pi$ - hidden path variables
+	\item $x$ - observations
+	\item $i$ - position
+	\item $s_k$ - state
+	\item $\lambda$ - model parameters
+\end{itemize}
+For example:
+\begin{align*}
+    &P(\pi_i = s_k | x, \lambda)\\
+    &= P(\pi = BBP|x = AGC, \lambda) + P(\pi = BPP|x = AGC, \lambda) + P(\pi = PBP|x = AGC, \lambda) + P(\pi = PPP|x = AGC, \lambda)\\
+    &= [P(\pi = BBP, x = AGC|\lambda) + P(\pi = BPP, x = AGC|\lambda) + P(\pi = PBP, x = AGC|\lambda) + P(\pi = PPP, x = AGC|\lambda)] / P(x = AGC|\lambda)\\
+    &= [P(\pi = BBP|\lambda) P(x = AGC|\pi = BBP, \lambda) + P(\pi = BPP|\lambda) P(x = AGC|\pi = BPP, \lambda) + P(\pi = PBP|\lambda) P(x = AGC|\pi = PBP, \lambda) + P(\pi = PPP|\lambda) P(x = AGC|\pi = PPP, \lambda)] / [P(\pi = BBB, x = AGC|\lambda) + P(\pi = BBP, x = AGC|\lambda) + P(\pi = BPB, x = AGC|\lambda) + P(\pi = BPP, x = AGC|\lambda) + P(\pi = PBB, x = AGC|\lambda) + P(\pi = PBP, x = AGC|\lambda) + P(\pi = PPB, x = AGC|\lambda) + P(\pi = PPP, x = AGC|\lambda)]
+\end{align*}
+The terms in the final equation can be computed directly.\\\\
+How do we compute $P(\pi|\lambda)$ for an arbitrary path $\pi$ of length 3?
+\begin{align*}
+    P(\pi|\lambda) &= P(\pi_1, \pi_2, \pi_3|\lambda)\\
+    &= P(\pi_1|\lambda) P(\pi_2, \pi_3|\lambda, \pi_1)\\
+    &= P(\pi_1|\lambda) P(\pi_2|\lambda, \pi_1) P(\pi_3|\lambda, \pi_1, \pi_2)\\
+    &= P(\pi_1|\lambda) P(\pi_2|\lambda, \pi_1) P(\pi_3|\lambda, \pi_2)
+\end{align*}
+How do we compute $P(x|\pi, \lambda)$ for an arbitrary path $\pi$ of length 3 and observation sequence $x$?
+\begin{align*}
+    P(x|\pi, \lambda) &= P(x_1, x_2, x_3 | \pi_1, \pi_2, \pi_3, \lambda)\\
+    &= P(x_1|\pi_1, \lambda) P(x_2, \pi_2, \lambda) P(x_3, \pi_3, \lambda)
+\end{align*}
+Example in the case $\pi = BBP$ and $x = AGC$
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W9_13.png} 
+\end{center}
+In general, what is the complexity of the brute force approach for a sequence of length $n$ and $K$ states?
+\begin{itemize}
+	\item O($nk^n$)
+	\item This sucks! We need a more efficient approach.
+\end{itemize}
+
+\subsection*{State Estimation with Forward and Backward Variables}
+Define:
+\begin{itemize}
+	\item Forward variables: $\alpha_i(k) = P(x_1 x_2 \dots x_i, \pi_i = s_k | \lambda)$
+	\item Backward variables: $\beta_i(k) = P(x_{i + 1} x_{i + 2} \dots x_n | \pi_i = s_k, \lambda)$
+	\item Forward variables $\alpha_i(k)$ is the probability under the model $\lambda$ that both:
+	\begin{itemize}
+        \item We have seen the first $i$ observations
+        \item We are in state $s_k$ at the $i$-th position
+    \end{itemize}
+    \item Backward variables $\beta_i(k)$ is the probability under the model $\lambda$ given we are in state $s_k$ at position $i$ that:
+    \begin{itemize}
+        \item We have seen the last $n - i$ observations
+    \end{itemize}
+    \item Claim:
+    \[P(\pi_i = s_k | x, \lambda) = \frac{\alpha_i(k) \beta_i(k)}{\sum_{j = 1}^K \alpha_i(j) \beta_i(j)}\]
+    \begin{itemize}
+        \item We can efficiently compute state estimates variables for all positions $i$ and states $k$ if we can efficiently compute forward and backward variables for them.
+        \item We need to show that this claim is true and that we can compute the forward and backward variables efficiently.
+    \end{itemize}
+\end{itemize}
+\subsubsection*{Proof}
+Let's break down the claim:
+\begin{align*}
+    &= \alpha_i(k) \beta_i(k) = P(x_1 x_2 \dots x_i, \pi_i = s_k|\lambda) P(x_{i + 1} x_{i + 2} \dots x_n | \pi_i = s_k, \lambda)\\
+    &=P(x_1 x_2 \dots x_i, \pi_i = s_k | \lambda) P(x_{i + 1} x_{i + 2} \dots x_n | x_1 x_2 \dots x_i, \pi_i = s_k, \lambda)\\
+    &= P(x_1 x_2 \dots x_i, x_{i + 1} x_{i + 2} \dots x_n, \pi_i = s_k | \lambda)\\
+    &= P(x, \pi_i = s_k | \lambda)
+\end{align*}
+Therefore, we get
+\[\sum_{j = 1}^K \alpha_i(j) \beta_i(j) = \sum_{j = 1}^K P(x, \pi_i = s_k | \lambda) = P(x | \lambda)\]
+We have shown the claim is true.  Now, we have to find a way to compute the variables.
+\subsubsection*{Computing Forward Variables}
+\[\alpha_i(k) = P(x_1 x_2 \dots x_i, \pi_i = s_k | \lambda)\]
+Forward variable $\alpha_i(k)$ is the probability under the mdoel that both:
+\begin{itemize}
+	\item We have seen the first $i$ observations
+	\item We are in state $s_k$ at the $i$-th position
+\end{itemize}
+We use dynamic programming to compute this efficiently.
+\begin{align*}
+    \intertext{Beginning with the base case:}
+    \alpha_1(k) &= P(x_1, \pi_1 = s_k | \lambda) \hspace{1cm} \text{for } k = 1, \dots, K\\
+    &= P(\pi_1 = s_k | \lambda) P(x_1 | \pi_1 = s_k, \lambda)\\
+    &= \tau_k b_k (x_1)
+\end{align*}
+\begin{itemize}
+	\item $\tau_k$ is the initial state probability
+	\item $b_k$ is the emission probability for the first observation
+\end{itemize}
+\begin{align*}
+    \intertext{Now, for the induction step:}
+    \alpha_{i = 1}(j) &= P(x_1 x_2 \dots x_i x_{i + 1}, \pi_{i + 1} = s_j | \lambda)\\
+    &= \sum_{k = 1}^K P(x_1 x_2 \dots x_i, \pi_i = s_k, x_{i + 1}, \pi_{i + 1 = s_j | \lambda})\\
+    &= \sum_{k = 1}^K P(x_{i + 1}, \pi_{i + 1} = s_j | x_1 x_2 \dots x_i, \pi_i = s_k, \lambda) P(x_1 x_2 \dots x_i, \pi_i = s_k | \lambda)\\
+    &= \sum_{k = 1}^K P(x_{i + 1}, \pi_{i + 1} = s_j | \pi_i = s_k, \lambda) \alpha_i(k)\\
+    &= \sum_{k = 1}^K P(\pi_{i + 1} = s_j | \pi_i = s_k, \lambda) P(x_{i + 1} | \pi_{i + 1} = s_j, \lambda) \alpha_i(k)\\
+    &= \sum_{k = 1}^K a_{kj} b_j (x_{i + 1})\alpha_i(k)
+\end{align*}
+\begin{itemize}
+	\item where $\alpha_{kj}$ is the transmission probability
+	\item $b_j(x_{i + 1})$ is the emission probability for the current observation
+	\item $\alpha_i(k)$ is the previous forward variable
+	\item The time complexity to compute all forward variables is O($nK^2$) since time for one position and state is $O(K)$ and need to do it for all $nK$ pairs of positions and states.
+\end{itemize}
+
+\subsection*{Forward Variable Example}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W9_14.png} 
+\end{center}
+Repeat for $\alpha_2$ and $\alpha_3$ \dots
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W9_15.png} \\
+    \rule{\textwidth}{2pt}
+    \includegraphics*[width=\textwidth]{W9_16.png} \\
+\end{center}
+
+\subsection*{Computing Backwards Variables}
+\[\beta_i(k) = P(x_{i + 1} x_{i + 2} \dots x_n | \pi_i = s_k, \lambda)\]
+Backward variable $\beta_i(k)$ is the probability under the model give we are in state $s_k$ at position $i$ that:
+\begin{itemize}
+	\item We have seen the last $n - i$ observations
+\end{itemize}
+Base case: $\beta_n (k) = 1$ for $k = 1, \dots, K$.  (By definition, probability of observing nothing after the last position)
+\begin{align*}
+    \beta_i(k) &= P(x_{i + 1} x_{i + 2} \dots x_n | \pi_i = s_k, \lambda)\\
+    &= \sum_{j = 1}^K P(x_{i + 1} x_{i + 2} \dots x_n, \pi_{i + 1} = s_j | \pi_i = s_k, \lambda)\\
+    &= \sum_{j = 1}^K P(\pi_{i + 1} = s_j | \pi_i = s_k, \lambda) P(x_{i + 1} x_{i + 2} | \pi_i = s_k, \pi_{i + 1} = s_j, \lambda)\\
+    &= \sum_{j = 1}^K P(\pi_{i + 1} = s_j | \pi_i = s_k, \lambda) P(x_{i + 1} x_{i + 2} \dots x_n | \pi_{i + 1} = s_j, \lambda)\\
+    &= \sum_{j = 1}^K P(\pi_{i + 1} = s_j | \pi_i = s_k, \lambda) P(x_{i + 1} | \pi_{i + 1} = s_j, \lambda) P(x_{i + 2} \dots x_n | \\pi_{i + 1} = s_j, \lambda)\\
+    &= \sum_{j = 1}^K a_{kj} b_j (x_{i + 1}) \beta_{i + 1}(j)
+\end{align*}
+\begin{itemize}
+	\item $a_{kj}$ is the transition probability
+	\item $b_j(x_{i + 1})$ is the emission probability for the next observation
+	\item $\beta_{i + 1}(j)$ is the next backward variable
+	\item The time complexity to compute all backwards variables is O($nK^2$) since time for one position and state is O($K$) and need to do it for all $nK$ pairs of positions and states
+\end{itemize}
+
+\subsection*{Backward Variable Example}
+\begin{center} 
+	\includegraphics*[width=0.9\textwidth]{W9_17.png}\\
+    \rule{\textwidth}{2pt}
+    \includegraphics*[width=0.9\textwidth]{W9_18.png}\\
+\end{center}
+
+\subsection*{State Estimation Example}
+\begin{center} 
+	\includegraphics*[width=0.9\textwidth]{W9_19.png} 
+\end{center}
+From this result, we can calculate:
+\begin{center} 
+	\includegraphics*[width=0.9\textwidth]{W9_20.png} 
+\end{center}
+\begin{itemize}
+	\item One limitation of this is that forward and backward variables can approach limits of floating point representations.  (We're multiplying lots of fractions)
+	\item To increase numerical stability, we can first normalize the $\alpha_i$ and $\beta_i$ values by constants.
+\end{itemize}
+
+\subsection*{Scaling}
+\[P(\pi_{i = s_i | x, \lambda}) = \frac{\alpha_i(k) \beta_i(k)}{\sum_{j = 1}^K \alpha_i(j) \beta_i(j)} = \frac{c_i \times \alpha_i(k) \beta_i(k)}{\sum_{j = 1}^K c_i \times \alpha_i (j) \beta_i(j)} \]
+\begin{itemize}
+	\item One strategy is to normalize $\alpha_i(j)$ based on the sum of their values after computing them for a position $i$ in the forward step
+	\item e.g., replace $\alpha_i(k)$ with $\frac{\alpha_i(k)}{\sum_{j = 1}^K \alpha_i(j)}$
+	\item similarly for the $\beta_i(j)$ values in the backwards step, replace $\beta_i(k)$ with $\frac{\beta_i(k)}{\sum_{j = 1}^K \beta_i(j)}$
+\end{itemize}
+
+\subsection*{Forward Variable Example with Scaling}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W9_21.png}\\
+    \rule{\textwidth}{2pt}
+    \includegraphics*[width=\textwidth]{W9_22.png} 
+\end{center}
+The final forward variables are scaled relative to each other, such that they would add to 1.  Repeat this process for every other forward variable.
+
+\subsection*{Computing Data Likelihood}
+To compute the data likelihood $P(x | \lambda)$ before scaling, we did:
+\begin{itemize}
+	\item Forward variables: $\alpha_i(k) = P(x_1 x_2 \dots x_i, \pi_i = s_k | \lambda)$
+	\item Backward variables: $\beta_i(k) = P(x_{i + 1} x_{i + 2} \dots x_n | \pi_i = s_k, \lambda)$
+	\[P(x | \lambda) = \sum_{j = 1}^K \alpha_i (j) \beta_i(j)\]
+    \item For $i = n$, this becomes:
+    \[P(x | \lambda) = \sum_{j = 1}^K \alpha_n(j)\]
+\end{itemize}
+If we have scaling, we now have:
+\[P(x | \lambda) = \left(\prod_{i = 1}^n \frac{1}{c_i}\right) \sum_{j = 1}^K \alpha_n(j)\]
+
+\subsection*{Posterior Decoding}
+\begin{itemize}
+	\item How can we use the state estimates to obtain hard assignments (e.g., 'P' or 'B' assignments?)
+	\item We simply take the state with the maximum posterior probability at each position.
+\end{itemize}
+Recall from earlier:
+\begin{center}
+\begin{tabular}{ll}
+    $P(\pi_1 = P|x, \lambda) = 0$ & $P(\pi_1 = B|x, \lambda) = 1$\\
+    $P(\pi_2 = P|x, \lambda) = 0.15$ & $P(\pi_2 = B|x, \lambda) = 0.85$\\
+    $P(\pi_3 = P|x, \lambda) = 0.24$ & $P(\pi_3 = B|x, \lambda) = 0.76$
+\end{tabular}
+\end{center}
+Therefore, our posterior decoding is BBB.
+
+\section*{Problem 2: Most Probable Path}
+\subsection*{Most Probable Path Given Observations}
+\begin{itemize}
+	\item What is the most probable path $\pi$ given a sequence of observations $x_1 x_2 \dots x_n$ that is
+	\[\arg \max_{\pi} P(\pi | x_1 x_2 \dots x_n, \lambda)\]
+    \item Brute force approach:
+    \begin{align*}
+        &\arg \max_{\pi} P(\pi | x_1 x_2 \dots x_n, \lambda)\\
+        &= \arg \max_{\pi} \frac{P(x_1 x_2 \dots x_n, \pi | \lambda)}{P(x_1 x_2 \dots x_n | \lambda)}\\
+        &= \arg \max_{\pi} P(x_1 x_2 \dots x_n, \pi | \lambda)\\
+        &= \arg \max_{\pi} P(x_1 x_2 \dots x_n | \pi, \lambda) P(\pi | \lambda)
+    \end{align*}
+\end{itemize}
+
+\subsubsection*{Brute Force Example}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W9_23.png} 
+\end{center}
+We would pick BBB since it has the highest probability.
+\begin{itemize}
+	\item The time complexity of this approach is O($nK^n$) time.
+	\item We need a more efficient approach!
+\end{itemize}
+
+\subsection*{Efficient Most Probable Path Computation}
+Let's define:
+\begin{align*}
+    \delta_i(k) &= \max_{\pi_1 \pi_2 \dots \pi_{i - 1}} P(\pi_1 \pi_2 \dots \pi_{i - 1}, \pi_i = s_k, x_1 x_2 \dots x_i | \lambda)\\
+    mpp_i(k) &= \arg \max_{\pi_1 \pi_2 \dots \pi_{i - 1}} P(\pi_1 \pi_2 \dots \pi_{i - 1}, \pi_i = s_k, x_1 x_2 \dots x_i | \lambda)
+\end{align*}
+$mpp_i(k)$ is the path of length $i - 1$ with maximum probability of
+\begin{enumerate}
+    \item Occurring
+    \item Ending up in state $s_k$ at position $i$
+    \item Producing output $x_1 x_2 \dots x_i$
+\end{enumerate}
+$\delta_i(k)$ is probability of $mpp_i(k)$ doing all this.
+
+\subsection*{The Viterbi Algorithm}
+Refer to the equations above.\\
+Base case $i = 1$ (only one choice for each $k$)
+\begin{align*}
+    \delta_1(k) &= P(\pi_1 = s_k, x_i | \lambda)\\
+    &= P(\pi_1 = s_k | \lambda) P(x_1 | \pi_1 = s_k, \lambda)\\
+    &= \tau_k b_k (x_1)
+\end{align*}
+Inductive case:
+\[\delta_{i + 1}(j) = \max_{\pi_1 \pi_2 \dots \pi_i} P(\pi_1 \pi_2 \dots \pi_i, \pi_{i + 1} = s_j, x_1 x_2 \dots x_i x_{i + 1} | \lambda)\]
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W9_24.png} 
+\end{center}
+\begin{align*}
+    &= \max_{\pi_1 \pi_2 \dots \pi_i} P(\pi_1 \pi_2 \dots \pi_i = s_k, x_1 x_2 \dots x_i | \lambda) P(\pi_{i + 1} = s_j | \pi_i = s_k, \lambda) P(x_{i + 1} | \pi_{i + 1} = s_j, \lambda)\\
+    &= \max_k \delta_i(k) a_{kj} b_j (x_{i + 1})
+\end{align*}
+\begin{itemize}
+	\item $\delta_i(k)$ is the previous mpp probability
+	\item $a_{kj}$ is the transition probability
+	\item $b_j(x_{i + 1})$ is the emission probability for the current observation
+\end{itemize}
+Now, we define $k^* = \arg \max_{k} \delta_i(k) a_{kj} b_j (x_{i + 1}) mpp_{i + 1}(j) = mpp_{i}(k^*) k^*$
+\begin{center} 
+	\includegraphics*[width=0.6\textwidth]{W9_25.png} 
+\end{center}
+Record the maximizing choice for each state $j$ at each position.  To get the Viterbi path, trace back from maximizing choice at the last position.
+\begin{itemize}
+	\item The time complexity of the Viterbi algorithm is O($nK^2$) since time for one position and state is O($K$) and need to do it for all $nK$ pairs of positions and states.
+	\item Note: faster run-times are possible if some transition probabilities are zero.
+\end{itemize}
+
+\subsection*{Viterbi Path Example}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W9_27.png} \\
+    \rule{\textwidth}{2pt}
+    \includegraphics*[width=0.9\textwidth]{W9_28.png} \\
+\end{center}
+To extract the path, we \textbf{record maximizing choice of the last choice, then trace back.}
+\begin{center} 
+	\includegraphics*[width=0.9\textwidth]{W9_29.png} 
+\end{center}
+
+\subsection*{Posterior Decoding vs. Viterbi Path}
+\begin{itemize}
+	\item Path from posterior decoding can be different from Viterbi path.
+	\item Posterior decoding path can have zero probability through model, but still be informative about each position in isolation
+	\item Viterbi path could represent very small amount of probability based on all paths
+\end{itemize}
+
+\section*{Problem 3: Learning a HMM}
+\begin{itemize}
+	\item Problem: We are given an observation sequence $x$ and want to learn the HMM parameters (emission, transition, and initial parameters).  For simplicity, we are assuming a single sequence.
+	\item There are two settings:
+	\begin{itemize}
+        \item Supervised Learning: We are also given the true path $\pi$ that generated observation sequence $x$
+        \item Unsupervised Learning: We only are given observation sequence $x$
+    \end{itemize}
+\end{itemize}
+
+\subsection*{HMM Supervised Learning}
+\begin{itemize}
+	\item Given path $\pi$ and observation sequence $x$ we want to set HMM $\lambda$ parameters to maximize their likelihood.  i.e.,
+	\[\arg\max_\lambda P(\pi, x | \lambda)\]
+    \item For emission parameters
+    \[b_k(\sigma_m) = P(x_i = \sigma_m | \pi_i = s_k)\]
+    maximum likelihood estimate is empirical frequency, i.e.,
+    \[\frac{\text{number of times in state $k$ and observe symbol $\sigma_m$}}{\text{number of times in state $k$}}\]
+    \item For transition parameters
+    \[a_{kj} = P(\pi_{i + 1} = s_j | \pi_i = s_k)\]
+    maximum likelihood estimate is empirical frequency, i.e.,
+    \[\frac{\text{number of times transition from state $k$ to state $j$}}{\text{number of times transition from state $k$}}\]
+    \item For initial parameters
+    \[\tau_j = P(\pi_i = s_j)\]
+    maximum likelihood estimate is empirical frequency, i.e.,
+    \[\frac{\text{number of times start a sequence in state $j$}}{\text{number of sequences}}\]
+    \item Could optionally use pseudocounts here
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W9_30.png} 
+\end{center}
+\subsection*{HMM Unsupervised Learning}
+\begin{itemize}
+	\item Given observation sequence $x$ we want to set HMM $\lambda$ parameters to maximize their likelihood, i.e.
+	\[\arg\max_{\lambda} P(x|\lambda)\]
+    \item We are trying to estimate the parameters of the HMM just from the observation sequence.  We will assume given the number of state.
+    \begin{itemize}
+        \item For this example, we will assume there are two states, $s_1$ and $s_2$.
+        \item This is analogous to estimating gaussian mixture model cluster parameters for unlabeled data points, or estimating parameters of a PWM from a set of DNA sequences.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Unsupervised Learning with EM}
+\begin{itemize}
+	\item (E-Step) If we had an estimate on the parameters HMM and weren't concerned with time-complexity we could directly compute probability of every path
+	\item (M-step) If we had the probability of every path and weren't concerned with time-complexity we could directly compute the most likely parameters of the HMM
+	\item This is slow, because we have to do this for every possible sequence of states, which is exponential time.
+\end{itemize}
+
+\subsubsection*{Example: Brute Force EM}
+Based on the sequence $x$ = AGC, we can fill out the table:
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W9_31.png} 
+\end{center}
+Now, we need to re-estimate the HMM parameters.
+\begin{itemize}
+	\item For emission parameters maximum likelihood estimate of
+	\[b_k(\sigma_m) = P(x_i = \sigma_m | \pi_i = s_k)\]
+    now becomes:
+    \[\frac{\text{expected number of times in state $k$ and observe symbol $\sigma_m$}}{\text{expected number of times in state $k$}}\]
+\end{itemize}
+For the top left box of the emission parameters:
+\begin{align*}
+    &\frac{\text{expected number of times in state $B$ and observe symbol $A$}}{\text{expected number of times in state $B$}}\\
+    &= \frac{0.737 + 0.109 + 0.024 + 0.129}{3 \times 0.737 + 2 \times 0.109 + 2 \times 0.024 + 1 \times 0.129} = 0.384
+\end{align*}
+\begin{itemize}
+	\item Symbol $A$ appears at $\pi_1$ in the sequence, hence the numerator is the sum of all state $B$ in position 1.
+\end{itemize}
+Next, for the second from the top box, we get
+\begin{align*}
+    &\frac{\text{expected number of times in state $B$ and observe symbol $C$}}{\text{expected number of times in state $B$}}\\
+    &= \frac{0.737 + 0.024}{3 \times 0.737 + 2 \times 0.109 + 2 \times 0.024 + 1 \times 0.129} = 0.29
+\end{align*}
+\begin{itemize}
+	\item Symbol $C$ appears in the sequence at $\pi_3$ in the sequence, hence the numerator is the sum of all state $B$ in position 3.
+\end{itemize}
+If we repeat this process for all the cells in the emission table, we get the following:
+\begin{center} 
+	\includegraphics*[width=0.3\textwidth]{W9_32.png} 
+\end{center}
+Next, we want to calculate the transitions:
+\begin{align*}
+    &\frac{\text{expected number of times transition from state $B$ to state $B$}}{\text{expected number of times transition from state $B$}}\\
+    &= \frac{2 \times 0.737 + 1 \times 0.109}{2 \times 0.737 + 2 \times 0.109 + 1 \times 0.024 + 1 \times 0.129} = 0.86
+\end{align*}
+Since $B$ can only transition to $B$ or $P$, and we know the probability for $B$, we can find the probability of transitioning to $P$ since they add to 1  ($P \rightarrow 0.14$).
+Repeating the process for $P$,
+\begin{align*}
+    &\frac{\text{expected number of times transition from state $P$ to state $P$}}{\text{expected number of times transition from state $P$}}\\
+    &= \frac{1 \times 0.129}{1 \times 0.024 + 1 \times 0.129} = 0.84
+\end{align*}
+The probability from $P \rightarrow B$ is 0.16.\\\\
+Finally, we want to calculate the starting states.
+\begin{itemize}
+	\item The probability we start with $B$ is $0.737 + 0.109 + 0.024 + 0.129 = 1$.  (We have a small rounding error in this example.)
+    \item The probability we start with $P$ is $0 + 0 + 0 + 0 = 0$.
+\end{itemize}
+Our final result is:
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W9_33.png}
+\end{center}
+Now, we can go back to the E-step.
+
+\subsection*{Efficient E-Step}
+How do we make this process efficient?\\\\
+For emission parameters $b_k (\sigma_m) = P(x_i = \sigma_m | \pi_i = s_k)$, we need the quantities in the numerator and denominator.
+\[\frac{\text{expected number of times in state $k$ and observe symbol $\sigma_m$}}{\text{expected number of times in state $k$}}\]
+Recall from the forward-backward algorithm we saw how to efficiently compute the probability we are in state $k$ at position $i$ given the observation sequence, i.e.,
+\[P(\pi_i = s_k | x, \lambda)\]
+Expected number of times in state $k$:
+\[\sum_{i = 1}^N P(\pi_i = s_k | x_1 x_2 \dots x_n, \lambda)\]
+We can find the expected number of times in state $k$ and observe $\sigma_m$:
+\[\sum_{i s.t. x_i = \sigma_m} P(\pi_i = s_k | x_1 x_2 \dots x_n, \lambda)\]
+Now, we need the transition parameters:
+\begin{itemize}
+	\item The expected number of times transition from state $k$:
+	\[\sum_{i = 1}^{n - 1} P(\pi_i = s_k | x_1 x_2 \dots x_n, \lambda)\]
+    \item The expected number of times transition from state $k$ to state $j$:
+    \[\sum_{i = 1}^{n - 1} P(\pi_i = s_k, \pi_{i + 1} = s_j | x_1 x_2 \dots x_n, \lambda)\]
+    \begin{itemize}
+        \item Note: we cannot write this as a product of two state estimates since they are not independent.
+    \end{itemize}
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{W9_34.png} 
+\end{center}
+
+\subsection*{Efficient M-step}
+\begin{itemize}
+	\item For transition parameters maximum likelihood estimate of
+	\[a_{kj} = P(\pi_{i + 1} = s_j | \pi_i = s_k)\]
+    we have the quantities in the numerator and denominator
+    \[\frac{\text{expected number of times transition from state $k$ to state $j$}}{\text{expected number of times transition from state $k$}}\]
+    \item For emission parameters
+    \[b_k(\sigma_m) = P(x_i = \sigma_m | \pi_i = s_k)\]
+    we have the quantities in the numerator and denominator
+    \[\frac{\text{expected number of times in state $k$ and observe symbol $\sigma_m$}}{\text{expected number of times in state $k$}}\]
+\end{itemize}
+
+\end{document}
