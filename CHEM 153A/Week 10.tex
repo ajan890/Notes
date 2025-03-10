@@ -1,0 +1,263 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% lists
+\usepackage{enumerate}
+\usepackage{tabularx}
+\usepackage{multicol}
+\usepackage[table,xcdraw]{xcolor}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+\graphicspath{{./assets/images/Week 10}}
+
+\newcommand{\solution}{\textbf{Solution:}} 
+\newcommand{\example}{\textbf{Example: }}
+\newcommand{\water}{\text{H$_2$O}}
+\newcommand{\hydroxide}{\text{OH$^-$}}
+\newcommand{\hydronium}{\text{H$_3$O$^+$}}
+\newcommand{\proton}{\text{H$^+$}}
+\newcommand{\pc}{$^+$}
+\newcommand{\nc}{$^-$}
+\newcommand{\ka}{\text{$K_\text{a}$}}
+
+% import subfiles
+\usepackage{subfiles}
+
+\title{CHEM 153A Week 10}
+
+\author{Aidan Jan}
+\date{\today}
+
+\begin{document}
+\maketitle
+\section*{Citric Acid Cycle Regulation}
+\begin{itemize}
+	\item regulation balances the supply of key intermediates with the demands of energy production and biosynthetic processes
+	\item regulation occurs at several points:
+	\begin{itemize}
+        \item PDH complex
+        \item citrate synthase
+        \item isocitrate dehydrogenase complex
+        \item $\alpha$-ketoglutarate dehydrogenase complex
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Production of Acetyl-CoA by the PDH Complex is Regulated by Allosteric and Covalent Mechanisms}
+\begin{itemize}
+	\item PDH complex activity is turned off when:
+	\begin{itemize}
+        \item ample fatty acids and acetyl-CoA are available as fuel
+        \item [ATP]/[ADP] and [NADH]/[NAD\pc] ratios are high
+    \end{itemize}
+	\item PDH complex activity is turned on when:
+	\begin{itemize}
+        \item energy demands are high
+        \item the cell requires greater flux of acetyl-CoA into the citric acid cycle
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Regulation of Metabolite Flow Through the Citric Acid Cycle}
+\textbf{The central role of the citric acid cycle in metabolism requires that it be regulated in coordination with many other pathways.}  Regulation occurs by both allosteric and covalent mechanisms that overlap and interact to achieve homeostasis.
+\begin{center} 
+	\includegraphics*[width=0.6\textwidth]{L1_1.png}
+\end{center}
+
+\subsection*{Covalent Modification of the PDH Complex}
+\begin{itemize}
+	\item \textbf{PDH Kinase} - inhibits the PDH complex by phosphorylation
+	\begin{itemize}
+        \item Allosterically activated by products of the complex
+        \item Inhibited by substrates of the complex
+    \end{itemize}
+    \item \textbf{PDH phosphatase} = reverses the inhibition by PDH kinase
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.5\textwidth]{L1_2}
+\end{center}
+
+\subsection*{The Citric Acid Cycle is also Regulated at Three Exergonic Steps}
+\begin{itemize}
+	\item regulation occurs at strongly exergonic steps catalyzed by:
+	\begin{itemize}
+        \item citrate synthase
+        \item isocitrate dehydrogenase complex
+        \item $\alpha$-ketoglutarate dehydrogenase complex
+    \end{itemize}
+    \item fluxes are affected by the concentrations of substrates and products:
+    \begin{itemize}
+        \item end products ATP and NADH are inhibitory
+        \item NAD\pc and ADP are stimulatory
+        \item long-chain fatty acids are inhibitory
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Role of the Citric Acid Cycle in Anabolism}
+\begin{itemize}
+	\item \textbf{Cataplerosis} describes the series of enzymatic reactions that draw down pools of metabolic intermediates
+	\item \textbf{Anaplerosis} describes the series of enzymatic reactions or pathways that replenish pools of metabolic intermediates in the TCA cycle
+	\item As intermediates of the citric acid cycle are removed to serve as biosynthesic precursors, they are replenished by \textbf{anaplerotic reactions}
+\end{itemize}
+\begin{center} 
+    \includegraphics*[width=0.8\textwidth]{../Week 9/L4_23.png} 
+\end{center}
+Intermediates of the citric acid cycle are drawn off as precursors in many biosynthetic pathways.  Shown in red are four anaplerotic rea
+
+\subsection*{Pyruvate Carboxylase}
+\begin{itemize}
+	\item Catalyzes the first step of \textbf{gluconeogenesis}
+	\item Also replenishes oxaloacetate allowing TCA to continue
+	\item Allosterically activated by acetyl-CoA
+	\begin{itemize}
+        \item Fate determination for pyruvate
+    \end{itemize}
+	\item Uses interesting cofactor called \textbf{biotin} that allows for carbon-carbon bond formation
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_3.png}
+\end{center}
+
+\pagebreak
+\subsection*{Structures of the B Vitamins along with their Role in Cells and the Disease Caused by their Deficiency}
+Vitamins are organic compounds required in small amounts for human health, distinct from essential amino acids, fatty acids, and elements.
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_4.png}
+\end{center}
+All B vitamins indeed act as precursors for \textbf{coenzymes} or are directly involved in enzymatic reactions.  Evolutionarily, animals lost the ability to biosynthesize vitamins, relying on dietary intake instead.
+
+\subsection*{Functions of B-vitamin Coenzymes in Metabolism}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_5.png}
+\end{center}
+
+\subsection*{Cofactors and Their Role in Enzyme Function}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_6.png}
+\end{center}
+Cofactors are essential non-protein components that assist enzymes in catalyzing reactions.  They are classified into \textbf{metal cofactors} (e.g., magnesium, zinc, and iron) and \textbf{organic cofactors} (e.g., coenzymes like NAD\pc, FAD, and prosthetic groups).  Metal cofactors can activate enzymes directly, while coenzymes often act as electron carriers.  Together, cofactors and the protein portion of an enzyme (apoenzyme) form an active holoenzyme capable of binding substrates and catalyzing reactions effectively
+
+\pagebreak
+\section*{The Mitochondrial Respiratory Chain}
+\subsection*{Electrons Are Funneled to Universal Electron Acceptors}
+\begin{itemize}
+	\item \textbf{respiratory chain} = series of electron carriers
+    \item dehydrogenases collect electrons from catabolic pathways and funnel them into universal electron acceptors:
+    \begin{itemize}
+        \item nicotinamide nucleotides (NAD\pc or NADP\pc)
+        \item flavin nucleotides (FMN or FAD)
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Electrons Pass through a Series of Membrane-Bound Carriers}
+\begin{itemize}
+	\item Three types of electron transfers occur in oxidative phosphorylation:
+	\begin{itemize}
+        \item direct transfer of electrons
+        \item transfer as a hydrogen atom (\proton + $e^-$)
+        \item transfer as a hydride ion (\textbf{:}H$^-$)
+    \end{itemize}
+    \item \textbf{reducing equivalent} = a single electron equivalent transferred in an oxidation-reduction reaction
+\end{itemize}
+
+\subsection*{Electron-Carrying Molecules in the Respiratory Chain}
+\begin{itemize}
+	\item Five types of electron-carrying molecules:
+	\begin{itemize}
+        \item NAD
+        \item flavoproteins
+        \item \textbf{ubiquinone (coenzyme Q or Q)}
+        \item \textbf{cytochromes}
+        \item \textbf{Iron-sulfur Proteins}
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Ubiquinone}
+\begin{itemize}
+	\item Ubiquinone (coenzyme \textbf{Q}) = a lipid-soluble benzoquinone with a long isoprenoid side chain
+	\begin{itemize}
+        \item Can accept one or two electrons
+        \item Freely diffusible within the inner mitochondrial membrane
+        \item Plays a central role in coupling electron flow to proton movement
+    \end{itemize}
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.4\textwidth]{L1_7.png}
+\end{center}
+
+\subsection*{Cytochromes}
+\begin{itemize}
+	\item \textbf{cytochromes} = proteins with characteristic strong absorption of visible light due to their iron-containing heme prosthetic groups
+	\begin{itemize}
+        \item one-electron carriers
+        \item 3 classes in mitochondria: $a$, $b$, and $c$
+        \begin{itemize}
+            \item hemes of $a$ and $b$ are not covalently bound to associated proteins
+            \item $c$ is covalently attached through Cys residues
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Prosthetic Groups of Cytochromes}
+\begin{center} 
+	\includegraphics*[width=0.9\textwidth]{L1_8.png}
+\end{center}
+
+\subsection*{Spatial Context 1}
+\begin{center} 
+	\includegraphics*[width=0.9\textwidth]{L1_9.png}
+\end{center}
+
+\subsection*{Spatial Context 2}
+\begin{center} 
+	\includegraphics*[width=0.6\textwidth]{../Week 9/L3_7.png}
+\end{center}
+Cristae structure does \textbf{two} things:
+\begin{itemize}
+	\item Higher surface area allows for more ETC subunits (more ATP production)
+	\item Allows for higher localized proton density, creating stronger gradient
+\end{itemize}
+
+\subsection*{Reduction Potential}
+\begin{itemize}
+	\item \textbf{Standard reduction potential} ($E^\circ$) is a measure of the tendency for a chemical species to be reduced
+	\begin{itemize}
+        \item The more positive the potential, the more favorable the reduction
+        \item Completely proportional to $\Delta$G
+        \[\Delta G^\circ_{cell} = -nFE^\circ_{cell}\]
+        Connects Gibbs free energy change ($\Delta G^\circ_{cell}$) with the reduction potential ($E^\circ_{cell}$) where:
+        \begin{itemize}
+            \item $\Delta G^\circ_{cell}$ is the standard Gibbs free energy change
+            \item $n$ is the number of electrons transferred
+            \item $F$ is Faraday's constant (96485 C/mol)
+            \item $E^\circ_{cell}$ is the standard cell potential
+        \end{itemize}
+        A \textbf{positive $E^\circ_{cell}$ results in a negative $\Delta G^\circ_{cell}$} indicating a spontaneous reaction, while a \textbf{negative $E^\circ_{cell}$ leads to a positive $\Delta G^\circ_{cell}$}, meaning the reaction is non-spontaneous
+    \end{itemize}
+    \item This can help us predict which direction redox reactions will flow naturally
+    \begin{itemize}
+        \item The less favorable reduction will flip to become an oxidation
+    \end{itemize}
+    \begin{align*}
+        X^+ + e^- &\longrightarrow X \hspace{2cm} &\text{less favorable (lower Eo)}\\
+        Y^+ + e^- &\longrightarrow Y \hspace{2cm} &\text{more favorable (higher Eo)}\\
+        \\
+        Y^+ + X &\longrightarrow Y + X^+ \hspace{2cm} &\text{net reaction}\\
+        & &\text{$Y^+$ is reduced, and $X$ is oxidized.}
+    \end{align*}
+\end{itemize}
+
+\end{document}
