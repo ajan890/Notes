@@ -260,4 +260,205 @@ Cristae structure does \textbf{two} things:
     \end{align*}
 \end{itemize}
 
+\section*{The Electron Transport Chain}
+\subsection*{ETC Redox Overview}
+Remember: these values indicate the tendency of each molecule to gain electrons (be reduced).
+\begin{center} 
+	[FILL 27]
+\end{center}
+\begin{itemize}
+	\item The flow of electrons in the ETC is "downhill" energetically, moving from molecules with lower Eo values (e.g., NADH at -0.315) to those with higher Eo values (e.g., O$_2$ at 0.815V)
+	\item For example, Q at $+0.045$V to Cyt b at $+0.077$V
+\end{itemize}
+
+\subsection*{Electron Transport Chain: Complexes I to IV}
+\begin{center} 
+	[FILL 29, full]
+\end{center}
+
+\subsection*{Protein Components of the Mitochondrial Respiratory Chain}
+\begin{center} 
+	[FILL 30, full]
+\end{center}
+* generalization from organisms where it has already been studied.  Remember that there are always exceptions.
+
+\subsection*{Complex I: NADH Oxidoreductase}
+\begin{itemize}
+	\item Also known as NADH oxidoreductase or NADH dehydrogenase
+	\item Large, large L-shaped enzyme with >40 polypeptide chains
+	\item Accepts 2 electrons from NADH and passes them to FMN (Flavin Mononucleotide)
+	\item Then passes electrons through 8+ Fe/S clusters to Ubiquinone \textbf{one at a time}
+	\item This complex uses this electrical work to pump 4 \proton ions out of the matrix and into the intermembrane space (likely an induced conformational change)
+\end{itemize}
+\begin{center} 
+	[FILL 32, edited]
+\end{center}
+
+\subsubsection*{(Review) Ubiquinone}
+\begin{itemize}
+	\item Ubiquinone, also known as coenzyme Q, is a lipid with a quinone ring structure at the top
+	\item Can be reduced with two electrons, then travels to Complex III: freely diffusible within the inner mitochondrial membrane
+	\item plays a central role in coupling electron flow to proton movement
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.4\textwidth]{L1_7.png} 
+\end{center}
+
+\subsubsection*{Complex I Catalyzes Two Simultaneous and Obligately Coupled Processes}
+Complex I catalyzes:
+\begin{itemize}
+	\item the exergonic transfer of a hydride ion (hydrogen atom with two electrons) from NADH and a proton from the matrix to ubiquinone
+	\begin{center}
+        NADH + \proton + Q $\rightarrow$ NAD\pc + QH$_2$
+    \end{center}
+    \item the endergonic transfer of 4 protons from the matrix to the intermembrane space
+\end{itemize}
+
+\subsubsection*{Electron Flow in Complex I}
+\begin{itemize}
+	\item \textbf{N1a} has a unique role compared to other Fe-S clusters: it can accept electrons from FMN but \textbf{does not always participate in the main electron transfer chain to ubiquinone.}  It may act as a reserve or moderate the process.
+	\item \textbf{N3} is part of the main pathway and facilitates the transfer of electrons to downstream clusters like \textbf{N2} (which transfers electrons to ubiquinone)
+\end{itemize}
+\begin{center} 
+	[FILL 35]
+\end{center}
+
+\subsubsection*{Complex I Overview}
+\begin{center} 
+	[FILL 36, full]
+\end{center}
+
+\subsubsection*{Proton Wires}
+\textbf{Protons are transported by proton "wires"} - a series of amino acids that undergo protonation and deprotonation
+\begin{center} 
+	[FILL 37, right, 38, left, edited]
+\end{center}
+Proton transfer pathways, outlined by blue arrows.  Membrane arm contains the central axis of charged residues, essential for the proton transfer and the coupling
+
+\subsection*{Pumping Protons and Free Energy}
+\begin{center} 
+	[FILL 39]
+\end{center}
+\begin{itemize}
+	\item Free energy is released on each step, with every reduction.  Oxygen is the final electron acceptor, with the lowest free energy and the highest electronegativity.
+	\item To find how much free energy is released between two steps, subtract their values to find $\Delta E^\circ$, then plug into the equation $\Delta G^\circ = -nFE^\circ$.
+	\begin{itemize}
+        \item For example, to find the amount of free energy released through Complex I, subtract NADH oxidation ($E^\circ = -0.32$ V) from Ubiquinone reduction ($E^\circ = +0.045$ V).
+        \item This gives $\Delta E^\circ = +0.36$ V.  Now, plug into the equation.  $n = 2$ since two electrons are transferred, and $F = 96.5$ kJ/mol (Faraday's constant)
+        \item The result is $-70$ kJ/mol 
+    \end{itemize}
+\end{itemize}
+
+\subsection*{The Coupling of Proton Pumping with Electron Flow}
+\begin{center} 
+	[FILL 46]
+\end{center}
+
+\subsection*{Complex II: Succinate Dehydrogenase}
+\begin{itemize}
+	\item As we've discussed - succinate dehydrogenase oxidizes succinate to fumarate as part of the TCA
+	\begin{itemize}
+        \item The two electrons are passed to FAD, forming FADH$_2$
+    \end{itemize}
+    \item The electrons are then passed \textbf{one at a time} through 3 Fe/S clusters to ubiquinone (Q)
+    \begin{itemize}
+        \item Also passes ubiquinol (reduced to Q) to Complex III
+        \item Effectively works in parallel with Complex I, \textbf{ETC can start from either Complex}
+        \item \textbf{Does not transport protons} - This is why FADH$_2$ produces less ATP than NADH (1.5 vs. 2.5)
+    \end{itemize}
+\end{itemize}
+\begin{center} 
+	[FILL 49]
+\end{center}
+
+\subsubsection*{Why Doesn't Complex II Pump Protons?}
+\begin{itemize}
+	\item Reduction of Fumarate and reduction of Ubiquinone only has a $\Delta E^\circ$ of $+0.014$ V!  There is not enough energy differential to pump protons.
+\end{itemize}
+
+\subsection*{Complex III: Cytochrome $c$ reductase}
+\begin{itemize}
+	\item Dimer of 11 subunits (22 in total)
+	\begin{itemize}
+        \item Relevance comes from the cavity in the center of the dimer
+        \item \textbf{Cavity has two binding sites for Coenzyme Q molecules}
+    \end{itemize}
+	\item Uses two electrons from ubiquinol (CoQ) to reduce two molecules of cytochrome $c$ (does so sequentially)
+	\item \textbf{Rieske center}, specialized Fe/S center with two His and Cys residues coordinating
+	\item \textbf{Issue:} We no longer have access to Flavin cofactors, making it hard for the protein to hold onto two electrons at the same time
+	\begin{itemize}
+        \item \textbf{Solution:} Releasing one electron at a time to cytochrome $c$ while pumping the second electron through a secondary pathway called the Q cycle.
+    \end{itemize}
+    \begin{center} 
+        [FILL 52 + 53 + 54]
+    \end{center}
+\end{itemize}
+
+\subsubsection*{Cytochromes}
+\begin{itemize}
+	\item Proteins with heme groups that are involved in redox reductions (as opposed to O$_2$ binding)
+	\item \textbf{Oxidation state change in central iron allows for electron carrying}
+	\item Can be embedded in complexes (e.g., cytochrome $b$, cytochrome $c_1$) or freely moving between them (cytochrome $c$)
+\end{itemize}
+\begin{center} 
+	[FILL 55]
+\end{center}
+
+\subsubsection*{The Q Cycle}
+\begin{itemize}
+	\item The two cavities in Complex III can bind both reduced \textbf{ubiquinol (QH$_2$)} and \textbf{oxidized ubiquinone (Q)}
+	\item When ubiquinol (QH$_2$) attaches to its cavity, it releases one electron towards cytochrome $c$ (via the Fe-S cluster and cytochrome $c_1$), but also releases one to cytochrome b chain, \textbf{reducing a bound ubiquinone halfway (semiquinone radical: $Q \cdot^-$)}
+	\item Same process occurs with a second ubiquinol, generating a second reduced cytochrome $c$, but \textbf{fully reduces one CoQ}
+	\begin{itemize}
+        \item This ensures that while two QH$_2$ molecules are oxidized, one QH$_2$ is regenerated, maintaining the balance of the ubiquinone pool
+    \end{itemize}
+    \begin{center} 
+        [FILL 56]
+    \end{center}
+    \item One reason for this cycle (besides lack of FAD/FMN) is that \proton ions can be donated directly to the intermembrane space from oxidized QH$_2$
+    \begin{itemize}
+        \item Four protons transported for every two electrons reaching cytochrome $c$
+    \end{itemize}
+\end{itemize}
+\begin{center} 
+	2 QH$_2$ + Q + 2 Cyto $c$ (Fe$^{3+}$) + 2 H\pc$_{\text{(matrix)}}$ $\rightarrow$ 2 Q + QH$_2$ + 2 Cyto $c$ (Fe$^{2+}$) + 4 \proton$_{\text{(IMS)}}$\\
+    QH$_2$ + 2 Cyto $c$ (Fe$^{3+}$) + 2 \proton$_{\text{(matrix)}}$ $\rightarrow$ Q + 2 Cyto $c$ (Fe$^{2+}$) + 4 \proton$_{\text{(IMS)}}$ \hspace{1cm} \textbf{\underline{NET}}\\
+    \[FILL 59, full\]
+\end{center}
+
+\subsubsection*{Complex III Overview}
+\begin{center} 
+	[FILL 60, full]
+\end{center}
+
+\subsection*{Complex IV: Cytochrome $c$ Oxidase}
+\begin{itemize}
+	\item Two cytochrome $c$ molecules each transfer one electron to Complex IV through two redox-active centers: two cytochrome groups (cyt a and cyt a3) and two copper atom groups (Cu$_A$ and Cu$_B$)
+	\item One electron is held at the Cu$_B$ center
+	\item The other is held at cytochrome a3
+	\item Once oxygen ($O_2$) binds to cytochrome a3 and Cu$_B$, it accepts the two electrons, forming a peroxide bridge
+\end{itemize}
+Two additional cytochrome $c$ molecules donate two more electrons to the system.  These electrons, along with two protons (\proton), break the peroxide bridge, reducing the oxygen to two water molecules (2 \water)
+\begin{itemize}
+	\item The complete process involves the oxidation of \textbf{four cytochrome $c$ molecules}, transferring four electrons to reduce one molecule of $O_2$ to two molecules of \water.  This process requires the uptake of four protons from the matrix, contributing to the proton gradient necessary for ATP synthesis
+\end{itemize}
+\begin{center} 
+	[FILL 62, 63, 64]
+\end{center}
+
+\subsubsection*{Path of Electron Through Complex IV}
+\begin{center} 
+	[FILL 65]
+\end{center}
+
+\subsubsection*{Complex IV Overview}
+\begin{center} 
+	[FILL 66]
+\end{center}
+
+\subsection*{Complex V: ATP Synthase}
+\begin{center} 
+	[FILL 31]
+\end{center}
+
 \end{document}
