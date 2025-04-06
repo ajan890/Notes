@@ -40,6 +40,7 @@
     \begin{itemize}
         \item Roombas
         \item Automatic sliding doors (which may use facial recognition, or just a simple proximity sensor)
+        \item Suprisingly, "robotic arms" used in assembly lines may not be considered robots, because they do not process information or take stimuli from the environment.  They only follow a preprogrammed routine over and over again.
     \end{itemize}
 \end{itemize}
 
@@ -129,21 +130,49 @@
 	\includegraphics*[width=\textwidth]{L1_8.png} 
 \end{center}
 
-\subsection*{[FILL]}
-[FILL]
+\subsection*{Robot Operating System}
+Robot operating system (ROS) is
+\begin{itemize}
+	\item a \textbf{middleware}: it sits between your robot's hardware and your application logic.
+	\item A collection of \textbf{tools, libraries, and conventions} to help you build complex and robust robot behavior.
+	\item A \textbf{communication system}: It allows different parts of a robot (sensors, motors, processors, etc.) to talk to each other using a publisher/subscriber model.
+\end{itemize}
+
+\section*{How do we describe the state of the robot?}
+\subsection*{Rigid Body in 2D space:}
+\begin{center} 
+	\includegraphics*[width=0.7\textwidth]{L2_1.png} 
+\end{center}
+How many variables do we need to fully describe the configuration of this \textbf{rigid body} in 2D?
+\begin{itemize}
+	\item Answer: 3.  ($x, y, \theta$)
+\end{itemize}
+What if an endpoint is fixed?
+\begin{center} 
+	\includegraphics*[width=0.7\textwidth]{L2_2.png} 
+\end{center}
+\begin{itemize}
+	\item Answer: 1.  ($\theta$)
+\end{itemize}
+
 
 \subsection*{Rigid Body in 3D space:}
-[FILL image]
+\begin{center} 
+	\includegraphics*[width=0.9\textwidth]{L2_3.png} 
+\end{center}
 How many DoF does it have?
 \begin{itemize}
     \item 6 = 3 for position + 3 for orientation
 \end{itemize}
 
 \subsection*{Joints and DoF}
-[FILL image, full]
-
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_4.png}
+\end{center}
 \subsection*{How many DoF do you have?}
-[FILL image]
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_5.png} 
+\end{center}
 Whole body: ~30 DoF (major joints)
 
 \subsection*{Gr$\ddot{\text{u}}$bler's Formula}
@@ -159,19 +188,47 @@ Whole body: ~30 DoF (major joints)
 \end{itemize}
 
 \subsection*{Acrobot (Double Pendulum)}
-[FILL image]
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_6.png} 
+\end{center}
 \begin{itemize}
     \item You can only move the first joint; the second is completely free moving.
     \item The tip is called the \textbf{end effector}.
     \item The entire circle that the robot can reach is called the \textbf{work space.}
-    \item [FILL]
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_7.png} 
+\end{center}
+\begin{itemize}
+	\item The action space looks at the motion of the robot rather than the positions like kinematics.
+\end{itemize}
+
+\subsection*{How to detect the state of a robot?}
+\begin{itemize}
+	\item \textbf{Sensors}: physical devices that provides information about the world
+	\item Internal states $\rightarrow$ Proprioceptive sensors
+	\item External states $\rightarrow$ Exteroceptive sensors
+	\item Perception = proprioception + exteroception
+	\item Passive sensors: detects natural energy
+	\item Active sensors: emits signals and detects feedback (thus do not rely on ambient energy)
 \end{itemize}
 
 \section*{Motors and Gears}
 \subsection*{Action and Actuation}
 \begin{itemize}
-	\item [FILL]
+	\item A robot acts through its \textit{actuators} (e.g., motors), which typically drive \textit{effectors} (e.g., wheels, grippers)
+	\item Robotic actuators are very different from biological ones, both are used for:
+	\begin{itemize}
+        \item locomotion (moving around, going places)
+        \item manipulation (handling objects)
+    \end{itemize}
+    \item This divides robotics into two areas:
+    \begin{itemize}
+        \item Mobile robotics
+        \item Manipulator robotics
+    \end{itemize}
 \end{itemize}
+
 \subsection*{Definition of Effector}
 \begin{itemize}
 	\item An effector is any device that has an effect on the environment.
@@ -188,7 +245,9 @@ Whole body: ~30 DoF (major joints)
 \end{itemize}
 
 \subsection*{Electric Motors}
-[FILL image]
+\begin{center} 
+	\includegraphics*[width=0.7\textwidth]{L2_8.png} 
+\end{center}
 \begin{itemize}
 	\item \textbf{AC Motor}
 	\begin{itemize}
@@ -197,10 +256,9 @@ Whole body: ~30 DoF (major joints)
     \end{itemize}
     \item \textbf{DC Motor}
     \begin{itemize}
-        \item [FILL]
         \item \textbf{The most common actuator in mobile robotics is the direct current (DC) motor}
-        \item Advantages: [FILL]
-        \item Disadvantages: [FILL]
+        \item Advantages: simple, cheap, various sizes and packages, easy to interface, easy to clean
+        \item DC motors convert electrical into mechanical energy
     \end{itemize}
 \end{itemize}
 
@@ -218,21 +276,28 @@ Whole body: ~30 DoF (major joints)
 	\begin{itemize}
         \item Low-voltage, low-torque, cheap
     \end{itemize}
+    \begin{center} 
+        \includegraphics*[width=0.8\textwidth]{L2_9.png} 
+    \end{center}
     \item Brushless motors (electric commutation)
     \begin{itemize}
         \item High voltage, high-torque, expensive
         \item No friction or wear of brushes
     \end{itemize}
+    \begin{center} 
+        \includegraphics*[width=0.9\textwidth]{L2_10.png} 
+    \end{center}
 \end{itemize}
-[FILL images]
+
 
 \subsection*{Motor Efficiency}
 \begin{itemize}
 	\item As any physical system, DC motors are not perfectly efficient
-	\item [FILL]
+	\item Energy is not converted perfectly; some is wasted as heat generated by winding resistance and friction
+	\item Inefficiencies are minimized in well-designed (more expensive) motors, and their efficiency can be high.
 	\item Good DC motors can be made to have efficiencies in the 90th percentile
 	\item Cheap DC motors can be as low as 50\%
-	\item [FILL]
+	\item Other types of effectors, such as miniature electrostatic motors, may have much lower efficiencies still
 \end{itemize}
 
 \subsection*{Speed and Torque}
@@ -247,31 +312,38 @@ Whole body: ~30 DoF (major joints)
 \end{itemize}
 
 \subsection*{Speed/Torque Relationship}
-[FILL image (graph)]
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_11.png} 
+\end{center}
 
 \subsection*{Motor Power}
 \begin{itemize}
 	\item Output power is the product of speed and torque:
 	\[P = w \times t\]
     \item At stall torque and no-load speed, the power is zero!
+    \item Where do we get the most power?
 \end{itemize}
-\begin{center} 
-	[FILL]
-\end{center}
 
 \subsection*{Power as a function of $\tau$, $\omega$}
 \begin{align*}
-    P_{motor}(\omega) &= -\frac{\tau_s}{\omega_n} [FILL]
-    P_{motor}(\tau) &= [FILL]
+    P_{motor}(\omega) &= -\frac{\tau_s}{\omega_n} \omega^2 + \tau_s \omega\\
+    P_{motor}(\tau) &= -\frac{\omega_n}{\tau_s}\tau^2 + \omega_n \tau
 \end{align*}
 \begin{center} 
-	[FILL]
+	\includegraphics*[width=0.8\textwidth]{L2_12.png} 
 \end{center}
 
 \subsection*{Operating Voltage and Speed}
 \begin{itemize}
 	\item Motors have maximum voltage
-	\item [FILL]
+	\begin{itemize}
+        \item Higher voltages may overheat windings
+    \end{itemize}
+	\item Motors have maximum speed rating
+	\begin{itemize}
+        \item Higher speeds may destroy bearings or commutator
+    \end{itemize}
+	\item Operating motors at higher speeds/voltage will reduce their life expectancy
 \end{itemize}
 
 \subsection*{DC motors and Robots}
@@ -290,8 +362,11 @@ Whole body: ~30 DoF (major joints)
 
 \subsection*{Gearing}
 \begin{itemize}
-	\item Gears are used to [FILL]
+	\item Gears are used to alter the output speed/torque of a motor (slope of speed/torque graph)
 \end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.8\textwidth]{L2_13.png} 
+\end{center}
 
 \subsection*{Gear Fundamentals}
 \begin{itemize}
@@ -309,7 +384,7 @@ Whole body: ~30 DoF (major joints)
     \[v = \omega r, \:\:\therefore \omega_2 = \frac{r_1}{r_2} \omega_1\]
     \item And the output torque is:
     \[F = \tau / r \:\:\therefore \tau_2 = \frac{r_2}{r_1}\tau_1\]
-    \item [FILL]
+    \item $r_2 / r_1$ is known as the \textit{gear ratio}
 \end{itemize}
 
 \subsubsection*{Examples:}
@@ -337,36 +412,56 @@ Whole body: ~30 DoF (major joints)
 \end{itemize}
 
 \subsection*{Types of Gears}
-[FILL image]
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_14.png} 
+\end{center}
 
 \subsection*{Backlash}
 \begin{itemize}
 	\item Simple gears suffer from \textit{backlash} (teeth not meshing completely)
 	\item Although sometimes this is needed, it reduces the control you have
 \end{itemize}
-[FILL image]
+\begin{center} 
+	\includegraphics*[width=0.7\textwidth]{L2_15.png} 
+\end{center}
 
+\pagebreak
 \subsection*{Control of Motors}
 \subsubsection*{Controlling Speed: Pulse Width Modulation (PWM)}
-[FILL image]
-\subsubsection*{Controlling Direction: H-Bridge}
-[FILL image]
+\[\omega = k_v V_{\text{average}}\]
+\begin{center} 
+	\includegraphics*[width=0.7\textwidth]{L2_16.png} 
+\end{center}
+What is the duty cycle?
+\begin{itemize}
+	\item Percentage of one period in which a signal is active.
+\end{itemize}
 
-\subsection*{[FILL]}
-[FILL]
+\subsubsection*{Controlling Direction: H-Bridge}
+\begin{center} 
+	\includegraphics*[width=0.7\textwidth]{L2_17.png} 
+\end{center}
+
+\subsection*{Control of Motors}
+\begin{center} 
+	\includegraphics*[width=0.6\textwidth]{L2_18.png} 
+\end{center}
 
 \subsection*{Servo Motors}
 \begin{itemize}
 	\item Servo motors are adapted DC motors:
 	\begin{itemize}
         \item Gear reduction
-        \item [FILL]
+        \item position sensor (encoder, potentiometer)
+        \item electric controller
     \end{itemize}
-    \item [FILL]
+    \item Range of at least 180 degrees
 \end{itemize}
 
 \subsection*{PWM Position Control}
-[FILL image]
+\begin{center} 
+	\includegraphics*[width=0.8\textwidth]{L2_19.png} 
+\end{center}
 \begin{itemize}
 	\item Not defined by PWM duty cycle but only \textbf{duration} of the pulse!
 	\item Pulse width must be very accurate
