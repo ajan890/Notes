@@ -1,20 +1,26 @@
-\documentclass{article}
-\usepackage{setspace}
-\onehalfspacing
+% document formatting
+\documentclass[10pt]{article}
 \usepackage[utf8]{inputenc}
-\usepackage[bb=boondox]{mathalfa}
-\usepackage{graphicx}
-
-%%Let's you change margins
 \usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
 
-%%Math symbols, proof environments
-\usepackage{amsmath,amsthm,amssymb, graphicx, tikz}
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
 
-%%Use this package for matrices
-\usepackage{array}
+% lists
+\usepackage{enumerate}
 
-\newcommand{\example}{\textbf{Example: }}
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+\graphicspath{{./assets/images/Week 1}}
 
 \title{CS 188 Robotics Week 1} 
 
@@ -23,13 +29,13 @@
 \date{\today}
 
 \begin{document}
-\maketitle
+\maketitle 
 
 \section*{Robots}
 \subsection*{What is a robot}
 \begin{itemize}
     \item "A robot is defined as \underline{intelligence} embodied in an engineered \underline{construct}, with the ability to process information, \underline{sense}, \underline{plan}, and \underline{move} within or substantially \underline{alter} its working environment.
-    \item [FILL]
+    \item Here intelligence includes a \underline{broad class of methods} that enable a robot to solve problems or to make contextually appropriate decisions and act upon them.
     \item Therefore, the following count as robots:
     \begin{itemize}
         \item Roombas
@@ -49,14 +55,14 @@
     \end{itemize}
 \end{itemize}
 
-\subsection*{Course Objectives} [FILL format]
+\subsection*{Course Objectives}
 \begin{itemize}
-    \item Develop a foundational understanding of kinematics, dynamics, and control for modeling and managing robotic motion
-    \item Become familiar with sensors and pereption algorithms to interpret environmental data for robotic decision-making
-    \item Understand principles of state estimation, as well as task and motion planning, to enable reliable and efficient robot behaviors.
-    \item Explore basic ideas of AI in robotics, including imitation learning and human-robot interactions, for advanced autonomous capabilities.
-    \item Gain hands-on experience in simulation tools to design, test, and refine robitic systems in a virtual environment
-    \item Reflect on the ethical implications of robotics, fostering responsible development and deployment [FILL]
+    \item Develop a foundational understanding of \textit{kinematics, dynamics, and control} for modeling and managing robotic motion
+    \item Become familiar with \textit{sensors and pereption algorithms} to interpret environmental data for robotic decision-making
+    \item Understand principles of \textit{state estimation}, as well as \textit{task and motion planning}, to enable reliable and efficient robot behaviors.
+    \item Explore basic ideas of \textit{AI in robotics}, including imitation learning and human-robot interactions, for advanced autonomous capabilities.
+    \item Gain \textit{hands-on experience} in simulation tools to design, test, and refine robitic systems in a virtual environment
+    \item Reflect on the \textit{ethical implications} of robotics, fostering responsible development and deployment of robotic technologies
 \end{itemize}
 
 \subsection*{Designing a Robot}
@@ -86,6 +92,292 @@
         \item User Interface: Remote control, dashboards, or autonomous modes.
     \end{itemize}
 \end{enumerate}
+
+\subsection*{Where are we?}
+\subsubsection*{Logistics and Warehouse Robots}
+
+\subsubsection*{Space Robots}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_1.png} 
+\end{center}
+\subsubsection*{Deepsea Robots}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_2.png} 
+\end{center}
+\subsubsection*{Healthcare and Medical Robots (?)}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_3.png} 
+\end{center}
+\subsubsection*{Agricultural Robots}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_4.png} 
+\end{center}
+\subsubsection*{Disaster Response Robots}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_5.png} 
+\end{center}
+\subsubsection*{Service and Hospitality Robots}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_6.png} 
+\end{center}
+\subsubsection*{Education, Entertainment, and Companion Robots}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_7.png} 
+\end{center}
+\subsubsection*{Humanoids | Tesla Optimus, Unitree H1, 1x, Figure}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_8.png} 
+\end{center}
+
+\subsection*{[FILL]}
+[FILL]
+
+\subsection*{Rigid Body in 3D space:}
+[FILL image]
+How many DoF does it have?
+\begin{itemize}
+    \item 6 = 3 for position + 3 for orientation
+\end{itemize}
+
+\subsection*{Joints and DoF}
+[FILL image, full]
+
+\subsection*{How many DoF do you have?}
+[FILL image]
+Whole body: ~30 DoF (major joints)
+
+\subsection*{Gr$\ddot{\text{u}}$bler's Formula}
+\begin{align*}
+    \text{def} &= m(N - 1) - \sum_{i = 1}^J c_i \\
+    &= m(N - 1) - \sum_{i = 1}^J(m - f_i)\\
+    &= m(N - 1 - J) + \sum_{i = 1}^J f_i
+\end{align*}
+\begin{itemize}
+    \item The term $m(N - 1)$ represents the number of rigid body freedoms
+    \item The term $\sum_{i = 1}^J c_i$ represents the number of joint constraints.
+    \item We would use $m = 3$ for two-dimensional rigid bodies (planar mechanisms), and $m = 6$ for three-dimensional rigid bodies (spatial mechanisms).
+\end{itemize}
+
+\subsection*{Acrobot (Double Pendulum)}
+[FILL image]
+\begin{itemize}
+    \item You can only move the first joint; the second is completely free moving.
+    \item The tip is called the \textbf{end effector}.
+    \item The entire circle that the robot can reach is called the \textbf{work space.}
+    \item [FILL]
+\end{itemize}
+
+\section*{Motors and Gears}
+\subsection*{Action and Actuation}
+\begin{itemize}
+	\item [FILL]
+\end{itemize}
+\subsection*{Definition of Effector}
+\begin{itemize}
+	\item An effector is any device that has an effect on the environment.
+	\item A robot's effectors are used to purposefully \underline{create an effect} on the environment.
+	\item E.g., legs, wheels, arms, fingers, \dots
+	\item \textit{The role of the controller is to get the effectors to produce the desired effect on the environment, based on the robot's task}
+\end{itemize}
+
+\subsection*{Definition of Actuator}
+\begin{itemize}
+	\item An actuator is the mechanism that enables the effector to execute an action.
+	\item E.g., electric motors, hydraulic or pneumatic cylinders, pumps, \dots
+	\item Actuators and effectors are \textbf{not} the same thing.
+\end{itemize}
+
+\subsection*{Electric Motors}
+[FILL image]
+\begin{itemize}
+	\item \textbf{AC Motor}
+	\begin{itemize}
+        \item Hard to control speed directly
+        \item Cheaper and more durable $\rightarrow$ common in household appliances, HVAC, pumps, and fans
+    \end{itemize}
+    \item \textbf{DC Motor}
+    \begin{itemize}
+        \item [FILL]
+        \item \textbf{The most common actuator in mobile robotics is the direct current (DC) motor}
+        \item Advantages: [FILL]
+        \item Disadvantages: [FILL]
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{How do DC motors work?}
+\begin{itemize}
+	\item DC motors consist of permanent magnets with loops of wire inside
+	\item When current is applied, the wire loops generate a \textbf{magnetic field}, which reacts against the outside field of the static magnets
+	\item The interaction of the fields produces the movement of the shaft or armature
+	\item A \textbf{commutator} switches the direction of the current flow, yielding continuous motion
+\end{itemize}
+
+\subsubsection*{Types of DC Motors}
+\begin{itemize}
+	\item Brushed motors (mechanical commutation)
+	\begin{itemize}
+        \item Low-voltage, low-torque, cheap
+    \end{itemize}
+    \item Brushless motors (electric commutation)
+    \begin{itemize}
+        \item High voltage, high-torque, expensive
+        \item No friction or wear of brushes
+    \end{itemize}
+\end{itemize}
+[FILL images]
+
+\subsection*{Motor Efficiency}
+\begin{itemize}
+	\item As any physical system, DC motors are not perfectly efficient
+	\item [FILL]
+	\item Good DC motors can be made to have efficiencies in the 90th percentile
+	\item Cheap DC motors can be as low as 50\%
+	\item [FILL]
+\end{itemize}
+
+\subsection*{Speed and Torque}
+\begin{itemize}
+	\item Motor \underline{speed} $w$ is proportional to induced voltage $V$.
+	\[w = k_v V\]
+    \item \underline{Torque} is a force that acts in a rotational manner
+    \[t = r \times F\]
+    \item Motor \underline{torque} $t$ is proportional to applied current $I$:
+    \[t = k_I I\]
+    \item Motors have a maximum speed (no-load speed) and a maximum torque (stall torque)
+\end{itemize}
+
+\subsection*{Speed/Torque Relationship}
+[FILL image (graph)]
+
+\subsection*{Motor Power}
+\begin{itemize}
+	\item Output power is the product of speed and torque:
+	\[P = w \times t\]
+    \item At stall torque and no-load speed, the power is zero!
+\end{itemize}
+\begin{center} 
+	[FILL]
+\end{center}
+
+\subsection*{Power as a function of $\tau$, $\omega$}
+\begin{align*}
+    P_{motor}(\omega) &= -\frac{\tau_s}{\omega_n} [FILL]
+    P_{motor}(\tau) &= [FILL]
+\end{align*}
+\begin{center} 
+	[FILL]
+\end{center}
+
+\subsection*{Operating Voltage and Speed}
+\begin{itemize}
+	\item Motors have maximum voltage
+	\item [FILL]
+\end{itemize}
+
+\subsection*{DC motors and Robots}
+\begin{itemize}
+	\item DC motors have high-speed, low torque
+	\item Typical speed range:
+	\begin{itemize}
+        \item 9000 to 12000 RPM
+        \item 150 to 200 Hz
+    \end{itemize}
+    \item Robots require low-speed, high torque.  
+    \begin{itemize}
+        \item What do we do about this? (We use gears!)
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Gearing}
+\begin{itemize}
+	\item Gears are used to [FILL]
+\end{itemize}
+
+\subsection*{Gear Fundamentals}
+\begin{itemize}
+	\item The force $F$ at the edge of a gear of radius $r$ is given by:
+	\[F = \tau / r\]
+    \item The linear speed $v$ at the edge of a gear of radius $r$ is given by:
+    \[v = \omega r\]
+\end{itemize}
+
+\subsection*{Combining Gears}
+\begin{itemize}
+	\item Meshing gears have equal linear speeds.
+	\[v_1 = v_2\]
+    \item Thus the output speed is:
+    \[v = \omega r, \:\:\therefore \omega_2 = \frac{r_1}{r_2} \omega_1\]
+    \item And the output torque is:
+    \[F = \tau / r \:\:\therefore \tau_2 = \frac{r_2}{r_1}\tau_1\]
+    \item [FILL]
+\end{itemize}
+
+\subsubsection*{Examples:}
+\begin{itemize}
+	\item Gearing down:
+	\[r_1 = 1, r_2 = 2\]
+    \begin{itemize}
+        \item 2:1 gear ratio doubles the torque and halves speed
+    \end{itemize}    
+    \item Gearing up:
+    \[r_1 = 2, r_2 = 1\]
+    \begin{itemize}
+        \item 1:2 gear ratio halves torque and doubles speed
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Gear Stages}
+\begin{itemize}
+	\item Usually, it is not possible to achieve a sufficient gear ratio with a single pair of gears
+	\item Gears can be arranged \textit{in stages}
+	\item The tortal gear ratio is the product of gear ratios for each stage
+	\begin{itemize}
+        \item E.g., $3:1 \times 3:1 = 9:1$
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Types of Gears}
+[FILL image]
+
+\subsection*{Backlash}
+\begin{itemize}
+	\item Simple gears suffer from \textit{backlash} (teeth not meshing completely)
+	\item Although sometimes this is needed, it reduces the control you have
+\end{itemize}
+[FILL image]
+
+\subsection*{Control of Motors}
+\subsubsection*{Controlling Speed: Pulse Width Modulation (PWM)}
+[FILL image]
+\subsubsection*{Controlling Direction: H-Bridge}
+[FILL image]
+
+\subsection*{[FILL]}
+[FILL]
+
+\subsection*{Servo Motors}
+\begin{itemize}
+	\item Servo motors are adapted DC motors:
+	\begin{itemize}
+        \item Gear reduction
+        \item [FILL]
+    \end{itemize}
+    \item [FILL]
+\end{itemize}
+
+\subsection*{PWM Position Control}
+[FILL image]
+\begin{itemize}
+	\item Not defined by PWM duty cycle but only \textbf{duration} of the pulse!
+	\item Pulse width must be very accurate
+	\begin{itemize}
+        \item Noise in width $\Rightarrow$ noise in position
+    \end{itemize}
+    \item Pulse rate may be variable
+    \begin{itemize}
+        \item Noise in rate $\Rightarrow$ no change
+    \end{itemize}
+\end{itemize}
 
 
 
