@@ -1,0 +1,266 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+\usepackage{xcolor}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+\newcommand{\dd}{\text{d}}
+
+\graphicspath{{./assets/images/Week 2}}
+
+\title{CS 188 Robotics Week 2} 
+
+\author{Aidan Jan}
+
+\date{\today}
+
+\begin{document}
+\maketitle 
+
+\section*{Rigid Body Motions}
+
+\subsection*{Representing Position}
+[FILL 11]
+
+\subsection*{2D Transformation: Translation}
+Translate the point $p$ to $p'$ with $T = (\dd x, \dd y)$:
+\[p' = T + p\]
+\[\begin{bmatrix} x' \\ y' \end{bmatrix} = \begin{bmatrix} d_x \\ d_y \end{bmatrix} + \begin{bmatrix} x \\ y \end{bmatrix}\]
+[FILL 12, graph only]
+
+\subsection*{2D Transformation: Rotation}
+\[p' = R \cdot p\]
+Here we are doing a counter-clockwise rotation
+[FILL 13]
+The triangle here helps us visualize the rotation.  However, we are still considering one 2D point $p$.
+\begin{align*}
+    \begin{bmatrix} x' \\ y' \end{bmatrix} &= \begin{bmatrix} \cos \theta & -\sin \theta \\ \sin \theta & \cos \theta \end{bmatrix} \cdot \begin{bmatrix} x \\ y \end{bmatrix}\\
+    x' &= x \cos \theta - y \sin \theta\\
+    y' &= x \sin \theta + y \cos \theta
+\end{align*}
+
+\subsection*{Combining Rotation and Transformation}
+\[p' = R \cdot p + T\]
+In general, a matrix multiplication lets us linearly combine components of a vector.
+\begin{itemize}
+	\item It is sufficient for representing rotation, but we can't add a constant :(
+\end{itemize}
+\[\begin{bmatrix} a & b \\ c & d \end{bmatrix} \times \begin{bmatrix} x \\ y \end{bmatrix} = \begin{bmatrix} ax + by \\ cx + dy \end{bmatrix}\]
+
+\subsection*{Homogeneous Coordinates}
+\begin{itemize}
+	\item The solution?  Stick a "1" at the end of every vector.
+	\item Now, we can do rotation AND translation
+	\item This is called "homogeneous coordinates"
+	\[\begin{bmatrix} a & b & c \\ d & e & f \\ 0 & 0 & 1 \end{bmatrix} \times \begin{bmatrix} x \\ y \\ 1 \end{bmatrix} = \begin{bmatrix} ax + by + c \\ dx + ey + f \\ 1 \end{bmatrix}\]
+    \item Our old way of representing point is called "Cartesian coordinate system"
+\end{itemize}
+
+\subsection*{Cartesian and Homogeneous Coordinate}
+\begin{itemize}
+	\item A point in cartesian coordinate $\langle x, y \rangle$ can be represented by $\langle sx, sy, s \rangle$ in homogeneous coordinate, where $s$ is any scalar number.
+	\begin{itemize}
+        \item For example, $\langle 2, 3 \rangle$ in cartesian coordinate can be represented as $\langle 2, 3, 1 \rangle$ or $\langle 4, 6, 2 \rangle$, or $\langle 1, 1.5, 0.5\rangle$, etc. in homogeneous coordinates
+        \item A point in homogeneous coordinate $\langle x, y, z \rangle$ can be converted to cartesian coordinates by dividing the last element $\langle x/z, y/z \rangle$
+        \item Similarly for higher dimensions
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Transformation Matrices}
+Representing rotation and translation homogeneous coordinates
+\begin{itemize}
+	\item 2D Translation
+	\[\begin{bmatrix} x' \\ y' \\ 1 \end{bmatrix} = \begin{bmatrix} 1 & 0 & t_x \\ 0 & 1 & t_y \\ 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} x \\ y \\ 1 \end{bmatrix}\]
+	\item 2D Rotation
+	\[\begin{bmatrix} x' \\ y' \\ 1 \end{bmatrix} = \begin{bmatrix} \cos \theta & -\sin \theta & 0 \\ \sin \theta & \cos \theta & 0 \\ 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} x \\ y \\ 1 \end{bmatrix}\]
+\end{itemize}
+Now we can represent both the rotation and translation operation with one \underline{transformation matrix}.
+\[\begin{bmatrix} x' \\ y' \\ 1 \end{bmatrix} = \begin{bmatrix} \cos \theta & -\sin \theta & t_x \\ \sin \theta & \cos \theta & t_y \\ 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} x \\ y \\ 1 \end{bmatrix}\]
+Note: Following the matrix multiplication rule, a transformation matrix always apply rotation first, then translation.
+\begin{itemize}
+	\item Matrix multiplication is \textit{not} commutative.
+\end{itemize}
+
+\section*{3D Transformation}
+Our examples so far were all in 2D, but we often want a 3D representation
+[FILL 21]
+
+\subsection*{Right Hand Rule}
+[FILL 24]
+Most of robotics system's coordinate system follows the right hand rule
+\begin{itemize}
+	\item Not always true (e.g., in some graphics and physics engine directX Unity)
+	\item Therefore, be careful!
+\end{itemize}
+
+\subsection*{3D Transformation: Translation}
+A 3D point $(x, y, z)$, translation by $t_x, t_y, t_z$:
+\[\begin{bmatrix} x' \\ y' \\ z' \end{bmatrix} = \begin{bmatrix} t_x \\ t_y \\ t_z \end{bmatrix} + \begin{bmatrix} x \\ y \\ z \end{bmatrix}\]
+[FILL 26]
+
+\subsection*{3D Transformation: Rotation}
+\begin{itemize}
+	\item A rotation in 2D is around a point
+	\item A rotation in 3D is around an \underline{axis} (a line with direction)
+	\begin{itemize}
+        \item rotation direction also follows right hand rule (thumb points to the axis direction, other fingers points towards the \textbf{positive} rotation direction)
+        \item It is a 3D space, not just 1D
+        \item most common choices for rotation axes are the $x$, $y$, $z$-axes (Euler angle representation)
+    \end{itemize}
+    [FILL 27]
+\end{itemize}
+
+\subsection*{3D Rotation Matrices}
+\begin{align*}
+R_x (\theta) &= \begin{bmatrix} 1 & 0 & 0 \\ 0 & \cos \theta & -\sin \theta \\ 0 & \sin \theta & \cos \theta \end{bmatrix}\\
+R_y (\theta) &= \begin{bmatrix} \cos \theta & 0 & \sin \theta \\ 0 & 1 & 0 \\ -\sin \theta & 0 & \cos \theta \end{bmatrix}\\
+R_z (\theta) &= \begin{bmatrix} \cos \theta & -\sin \theta & 0 \\ \sin \theta & \cos \theta & 0 \\ 0 & 0 & 1 \end{bmatrix}
+\end{align*}
+
+\subsection*{Reference Frames (Coordinate System)}
+\begin{itemize}
+	\item Up to now we have look at transformation in a single reference frame.  However, in a complex robotic system we often need to define many reference frames.
+	\item The same 3D point might have different coordinate if we use different reference frames, next we will learn how to transform between different reference frames.
+\end{itemize}
+Example: green dot's coordinate is $(2, 1)$ in blue reference frame, but its coordinate is $(4, 4)$ in red reference frame.
+[FILL 30]
+Changing coordinate frame is like translating between two different languages that describes the same thing.
+
+\subsubsection*{Examples:}
+[FILL 31, full]
+
+\subsection*{Changing Reference Frames}
+\begin{itemize}
+	\item We define two coordinate frames A and B
+	\item A Point $P$:
+	\begin{itemize}
+        \item $P$'s coordinate in Frame A is $^A P = (4, 4)$
+        \item $P$'s coordinate in Frame B is $^B P = (2, 1)$
+    \end{itemize}
+    \item Transformations between reference frames we will use the notation $^{\textcolor{red}{A}} T_{\textcolor{blue}{B}}$ (\textcolor{blue}{FROM} frame is in the bottom right and the \textcolor{red}{TO} frame is in the top left.)
+    \item To transform $^B P$'s reference frame from B to A, we just need to apply $^A T_B$ to $^B P$.
+    \[^A P = \:^A T_B \cdot \:^B P\]
+\end{itemize}
+How do we compute $^A T_B$?
+\begin{itemize}
+	\item Suppose the point $P$ is \underline{rigidly} attached to reference Frame B.
+	\item No matter where the reference B, point $P$ is its coordinates with respect to Frame B is always given by $^B P = (2, 1)$.
+\end{itemize}
+[FILL 37, edited, 2x2 grid]
+First, let's make Frame B identical to Frame A.  Now, $^A P = \:^B P = (2, 1)$.  Now, simply \underline{translate} Frame B together with $d = (2, 3)$, we will get the $^A P = \:^B P + d$.\\
+Therefore in this case,
+\[^A T_B = \begin{bmatrix} 1 & 0 & 2 \\ 0 & 1 & 3 \\ 0 & 0 & 1 \end{bmatrix}\]
+(There is no rotation in this case, only translation)
+\begin{itemize}
+	\item If there is a rotation, first rotate the frame so it is aligned with the target, then do a translation.
+\end{itemize}
+[FILL 47, edited]
+If we combine this rotation and translation into one transformation matrix, we get:
+\[T = \begin{bmatrix} R_\theta & d \\ 0_n & 1 \end{bmatrix}\]
+This is the transformation $^A T_B$ that change the coordinate frame from B to A.
+\begin{itemize}
+	\item However, geometrically it describes the motion from Frame A to B.
+	\item $^A T_B$ also describes Frame B's "pose" in Frame A, where the rotation component R describes the B's orientation in Frame A, and the translation represents B's position in Frame A.
+\end{itemize}
+[FILL 52]
+
+\subsection*{Change of Basis Summary}
+What is $^A T_B$?
+\begin{itemize}
+	\item $^A T_B$ is a rigid transformation matrix (3x3 matrix in 2D, 4x4 in 3D)
+	\item $^A T_B$ represents the transform that \textbf{change the coordinate frame from B to A:} $^A P = \:^A T_B \:^B P$
+	\item $^A T_B$ geometrically describes the motion from Frame A to B.
+	\item $^A T_B$ is also the \underline{pose} of coordinate frame (B) in the coordinate frame (A); that describes the \underline{position} and \underline{orientation} of Frame B in Frame A.
+\end{itemize}
+
+\subsection*{Composing Transformation}
+[FILL 54, fill]
+
+\subsection*{Chained 3D Rotation}
+We can chain a sequence of Euler angle rotations (multiple sequence of rotation matrix) to get a general 3D rotation.
+\[R = R_z(\alpha) R_y(\beta) R_x(\gamma) = \begin{bmatrix} \cos \alpha & -\sin \alpha & 0 \\ \sin \alpha \cos \alpha & 0 \\ 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} \cos \beta & 0 & \sin \beta \\ 0 & 1 & 0 \\ -\sin \beta & 0 & \cos \beta \end{bmatrix} \begin{bmatrix} 1 & 0 & 0 \\ 0 & \cos \gamma & -\sin \gamma \\ 0 & \sin \gamma & \cos \gamma \end{bmatrix}\]
+There are a few things to note when writing down the sequence of rotation:
+\begin{enumerate}
+    \item Rotation matrix is non-commutative - order matters!
+    \item Be aware of which sequence convention you are using when describing the 2nd and 3rd rotations: \textbf{extrinsic} rotation (fixed global frame), or \textbf{intrinsic} rotation? (last rotated coordinate system) - they are different.
+\end{enumerate}
+
+\subsection*{Extrinsic vs. Intrinsic Rotation}
+[FILL 57, 58, incl. text, edited]
+The final rotation $R$ is the same.  However, the order of describing rotation sequence is opposite in each convention.
+\begin{itemize}
+	\item (Use premultiply!)
+\end{itemize}
+
+\subsection*{Rotation Matrix}
+Rotation matrix has a number of highly useful properties:
+\begin{itemize}
+	\item R is an orthonormal matrix: Its columns are orthogonal unit vectors. ($R^{-1} = R^T$)
+	\begin{itemize}
+        \item This does not apply to general transformation matrices.
+    \end{itemize}
+	\item determinant of the matrix $|R| = 1$
+	\item The length of the vector is unchanged after transformation
+\end{itemize}
+
+\subsection*{Other 3D Rotation Representations}
+There are many ways to specify rotation
+\begin{itemize}
+	\item Rotation matrix
+	\item Euler angles: 3 angles about 3 axes
+	\item Axis-angle representation
+	\item Quaternions
+\end{itemize}
+
+\subsection*{Axis Angle Representation}
+Parameterize a 3D rotation by two quantities: a unit vector $e$ indicating the direction of an axis of rotation, and an angle $\theta$ describing the magnitude of the rotation about the axis.
+\begin{itemize}
+	\item Euler's rotation theorem: any rotation or sequence of rotations of a rigid body in a three-dimensional space is equivalent to a single rotation about a single fixed axis.
+\end{itemize}
+[FILL 63]
+
+\subsection*{Quaternions}
+Uses a unit four-dimensional vector $(x, y, z, w)$ to represent rotation.
+\begin{itemize}
+	\item If the rotation is $(v_1, v_2, v_3, \theta)$ in angle-axis representation, it can be written in quaternion as:
+\end{itemize}
+\begin{align*}
+    x &= v_1 \sin \frac{\theta}{2}\\
+    y &= v_2 \sin \frac{\theta}{2}\\
+    z &= v_3 \sin \frac{\theta}{2}\\
+    w &= \cos \frac{\theta}{2}\\
+\end{align*}
+\[x^2 + y^2 + z^2 + w^2 = 1\]
+\begin{itemize}
+	\item the above is a 4-dimensional vector on a 4D sphere.
+\end{itemize}
+Quaternions are a very popular parameterization due to the following properties:
+\begin{itemize}
+	\item More \underline{compact} than the matrix representation (4 numbers instead of 9 numbers)
+	\item The quaternion elements vary \underline{continuously} over the unit sphere in $\mathbb{R}^4$ as the orientation changes, avoiding \underline{discontinuous} jumps (it is important for many optimization or learning algorithms).
+\end{itemize}
+To inverse a quaternion:
+\begin{itemize}
+	\item keep the rotation axis, rotate backward
+	\item Inverse of $(x, y, z, w)$ is $(x, y, z, -w)$
+	\item $(x, y, z, w)$ is equivalent to $(-x, -y, -z, -w)$
+\end{itemize}
+
+\end{document}
