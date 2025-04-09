@@ -37,18 +37,26 @@
 \section*{Rigid Body Motions}
 
 \subsection*{Representing Position}
-[FILL 11]
+\begin{center} 
+	\includegraphics*[width=0.8\textwidth]{L1_1.png} 
+\end{center}
 
 \subsection*{2D Transformation: Translation}
 Translate the point $p$ to $p'$ with $T = (\dd x, \dd y)$:
 \[p' = T + p\]
 \[\begin{bmatrix} x' \\ y' \end{bmatrix} = \begin{bmatrix} d_x \\ d_y \end{bmatrix} + \begin{bmatrix} x \\ y \end{bmatrix}\]
-[FILL 12, graph only]
+\begin{center} 
+	\includegraphics*[width=0.3\textwidth]{L1_2.png} 
+\end{center}
+
 
 \subsection*{2D Transformation: Rotation}
 \[p' = R \cdot p\]
 Here we are doing a counter-clockwise rotation
-[FILL 13]
+\begin{center} 
+	\includegraphics*[width=0.4\textwidth]{L1_3.png} 
+\end{center}
+
 The triangle here helps us visualize the rotation.  However, we are still considering one 2D point $p$.
 \begin{align*}
     \begin{bmatrix} x' \\ y' \end{bmatrix} &= \begin{bmatrix} \cos \theta & -\sin \theta \\ \sin \theta & \cos \theta \end{bmatrix} \cdot \begin{bmatrix} x \\ y \end{bmatrix}\\
@@ -100,10 +108,16 @@ Note: Following the matrix multiplication rule, a transformation matrix always a
 
 \section*{3D Transformation}
 Our examples so far were all in 2D, but we often want a 3D representation
-[FILL 21]
+\begin{center} 
+	\includegraphics*{L1_4.png} 
+\end{center}
+
 
 \subsection*{Right Hand Rule}
-[FILL 24]
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_5.png} 
+\end{center}
+
 Most of robotics system's coordinate system follows the right hand rule
 \begin{itemize}
 	\item Not always true (e.g., in some graphics and physics engine directX Unity)
@@ -113,7 +127,10 @@ Most of robotics system's coordinate system follows the right hand rule
 \subsection*{3D Transformation: Translation}
 A 3D point $(x, y, z)$, translation by $t_x, t_y, t_z$:
 \[\begin{bmatrix} x' \\ y' \\ z' \end{bmatrix} = \begin{bmatrix} t_x \\ t_y \\ t_z \end{bmatrix} + \begin{bmatrix} x \\ y \\ z \end{bmatrix}\]
-[FILL 26]
+\begin{center} 
+	\includegraphics*[width=0.5\textwidth]{L1_6.png} 
+\end{center}
+
 
 \subsection*{3D Transformation: Rotation}
 \begin{itemize}
@@ -124,7 +141,10 @@ A 3D point $(x, y, z)$, translation by $t_x, t_y, t_z$:
         \item It is a 3D space, not just 1D
         \item most common choices for rotation axes are the $x$, $y$, $z$-axes (Euler angle representation)
     \end{itemize}
-    [FILL 27]
+    \begin{center} 
+        \includegraphics*[width=0.6\textwidth]{L1_7.png} 
+    \end{center}
+    
 \end{itemize}
 
 \subsection*{3D Rotation Matrices}
@@ -140,11 +160,16 @@ R_z (\theta) &= \begin{bmatrix} \cos \theta & -\sin \theta & 0 \\ \sin \theta & 
 	\item The same 3D point might have different coordinate if we use different reference frames, next we will learn how to transform between different reference frames.
 \end{itemize}
 Example: green dot's coordinate is $(2, 1)$ in blue reference frame, but its coordinate is $(4, 4)$ in red reference frame.
-[FILL 30]
+\begin{center} 
+	\includegraphics*[width=0.3\textwidth]{L1_8.png} 
+\end{center}
 Changing coordinate frame is like translating between two different languages that describes the same thing.
 
 \subsubsection*{Examples:}
-[FILL 31, full]
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_9.png} 
+\end{center}
+
 
 \subsection*{Changing Reference Frames}
 \begin{itemize}
@@ -163,7 +188,9 @@ How do we compute $^A T_B$?
 	\item Suppose the point $P$ is \underline{rigidly} attached to reference Frame B.
 	\item No matter where the reference B, point $P$ is its coordinates with respect to Frame B is always given by $^B P = (2, 1)$.
 \end{itemize}
-[FILL 37, edited, 2x2 grid]
+\begin{center} 
+	\includegraphics*[width=0.8\textwidth]{L1_10.png} 
+\end{center}
 First, let's make Frame B identical to Frame A.  Now, $^A P = \:^B P = (2, 1)$.  Now, simply \underline{translate} Frame B together with $d = (2, 3)$, we will get the $^A P = \:^B P + d$.\\
 Therefore in this case,
 \[^A T_B = \begin{bmatrix} 1 & 0 & 2 \\ 0 & 1 & 3 \\ 0 & 0 & 1 \end{bmatrix}\]
@@ -171,7 +198,9 @@ Therefore in this case,
 \begin{itemize}
 	\item If there is a rotation, first rotate the frame so it is aligned with the target, then do a translation.
 \end{itemize}
-[FILL 47, edited]
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_11.png} 
+\end{center}
 If we combine this rotation and translation into one transformation matrix, we get:
 \[T = \begin{bmatrix} R_\theta & d \\ 0_n & 1 \end{bmatrix}\]
 This is the transformation $^A T_B$ that change the coordinate frame from B to A.
@@ -179,7 +208,10 @@ This is the transformation $^A T_B$ that change the coordinate frame from B to A
 	\item However, geometrically it describes the motion from Frame A to B.
 	\item $^A T_B$ also describes Frame B's "pose" in Frame A, where the rotation component R describes the B's orientation in Frame A, and the translation represents B's position in Frame A.
 \end{itemize}
-[FILL 52]
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_12.png} 
+\end{center}
+
 
 \subsection*{Change of Basis Summary}
 What is $^A T_B$?
@@ -191,7 +223,10 @@ What is $^A T_B$?
 \end{itemize}
 
 \subsection*{Composing Transformation}
-[FILL 54, fill]
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_13.png} 
+\end{center}
+
 
 \subsection*{Chained 3D Rotation}
 We can chain a sequence of Euler angle rotations (multiple sequence of rotation matrix) to get a general 3D rotation.
@@ -203,7 +238,10 @@ There are a few things to note when writing down the sequence of rotation:
 \end{enumerate}
 
 \subsection*{Extrinsic vs. Intrinsic Rotation}
-[FILL 57, 58, incl. text, edited]
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_14.png} 
+\end{center}
+
 The final rotation $R$ is the same.  However, the order of describing rotation sequence is opposite in each convention.
 \begin{itemize}
 	\item (Use premultiply!)
@@ -234,7 +272,10 @@ Parameterize a 3D rotation by two quantities: a unit vector $e$ indicating the d
 \begin{itemize}
 	\item Euler's rotation theorem: any rotation or sequence of rotations of a rigid body in a three-dimensional space is equivalent to a single rotation about a single fixed axis.
 \end{itemize}
-[FILL 63]
+\begin{center} 
+	\includegraphics*[width=0.3\textwidth]{L1_15.png} 
+\end{center}
+
 
 \subsection*{Quaternions}
 Uses a unit four-dimensional vector $(x, y, z, w)$ to represent rotation.
@@ -256,6 +297,11 @@ Quaternions are a very popular parameterization due to the following properties:
 	\item More \underline{compact} than the matrix representation (4 numbers instead of 9 numbers)
 	\item The quaternion elements vary \underline{continuously} over the unit sphere in $\mathbb{R}^4$ as the orientation changes, avoiding \underline{discontinuous} jumps (it is important for many optimization or learning algorithms).
 \end{itemize}
+For example:
+\begin{itemize}
+	\item $(0, 0, 0, 1)$ is the identity quaternion.
+	\item $(1, 0, 0, 0)$ rotates along $x$-axis by $\pi$.  (Since $w = 0$, therefore $\theta = \pi$).
+\end{itemize}
 To inverse a quaternion:
 \begin{itemize}
 	\item keep the rotation axis, rotate backward
@@ -263,4 +309,78 @@ To inverse a quaternion:
 	\item $(x, y, z, w)$ is equivalent to $(-x, -y, -z, -w)$
 \end{itemize}
 
+\section*{Forward Kinematics}
+\subsection*{Forward Kinematics of 2-link Manipulator}
+Given joint angles, calculate position of end-effector
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_16.png} 
+\end{center}
+
+\begin{align*}
+    x &= l_1 \cos \theta_1 + l_2 \cos(\theta_1 + \theta_2)\\
+    y &= l_1 \sin \theta_1 + l_2 \sin(\theta_1 + \theta_2)
+\end{align*}
+
+\subsection*{Forward Kinematics of RRR open-chain}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_17.png} 
+\end{center}
+
+\subsection*{Denavit-Hartenberg (DH) parameters}
+\[T_{0n} (\theta_1, \dots, \theta_n) = T_{01} (\theta_1) T_{12} (\theta_2) \cdots T_{n - 1, n} (\theta_n) \hfill T_i = \begin{bmatrix} \cos \theta_i & -\sin \theta_i \cos \alpha_i & \sin \theta_i \sin \alpha_i & a_i \cos \theta_i \\ \sin \theta_i & \cos \theta_i \cos \alpha_i & -\cos \theta_i \sin \alpha_i & a_i \sin \theta_i \\ 0 & \sin \alpha_i & \cos \alpha_i & d_i \\ 0 & 0 & 0 & 1 \end{bmatrix}\]
+\begin{itemize}
+	\item The length of the mutually perpendicular line, denoted by the scalar $a_{i - 1}$, is called the \textbf{link length} of link $i - 1$.  Despite its name, this link length does not necessarily correspond to the actual length of the physical link.
+	\item The \textbf{link twist} $\alpha_{i - 1}$ is the angle from $\hat{z}_{i - 1}$ to $\hat{z}_{i - 1}$, measured about $\hat{x}_{i - 1}$.
+	\item The \textbf{link offset} $d_i$ is the distance from the intersection of $\hat{x}_{i - 1}$ and $\hat{z}_i$ to the origin of the link-0$i$ frame (the positive direction is defined to be along the $\hat{z}_i$-axis).
+	\item The \textbf{joint angle} $\phi_i$ is the angle from $\hat{x}_{i - 1}$ to $\hat{x}_i$, measured about the $\hat{z}_i$-axis.
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_18.png} 
+\end{center}
+
+
+\section*{Inverse Kinematics}
+Given the end-effector position, calculate joint angles
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_19.png} 
+\end{center}
+
+\[\theta_2 = \pi \pm \alpha \hspace{1cm} \alpha = \cos^{-1} \left(\frac{l_i^2 + l_2^2 - r^2}{2l_1 l_2}\right)\]
+If $\alpha \neq 0$, there are two distinct values of $\theta_2$ which give the appropriate radius - the \textit{flip solution} is shown dashed above.
+\[\theta_1 = \arctan2(y, x) \pm \beta \hspace{1cm} \beta = \cos^{-1} \left(\frac{r^2 + l_1^2 - l_2^2}{2l_1 r}\right)\]
+Solve for $\phi$ and use this to get $\theta_1$ for \textbf{both} possible $\theta_2$ values
+\begin{itemize}
+	\item Inverse kinematics for joints > 2 is generally not solvable (no closed-form solution)
+	\item More than one solution (redundancy)
+	\item A hard (and well-studied problem)
+\end{itemize}
+
+\subsection*{Dynamics}
+Given joint velocities, find the end-effector velocity
+\begin{align*}
+    x &= L_1 \cos(\theta_1) + L_2 \cos(\theta_1 + \theta_2)\\
+    y &= L_2 \sin(\theta_1) + L_2 \sin(\theta_1 + \theta_2)
+\end{align*}
+First, differentiate with respect to joint angles
+\begin{align*}
+    \frac{\partial x}{\partial \theta_1} &= -L_1 \sin \theta_1 - L_2 \sin(\theta_1 + \theta_2)\\
+    \frac{\partial x}{\partial \theta_2} &= -L_2 \sin(\theta_1 + \theta_2)\\
+    \frac{\partial y}{\partial \theta_1} &= L_1 \cos \theta_1 + L_2 \cos(\theta_1 + \theta_2)\\
+    \frac{\partial y}{\partial \theta_2} &= L_2 \cos(\theta_1 + \theta_2)
+\end{align*}
+
+\subsection*{Jacobian Matrix}
+For \textit{Jacobian} matrix: the matrix of all first-order partial derivatives of a vector-valued function
+\[J = \begin{bmatrix} \frac{\partial x}{\partial \theta_1} & \frac{\partial x}{\partial \theta_2} \\ \frac{\partial y}{\partial \theta_1} & \frac{\partial y}{\partial \theta_2} \end{bmatrix}\]
+Velocity of end-effector:
+\[\begin{pmatrix} \dot{x} \\ \dot{y} \end{pmatrix} = \begin{bmatrix} \frac{\partial x}{\partial \theta_1} & \frac{\partial x}{\partial \theta_2} \\ \frac{\partial y}{\partial \theta_1} & \frac{\partial y}{\partial \theta_2} \end{bmatrix} \begin{bmatrix} \dot{\theta_1} \\ \dot{\theta_2} \end{bmatrix}\]
+
+\subsection*{Inverse of Jacobian}
+Jacobian is used for inverse dynamics
+\[\begin{bmatrix} \dot{\theta}_1 \\ \dot{\theta}_2 \end{bmatrix} = \begin{bmatrix} \frac{\partial x}{\partial \theta_1} & \frac{\partial x}{\partial \theta_2} \\ \frac{\partial y}{\partial \theta_1} & \frac{\partial y}{\partial \theta_2} \end{bmatrix}^{-1} \begin{bmatrix} \dot{x} \\ \dot{y} \end{bmatrix}\]
+\begin{itemize}
+	\item Can be used for closed-loop control
+	\item Manipulator has singularity when determinant of Jacobian is zero
+	\item Difficult to control around singularity
+\end{itemize}
 \end{document}
