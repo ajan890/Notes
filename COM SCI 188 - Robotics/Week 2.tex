@@ -355,6 +355,28 @@ Solve for $\phi$ and use this to get $\theta_1$ for \textbf{both} possible $\the
 	\item A hard (and well-studied problem)
 \end{itemize}
 
+\subsection*{"Solving" Inverse Kinematics}
+Inverse kinematics for joints > 2 is generally not solvable.  In this case, what do we do?
+\begin{enumerate}
+    \item Numerical IK
+    \begin{itemize}
+        \item Iterative solvers (like Newton-Raphson, Jacobian pseudo-inverse).
+        \item Solves for joint angles by minimizing position / orientation error.
+        \item Used in most general-purpose robot controllers.
+    \end{itemize}
+    \item Optimization-Based IK
+    \begin{itemize}
+        \item Define an objective function (like minimizing joint torque or staying within limits).
+        \item Add constraints (collision, joint bounds, etc.)
+        \item Solvers: gradient descent, SQP, or even MPC
+    \end{itemize}
+    \item Learning-Based IK
+    \begin{itemize}
+        \item Neural networks or reinforcement learning.
+        \item Especially helpful in high-DoF or redundant robots (like humanoids or octopuses).
+    \end{itemize}
+\end{enumerate}
+
 \subsection*{Dynamics}
 Given joint velocities, find the end-effector velocity
 \begin{align*}
@@ -369,13 +391,13 @@ First, differentiate with respect to joint angles
     \frac{\partial y}{\partial \theta_2} &= L_2 \cos(\theta_1 + \theta_2)
 \end{align*}
 
-\subsection*{Jacobian Matrix}
+\subsection*{Aside: Jacobian Matrix}
 For \textit{Jacobian} matrix: the matrix of all first-order partial derivatives of a vector-valued function
 \[J = \begin{bmatrix} \frac{\partial x}{\partial \theta_1} & \frac{\partial x}{\partial \theta_2} \\ \frac{\partial y}{\partial \theta_1} & \frac{\partial y}{\partial \theta_2} \end{bmatrix}\]
 Velocity of end-effector:
 \[\begin{pmatrix} \dot{x} \\ \dot{y} \end{pmatrix} = \begin{bmatrix} \frac{\partial x}{\partial \theta_1} & \frac{\partial x}{\partial \theta_2} \\ \frac{\partial y}{\partial \theta_1} & \frac{\partial y}{\partial \theta_2} \end{bmatrix} \begin{bmatrix} \dot{\theta_1} \\ \dot{\theta_2} \end{bmatrix}\]
 
-\subsection*{Inverse of Jacobian}
+\subsubsection*{Inverse of Jacobian}
 Jacobian is used for inverse dynamics
 \[\begin{bmatrix} \dot{\theta}_1 \\ \dot{\theta}_2 \end{bmatrix} = \begin{bmatrix} \frac{\partial x}{\partial \theta_1} & \frac{\partial x}{\partial \theta_2} \\ \frac{\partial y}{\partial \theta_1} & \frac{\partial y}{\partial \theta_2} \end{bmatrix}^{-1} \begin{bmatrix} \dot{x} \\ \dot{y} \end{bmatrix}\]
 \begin{itemize}
@@ -383,4 +405,385 @@ Jacobian is used for inverse dynamics
 	\item Manipulator has singularity when determinant of Jacobian is zero
 	\item Difficult to control around singularity
 \end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_1.png} 
+\end{center}
+
+\section*{Control}
+\begin{itemize}
+	\item Many tasks in robotics are defined by \textit{achievement goals}
+	\begin{itemize}
+        \item Go to the end of the maze
+        \item Push that box over here
+        \item Typically AI (search, ML) algorithms
+    \end{itemize}
+    \item Other tasks in robotics are defined by \textit{maintenance goals}
+    \begin{itemize}
+        \item Drive at 0.5 m/s
+        \item Balance on one leg
+    \end{itemize} 
+    \item Control theory is generally used for low-level maintenance goals
+    \item General notions:
+    \begin{itemize}
+        \item output = Controller(input)
+        \item output is control signal to actuator (e.g., motor voltage/current)
+        \item input is either goal state or goal state error (e.g., desired motor velocity)
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Control Systems}
+\begin{itemize}
+	\item Provides an output or response for a given input or stimulus
+	\begin{itemize}
+        \item Input: desired response
+        \item Output: actual response
+        \item E.g., pressing 4th floor button on an elevator
+    \end{itemize}
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_2.png} 
+\end{center}
+Output $\neq$ Input
+\begin{itemize}
+	\item Transient Response:
+	\begin{itemize}
+        \item Instantaneous change of input but gradual change of output
+    \end{itemize}
+	\item State-state Error:
+	\begin{itemize}
+        \item Accuracy of leveling
+        \item Steady state error is inherent!
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Open Loop (feedforward) Control}
+\begin{itemize}
+	\item Open loop controller:
+	\begin{itemize}
+        \item output = FF(goal)
+    \end{itemize}
+	\item E.g.: motor speed controller (linear):
+	\begin{itemize}
+        \item Is applied voltage on motor: $V$
+        \item Is goal speed: $s$
+        \item Is gain term (from calibration): $k$
+        \item $V = ks$
+    \end{itemize}
+	\item How do we know we've reached the goal?
+	\begin{itemize}
+        \item Weakness:
+        \begin{itemize}
+            \item Varying load on motor: \textit{motor may not maintain goal speed}
+        \end{itemize}
+        \item More likely scenario in robotics:
+        \begin{center} 
+            \includegraphics*[width=0.9\textwidth]{L2_3.png} 
+        \end{center}
+    \end{itemize}    
+\end{itemize}
+
+\subsection*{Uses of Open Loop Control}
+\begin{itemize}
+	\item Industrial machines may use open loop control
+	\begin{itemize}
+        \item Biological systems use it, in various movements
+        \item These are called ballistic movements
+        \item Ballistic movements cannot be corrected while they are executed
+        \item E.g., pouncing, reflex reaching and withdrawal, etc.
+    \end{itemize}
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_4.png} 
+\end{center}
+
+\subsection*{Definition of Feedback Control}
+\begin{itemize}
+	\item Feedback control is a means of getting a system to achieve and maintain a desired state by \underline{continuously feeding back} the current state and comparing it to the desired state, then adjusting the current state to minimize the difference.
+	\item Feedback control systems are drawn in a traditional diagrammatic way
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_5.png}
+\end{center}
+
+\subsection*{Comparing Methods}
+\begin{itemize}
+	\item Feedforward
+	\begin{itemize}
+        \item Anticipative
+        \item Previous plan
+        \item Doesn't wait
+    \end{itemize}
+	\item Feedback
+	\begin{itemize}
+        \item Reactive / Responsive
+        \item Seeks to correct errors
+        \item Always too late!
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Goal / Desired State}
+\begin{itemize}
+	\item The desired state is also called the \textbf{set point} or the \textbf{goal state} of the system.
+	\item Goal state can be:
+	\begin{itemize}
+        \item External (e.g., a thermostat monitors and controls the temperature of the house)
+        \item Internal (e.g., a robot can monitor its battery and control its energy usage)
+    \end{itemize}
+    \item If the desired and current states are the same, then what?
+    \begin{itemize}
+        \item Then there is nothing to do!
+    \end{itemize}
+    \item What if they are not?
+\end{itemize}
+
+\subsection*{Measuring Error}
+\begin{itemize}
+	\item The controller first computes the difference between the current and desired states
+	\item The difference is called \textbf{error}
+	\item What is the controller's job?
+	\begin{itemize}
+        \item To minimize the error at all times
+    \end{itemize}
+    \item Depending on the type of sensors, the error may be measured with different amounts of information.
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_6.png} 
+\end{center}
+\subsection*{Zero / non-zero Error}
+\begin{itemize}
+	\item The least information we can have about the error is whether it exists.
+	\begin{itemize}
+        \item i.e., whether the current state is the desired state
+    \end{itemize}
+    \item This is called \textbf{zero / non-zero error}
+    \item Zero / non-zero error provides very little information, yet useful control systems can be constructed with it.  (E.g., some forms of reinforcement learning work this way)
+    \item What other information would be helpful?
+\end{itemize}
+
+\subsection*{Error Magnitude and Direction}
+\begin{itemize}
+	\item Additional information about the error is its \underline{magnitude}, i.e., the absolute difference (distance) between the current state and the desired state.
+	\item The last part of the error information is its \underline{direction}, i.e., whether the difference is positive or negative.
+	\item Control is easiest if frequent \textbf{feedback} provides both magnitude and direction.
+\end{itemize}
+
+\subsection*{Closed loop (feedback) control}
+\begin{itemize}
+	\item Feedback controller:
+	\begin{itemize}
+        \item output = FB(error)
+        \item error = goal state - measured state
+        \item controller attempts to minimize error
+    \end{itemize}
+	\item Feedback control requires sensors:
+	\begin{itemize}
+        \item Binary (at goal / not at goal)
+        \item Direction (less than / greater than)
+        \item Magnitude (very bad, bad, good)
+    \end{itemize}
+    \item Control is easiest when direction and magnitude are available.
+\end{itemize}
+
+\subsubsection*{Example}
+\begin{itemize}
+	\item Using feedback control to implement a wall-following behavior
+	\begin{itemize}
+        \item What type of goal is this?  Achievement or maintenance?
+        \item What would the error be?
+    \end{itemize}
+	\item What sensors could you use?
+	\begin{itemize}
+        \item Would the sensor provide magnitude and direction of the error?
+    \end{itemize}
+	\item How can we word the controller?
+	\item What will this robot's behavior look like?
+\end{itemize}
+
+\subsection*{Simplest Control: ON/off or bang/bang}
+\begin{itemize}
+	\item If error > 0, turn on actuators
+	\item If error $\leq$ 0, turn off actuators
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_7.png} 
+\end{center}
+
+\subsection*{Oscillation and the Set Point}
+\begin{itemize}
+	\item The behavior of a feedback system oscillates around the desired state
+	\item E.g., the robot's movement will oscillate around the desired distance from the wall
+	\item How can we decrease oscillation?
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_8.png} 
+\end{center}
+
+\subsection*{Control Theory}
+\begin{itemize}
+	\item \textit{Control theory} is the science that studies the behavior of control systems
+	\item Three main types of simple linear controllers:
+	\begin{itemize}
+        \item P: proportional control
+        \item PD: proportional derivative control
+        \item PID: proportional integral derivative control
+    \end{itemize}
+    \item All use direction and magnitude of error
+\end{itemize}
+
+\subsection*{Proportional Control}
+\begin{itemize}
+	\item Act in proportion to the error
+	\item A proportional controller has an output $o$ proportional to its input $i$:
+	\[o = K_p e\]
+    \item $K_p$ is a proportionality constant (gain)
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_9.png}
+\end{center}
+
+\subsection*{What is a Gain?}
+\begin{itemize}
+	\item How do we decide how much to turn, or how fast to go?  (i.e., the magnitude of the system's response)
+	\item Those parameters ($K_p$) are called \textbf{gains}, and are very important in control
+	\item Determining the right gains is difficult
+	\item It can be done
+	\begin{itemize}
+        \item analytically (mathematics)
+        \item empirically (trial and error)
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Effect of Gains}
+[FILL 38, full]
+
+\subsection*{Physics and Gains}
+\begin{itemize}
+	\item The physical properties of the system directly affect the gain values.
+	\begin{itemize}
+        \item E.g., the velocity profile of a motor (how fast it can accelerate and decelerate)
+        \item the backlash and friction in the gears,
+        \item the friction on the surface, in the air, etc.
+    \end{itemize}
+    \item All of these influence what the system actually does in response to a command
+\end{itemize}
+
+\subsection*{Setting Gains}
+\begin{itemize}
+	\item Analytical approaches
+	\begin{itemize}
+        \item require that the system be well understood and characterized mathematically
+    \end{itemize}
+    \item Trial and error (ad hoc, system-specific) approaches
+    \begin{itemize}
+        \item require that the system be tested extensively
+    \end{itemize}
+    \item Gains can also be tuned by the system itself, automatically, by trying different values at run-time
+\end{itemize}
+
+\subsection*{Gains and Oscillations}
+\begin{itemize}
+	\item Real systems have \textit{momentum}
+	\begin{itemize}
+        \item System takes some time to respond to commands
+    \end{itemize}
+    \item Large gains can lead to \textit{oscillations}
+    \begin{itemize}
+        \item System overshoots, recovers, overshoots again
+    \end{itemize}
+    \item Very large gains can lead to \textit{divergent} oscillations
+    \begin{itemize}
+        \item Overshoot gets larger and larger over time.
+    \end{itemize}
+\end{itemize}
+\begin{center} 
+	[FILL 41, 43, mix]
+\end{center}
+
+\subsection*{Control Near the Set Point}
+\begin{itemize}
+	\item Setting gains is difficult, and simply increasing the proportional gain does not remove oscillations
+	\item While at low values this may work, as the gain increases, the oscillations increase as well.
+	\item The problem has to do with the distance from the set point\dots
+	\item How can we solve this?
+\end{itemize}
+
+\subsection*{Damping}
+\begin{itemize}
+	\item \textbf{Damping} is the process of systematically decreasin oscillations
+	\item What do you think it means to be properly damped?
+	\item A system is \underline{properly damped} if it does not oscillate with increasing magnitude, i.e., if its oscillations are either avoided, or decrease to the desired set point within a reasonable time period
+\end{itemize}
+
+\subsection*{Derivative Control}
+\begin{itemize}
+	\item Act in proportion to the \textit{rate of change} of the error
+	\item A \underline{derivative controller} has an output $o$ proportional to the \underline{derivative} of its input:
+	\[o = K_d \frac{\dd e}{\dd t}\]
+    \item $K_d$ is a proportionality constant
+\end{itemize}
+\begin{center} 
+	[FILL 44]
+\end{center}
+
+\subsection*{PD Control}
+\begin{itemize}
+	\item PD control combined P and D control: $o = K_p e + K_d \frac{\dd e}{\dd t}$
+	\item P component minimizes error
+	\item D component provides damping
+	\item Gains $K_p$ and $K_d$ must be tuned together
+\end{itemize}
+[FILL 45]
+
+\subsection*{Integral Control}
+\begin{itemize}
+	\item Act in proportion to the \textit{accumulated} error
+    \item Output proportioanl to the integral of its input:
+    \[o = K_i \int e(t) \dd t\]
+    \item $K_i$ is a proportionality constant
+    \item Integral control is useful for eliminating steady-state errors
+\end{itemize}
+[FILL 46]
+
+[FILL 47]
+
+\subsection*{PID Control}
+\begin{itemize}
+	\item PID control combined P, I, and D control:
+	\[o = K_p e + K_i \int e(t) \dd t + K_d \frac{\dd e}{\dd t}\]
+    \begin{itemize}
+        \item P component minimizes instantaneous error
+        \item I component minimizes cumulative error
+        \item D component provides damping
+    \end{itemize}
+    \item Gains must be tuned together
+    [FILL 48]
+\end{itemize}
+
+\subsection*{System Response Terminology}
+\begin{itemize}
+	\item Rise Time
+	\begin{itemize}
+        \item Time for the waveform to go from 0.1 to 0.9 of its final value
+        \item Measures how quickly the controller responds
+    \end{itemize}
+	\item Percent Overshoot
+	\begin{itemize}
+        \item Amount the waveform overshoots the final value, at the peak time
+        \item Measures how big the oscillations are
+    \end{itemize}
+	\item Settling time
+	\begin{itemize}
+        \item Time for the response to reach, and stay within, 2\% of its final value
+        \item Measures how fast the controller reaches steady-state
+    \end{itemize}
+\end{itemize}
+\begin{center} 
+	[FILL 49]
+\end{center}
+
+\subsection*{PID Control Summary}
+[FILL 50]
+
+\subsection*{}
+
 \end{document}
