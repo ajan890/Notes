@@ -502,7 +502,7 @@ Output $\neq$ Input
 	\item Feedback control systems are drawn in a traditional diagrammatic way
 \end{itemize}
 \begin{center} 
-	\includegraphics*[width=\textwidth]{L2_5.png}
+	\includegraphics*[width=0.6\textwidth]{L2_5.png}
 \end{center}
 
 \subsection*{Comparing Methods}
@@ -615,7 +615,7 @@ Output $\neq$ Input
 	\item How can we decrease oscillation?
 \end{itemize}
 \begin{center} 
-	\includegraphics*[width=\textwidth]{L2_8.png} 
+	\includegraphics*[width=0.6\textwidth]{L2_8.png} 
 \end{center}
 
 \subsection*{Control Theory}
@@ -654,7 +654,9 @@ Output $\neq$ Input
 \end{itemize}
 
 \subsection*{Effect of Gains}
-[FILL 38, full]
+\begin{center} 
+	\includegraphics*[width=0.7\textwidth]{L2_10.png} 
+\end{center}
 
 \subsection*{Physics and Gains}
 \begin{itemize}
@@ -696,7 +698,7 @@ Output $\neq$ Input
     \end{itemize}
 \end{itemize}
 \begin{center} 
-	[FILL 41, 43, mix]
+	\includegraphics*[width=0.6\textwidth]{L2_11.png} 
 \end{center}
 
 \subsection*{Control Near the Set Point}
@@ -713,6 +715,9 @@ Output $\neq$ Input
 	\item What do you think it means to be properly damped?
 	\item A system is \underline{properly damped} if it does not oscillate with increasing magnitude, i.e., if its oscillations are either avoided, or decrease to the desired set point within a reasonable time period
 \end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.6\textwidth]{L2_12.png} 
+\end{center}
 
 \subsection*{Derivative Control}
 \begin{itemize}
@@ -722,7 +727,7 @@ Output $\neq$ Input
     \item $K_d$ is a proportionality constant
 \end{itemize}
 \begin{center} 
-	[FILL 44]
+	\includegraphics*[width=\textwidth]{L2_13.png} 
 \end{center}
 
 \subsection*{PD Control}
@@ -732,7 +737,9 @@ Output $\neq$ Input
 	\item D component provides damping
 	\item Gains $K_p$ and $K_d$ must be tuned together
 \end{itemize}
-[FILL 45]
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_14.png} 
+\end{center}
 
 \subsection*{Integral Control}
 \begin{itemize}
@@ -742,9 +749,10 @@ Output $\neq$ Input
     \item $K_i$ is a proportionality constant
     \item Integral control is useful for eliminating steady-state errors
 \end{itemize}
-[FILL 46]
-
-[FILL 47]
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_15.png} \\
+    \includegraphics*[width=\textwidth]{L2_16.png} \\
+\end{center}
 
 \subsection*{PID Control}
 \begin{itemize}
@@ -756,7 +764,9 @@ Output $\neq$ Input
         \item D component provides damping
     \end{itemize}
     \item Gains must be tuned together
-    [FILL 48]
+    \begin{center} 
+        \includegraphics*[width=0.9\textwidth]{L2_17.png} 
+    \end{center}
 \end{itemize}
 
 \subsection*{System Response Terminology}
@@ -778,12 +788,23 @@ Output $\neq$ Input
     \end{itemize}
 \end{itemize}
 \begin{center} 
-	[FILL 49]
+	\includegraphics*[width=\textwidth]{L2_18.png} 
 \end{center}
 
 \subsection*{PID Control Summary}
-[FILL 50]
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_19.png} 
+\end{center}
 
-\subsection*{}
+\subsection*{Control is one component\dots}
+\begin{itemize}
+	\item Getting robots to do what you want requires many components!
+	\item Feedback Control plays a part at the lower level: turning wheels, moving actuators
+	\item Higher-level goals (coordination, interaction, collaboration) require other approaches
+	\begin{itemize}
+        \item These approaches can better represent and handle those challenges
+    \end{itemize}
+    \item Control Architectures are the AI portion that determines how the robot makes decisions
+\end{itemize}
 
 \end{document}
