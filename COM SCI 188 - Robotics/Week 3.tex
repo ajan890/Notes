@@ -36,7 +36,9 @@
 \maketitle 
 
 \section*{Model Predictive Control}
-[FILL 10]
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_1.png} 
+\end{center}
 \textbf{Model predictive control (MPC)} is an optimal control technique in which the calculated control actions minimize a cost function for a constrained dynamical system over a finite, receding, horizon.
 \begin{itemize}
 	\item Predicts future system behavior using a \textbf{model}
@@ -49,10 +51,14 @@
 \subsection*{System Identification}
 \textbf{\dots building a mathematical model} of a dynamic system \textbf{from measured data}
 
-[FILL 13]
+\begin{center} 
+	\includegraphics*[width=0.7\textwidth]{L1_2.png} 
+\end{center}
 
 \subsection*{Model Predictive Contouring Control (MPCC++)}
-[FILL 14]
+\begin{center} 
+	\includegraphics*[width=0.9\textwidth]{L1_3.png} 
+\end{center}
 
 \section*{Cameras and 2D Perception}
 \subsection*{Color Camera}
@@ -66,12 +72,16 @@
 \begin{itemize}
 	\item An image is basically a 2D array of intensity/color values
 	\item Image types:
-	[FILL 17, incl bottom text]
+	\begin{center} 
+        \includegraphics*[width=0.9\textwidth]{L1_4.png} 
+    \end{center}
 \end{itemize}
 
 \subsubsection*{Grayscale Images}
 A grid (2D matrix) of intensity values:
-[FILL 18]
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_5.png} 
+\end{center}
 \begin{itemize}
 	\item \underline{Pixel:} A "picture element" that contains the light intensity at some location $(x, y)$ in the image Referred to as $I(x, y)$
 	\item \underline{Image Resolution:} expressed in terms of Width and Height of the image
@@ -85,7 +95,9 @@ A grid (2D matrix) of intensity values:
 \end{itemize}
 
 \subsubsection*{Image Formation}
-[FILL 20]
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_6.png} 
+\end{center}
 
 \subsubsection*{Pinhole Camera Model}
 \textbf{Pinhole image:} Natural phenomenon, known during classical period in China and Greece (e.g., 470 BCE to 390 BCE).  
@@ -93,7 +105,10 @@ A grid (2D matrix) of intensity values:
     \item Used for \underline{art creation} and religious ceremony in the ancient times.
 	\item Expensive to record the image (drawing)
 \end{itemize}
-[FILL 21, 22]
+\begin{center} 
+	\includegraphics*[width=0.8\textwidth]{L1_7.png} \\
+    \includegraphics*[width=0.8\textwidth]{L1_8.png} 
+\end{center}
 \begin{itemize}
 	\item Light sensitive material was used as film.  
 	\item Hard to store, loses color after a while
@@ -101,13 +116,18 @@ A grid (2D matrix) of intensity values:
 \textbf{Today:} photon sensors are CCD, CMOS, etc.
 
 \subsubsection*{Human Vision}
-[FILL 24, im9]
-
+\begin{center} 
+	\includegraphics*[width=0.8\textwidth]{L1_9.png} 
+\end{center}
 \subsubsection*{Why do we need a pinhole?}
-[FILL 25-1]
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_10.png} 
+\end{center}
 Light rays from many different parts of the scene strike the same point on the paper.
-[FILL 25-2]
-Each point on the image plane \underline{sees light from only one direction ---} the one that passes through the pinhole.
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_11.png} 
+\end{center}
+Each point on the image plane \underline{sees light from only one direction} - the one that passes through the pinhole.
 
 \subsubsection*{Problem with Pinhole Camera}
 The pinhole size:
@@ -122,11 +142,16 @@ The pinhole size:
 	\item Shift them to align using the light \textbf{refraction}
 	\item However, this alignment works only for \underline{one depth} (need the object and image plane to stay in focus.)
 \end{itemize}
-[FILL 27]
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_12.png} 
+\end{center}
 
+\pagebreak
 \subsubsection*{Lenses Issues (depth of field)}
 Only objects on focus plane are in "perfect" focus
-[FILL 29, incl text.]
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_13.png} 
+\end{center}
 \[\frac{1}{D} + \frac{1}{D'} = \frac{1}{f}\]
 where $D$ is the distance of a focus plane to the lens plane, $D'$ is the distance of the image plane to the lens plane, and $f$ is the focal length of the lens.
 \begin{itemize}
@@ -153,7 +178,9 @@ Motivation
 \end{itemize}
 
 \subsubsection*{Field of View (FOV)}
-[FILL 34]
+\begin{center} 
+	\includegraphics*[width=0.9\textwidth]{L1_14.png} 
+\end{center}
 \[\alpha = 2 \arctan \frac{d}{2f}\]
 \begin{itemize}
 	\item The unit of FoV $\alpha$ is a degree.
@@ -161,42 +188,67 @@ Motivation
 \end{itemize}
 
 \subsubsection*{Focal Length}
-[FILL 35, full]
-
+\begin{center} 
+	\includegraphics*[width=0.9\textwidth]{L1_15.png} 
+\end{center}
 \subsubsection*{Camera Projection}
-[FILL 37, 38 (combined)]
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_16.png} 
+\end{center}
 \begin{align*}
     \textcolor{Green}{\frac{u}{f}}\: & \textcolor{Green}{= \frac{X}{Z}}\\
     \textcolor{red}{\frac{v}{f}}\: & \textcolor{red}{= \frac{Y}{Z}}
 \end{align*}
 In camera coordinates, the camera center is the origin.
 \[p_{2d} = \begin{bmatrix} u \\ v \end{bmatrix} \hspace{2cm} p_{3d} = \begin{bmatrix} X \\ Y \\ Z \end{bmatrix}\]
-[FILL 40, all]
-[FILL 41, all]
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_17.png} \\
+    \includegraphics*[width=\textwidth]{L1_18.png} 
+\end{center}
+
 
 \subsubsection*{Image Coordinate}
-[FILL 43]
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_19.png} 
+\end{center}
 Until now, we use 2D coordinate conventions that are \textbf{consistent} with the 3D camera coordinate.  However, if your application uses a different 2D coordiante, you'll need to further transform the $(u, v)$.\\\\
 For example, consider the following cases where we change the direction of the axes and the position of the origin.
-[FILL 44, 45]
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_20.png} \\
+    \rule{\textwidth}{1pt}
+    \vspace{1cm}
+    \includegraphics*[width=\textwidth]{L1_21.png}
+\end{center}
 
 \subsubsection*{Popular Camera Coordinate Systems}
-[FILL 46, full]
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_22.png} 
+\end{center}
 
 \subsection*{Camera Projection:}
 \[\lambda \begin{bmatrix} u \\ v \\ f \end{bmatrix} = \begin{bmatrix} X \\ Y \\ Z \end{bmatrix}\]
-[FILL 47]
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_23.png} 
+\end{center}
 
 \section*{Computer Vision}
 A quick overview: what is computer vision?
-[FILL 49]
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_24.png} 
+\end{center}
 
 \subsection*{What Makes 2D Computer Vision Hard?}
-[FILL 50]
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_25.png} 
+\end{center}
 Variation: same cat, different poses, view points, \dots
-[FILL 51]
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_26.png} 
+\end{center}
 More variation: different cats, different shapes, colors, textures, \dots\\\\
-Other factors:
+
+\pagebreak
+\textbf{Other factors:}
 \begin{itemize}
 	\item Illumination
 	\item Occlusion: partial observation
@@ -204,7 +256,9 @@ Other factors:
 \end{itemize}
 
 \subsection*{Human Vision}
-[FILL 57]
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_27.png} 
+\end{center}
 
 \subsection*{3D Vision}
 How do humans and animals perceive depth?
@@ -220,7 +274,9 @@ How do robots perceive depth?
 \end{itemize}
 
 \subsection*{2D to 3D Projection}
-[FILL 63]
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_28.png} 
+\end{center}
 \begin{itemize}
 	\item Knowing just 2D coordinate $(u, v)$, we don't have enough information to compute the 3D point location $(X, Y, Z)$
 	\item However, with an additional depth channel we can. (RGB-D image).
@@ -229,7 +285,9 @@ How do robots perceive depth?
     \end{itemize}
 \end{itemize}
 We can combine the two images to form a single, 3D image.
-[FILL 65]
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_29.png} 
+\end{center}
 \begin{itemize}
 	\item Depth image $\rightarrow$ 3D point clouds:
 	\item A pixel with
@@ -240,10 +298,13 @@ We can combine the two images to form a single, 3D image.
     \end{itemize} 
     \item Its 3D location $(X, Y, Z)$ in camera coordinate can be computed by:
     \[X = \frac{u}{f} \cdot Z \hspace{2cm} Y = \frac{v}{f} \cdot Z\]
+    \item $Z$: reading from the depth image
 \end{itemize}
 
 \subsection*{Summary:}
-[FILL 66, full]
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_30.png} 
+\end{center}
 
 \subsection*{World Coordinate to Camera Coordinate}
 \begin{itemize}
@@ -251,10 +312,14 @@ We can combine the two images to form a single, 3D image.
 	\item However, the world coordinate can be different from the \textit{camera coordinates}.
 	\item Requires an additional transformation
 \end{itemize}
-[FILL (combine 68-70)]
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_31.png} 
+\end{center}
 
 \subsection*{Camera: Putting Everything Together}
-[FILL (combine 72-73)]
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_32.png} 
+\end{center}
 \[x = K[R|t]X\]
 \begin{itemize}
 	\item Map a 3D point $X$ into a 2D coordinate in image $x$
