@@ -1,0 +1,294 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+\usepackage{xcolor}
+\usepackage[dvipsnames]{xcolor}
+
+% lists
+\usepackage{enumerate}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+\newcommand{\dd}{\text{d}}
+
+\graphicspath{{./assets/images/Week 3}}
+
+\title{CS 188 Robotics Week 3} 
+
+\author{Aidan Jan}
+
+\date{\today}
+
+\begin{document}
+\maketitle 
+
+\section*{Model Predictive Control}
+[FILL 10]
+\textbf{Model predictive control (MPC)} is an optimal control technique in which the calculated control actions minimize a cost function for a constrained dynamical system over a finite, receding, horizon.
+\begin{itemize}
+	\item Predicts future system behavior using a \textbf{model}
+	\item Solves an \textbf{optimization} problem at each step.
+	\item Applies only the first control input at each step (iterative).
+	\item Repeats this process continuously (receding horizon).
+	\item Handles input and output \textbf{constraints} directly.
+\end{itemize}
+
+\subsection*{System Identification}
+\textbf{\dots building a mathematical model} of a dynamic system \textbf{from measured data}
+
+[FILL 13]
+
+\subsection*{Model Predictive Contouring Control (MPCC++)}
+[FILL 14]
+
+\section*{Cameras and 2D Perception}
+\subsection*{Color Camera}
+\begin{itemize}
+	\item Cameras are the primary sensor for many robotic platforms
+	\item One of the cheapest and richest sensors is a camera
+	\item Many other sensors are built on top of the color camera
+\end{itemize}
+
+\subsection*{Images Representation}
+\begin{itemize}
+	\item An image is basically a 2D array of intensity/color values
+	\item Image types:
+	[FILL 17, incl bottom text]
+\end{itemize}
+
+\subsubsection*{Grayscale Images}
+A grid (2D matrix) of intensity values:
+[FILL 18]
+\begin{itemize}
+	\item \underline{Pixel:} A "picture element" that contains the light intensity at some location $(x, y)$ in the image Referred to as $I(x, y)$
+	\item \underline{Image Resolution:} expressed in terms of Width and Height of the image
+\end{itemize}
+
+\subsection*{Camera and Image Formation}
+\begin{itemize}
+	\item How we get the image (Image formation)
+	\item Pinhole Camera Model
+	\item 2D computer vision tasks and challenges
+\end{itemize}
+
+\subsubsection*{Image Formation}
+[FILL 20]
+
+\subsubsection*{Pinhole Camera Model}
+\textbf{Pinhole image:} Natural phenomenon, known during classical period in China and Greece (e.g., 470 BCE to 390 BCE).  
+\begin{itemize}
+    \item Used for \underline{art creation} and religious ceremony in the ancient times.
+	\item Expensive to record the image (drawing)
+\end{itemize}
+[FILL 21, 22]
+\begin{itemize}
+	\item Light sensitive material was used as film.  
+	\item Hard to store, loses color after a while
+\end{itemize}
+\textbf{Today:} photon sensors are CCD, CMOS, etc.
+
+\subsubsection*{Human Vision}
+[FILL 24, im9]
+
+\subsubsection*{Why do we need a pinhole?}
+[FILL 25-1]
+Light rays from many different parts of the scene strike the same point on the paper.
+[FILL 25-2]
+Each point on the image plane \underline{sees light from only one direction ---} the one that passes through the pinhole.
+
+\subsubsection*{Problem with Pinhole Camera}
+The pinhole size:
+\begin{itemize}
+	\item If large, blurry
+	\item If small, not enough light
+	\item When the pinhole size is extremely small, we will see the diffraction effect through the pinhole, resulting in the blurry image
+\end{itemize}
+\textbf{Solution:} refraction (lenses)
+\begin{itemize}
+	\item Essentially add multiple pinhole images
+	\item Shift them to align using the light \textbf{refraction}
+	\item However, this alignment works only for \underline{one depth} (need the object and image plane to stay in focus.)
+\end{itemize}
+[FILL 27]
+
+\subsubsection*{Lenses Issues (depth of field)}
+Only objects on focus plane are in "perfect" focus
+[FILL 29, incl text.]
+\[\frac{1}{D} + \frac{1}{D'} = \frac{1}{f}\]
+where $D$ is the distance of a focus plane to the lens plane, $D'$ is the distance of the image plane to the lens plane, and $f$ is the focal length of the lens.
+\begin{itemize}
+	\item Objects close to the focus plane are in better focus
+	\item Objects further away are not.
+\end{itemize}
+
+\subsection*{Camera Terminology}
+These terms will be defined below.
+\begin{itemize}
+	\item Focal length
+	\item Field of view
+	\item Aperture
+	\item Camera intrinsic
+	\item Camera extrinsic
+\end{itemize}
+
+\subsection*{Pinhole Camera Geometry}
+Motivation
+\begin{itemize}
+	\item Physics of real cameras are all different (too tedious to model all of them).
+	\item But they all try their best to approximate pinhole camera.
+	\item So \textbf{in most of computer vision subjects, we model all cameras mathematically as a pinhole camera.}
+\end{itemize}
+
+\subsubsection*{Field of View (FOV)}
+[FILL 34]
+\[\alpha = 2 \arctan \frac{d}{2f}\]
+\begin{itemize}
+	\item The unit of FoV $\alpha$ is a degree.
+	\item Each camera has two FoV: vertical and horizontal.
+\end{itemize}
+
+\subsubsection*{Focal Length}
+[FILL 35, full]
+
+\subsubsection*{Camera Projection}
+[FILL 37, 38 (combined)]
+\begin{align*}
+    \textcolor{Green}{\frac{u}{f}}\: & \textcolor{Green}{= \frac{X}{Z}}\\
+    \textcolor{red}{\frac{v}{f}}\: & \textcolor{red}{= \frac{Y}{Z}}
+\end{align*}
+In camera coordinates, the camera center is the origin.
+\[p_{2d} = \begin{bmatrix} u \\ v \end{bmatrix} \hspace{2cm} p_{3d} = \begin{bmatrix} X \\ Y \\ Z \end{bmatrix}\]
+[FILL 40, all]
+[FILL 41, all]
+
+\subsubsection*{Image Coordinate}
+[FILL 43]
+Until now, we use 2D coordinate conventions that are \textbf{consistent} with the 3D camera coordinate.  However, if your application uses a different 2D coordiante, you'll need to further transform the $(u, v)$.\\\\
+For example, consider the following cases where we change the direction of the axes and the position of the origin.
+[FILL 44, 45]
+
+\subsubsection*{Popular Camera Coordinate Systems}
+[FILL 46, full]
+
+\subsection*{Camera Projection:}
+\[\lambda \begin{bmatrix} u \\ v \\ f \end{bmatrix} = \begin{bmatrix} X \\ Y \\ Z \end{bmatrix}\]
+[FILL 47]
+
+\section*{Computer Vision}
+A quick overview: what is computer vision?
+[FILL 49]
+
+\subsection*{What Makes 2D Computer Vision Hard?}
+[FILL 50]
+Variation: same cat, different poses, view points, \dots
+[FILL 51]
+More variation: different cats, different shapes, colors, textures, \dots\\\\
+Other factors:
+\begin{itemize}
+	\item Illumination
+	\item Occlusion: partial observation
+	\item Ambiguity: some objects may look a lot like others; different perspectives may look like different objects
+\end{itemize}
+
+\subsection*{Human Vision}
+[FILL 57]
+
+\subsection*{3D Vision}
+How do humans and animals perceive depth?
+\begin{itemize}
+	\item Binocular vision: 2 eyes instead of 1
+	\item Structure from Motion (SIM): walking around an object allows you to build a 3D model.
+\end{itemize}
+How do robots perceive depth?
+\begin{itemize}
+	\item Stereo camera
+	\item Time of flight
+	\item Structured light
+\end{itemize}
+
+\subsection*{2D to 3D Projection}
+[FILL 63]
+\begin{itemize}
+	\item Knowing just 2D coordinate $(u, v)$, we don't have enough information to compute the 3D point location $(X, Y, Z)$
+	\item However, with an additional depth channel we can. (RGB-D image).
+	\begin{itemize}
+        \item The image on the right is an RGB-D image.  Each pixel records the depth value $Z$ (in meter or millimeter)
+    \end{itemize}
+\end{itemize}
+We can combine the two images to form a single, 3D image.
+[FILL 65]
+\begin{itemize}
+	\item Depth image $\rightarrow$ 3D point clouds:
+	\item A pixel with
+	\begin{itemize}
+        \item image coordinate $(u, v)$
+        \item Depth value = $Z$
+        \item Focal length $f$
+    \end{itemize} 
+    \item Its 3D location $(X, Y, Z)$ in camera coordinate can be computed by:
+    \[X = \frac{u}{f} \cdot Z \hspace{2cm} Y = \frac{v}{f} \cdot Z\]
+\end{itemize}
+
+\subsection*{Summary:}
+[FILL 66, full]
+
+\subsection*{World Coordinate to Camera Coordinate}
+\begin{itemize}
+	\item In order to apply the camera model we described so far, the 3D point $(X, Y, Z)$ must be expressed in \underline{camera coordinates} (i.e.; centered at the camera origin)
+	\item However, the world coordinate can be different from the \textit{camera coordinates}.
+	\item Requires an additional transformation
+\end{itemize}
+[FILL (combine 68-70)]
+
+\subsection*{Camera: Putting Everything Together}
+[FILL (combine 72-73)]
+\[x = K[R|t]X\]
+\begin{itemize}
+	\item Map a 3D point $X$ into a 2D coordinate in image $x$
+	\item How to describe its \textit{pose} in the world?  (extrinsic matrix)
+	\item How to describe its internal parameters?  (intrinsic matrix)
+\end{itemize}
+
+\subsection*{Camera: Calibration}
+Goal: estimate the camera parameters
+\begin{itemize}
+	\item Version 1: solve for projection matrix
+	\[X = \begin{bmatrix} wx \\ wy \\ w \end{bmatrix} = \begin{bmatrix} * & * & * & * \\ * & * & * & * \\ * & * & * & * \end{bmatrix} \begin{bmatrix} X \\ Y \\ Z \\ 1 \end{bmatrix} = PX\]
+    \item Version 2: solve for camera parameters separately
+    \begin{itemize}
+        \item Intrinsic (focal length, principle point, pixel size)
+        \item Extrinsic (rotation angles, translation)
+    \end{itemize}
+\end{itemize}
+To calibrate:
+\begin{enumerate}
+    \item Identify correspondance between image and scene
+    \item Compute mapping from scene to image
+\end{enumerate}
+Requirement
+\begin{enumerate}
+    \item Must know geometry very accurately
+    \item Must know correspondance
+\end{enumerate}
+\begin{align*}
+    x_i &= PX_i \\
+    \begin{bmatrix} u_i \\ v_i \\ 1 \end{bmatrix} &\cong \begin{bmatrix} m_{00} & m_{01} & m_{02} & m_{03} \\ m_{10} & m_{11} & m_{12} & m_{13} \\ m_{20} & m_{21} & m_{22} & m_{23} \end{bmatrix} \begin{bmatrix} X_i \\ Y_i \\ Z_i \\ 1 \end{bmatrix}
+\end{align*}
+Robust camera calibration is still an open challenge!
+
+
+
+\end{document}
