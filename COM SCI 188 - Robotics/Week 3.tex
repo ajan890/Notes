@@ -12,6 +12,7 @@
 
 % lists
 \usepackage{enumerate}
+\usepackage{tabularx}
 
 % images
 \usepackage{graphicx} % for images
@@ -327,7 +328,10 @@ We can combine the two images to form a single, 3D image.
 	\item How to describe its internal parameters?  (intrinsic matrix)
 \end{itemize}
 
-\subsection*{Camera: Calibration}
+\section*{Camera: Calibration}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_1.png} 
+\end{center}
 Goal: estimate the camera parameters
 \begin{itemize}
 	\item Version 1: solve for projection matrix
@@ -338,6 +342,10 @@ Goal: estimate the camera parameters
         \item Extrinsic (rotation angles, translation)
     \end{itemize}
 \end{itemize}
+During the hand-eye calibration process, we move robot to a known position in its base frame, and captures the image with camera and detects the robot's hand's position (approximated with the red ball)
+\begin{center} 
+	\includegraphics*[width=0.6\textwidth]{L2_2.png} 
+\end{center}
 To calibrate:
 \begin{enumerate}
     \item Identify correspondance between image and scene
@@ -352,7 +360,356 @@ Requirement
     x_i &= PX_i \\
     \begin{bmatrix} u_i \\ v_i \\ 1 \end{bmatrix} &\cong \begin{bmatrix} m_{00} & m_{01} & m_{02} & m_{03} \\ m_{10} & m_{11} & m_{12} & m_{13} \\ m_{20} & m_{21} & m_{22} & m_{23} \end{bmatrix} \begin{bmatrix} X_i \\ Y_i \\ Z_i \\ 1 \end{bmatrix}
 \end{align*}
-Robust camera calibration is still an open challenge!
+You want to find a \textbf{rotation matrix} $\mathbb{R} \in SO(3)$, and a \textbf{translation vector} $t \in \mathbb{R}^3$ such that $p_i^B \equiv Rp_i^A + t$.  (This is the matrix above.)
+
+\subsection*{The Kabsch-Umeyama Algorithm}
+\begin{enumerate}
+    \item Compute centroids
+    \[\bar{p}^A = \frac{1}{N} \sum_{i = 1}^N p_i^A,\hspace{1cm} \bar{p}^B = \frac{1}{N} \sum_{i = 1}^N p_i^B\]
+    \item Center the points
+    \[q_i^A = p_i^A - \bar{p}^A, \hspace{1cm} q_i^B = p_i^B - \bar{p}^B\]
+    \item Compute the cross-covariance matrix
+    \[H = \sum_{i = 1}^N q_i^A(q_i^B)^T\]
+    \item Apply SVD (singular value decomposition)
+    \[H = U\Sigma V^T\]
+    \item Construct the rotation matrix
+    \[R = VU^T\]
+    \begin{itemize}
+        \item If $\det(R) < 0$, correct for reflection:
+        \item $V$[:, 3] $\leftarrow -V$[:, 3], (flip the third column of $V$)
+    \end{itemize}
+    \item Compute the translation vector
+    \[t = \bar{p}^B - R \bar{p}^A\]
+    \item Output the transformation (combine rotation and translation into a rigid body transformation)
+\end{enumerate}
+Pseudo Code
+\begin{verbatim}
+    // compute centroids
+    centroid_A = mean of A_points
+    centroid_B = mean of B_points
+
+    // center point sets
+    A_centered = [Ai - centroid_A for Ai in A_points]
+    B_centered = [Bi - centroid_B for Bi in B_points]
+
+    // Compute cross-covariance matrix H:
+    H = zero 3×3 matrix
+    for i = 1 to N:
+        H += outer_product(A_centered[i], B_centered[i])
+
+    // Perform Singular Value Decomposition:
+    [U, Σ, V_T] = SVD(H)
+
+    // Compute rotation matrix R:
+    R = V_T^T * U^T
+
+    // Handle reflection case (det(R) < 0)
+    if determinant(R) < 0:
+        V_T[2] = -V_T[2] # flip the 3rd row of V_T
+        R = V_T^T * U^T
+    
+    // Compute translation vector t:
+    t = centroid_B - R * centroid_A
+    
+    RETURN R, t
+\end{verbatim}
+
+\section*{Computer Vision Basics}
+\subsection*{Basic Image Processing}
+There are many operations we can apply on a image.  Here are some examples:
+\begin{itemize}
+	\item Resize
+	\item Color manipulation
+	\item Contrast
+	\item Brightness
+	\item Gamma
+	\item Filtering
+	\item Denosing
+\end{itemize}
+
+\subsubsection*{Brightness (overall intensity of an image)}
+Adjust brightness: $g(x) = f(x) + \beta$\\
+Increasing (or decreasing) the $\beta$ value will add (or subtract) a constant value to every pixel.  Pixel values outside of the [0, 1] range will be saturated (i.e., a pixel value higher or lower than 1 or 0 will be clamped to 1 or 0).
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_3.png} 
+\end{center}
+
+\subsubsection*{Contrast}
+Adjust contrast: $g(x) = \alpha f(x)$\\
+The $\alpha$ parameter will modify how the intensity distribution spread.  If $\alpha < 1$, the color levels will be compressed and the result will be an image with less contrast.
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_4.png} 
+\end{center}
+
+\subsubsection*{Gamma Correction}
+\begin{itemize}
+	\item Gamma correction can be used to correct the brightness of an image by using a nonlinear transformation between the input values and the mapped output values: $g(x) = [f(x)]^{\frac{1}{\gamma}}$
+	\item As this relation is nonlinear, the effect will not be the same for all the pixels and will depend to their original value.
+	\item When $\gamma < 1$, the original dark regions will be brighter and the histogram will be shifted to the right.  (reducing contrast)
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.5\textwidth]{L2_5.png} \\
+    \includegraphics*[width=\textwidth]{L2_6.png} 
+\end{center}
+
+
+\subsubsection*{Image Filtering}
+Image filtering: compute function of local neighborhood at each position
+\begin{itemize}
+	\item Filtering can be used for:
+	\begin{itemize}
+        \item Enhance images (denoise, increase contrast, etc.)
+        \item Extract information from images (textures, edges, distinctive points, etc.)
+        \item Detect patterns (template matching)
+        \item Deep convolutional networks
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Convolution Operation}
+\begin{itemize}
+	\item Sliding the kernel (small 2D matrix) over the 2D image (big 2D matrix)
+	\item Performing elementwise multiplication with the part of the input it is currently on
+	\item Sum up the result into a single output pixel
+	\item Slide to the next location
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_7.png} 
+\end{center}
+
+\subsection*{Padding}
+\begin{itemize}
+	\item What about near the edge?
+	\begin{itemize}
+        \item the filter window falls off the edge of the image
+    \end{itemize}
+	\item Boundary \underline{padding}
+	\begin{itemize}
+        \item Zero (smaller value around boundary)
+        \item Circular/warp (best for panorama)
+        \item Replicate
+        \item Symmetric        
+    \end{itemize}
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.6\textwidth]{L2_8.png} 
+\end{center}
+
+\subsection*{Image Filtering}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_9.png} 
+\end{center}
+
+\subsection*{Image Filtering: Box Filter}
+\begin{itemize}
+	\item What does it do?
+	\begin{itemize}
+        \item Replaces each pixel with an average of its neighborhood
+        \item Achieve smoothing effect (remove sharp features)
+    \end{itemize}
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_10.png} 
+\end{center}
+
+\subsection*{Example: Convolution Kernels}
+\begin{center} 
+	\includegraphics*[width=0.8\textwidth]{L2_11.png} \\
+    \includegraphics*[width=0.8\textwidth]{L2_12.png} 
+\end{center}
+
+\subsection*{Other Filters}
+\subsubsection*{Gaussian Kernel}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_13.png} 
+\end{center}
+\subsubsection*{Edge Detection}
+\begin{center} 
+	\includegraphics*[width=0.9\textwidth]{L2_14.png} 
+\end{center}
+\begin{itemize}
+	\item Goal: Identify sudden changes (discontinuities) in an image
+	\item Why?  Intuitively, edges carry a lot of the semantic and shape information from the image.
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_15.png} 
+\end{center}
+
+\subsection*{Edge Detection in Robotics}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_16.png} 
+\end{center}
+
+\pagebreak
+\section*{Convolution Neural Networks}
+\subsection*{Convnet Building Blocks}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_17.png} 
+\end{center}
+
+\subsection*{Convolutional Layer}
+\begin{itemize}
+	\item Input: an image
+	\item Processing: convolution with \textbf{\underline{multiple}} filters
+	\item Output: an image, ($\#$ channels = $\#$ filters), weighted sum of input
+	\item \texttt{torch.nn.Conv2d(in\_channels, out\_channels, kernel\_size, stride=1, } \\\texttt{padding=0, padding\_mode='zeros')}
+	\item \textbf{Convolve} the filter with the image i.e., "slide over the image spatially, computing dot products"
+	\item A convolutional layer can have multiple filters.
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.8\textwidth]{L2_18.png} 
+\end{center}
+If we had \textbf{6} \underline{5x5 filters}, we'll get 6 separate activation maps.  We stack these up to get a "new image" of size 28x28x6!
+
+\subsection*{Kernel Size}
+How big the filter for a layer is typically between 1x1 and 7x7.
+\begin{itemize}
+	\item Larger kernel aggregate information from larger local region (bigger receptive field)
+	\item 1x1 is just linear combination of channels in previous image (no spatial processing)
+	\item Filters usually have the same number of channels as the input image. (e.g., an RGB image has 3 channels, so one filter is a $n \times n \times 3$ rather than just a 2d kernel)
+\end{itemize}
+
+\subsection*{Padding}
+\begin{itemize}
+	\item Convolutions have problems on edges
+    \item Do nothing: output a little smaller than input
+    \item Pad: add extra pixels on edge
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_19.png} 
+\end{center}
+
+\subsection*{Stride}
+\begin{itemize}
+	\item How far to move filter between applications
+	\item We've done stride 1 convolutions up until now, approximately preserves image size
+	\item Could move filter further, downsample image
+\end{itemize}
+
+\subsection*{Input - Output Size}
+\begin{itemize}
+	\item Input $C_{\text{in}} \times H_{\text{in}} \times W_{\text{in}}$ image
+	\item \texttt{Conv2d(K, N, S, P)}: Number of kernels \texttt{K}, kernel size [\texttt{N} $\times$ \texttt{N}], stride \texttt{S}, padding \texttt{P}
+	\item What's the output feature size ($C_{\text{out}}$, $H_{\text{out}}$, $W_{\text{out}}$)?
+	\begin{itemize}
+        \item $H_{\text{out}} = \lfloor \frac{H_{\text{in}} + 2 \cdot \text{padding} - (N - 1) - 1}{\text{stride}} + 1 \rfloor$
+        \item $W_{\text{out}} = \lfloor \frac{W_{\text{in}} + 2 \cdot \text{padding} - (N - 1) - 1}{\text{stride}} + 1 \rfloor$
+        \item $C_{\text{out}} = K$
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Pooling Layer}
+\begin{itemize}
+	\item Input: an image
+	\item Processing: pool pixel values over region
+	\item Output: an image, shrunk by a factor of the stride
+\end{itemize}
+Hyperparameters:
+\begin{itemize}
+	\item What kind of pooling?  Average, mean, max, min
+	\item How big of stride?  Controls downsampling
+	\item How big of region?  Usually not bigger than stride
+\end{itemize}
+Most common: maxpooling 2x2 stride of 2, or 3x3 stride of 3.
+\begin{center} 
+	\includegraphics*[width=0.7\textwidth]{L2_20.png} 
+\end{center}
+
+\subsection*{Fully Connected Layer (InnerProduct)}
+Every input neuron connects to every output neuron
+
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_21.png} 
+\end{center}
+\begin{itemize}
+	\item Often used to go from image feature map $\rightarrow$ final output or map image features to a single vector
+	\item Eliminates spatial information
+\end{itemize}
+
+\subsection*{Activation Layer}
+\begin{itemize}
+	\item Used to increase non-linearity of the network without affecting receptive fields of the conv layers.
+	\item Most commonly used activation layer: ReLU
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_22.png} 
+\end{center}
+
+\subsection*{Activation Layer: Softmax}
+\begin{itemize}
+	\item A special kind of activation layer, usually at the end of fully connected layer and before cross-entropy loss.
+	\item Can be viewed as a fancy \underline{normalization function} that produce a \underline{probability distribution vector}
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_23.png} 
+\end{center}
+
+\subsection*{Loss Function}
+A loss function scores how far off a prediction is from the desired "target" output.
+\begin{itemize}
+	\item loss(prediction, target) returns a number called "the loss"
+	\item Big Loss = Bad Error
+	\item Small Loss = Minor Error
+	\item Zero Loss = No Error
+\end{itemize}
+
+\begin{center}
+\begin{tabularx}{\linewidth}{|X|X|}
+    \hline \rule{0pt}{2.5ex}
+    \textbf{Regression} & \textbf{Classification}\\
+    \hline \rule{0pt}{2.5ex}
+    Predict real-valued output & Predict category output\\
+    \hline \rule{0pt}{2.5ex}
+    What temperature will it be tomorrow? & Will it be sunny tomorrow?  Often predicts continuous values which are probabilities of different labels, use the one with max probabilities as predicted class.\\
+    \hline \rule{0pt}{2.5ex}
+    Loss function: squared error, L1 error, \dots & Loss function: cross-entropy\\
+    \hline
+\end{tabularx}
+\end{center}
+
+\subsection*{Regression}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_24.png} 
+\end{center}
+L1 loss is more robust to outliers, but its \textbf{derivatives around zero are not continuous}, making it inefficient to find the solution.  L2 loss is \textbf{sensitive to outliers}, but gives a more stable and closed form solution.
+\begin{itemize}
+	\item Smooth L1 is somewhat a combination of the two.
+\end{itemize}
+
+\subsection*{Classification: CrossEntropy}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_25.png} 
+\end{center}
+\begin{itemize}
+	\item The network output prediction is compared to the ground truth vector
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_26.png} 
+\end{center}
+\begin{itemize}
+	\item Finally, weights update through backpropagation.
+	\item Change the network weight $W$ so that the loss $L$ is minimized.
+\end{itemize}
+
+\subsection*{Summary of Convnet Building Blocks}
+\begin{itemize}
+	\item Convolutional layers:
+	\begin{itemize}
+        \item Used convolution operation to extract features
+        \item Convolution with stride > 1 will downsample image
+    \end{itemize}
+	\item Pooling layers:
+	\begin{itemize}
+        \item Used to downsample feature maps, making processing more efficient
+    \end{itemize}
+	\item Fully connected layers:
+	\begin{itemize}
+        \item Often used as last layer, to map image features $\rightarrow$ prediction
+        \item No spatial information
+        \item Inefficient: lots of weights, no weight sharing
+    \end{itemize}
+    \item Activation layers: increase non-linearity of the network
+    \item Loss function: classification and regression
+\end{itemize}
 
 
 
