@@ -1,0 +1,314 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+\usepackage{xcolor}
+\usepackage[dvipsnames]{xcolor}
+
+% lists
+\usepackage{enumerate}
+\usepackage{tabularx}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+\newcommand{\dd}{\text{d}}
+
+\graphicspath{{./assets/images/Week 4}}
+
+\title{CS 188 Robotics Week 4} 
+
+\author{Aidan Jan}
+
+\date{\today}
+
+\begin{document}
+\maketitle 
+
+\subsection*{Projective Sign Distance Function}
+\begin{center} 
+	\includegraphics*[width=0.5\textwidth]{L1_1.png} 
+\end{center}
+Sign indicated occluded / free space with respect to the camera\\\\
+In this example:
+\begin{itemize}
+	\item \textcolor{red}{Red: surface observed in camera}
+	\item \textcolor{green}{Green: camera projection ray}
+	\item We take p' as the nearest point.
+	\item Sign: c is behind p' $\rightarrow$ occluded $\rightarrow$ negative
+	\item Projective distance: blue line
+	\item 3D point location $c\langle x, y, z \rangle$
+	\item Project $c\langle x, y, z \rangle$ to the 2D image, gives us 2D coordinate $u, v$.
+	\item Depth reading on pixel is $d(u, v)$
+\end{itemize}
+Signed projective distance:
+\[d_{\text{proj}} = d(u, v) - z\]
+
+\section*{State Estimation and Particle Filter}
+\subsection*{Probabilistic Robotics}
+\begin{itemize}
+	\item Robotics is by nature a very messy subject
+	\begin{itemize}
+        \item Sensors are noisy
+        \item Actuators are imperfect
+    \end{itemize}
+	\item We rarely ever know anything "for sure"
+	\begin{itemize}
+        \item We can only collect evidence to try to make educated assumptions
+    \end{itemize}
+\end{itemize}
+\subsubsection*{For Example...}
+\begin{itemize}
+	\item An IR rangefinder can tell us
+	\begin{itemize}
+        \item if we are likely to be near a wall or not
+        \item if its likely that there is something close to us
+        \item if its likely that the area ahead of us is unobstructed
+    \end{itemize}
+    \item A camera can tell us
+    \begin{itemize}
+        \item if there is a good chance of a colored stuffed doll being in front of us
+        \item if its possible that there is a box on the table
+        \item if its likely the walls are blue
+    \end{itemize}
+\end{itemize}
+\subsubsection*{However\dots}
+\begin{itemize}
+	\item We are making a big leap between sensing and perception
+	\begin{itemize}
+        \item When a rangefinder gives us a certain voltage that indicates an obstacle on the path, \textit{it doesn't guarantee that there is an actual obstacle in our path}
+        \item However, we can definitely say that if our rangefinder reports that voltage, there may be a \underline{better chance} of an obstacle being in our way
+    \end{itemize}
+\end{itemize}
+Instead of considering a sensor output as a \textit{certainty}, we can think of the \textit{likelihood} that it is correct
+
+\subsection*{Probabilities}
+\begin{itemize}
+	\item We will use probabilistic representations for 
+	\begin{itemize}
+        \item The world state
+        \item sensor models
+        \item action models
+    \end{itemize}
+    \item Use the calculus of probability theory to combine these models
+\end{itemize}
+
+\subsection*{Probabilistic Localization}
+\begin{itemize}
+	\item Goal: use probabilistic methods to represent both the motion and the perception of your robots.
+	\item We will use a "particle filter" to represent these probability distributions
+\end{itemize}
+
+\subsection*{Probability Filter Motion Models}
+\begin{itemize}
+	\item We can describe every movement of your robots as a probability distribution
+	\begin{itemize}
+        \item For example, let's say we want our robot to just move forward for 3.5 feet
+    \end{itemize}
+    \begin{center} 
+        \includegraphics*[width=0.7\textwidth]{L1_2.png} 
+    \end{center}
+    \item The motors are subject to noise!
+    \begin{center} 
+        \includegraphics*[width=0.7\textwidth]{L1_3.png} 
+    \end{center}
+\end{itemize}
+
+What if we were to tell our robot to move forward 3.5 feet 100 different times?
+\begin{itemize}
+	\item It would likely land in 100 different locations
+\end{itemize}
+Let's break the track into 0.5 foot increments, and calculate the percentage of times our robot lands in each increment.
+\begin{center} 
+	\includegraphics*[width=0.7\textwidth]{L1_4.png} 
+\end{center}
+We can do the same thing even with smaller increments
+\begin{center} 
+	\includegraphics*[width=0.7\textwidth]{L1_5.png} 
+\end{center}
+This "bell curve" shape is very common when describing noisy processes
+\begin{itemize}
+	\item It is called the "Gaussian" or "Normal" distribution
+\end{itemize}
+
+\subsection*{Gaussian Distribution}
+\begin{itemize}
+	\item Gaussian Distribution isn't the only way to describe a random process, but it is one of the easiest and most flexible.
+	\item It often does a pretty good job of describing our physical systems
+\end{itemize}
+
+\begin{center} 
+	\includegraphics*[width=0.7\textwidth]{L1_6.png} 
+\end{center}
+\subsection*{Some Details\dots}
+\begin{center} 
+	\includegraphics*[width=0.7\textwidth]{L1_7.png} 
+\end{center}
+
+\subsubsection*{Example:}
+Let's say we have a robot with a compass.  This robot accepts commands to turn to particular angles (which it does very well) and it also accepts commands to move forward (which it does with some rotational and translational noise)
+\begin{itemize}
+	\item Our robot's motion is noisy!
+	\item What's a simple way we can model noise?
+	\item Let's say that each time we try to move in a straight line, our robot goes almost the right direction and distance, but with some Gaussian noise on both the direction and distance.
+\end{itemize}
+
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_8.png} 
+\end{center}
+\begin{itemize}
+	\item This is the simplesst way to predict our robot's motion
+	\item There are much more complex and accurate models available, but we will use this one for simplicity.
+\end{itemize}
+
+\subsubsection*{Example 2:}
+\begin{itemize}
+	\item How can we estimate the 2D position of our robot?
+	\begin{itemize}
+        \item Simulate the movement of a whole bunch of robots, each with its own random Gaussian noise.
+    \end{itemize}
+	\item What will happen to these "virtual" robots?
+	\begin{itemize}
+        \item They will scatter according to the amount of noise we add.
+    \end{itemize}
+	\item If our noise model is a good approximation of real life\dots
+	\begin{itemize}
+        \item then the distribution of our virtual robots will describe the probability distribution of our real robot's location.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Example 3:}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_9.png} 
+\end{center}
+
+\subsection*{Measurement Models}
+Obviously, if we keep moving around and adding noise with each step, all of our virtual robots will eventually be completely scattered.
+\begin{itemize}
+	\item But how can we assess the likelihood of each "virtual robot?"
+	\item By taking measurements!
+\end{itemize}
+So, we would like to assess the probability of our robot actaully being at one of our simulated robots' positions given some new sensor reading.
+\[P(\text{virtual robot}) = P(\text{robot at location} | \text{sensor reading})\]
+How do we calculate this?
+\begin{itemize}
+	\item Bayes Law!
+\end{itemize}
+\[P(A|B) = \frac{P(B|A) P(A)}{P(B)}\]
+Just like our motion model, our sensors are subject to noise, and can be modeled as a probability distribution.
+\begin{itemize}
+	\item Hence, this is what the $P(\text{sensor reading} | \text{robot at location})$ means.
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_10.png} 
+\end{center}
+Now, if we get some new reading, we know the probaiblity of getting that reading given the actual distance to the object.
+\begin{itemize}
+	\item If at each timestep, we calculate the probability of each virtual robot, then we can use those probabilities from the last timestep for the $P(\text{robot at location})$
+\end{itemize}
+Now all we have left is $P(\text{sensor reading})$.  Each time we take a reading, and update the probability of each virtual robot, let's choose $N$ such that all probabilities sum to 1.
+\[N = \frac{1}{\sum_x P(\text{sensor reading} | \text{robot at location}) P(\text{robot at location})}\]
+We now know everything we need to calculate $P(\text{robot at location} x | \text{sensor reading})$, the "posterior probability"
+
+\subsubsection*{Example:}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_11.png} 
+\end{center}
+\begin{itemize}
+	\item Calculate the estimated robot's position.
+	\item Weighted average of particles' positions using their probability
+\end{itemize}
+\begin{align*}
+    x_{est} &= \sum_n P_n x_n\\
+    y_{est} &= \sum_n P_n y_n
+\end{align*}
+
+\subsection*{Resampling}
+\begin{itemize}
+	\item Now that we can assess the probability of each of our virtual robots' positions given a new sensor measurement, let's kill off some of the virtual robots with lower probabilities
+	\item There are quite a few ways to do this, but \textit{resampling} is one efficient method
+\end{itemize}
+How does it work?
+\begin{itemize}
+	\item Use a roulette wheel to probabilistically duplicate particles with high weights, and discard those with low weights
+	\item A 'Particle' is some structure that has a weight element $w$.  The sum of all weights in old Particles should equal 1.
+	\item Calculate a Cumulative Distribution Function (CDF) for our particle weights
+	\item Loop through our particles as if spinning a roulette wheel
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.3\textwidth]{L1_12.png} 
+\end{center}
+\begin{itemize}
+	\item Each particle will have a probability of getting landed on and saved proportional to its posterior probability
+	\item If a particle has a very large posterior probability, then it may get landed on many times.
+	\item If a particle has a very low posterior probability, then it may not get landed on at all.
+	\item By incrementing by $\frac{1}{\text{numParticles}}$, we ensure that we don't change the number of particles in our returned set.
+\end{itemize}
+
+\subsection*{Resampling: Practical considerations}
+\begin{itemize}
+	\item Resampling just chooses particles (with repetition) with the computed probabilities: \textit{it does not change the number of particles}
+	\begin{itemize}
+        \item It "kills" some and "copies" others
+    \end{itemize}
+    \item One extension is to have the particle number dynamic, based on the "confidence" of the current estimate
+    \item If probabilities get too low, there could be numerical issues
+    \begin{itemize}
+        \item Use logarithm when calculating $P(\text{virtual robot})$
+    \end{itemize}
+    \[p = p_1 p_2 \rightarrow \log(p) = \log(p_1) + \log(p_2)\]
+\end{itemize}
+\textit{Do we really need to resample our particles every time we take a measurement?}
+\begin{itemize}
+	\item Resampling is used to avoid the problem of degeneracy of the algorithm, that is, avoiding the situation that all but one of the importance weights are close to zero.
+	\item No, we can calculate the number of effective particles:
+	\[N_{eff} = \frac{1}{\sum_n (\text{particle}_i \cdot \text{prob})^2}\]
+    \item and only resample when $N_{eff} < N_{thresh}$
+\end{itemize}
+
+\subsection*{Particle Filter}
+\begin{itemize}
+	\item Notice we refer to our "virtual robots" as "particles"
+	\item The algorithm we've put together in this lecture is called a "Particle Filter"
+	\item Algorithm for robots to localize using a particle filter is called \textit{Monte Carlo Localization} or \textit{particle filter localization}
+\end{itemize}
+
+\subsection*{Putting it all together}
+Particle Filtering Algorithm:
+\begin{itemize}
+	\item Create N particles at some starting location (or distributed randomly around the map), each with equal probability.  Call this data structure "Particles"
+	\begin{itemize}
+        \item When a new movement command $(d, Q)$ is issued:
+        \begin{itemize}
+            \item For each particle "p" in "Particles":
+            \begin{itemize}
+                \item Generate a randomized movement command consisting of 'd' and 'Q'
+                \item Update the current position of 'p' according to the motion model applied to 'd' and 'Q'
+                \item Optionally do bounds checking to ehsure that our particles are not ghosting through walls
+            \end{itemize}
+        \end{itemize}
+        \item When a new sensor movement $(z)$ is received:
+        \begin{itemize}
+            \item For each particle "p" in "Particles":
+            \begin{itemize}
+                \item Compute the posterior probability for each particle: P("p", location | "z")
+            \end{itemize}
+            \item Resample the particles: "Particles" = resampleParticles("Particles")
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_13.png} 
+\end{center}
+\end{document}
