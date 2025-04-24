@@ -293,8 +293,10 @@ Particle Filtering Algorithm:
         \begin{itemize}
             \item For each particle "p" in "Particles":
             \begin{itemize}
-                \item Generate a randomized movement command consisting of 'd' and 'Q'
-                \item Update the current position of 'p' according to the motion model applied to 'd' and 'Q'
+                \item Generate a randomized movement command consisting of d' and Q'
+                \[\theta' = \theta + \mathcal{N}(0, \sigma_\theta) \hspace{1cm} d' = d + \mathcal{N}(0, \sigma_d)\]
+                \item Update the current position of 'p' according to the motion model applied to d' and Q'
+                \[x_{t + 1} = x_t + d' \cos \theta' \hspace{1cm} y_{t + 1} = y_t + d' \sin \theta'\]
                 \item Optionally do bounds checking to ehsure that our particles are not ghosting through walls
             \end{itemize}
         \end{itemize}
@@ -308,7 +310,300 @@ Particle Filtering Algorithm:
         \end{itemize}
     \end{itemize}
 \end{itemize}
+
+\section*{SLAM: Simultaneous Localization and Mapping}
 \begin{center} 
 	\includegraphics*[width=\textwidth]{L1_13.png} 
 \end{center}
+\begin{itemize}
+	\item Estimate the pose of a robot and the map of the environment at the same time
+	\item \textbf{Localization:} inferring location given a map
+	\item \textbf{Mapping:} inferring a map given locations
+	\item \textbf{SLAM:} learning a map and locating the robot simultaneously
+\end{itemize}
+SLAM is hard, because
+\begin{itemize}
+	\item a map is needed for localization
+	\item a good pose estimate is needed for mapping
+	\item (chicken-and-egg problem)
+\end{itemize}
+
+\subsection*{SLAM Applications}
+\begin{itemize}
+	\item SLAM is central to a range of indoor, outdoor, in-air, and underwater applications for both manned and autonomous vehicles.
+	\item Examples:
+	\begin{itemize}
+        \item At home: vacuum cleaner, lawn mower
+        \item Air: surveillance with unmanned air vehicles
+        \item Underwater: reef monitoring
+        \item Underground: exploration of mines
+        \item Space: terrain mapping for localization
+    \end{itemize}
+\end{itemize}
+
+\subsection*{The SLAM Problem}
+\begin{itemize}
+	\item SLAM is considered a fundamental problem for robots to become truly autonomous
+	\item Large variety of different SLAM approaches have been developed
+	\item The majority uses probabilistic concepts
+	\item History of SLAM dates to the mid-eighties.
+\end{itemize}
+
+\subsection*{Feature-based SLAM}
+\begin{itemize}
+	\item Given:
+	\begin{itemize}
+        \item The robot's controls $U_{1\::\: k} = \{u_1, u_2, \dots, u_k\}$
+        \item Relative observations $Z_{1\::\: k} = \{z_1. z_2, \dots, z_k\}$
+    \end{itemize}
+	\item Wanted:
+	\begin{itemize}
+        \item Map of features $m = \{m_1, m_2, \dots, m_n\}$
+        \item Path of the robot $X_{1\::\: k} = \{x_1, x_2, \dots, x_k\}$
+    \end{itemize}
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_1.png} 
+\end{center}
+\begin{itemize}
+	\item \textbf{Absolute} robot poses
+	\item \textbf{Absolute} landmark positions
+	\item But only \textbf{relative} measurements of landmarks
+\end{itemize}
+
+\subsection*{Why is SLAM a hard problem?}
+\begin{enumerate}
+    \item Robot path and map are both unknown
+    \item Errors in map and pose estimates correlated
+    \begin{center} 
+        \includegraphics*[width=0.6\textwidth]{L2_2.png} 
+    \end{center}
+    \item The mapping between observations and landmarks is unknown
+    \item Picking wrong data associations can have catastrophic consequences (divergence)
+    \begin{center} 
+        \includegraphics*[width=0.8\textwidth]{L2_3.png} 
+    \end{center}
+\end{enumerate}
+
+\subsection*{Knowledge about Environment}
+\begin{itemize}
+	\item Cannot rely on odometry alone
+	\item Need knowledge about environment or its structure
+	\begin{itemize}
+        \item i.e., walls are straight, corners are 90$^\circ$
+    \end{itemize}
+    \item Can be used to close the loop
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.6\textwidth]{L2_4.png} 
+\end{center}
+
+\subsubsection*{Overlapping Sensor Measurements}
+\begin{itemize}
+	\item Regular features, seen from multiple angles at different points in time
+	\item Can be used to update localization and correct maps
+	\item Basis of SLAM algorithm
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.4\textwidth]{L2_5.png} 
+\end{center}
+
+\subsection*{SLAM - Derivation}
+\begin{itemize}
+	\item Divide environment into a grid
+	\begin{itemize}
+        \item Each cell is labeled as free or obstacle
+        \item Unknown / unexplored cells shown as \texttt{?}
+    \end{itemize}
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.8\textwidth]{L2_6.png} 
+\end{center}
+
+\begin{itemize}
+	\item Inconsistencies in actuators and effectors mean that the robot does not perfectly execute each motion command
+	\item (a) is intended perception
+	\item (b) is actual
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.8\textwidth]{L2_7.png} 
+\end{center}
+
+\begin{itemize}
+	\item Assume odometry gives a reasonable estimation of pose (position and heading) for short motions
+	\item For each relatively small possible error in pose, compute what the perception of the current map would be and compare it with the current map would be and compare it with the actual perception computed from sensor data
+	\begin{itemize}
+        \item Choose pose that gives best match
+        \item Set this as actual pose of robot and update map
+    \end{itemize}
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.5\textwidth]{L2_8.png} 
+\end{center}
+
+\begin{itemize}
+	\item Correct the pose of the robot
+	\item Use data from perception map to update current map stored in the robot's memory
+\end{itemize}
+
+\begin{center} 
+	\includegraphics*[width=0.8\textwidth]{L2_9.png} 
+\end{center}
+
+\subsection*{SLAM Algorithm}
+\begin{verbatim}
+    matrix m <- partial map           // current map
+    matrix p                          // perception map
+    matrix e                          // expected map
+    coordinate c <- initial position  // current position
+    coordinate n                      // new position
+    coordinate array T                // set of test positions
+    coordinate t                      // test position
+    coordinate b <- none              // best position
+
+    loop
+        move a short distance
+        n <- odometry(c)                    // New position based on odometry
+        p <- analyze sensor data
+
+        for every t in T                    // T is the positions around n
+            e <- expected(m, t)             // Expected map at test position
+            if compare(p, e) better than b
+                b <- t                      // Best test position so far
+        
+        n <- b                              // Replace new position by best position
+        m <- update(m, p, n)                // Update map based on new position
+        c <- n                              // Current position is new position
+\end{verbatim}
+
+How do we actually determine what is the "best position" in practice?
+\begin{itemize}
+	\item Use a Kalman filter!
+\end{itemize}
+
+\subsection*{Kalman Filter}
+\begin{itemize}
+	\item Also known as Linear Quadratic Estimation (LQE)
+	\item Assumes \textbf{Gaussian Noise} in both motion and measurements and uses a \textbf{linearized approximation} of the system dynamics
+	\item Uses a series of measurements observed over time
+	\item (Follows similar process to particle filter but is not the same!)
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.8\textwidth]{L2_10.png} 
+\end{center}
+
+\begin{center}
+\begin{tabular}{|p{0.3\linewidth}|p{0.3\linewidth}|p{0.3\linewidth}|}
+    \hline
+    \textbf{Feature} & \textbf{Kalman Filter} & \textbf{Particle Filter} \\
+    \hline
+    Assumes Gaussian noise & Yes & Not required \\
+    \hline
+    Works with nonlinear systems & Only with extended / unscented variants (EKF/UKF) & Naturally handles nonlinear systems \\
+    \hline
+    State representation & A single mean and covariance matrix & A set of particles (samples of possible states)\\
+    \hline
+    Scalability & Very efficient for low-dimensional states & Can handle high-dimensional states (but needs many particles) \\
+    \hline
+    Accuracy & Accurate if assumptions hold (e.g., linearity, Gaussian) & More accurate in complex or non-Gaussian cases \\
+    \hline
+    Computational load & Low to moderate & Higher (especially with many particles)\\
+    \hline
+\end{tabular}
+\end{center}
+
+\subsection*{Extended Kalman Filter (EKF) SLAM}
+\begin{itemize}
+	\item Localization
+	\begin{itemize}
+        \item 3x1 pose vector
+        \item 3x3 covariance matrix
+    \end{itemize}
+    \[x_k = \begin{bmatrix} x_k \\ y_k \\ \theta_k \end{bmatrix} \hspace{1cm} C_k = \begin{bmatrix} \sigma_x^2 & \sigma_{xy} & \sigma_{x\theta} \\ \sigma_{yx} & \sigma_y^2 & \sigma_{y\theta} \\ \sigma_{\theta x} & \sigma_{\theta y} & \sigma_{\theta}^2 \end{bmatrix}\]
+    \item SLAM
+    \begin{itemize}
+        \item Landmarks simply extend the state.  Growing both the state vector and covariance matrix.
+        \item Ex: Map with $N$ landmarks
+    \end{itemize}
+    \begin{center} 
+        \includegraphics*[width=0.7\textwidth]{L2_11.png} 
+    \end{center}
+\end{itemize}
+
+\pagebreak
+\subsection*{EKF SLAM: Building the Map}
+Filter cycle:
+\begin{enumerate}
+    \item \textbf{Predict robot's state} (odometry)
+    \begin{center} 
+        \includegraphics*[width=0.8\textwidth]{L2_12.png} 
+    \end{center}
+    \item \textbf{Measurement prediction} (predict what the robot should see based on landmarks that currently exist in map)
+    \begin{center} 
+        \includegraphics*[width=0.5\textwidth]{L2_13.png} 
+    \end{center}
+    \item \textbf{Observation} (measure actual distance and orientation to landmarks)
+    \begin{center} 
+        \includegraphics*[width=0.5\textwidth]{L2_14.png} 
+    \end{center}
+    \item \textbf{Data association} (associates predicted measurements to observations)
+    \begin{center} 
+        \includegraphics*[width=0.5\textwidth]{L2_15.png} 
+    \end{center}
+    \item \textbf{Update} (update pose vector and covariance matrix using Kalman Filter)
+    \begin{center} 
+        \includegraphics*[width=0.5\textwidth]{L2_16.png} 
+    \end{center}
+    \item \textbf{Integration of new landmarks} (extend pose vector and covariance matrix with new landmarks)
+    \begin{center} 
+        \includegraphics*[width=\textwidth]{L2_17.png} 
+    \end{center}
+\end{enumerate} 
+
+\subsection*{Loop Closure}
+\begin{itemize}
+	\item Recognizing an already mapped area, typially after a long exploration path (the robot "closes a loop")
+	\item Structurally identical to data association, but
+	\begin{itemize}
+        \item high levels of ambiguity
+        \item possibly useless validation gates
+        \item environment symmetries
+    \end{itemize}
+    \item Uncertainties collapse after a loop closure (whether the closure was correct or not)
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_18.png} 
+\end{center}
+\begin{itemize}
+	\item By revisiting already mapped areas, uncertainties in robot landmark estimates can be reduced
+	\item This can be exploited when exploring an environment for the sake of better (e.g., more accurate) maps
+	\item Exploration: the problem of where to acquire new information
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.8\textwidth]{L2_19.png} 
+\end{center}
+
+\subsection*{EKF-SLAM: Complexity}
+\begin{itemize}
+	\item Cost per step: quadratic in $n$, the number of landmarks: O($n^2$)
+	\item Total cost to build a map with $n$ landmarks: O($n^3$)
+	\item Memory consumption: O($n^2$)
+	\item Problem: becomes computationally intractable for large maps!
+	\item There exists variants to circumvent these problems
+\end{itemize}
+
+\subsection*{SLAM Techniques}
+\begin{itemize}
+	\item EKF SLAM
+	\item FastSLAM (particle filter version)
+	\item Graph-based SLAM
+	\item Topological SLAM (mainly place recognition)
+	\item Scan Matching / Visual Odometry (only locally consistent maps)
+	\item Approximations for SLAM: Local submaps
+	\item Sparse extended information filters, Sparse links, Thin junction tree filters, etc.
+	\item \dots
+\end{itemize}
+
+
+
 \end{document}
