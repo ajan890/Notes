@@ -1,0 +1,555 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+\usepackage{xcolor}
+\usepackage[dvipsnames]{xcolor}
+
+% lists
+\usepackage{enumerate}
+\usepackage{tabularx}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+% colors
+\definecolor{paint_red}{RGB}{237, 28, 36}
+\definecolor{paint_green}{RGB}{34, 177, 76}
+\definecolor{paint_blue}{RGB}{63, 72, 204}
+\definecolor{paint_purple}{RGB}{163, 73, 164}
+
+\newcommand{\dd}{\text{d}}
+
+\graphicspath{{./assets/images/Week 5}}
+
+\title{CS 188 Robotics Week 5} 
+
+\author{Aidan Jan}
+
+\date{\today}
+
+\begin{document}
+\maketitle 
+
+\section*{Motion Planning}
+\subsection*{Occupancy Grid, accounting for C-Space}
+\textbf{Problem:} Occupancy grids perform exhaustive search across the state space (i.e., large graph with many nodes and edges.)  There are $10^6$ nodes for a 6 DoF arm.  What can we do differently?
+\begin{center} 
+	\includegraphics*[width=0.7\textwidth]{L1_1.png} 
+\end{center}
+Now we can build a graph:
+\begin{itemize}
+	\item Each cell is a node
+	\item Edges between adjacent cells
+\end{itemize}
+Task: find the shortest path from the starting cell to the ending cell
+\begin{itemize}
+	\item You can use any graph search algorithms:
+	\begin{itemize}
+        \item Breadth First Search (Grassfire)
+        \item Depth First Search
+        \item A-star Search
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Sampling based planning}
+Rather than \underline{exhaustively} explore ALL possibilities, \underline{randomly} explore a smaller subset of possibilities while keeping track of progress.  Then, search for collision-free path only on the sampling points.\\\\
+There are two methods:
+\begin{enumerate}
+    \item PRM: Probabilistic Road Map
+    \item RRT: Rapidly-Exploring Random Tree
+\end{enumerate}
+
+\section*{Probabilistic Road Map (PRM)}
+Probabilistic Roadmap methods proceed in two phases:
+\begin{enumerate}
+    \item Preprocessing Phase - to construct the roadmap $G$
+    \item Query (Search) Phase - to search a path from q\_init and q\_goal
+\end{enumerate}
+\begin{itemize}
+	\item The roadmap is an undirected graph $G = (N, E)$.
+	\item The nodes in $N$ are a \textbf{subset of configurations} of the robot sampled that are \textbf{collision free}.
+	\item The edges in $E$ correspond to feasible straight-line paths.
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.7\textwidth]{L1_2.png} \\
+    \rule{\textwidth}{1pt}
+    \includegraphics*[width=0.7\textwidth]{L1_3.png} \\
+    \rule{\textwidth}{1pt}
+    \includegraphics*[width=0.7\textwidth]{L1_4.png} \\
+\end{center}
+
+\subsubsection*{PRM - Phase 2}
+Query phase: search a path given q\_init and q\_goal with the constructed graph
+\begin{itemize}
+	\item First, add these two nodes into the graph
+	\item Then, connect the possible edges to existing nodes
+    \begin{center} 
+        \includegraphics*[width=0.6\textwidth]{L1_5.png} 
+    \end{center}
+    \item Finally, perform a graph search
+    \begin{center} 
+        \includegraphics*[width=0.6\textwidth]{L1_6.png} 
+    \end{center}
+\end{itemize}
+
+\subsubsection*{Graph Search}
+\begin{center} 
+    \includegraphics*[width=0.8\textwidth]{L1_7.png} 
+\end{center}
+
+\subsubsection*{Aside: Some Terminology}
+\begin{itemize}
+	\item The graph $G$ is called a \textbf{probabilistic roadmap}
+	\item The nodes in $G$ are called \textbf{milestones}
+	\item Edge between two milestones called \textbf{local path (or roadways)}
+\end{itemize}
+\begin{center} 
+    \includegraphics*[width=0.8\textwidth]{L1_8.png} 
+\end{center}
+
+\subsection*{A few design decisions:}
+\begin{itemize}
+	\item How do we sample a new point?
+	\item Randomly or using other "clever" methods?  The biggest advantage for random sampling is that there is no bias.
+	\item How to choose the distance of neighbor $R$?  L2 distance?  How far?
+\end{itemize}
+
+\subsection*{Defining Distance}
+\begin{itemize}
+	\item The PRM procedure relies upon a distance function, \textbf{Dist}, that can be used to measure the \textbf{distance between two points in configuration space.}  This function takes as input the coordinates of the two points and returns a real number.
+\end{itemize}
+Common choices for distance functions include:
+\begin{itemize}
+	\item The L1 distance: $\text{Dist}_1 = \sum_i |x_i - y_i|$
+	\item The L2 distance: $\text{Dist}_2 = \sqrt{\sum_i (x_i - y_i)^2}$
+\end{itemize}
+
+\subsection*{Defining Distance with Angle}
+\begin{itemize}
+	\item Sometimes, configuration space correspond to angular rotations.  In these situations, we want to ensure that the Dist function correctly reflects distances in the presence of wrap around, if there is no joint limit.
+	\item For example, if $\theta_1$ and $\theta_2$ denote two angles between $0$ and $360$ degrees, the expression below can be used to capture the angular displacement between them.
+	\[\text{Dist}(\theta_1, \theta_2) = \min(|\theta_1 - \theta_2|, (360 - |\theta_1 - \theta_2|))\]
+\end{itemize}
+
+\subsection*{Check for collision along a path}
+\begin{center} 
+    \includegraphics*[width=0.7\textwidth]{L1_9.png} 
+\end{center}
+Method:
+\begin{itemize}
+	\item Uniformly sample points along the path.
+	\item Check: if all the points are in free space, we assume the path is collision free
+\end{itemize}
+
+\subsection*{Random Sample in PRM}
+It is possible to have a situation where the algorithm would fail to find a path even when one exists if the sampling procedure fails to generate an appropriate set of samples.
+\begin{center} 
+    \includegraphics*[width=0.7\textwidth]{L1_10.png} 
+\end{center}
+How do we solve this problem?
+\begin{itemize}
+	\item More samples
+	\item Sample more points close to C-space obstacles
+\end{itemize}
+The only thing we can say is if there is a route and the planner keeps adding random samples, it will, eventually find a solution.
+\begin{itemize}
+	\item \textbf{In summary: PRM is not complete, but probabilistically complete.}
+\end{itemize}
+
+\subsection*{Summary: Probabilistic}
+\begin{itemize}
+	\item Assumption:
+	\begin{itemize}
+        \item Static obstacles
+        \item Many queries (start and end state) to be processed in the same environment
+    \end{itemize}
+	\item Example applications
+	\begin{itemize}
+        \item Navigation in static virtual environments
+        \item Robot manipulator arm in a static workcell
+    \end{itemize}
+	\item \textbf{Advantages}: one roadmap that works for many q\_init and q\_goal, repeatedly
+	\begin{itemize}
+        \item But in many cases, we have the start and end point in mind, can we use it to improve the sampling efficiency?
+    \end{itemize}
+	\item \textbf{Disadvantage}: it spends a lot of time on preprocessing (roadmap construction), and if the environment changes after the road map is constructed, then we need to redo the process.
+\end{itemize}
+
+\section*{Rapidly-Exploring Random Tree (RRT)}
+\begin{itemize}
+	\item Searches for a path from the initial configuration to the goal configuration by expanding a search tree - (single root node, start), no longer a general graph
+	\item For each step,
+	\begin{itemize}
+        \item The algorithm samples a \textbf{new} configuration and expands the tree towards it.
+        \item The new sample can either be a \textbf{random configuration} or the \textbf{goal configuration} itself.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{The Basic Idea: Iteratively expand the tree}
+\begin{center} 
+    \includegraphics*[width=0.8\textwidth]{L1_11.png} 
+\end{center}
+
+\subsection*{RRT requires the following functions}
+\begin{itemize}
+	\item $\text{x}_{\text{rand}}$ = RandomSample()
+	\begin{itemize}
+        \item Uniform random sampling of free configuration space
+        \item This can easily be done by sampling randomly in $\mathbb{R}^n$ (or whatever your configuration space is) and then discarding any points which fail the collision check
+    \end{itemize}
+    \item $\text{x}_{\text{nearest}}$ = Nearest(G, $\text{x}_{\text{rand}}$)
+    \begin{itemize}
+        \item Given point in Cspace, find vertex on tree that is closest to that point
+    \end{itemize}
+    \item $\text{x}_{\text{new}}$ = Steer($\text{x}_{\text{nearest}}, \text{x}_{\text{rand}}$)
+    \begin{itemize}
+        \item Find $\text{x}_{\text{new}}$ take 'one step' towards $\text{x}_{\text{rand}}$ from $\text{x}_{\text{nearest}}$
+    \end{itemize}
+    \begin{verbatim}
+        if (dist(x_nearest, x_rand) <= delta):
+            x_new = x_rand
+        else:
+            compute a new configuration x_new, \
+                that is along the path from x_nearest to x_rand, \
+                such that dist(x_nearest, x_new) = delta
+    \end{verbatim}
+    \item ObstacleFree(x, y)
+    \begin{itemize}
+        \item Check if the path from x to y is collision free
+        \item Oftentimes, we assume delta is small enough, and we only need to check obstacleFree on the new point $\text{x}_{\text{new}}$
+    \end{itemize}
+\end{itemize}
+
+\pagebreak
+\subsection*{RRT Algorithm}
+Input: Initial configuration $\text{x}_{\text{init}}$, number of vertices in tree N, incremental distance delta.  Note: end configuration is not part of the input for this version of RRT.\\\\
+\texttt{$V \leftarrow \{x_{init}\}$;  $E \leftarrow \emptyset$}\\
+\texttt{for $i = 1$ to $N$}\\
+\indent\texttt{$G \leftarrow (V, E)$}\\
+\indent\textcolor{paint_blue}{\texttt{$x_{rand} \leftarrow RandomSample()$}}\\
+\indent\textcolor{paint_red}{\texttt{$x_{nearest} \leftarrow Nearest(G, x_{rand})$}}\\
+\indent\textcolor{paint_green}{\texttt{$x_{new} \leftarrow Steer(x_{nearest}, x_{rand})$}}\\
+\indent\texttt{if $ObstacleFree(x_{nearest}, x_{new})$}\\
+\indent\indent\textcolor{paint_purple}{\texttt{$V \leftarrow V \cup \{x_{new}\}$}}\\
+\indent\indent\textcolor{paint_purple}{\texttt{$E \leftarrow E \cup \{(x_{nearest}, x_{new})\}$}}\\
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_12.png} 
+\end{center}
+Basic algorithm is simply exploring space - but we want it to actually head towards the goal!  Therefore, we add a bias:
+\begin{center} 
+    \includegraphics*[width=0.8\textwidth]{L1_13.png} 
+\end{center}
+
+\subsection*{Optimizing the path}
+\begin{itemize}
+	\item Milestone-based paths are far from optimal and require additional refinement before they are usable
+	\item A typical solution can look like this:
+	\begin{center} 
+        \includegraphics*[width=0.4\textwidth]{L1_14.png} 
+    \end{center}
+    \item A simple way to improve the path (after we find a solution) is to random pick two nodes, and check whether they can be connected by a straight line with collision.  If so, use the line to shorten the path.
+    \begin{itemize}
+        \item Repeat for N iterations or until no further improvements are being made
+        \item The result is not an optimal path, but shorter and more efficient than the original
+    \end{itemize}
+    \begin{center} 
+        \includegraphics*[width=0.9\textwidth]{L1_15.png} 
+    \end{center}
+\end{itemize}
+
+\subsection*{Bidirectional RRT:}
+\begin{itemize}
+	\item Build two tree A from Start, B from End
+	\item While not done
+	\begin{itemize}
+        \item Extend Tree A by adding a new node (sample + steer)
+        \item Find the closest node in Tree B to x : y
+        \item If (ObstacleFree(x, y)) - check if you can bridge the two trees
+        \begin{itemize}
+            \item Add edge between x and y.  This completes a route between the root of Tree A and the root of Tree B.  
+            \item Return this route
+        \end{itemize}
+        \item Else
+        \begin{itemize}
+            \item Swap Tree A and Tree B (in the next iteration, we will expand tree B)
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{How to change the algorithm to handle high DoF robots?}
+\begin{center} 
+    \includegraphics*[width=0.8\textwidth]{L1_16.png} 
+\end{center}
+
+\subsubsection*{Examples: Hovercoraft}
+What's the DoF of the robot?
+\begin{center} 
+    \includegraphics*[width=0.6\textwidth]{L1_17.png} 
+\end{center}
+
+\subsubsection*{Examples: Articulated Robot}
+What's the DoF of the robot?
+\begin{center} 
+    \includegraphics*[width=0.7\textwidth]{L1_18.png} 
+\end{center}
+
+\subsubsection*{Examples: Highly Articulated Robot}
+\begin{center} 
+    \includegraphics*[width=0.4\textwidth]{L1_19.png} 
+\end{center}
+
+\subsection*{Summary: Rapidly-Exploring Random Tree (RRT)}
+\begin{itemize}
+	\item Advantages of RRT:
+	\begin{itemize}
+        \item very fast, works well for dynamic environments (scene can change between each planning episode, but not within)
+    \end{itemize}
+	\item Disadvantages: Not optimal
+	\begin{itemize}
+        \item In fact, it has been proven that the probability of RRT converging to an optimal solution is 0.
+    \end{itemize}
+\end{itemize}
+
+\section*{Markov Decision Processes and Reinforcement Learning}
+\subsection*{Decision making in deterministic systems}
+\begin{itemize}
+	\item State: $s_t \in \mathcal{S}$
+	\item Action: $a_t \in \mathcal{A}(s_t)$
+	\item Transition: $s_{t + 1} = f_t(s_t, a_t)$
+	\item Total reward: 
+    \[J(s_0; a_0, \dots, a_{T - 1}) = r_T(s_T) + \sum_{t = 0}^{T - 1} r_t(s_t, a_t)\]
+    \item Decision making problem:
+    \[J^*(s_0) = \max{a_t \in \mathcal{A}(s_t), t=0, 1, \dots, T - 1} J(s_0; a_0, \dots, a_{T - 1})\]
+\end{itemize}
+
+\subsection*{Principle of optimality}
+It's the key concept behind the \textbf{dynamic programming} approach.
+\begin{itemize}
+	\item Suppose $A - B - C$ is the optimal path from $A$ to $C$.
+	\item First segment reward: $J_{AB}$
+	\item Second segment reward: $J_{BC}$
+	\item Optimal reward: $J_{AC}^* = J_{AB} + J_{BC}$
+\end{itemize}
+If $A - B - C$ is the optimal path from $A - C$, then $B-C$ is the optimal path from $B - C$.
+\subsubsection*{Proof:}
+Suppose $(a_0^*, a_1^*, \dots, a_{T - 1}^*)$ is an optimal solution to the decision making problem for an initial state $s_0^*$, and the systems evolves as $(s_0^*, s_1^*, \dots, s_T^*)$ for this initial state and action sequence.\\\\
+Then, an optimal solution to the subproblem for moving from state $s_t^*$ at time $t$ until time $T$ is $(a_t^*, a_{t + 1}^*, \dots, a_{T - 1}^*)$\\\\
+\begin{center}
+Tail of an optimal solution = Optimal for the tail subproblem
+\end{center}
+
+\subsection*{Dynamic Programming (deterministic)}
+\begin{itemize}
+	\item $J_T^*(s_T) = r_T(s_T)$, for all $s_T \in \mathcal{S}$
+	\item for $t = T - 1$ to $0$, do:
+	\begin{itemize}
+        \item $J_t^*(s_t) = \max_{a_t \in \mathcal{A}(s_t)} r_t(s_t, a_t) + J_{t + 1}^* (f_t(s_t, a_t))$, for all $s_t \in \mathcal{S}$
+    \end{itemize}
+    \item return $J_0^*(\cdot), J_1^*(\cdot), \dots, J_T^*(\cdot)$
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L2_1.png} 
+\end{center}
+
+\subsection*{Decision Making in Stochastic Systems}
+Similar to deterministic systems, state and action are the same.
+\begin{itemize}
+	\item State: $s_t \in \mathcal{S}$
+	\item Action: $a_t \in \mathcal{A}(s_t)$
+	\item Transition: $s_{t + 1} = f_t(s_t, a_t, w_t)$, or $s_{t + 1} \sim P(\cdot \vert s_t, a_t)$.  $w_t$ is a random variable.
+	\item Policies: $\pi = (\pi_0, \pi_1, \dots, \pi_{T - 1})$ where $a_t = \pi_t(s_t)$.  We introduce policies since we will find an optimal closed-loop policy.
+	\item Total reward: 
+    \[J_\pi (s_0) = \mathbb{E}_{w_0, w_1, \dots, w_{T - 1}} \left[r_T (s_T) + \sum_{t = 0}^{T - 1} r_t (s_t, \pi_t (s_t), w_t)\right]\]
+    \item Decision making problem:
+    \[J^*(s_0 = \max_\pi J_\pi (s_0))\]
+\end{itemize}
+
+\subsection*{Principle of Optimality (stochastic)}
+Suppose $(\pi_0^*, \pi_1^*, \dots, \pi_{T - 1}^*)$ is an optimal solution to the decision making problem and assume state $s_t$ is reachable.\\\\
+Then, an optimal solution to the subproblem for moving from state $s_t$ at time $t$ until time $T$ is $(\pi_t^*, \pi_{t + 1}^*, \dots, \pi_{T - 1}^*)$.
+\begin{center}
+    Tail of optimal policies = Optimal for the tail subproblem
+\end{center}
+
+\subsection*{Dynamic Programming (stochastic)}
+\begin{itemize}
+	\item $J_T (s_T) = r_T (s_T)$, for all $s_T \in \mathcal{S}$
+	\item for $t = T - 1$ to $0$ do:
+	\begin{itemize}
+        \item $J_t (s_t) = \max_{a_t \in \mathcal{A}(s_t)} \mathbb{E}_{w_t} \left[r_t(s_t, a_t, w_t) + J_{t + 1}(f_t(s_t, a_t, w_t)) \forall s_t \in \mathcal{S}\right]$
+    \end{itemize}
+    \item return $J_0(\cdot), J_1(\cdot), \dots, J_T(\cdot)$
+\end{itemize}
+
+\subsection*{Markov Decision Processes (MDP)}
+\begin{itemize}
+	\item DP in stochastic systems suffers from the same problems as DP in deterministic systems.
+	\item Also, modeling transitions perfectly is not always possible.
+	\item MDPs are useful tools to model an agent's interaction with its environment
+	\item Reinforcement learning algorithms try to solve MDPs.
+	\item They have advantages over DP, as they only need a reward function.
+\end{itemize}
+
+\subsection*{Infinite Horizon MDP's}
+We are looking at the infinite horizon case, since it makes stationary policies optimal.
+\begin{itemize}
+	\item State: $s \in \mathcal{S}$
+	\item Action: $a \in \mathcal{A}$.  We removed the dependence on the state, although that also creates interesting research questions.
+	\item Transition: $s_{t + 1} \sim P(\cdot | s_t, a_t)$
+	\item Reward: $r_t = R(s_t, a_t)$
+	\item Discount: $\gamma \in [0, 1)$
+	\item Policy: $\pi \::\: \mathcal{S} \rightarrow \mathcal{A}$ or $\pi \::\: \mathcal{S} \rightarrow \Delta \mathcal{A}$
+	\item Goal:  (Reinforcement learning tries to solve this problem)
+	\[\pi^* = \arg \max_\pi \mathbb{E} \left[\sum_{t = 0}^\infty \gamma^t R(s_t, \pi(s_t))\right]\]
+\end{itemize}
+
+\subsubsection*{Example MDP}
+\begin{itemize}
+	\item Goal: Achieve a high score in the Atari game "Breakout"
+	\item States: Image of current screen (?)
+	\item Actions: Left or right keys
+	\item Reward: Change in the score of the game
+\end{itemize}
+
+\subsubsection*{Another Example MDP}
+\begin{itemize}
+	\item Goal: Make an RC helicopter fly and perform some maneuvers
+	\item States: Sensory input of the helicopter
+	\item Actions: Control inputs
+	\item Reward: Positive for the manuevers, negative for crashing  (This is usually what we need to hand-design)
+	\begin{itemize}
+        \item This is a very naive reward function.  They instead learned the reward from expert demostrations.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Partially Observable MDP's}
+\begin{itemize}
+	\item State: $s \in \mathcal{S}$
+	\item Action: $a \in \mathcal{A}$
+	\item Observation: $o \in \mathcal{O}$
+	\item Observation Model: $o_t \sim \Omega(\cdot | s_t)$
+	\item Transition: $s_{t + 1} \sim P(\cdot | s_t, a_t)$
+	\item Reward: $r_t = R(s_t, a_t)$
+	\item Discount: $\gamma \in [0, 1)$
+	\item Policy: $\pi \::\: \mathcal{O} \rightarrow \mathcal{A}$ or $\pi \::\: \mathcal{O} \rightarrow \Delta \mathcal{A}$
+	\item Goal: 
+	\[\pi^* = \arg \max_\pi \mathbb{E} \left[\sum_{t = 0}^\infty \gamma^t R(s_t, \pi(o_t))\right]\]
+\end{itemize}
+
+\subsection*{Value Functions}
+\begin{itemize}
+	\item State value function: $V^\pi (s) = \mathbb{E}_\pi \left[\sum_{t = 0}^\infty \gamma^t r_t | s_0 = s\right]$
+	\item State-action value function: $Q^\pi (s_a) = \mathbb{E}_\pi \left[ \sum_{t = 0}^\infty \gamma^t r_t | s_0 = s, a_0 = a\right]$
+\end{itemize}
+\begin{align*}
+    V^\pi(s) &= R(s, \pi(s)) + \gamma \mathbb{E}_{s' \sim P(\cdot | s, \pi(s))} [V^\pi (s')]\\
+    Q^\pi (s, a) &= R(s, a) + \gamma \mathbb{E}_{s' \sim P(\cdot | s, a), a' \sim \pi(s')} [Q^\pi (s', a')]
+\end{align*}
+For any stationary policy, these have unique solutions.  Hint: Think of it as a system of linear equations.\\\\
+These equations can be used to derive the \textbf{Bellman equations}.
+\begin{align*}
+    V^*(s) &= \max_a \left(R(s, a) + \gamma \sum_{s' \in \mathcal{S}} P(s' | s, a) V^* (s')\right)
+    Q^*(s, a) &= R(s, a) + \gamma \sum_{s' \in \mathcal{S}} P(s' | s, a) \max_{a'} Q^* (s', a')
+\end{align*}
+
+\subsection*{Value Iteration}
+\begin{itemize}
+	\item Idea: Take Bellman equation and iterate until it converges.  It does converge because it is a contractive mapping.
+	\item $V_0(s) = 0 \forall s \in \mathcal{S}$
+	\item for $k = 0, 1, \dots$ until convergence:
+	\begin{itemize}
+        \item for all $s \in \mathcal{S}$:
+        \begin{itemize}
+            \item $V_{k + 1}(s) = \max_a \left(R(s, a) + \gamma \sum_{s' \in \mathcal{S}} P(s' | s, a) V_k (s')\right)$
+        \end{itemize}
+    \end{itemize} 
+    \item Each iteration is O($|\mathcal{S}|^2 |\mathcal{A}|^2$)
+\end{itemize}
+
+\subsection*{Policy Iteration}
+\begin{itemize}
+	\item Initialize a random policy $\pi_0$.
+	\item for $k = 0, 1, \dots$, until convergence:
+	\begin{itemize}
+        \item Solve the following system for $V^{\pi_k}$:
+        \begin{itemize}
+            \item $V^{\pi_k}(s) = \mathbb{E}_{a \sim \pi_k(s)} \left[R(s, a) + \gamma \sum_{s' \in \mathcal{S}} P(s' | s, a) V^{\pi_k} (s')\right]$
+        \item // This is called policy evaluation.  It is $O(|\mathcal{S}|^2)$.
+        \end{itemize}
+        \item for all $s \in \mathcal{S}$
+        \begin{itemize}
+            \item $\pi_k(s) = \arg \max_a \left(R(s, a) + \gamma \sum_{s' \in \mathcal{S}} P(s' | s, a) V^{\pi_k} (s')\right)$
+            \item // This is called policy improvement.  It is $O(|\mathcal{S}|^2 |\mathcal{A}|)$
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Value Iteration vs Policy Iteration}
+\begin{itemize}
+	\item Both converge. 
+	\item Policy iteration requires more complex implementation
+	\item In practice, policy iteration usually converges faster.
+\end{itemize}
+
+\begin{center} 
+\begin{tabular}{l|ll}
+    Feature & \textbf{Dynamic Programming (DP)} & \textbf{Reinforcement Learning (RL)} \\ \hline
+    \textbf{Model Assumption} & \begin{tabular}[c]{@{}l@{}}Requires a complete and accurate model\\ of the environment (transition probabilities \\ and rewards).\end{tabular} & \begin{tabular}[c]{@{}l@{}}Does \textbf{not} require a model; learns from\\ \textbf{interaction} with the environment.\end{tabular} \\\\
+    \textbf{Environment Knowledge} & \begin{tabular}[c]{@{}l@{}}Known and fully specified \\ (i.e., Markov Decision Process is explicit).\end{tabular} & \begin{tabular}[c]{@{}l@{}}Environment is \textbf{initially unknown} and\\ must be explored.\end{tabular} \\\\
+    \textbf{Learning Method} & \begin{tabular}[c]{@{}l@{}}Solves problems analytically\\ (e.g., via \textbf{Bellman equations}).\end{tabular} & \begin{tabular}[c]{@{}l@{}}Learns policies or value functions via\\ \textbf{sampling} and \textbf{trial-and-error}.\end{tabular} \\\\
+    \textbf{Typical Algorithms} & Value Iteration, Policy Iteration. & \begin{tabular}[c]{@{}l@{}}Q-learning, SARSA, Deep Q-Networks\\ (DQB), Policy Gradient methods.\end{tabular} \\\\
+    \textbf{Computation Style} & \begin{tabular}[c]{@{}l@{}}Often requires full sweeps over state \\ space (offline, batch)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Can be \textbf{online}, updating based on \\ individual experiences.\end{tabular} \\\\
+    \textbf{Use Case} & \begin{tabular}[c]{@{}l@{}}Works best when the environment is small\\ and fully known.\end{tabular} & \begin{tabular}[c]{@{}l@{}}Scales better to \textbf{unknown or complex}\\ environments, like games, robotics.\end{tabular}
+    \end{tabular}
+\end{center}
+
+\section*{Evolution of Reinforcement Learning}
+\subsection*{1. Psychological Foundations (1900s - 1950s)}
+\begin{itemize}
+	\item Edward Thorndike (1898): Proposed the \textit{Law of Effect} - actions followed by rewards are more likely to be repeated.  A core RL idea.
+	\item B.F. Skinner (1930s - 1950s): Developed operant conditioning - learning by interacting with the environment and receiving rewards/punishments
+	\item These early concepts inspired the \textit{trial and error learning} at the heart of RL.
+\end{itemize}
+
+\subsection*{2. Control Theory and Early AI (1950s - 1970s)}
+\begin{itemize}
+	\item Richard Bellman (1957): Introduced \textbf{Dynamic Programming} and the \textbf{Bellman equation}, foundational for RL.  Formalized optimal decision-making in MDPs.
+	\item Arthur Samuel (1959): Built one of the first learning programs (checkers), which used ideas akin to RL.
+	\item DP provided a mathematical framework; AI began applying learning to games.
+\end{itemize}
+
+\subsection*{Temporal-Difference Learning and Modern Formulation (1980s)}
+\begin{itemize}
+	\item Andrew Barto, Richard Sutton, and Charles Anderson: Introduced \textbf{Temporal-Difference (TD) learning} (1983), which combined ideas from DP and supervised learning.
+	\item Sutton's 1988 paper: Formalized \textbf{TD learning}, a core technique in RL.
+	\item Watkins (1989): Developed \textbf{Q-learning}, a model-free RL algorithm.
+	\item This era established RL as a distinct field with foundational algorithms.
+\end{itemize}
+
+\subsection*{RL Meets Machine Learning (1990s - 2000s)}
+\begin{itemize}
+	\item \textbf{Policy Gradient methods} introduced for continuous action spaces.
+	\item Applications expanded to robotics, games, and scheduling.
+	\item \textbf{TD-Gammon (1992)}: Gerald Tesauro's backgammon player used TD learning and beat top human players - a milestone for RL in practice.
+\end{itemize}
+
+\subsection*{Deep Reinforcement Learning (2010s - Present)}
+\begin{itemize}
+	\item \textbf{Deep Q-Networks (DQN)} by DeepMind (2013 - 2015): Combined Q-learning with deep neural networks, achieving human-level play in Atari games.
+	\item \textbf{AlphaGo (2016)}: Combined deep RL with Monte Carlo Tree Search to beat world champions in Go.
+	\item \textbf{Proximal Policy Optimization (PPO), A3C, SAC}: New policy optimization methods made training more stable and efficient.
+	\item \textbf{OpenAI Five (2019)}: Used RL to master Dota 2 in a complex multi-agent environment.
+\end{itemize}
+\end{document}
