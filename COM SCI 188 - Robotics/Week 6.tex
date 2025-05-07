@@ -1,0 +1,199 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+\usepackage{xcolor}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[table,xcdraw]{xcolor}
+
+% lists
+\usepackage{enumerate}
+\usepackage{tabularx}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+% colors
+\definecolor{paint_red}{RGB}{237, 28, 36}
+\definecolor{paint_green}{RGB}{34, 177, 76}
+\definecolor{paint_blue}{RGB}{63, 72, 204}
+\definecolor{paint_purple}{RGB}{163, 73, 164}
+
+\newcommand{\dd}{\text{d}}
+
+\graphicspath{{./assets/images/Week 6}}
+
+\title{CS 188 Robotics Week 6} 
+
+\author{Aidan Jan}
+
+\date{\today}
+
+\begin{document}
+\maketitle 
+
+\section*{Imitation Learning}
+Specifying reward for RL is hard\dots
+\begin{itemize}
+	\item \textbf{Reward hacking:} AI system learns to exploit loopholds or unintended behaviors in its reward function to achieve high rewards without actually accomplishing the intended task
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_1.png} 
+\end{center}
+
+\subsection*{Why learn from demonstrations?}
+\begin{itemize}
+	\item Natural and expressive
+	\item No expert knowledge required
+	\item Valuable human intuition
+	\item Program new tasks as-needed
+\end{itemize}
+Human babies imitate adults when to learn.
+
+\subsection*{How to Imitate?}
+Demonstrations to Autonomous Behavior
+\begin{itemize}
+	\item Dynamic Movement Primitives (DMP): replay the motion
+	\item \textbf{Behavior Cloning (BC)}: supervised learning of behavior
+	\begin{itemize}
+        \item This is what everyone (as in, robotics companies) is trying to do
+    \end{itemize}
+	\item Inverse Reinforcement Learning (IRL): inferring the underlying intent
+\end{itemize}
+
+\subsection*{Types of Demonstrations}
+\begin{center} 
+	\includegraphics*[width=0.5\textwidth]{L1_2.png} 
+\end{center}
+\begin{center} 
+\begin{tabular}{|l|c|c|c|}
+    \hline
+    \rowcolor[HTML]{F1EACA} 
+    \textbf{Demonstration} & \textbf{Ease of demonstration} & \multicolumn{1}{l|}{\textbf{High DOFs}} & \multicolumn{1}{l|}{\textbf{Ease of mapping}} \\ \hline
+    Kinesthetic teaching & \checkmark &  & \checkmark \\ \hline
+    Teleoperation &  & \checkmark & \checkmark \\ \hline
+    Passive observation & \checkmark & \checkmark & \\ \hline
+\end{tabular}
+\end{center}
+
+\subsection*{Learning Outcomes}
+\begin{center} 
+	\includegraphics*[width=0.5\textwidth]{L1_3.png} 
+\end{center}
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+\rowcolor[HTML]{F1EACA} 
+\textbf{\begin{tabular}[c]{@{}c@{}}Learning\\ outcome\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Low-level\\ control\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Action space\\ continuity\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Compact \\ representation\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Long-horizon\\ planning\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Multistep\\ tasks\end{tabular}} \\ \hline
+Policy & \checkmark & \checkmark & \checkmark &  &  \\ \hline
+Cost or reward & \checkmark & \checkmark &  & \checkmark &  \\ \hline
+Plan &  &  & \checkmark & \checkmark & \checkmark \\ \hline
+\end{tabular}
+\end{center}
+
+\subsection*{Policy Parameterization}
+\begin{center} 
+	\includegraphics*[width=0.5\textwidth]{L1_4.png} 
+\end{center}
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+\rowcolor[HTML]{F1EACA} 
+\textbf{Policy input} & \textbf{Ease of design} & \textbf{\begin{tabular}[c]{@{}c@{}}Performance\\ guarantees\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Robustness to \\ perturbations\end{tabular}} & \textbf{Task Variety} & \textbf{\begin{tabular}[c]{@{}c@{}}Algorithmic\\ efficiency\end{tabular}} \\ \hline
+Time & \checkmark & \checkmark & & & \checkmark \\ \hline
+State & & \checkmark & \checkmark & & \checkmark \\ \hline
+Raw observations & \checkmark & & \checkmark & \checkmark & \\ \hline
+\end{tabular}
+\end{center}
+
+\subsection*{Policy Class}
+\begin{center} 
+	\includegraphics*[width=0.5\textwidth]{L1_5.png} 
+\end{center}
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\rowcolor[HTML]{F1EACA} 
+\textbf{Policy class} & \textbf{\begin{tabular}[c]{@{}c@{}}Temporal\\ context\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Robustness to temporal\\ perturbations\end{tabular}} & \textbf{Repeatability} & \textbf{\begin{tabular}[c]{@{}c@{}}Multimodal\\ behavior\end{tabular}} \\ \hline
+Deterministic and time dependent & \checkmark & & \checkmark & \\ \hline
+Deterministic and time invariant & & \checkmark & \checkmark & \\ \hline
+Stochastic and time dependent & \checkmark & & & \checkmark \\ \hline
+Stochastic and time invariant & & \checkmark & & \checkmark \\ \hline
+\end{tabular}
+\end{center}
+
+\section*{Dynamic Movement Primitives (DMP)}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_6.png} 
+\end{center}
+
+\subsection*{Characteristics of DMPs}
+\begin{itemize}
+	\item Convergence to the goal $g$ is guaranteed (for bounded weights) since $f(s)$ vanishes at the end of a movement
+	\item The weights $w_i$ can be learned to generate any desired \textit{smooth} trajectory.
+	\item The equations are spatial and temporal invariant, i.e., movements are self-similar for a change in goal, start point, and temporal scaling without a need to change the weights $w_i$
+	\item The formulation generates movements which are robust against perturbation due to the inherent attractor dynamics of the equations.
+\end{itemize}
+    
+\subsection*{Weighted Sum of Gaussian Basis}
+\begin{center} 
+	\includegraphics*[width=0.7\textwidth]{L1_7.png} 
+\end{center}
+
+\subsection*{Dynamic Movement Primitives}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_8.png} \\
+    \includegraphics*[width=\textwidth]{L1_9.png} 
+\end{center}
+
+\subsection*{Multidimensional}
+\begin{itemize}
+	\item one central harmonic oscillator
+	\item multiple transformations
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.7\textwidth]{L1_10.png} 
+\end{center}
+
+\subsection*{Examples:}
+\begin{itemize}
+	\item 1 Dimensional:
+	\begin{center} 
+        \includegraphics*[width=0.9\textwidth]{L1_11.png} 
+    \end{center}
+    \item 2 Dimensional:
+    \begin{center} 
+        \includegraphics*[width=0.9\textwidth]{L1_12.png} 
+    \end{center}
+    \item 3 Dimensional / 6 Dimensional:
+    \begin{center} 
+        \includegraphics*[width=0.6\textwidth]{L1_13.png} 
+    \end{center}
+\end{itemize}
+
+\subsection*{Limitations of DMPs}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_14.png} 
+\end{center}
+
+\subsection*{Summary}
+\begin{itemize}
+	\item DMP enable learning "movement styles" while enabling generalization to new movement targets
+	\item DMP is a purely kinematic account $\Rightarrow$ DMP is not addressing control in that respect, analogy to force-fields is misleading
+	\item DMP addresses timing, but account of coordination is limited
+	\item DMP for different tasks and their combination\dots?
+\end{itemize}
+
+
+\end{document}
