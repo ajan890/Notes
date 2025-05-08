@@ -13,6 +13,7 @@
 
 % lists
 \usepackage{enumerate}
+\usepackage{enumitem}
 \usepackage{tabularx}
 
 % images
@@ -195,5 +196,257 @@ Stochastic and time invariant & & \checkmark & & \checkmark \\ \hline
 	\item DMP for different tasks and their combination\dots?
 \end{itemize}
 
+\section*{IID (Independent and Identically Distributed)}
+\subsection*{Imitation Learning}
+[FILL 7]
+\subsection*{Supervised Learning}
+[FILL 9]
+\subsection*{The i.i.d. Assumption}
+\begin{itemize}
+	\item "The training and testing data are \textbf{independent} and \textbf{identically} distributed."
+\end{itemize} 
+[FILL 11]
+[FILL 12, incl red text]
+\begin{itemize}
+	\item \textbf{Robustness} refers to the ability of a system, model, or method to maintain performance or produce reliable results \textbf{despite variations, noise, errors, or adversarial conditions} in the input or environment.
+\end{itemize}
+
+\subsection*{Input Data Distribution}
+\begin{itemize}
+	\item End-to-End Control Tasks
+	[FILL 13]
+    \item Markov Decision Process <S, A, P, R>
+    [FILL 14, 15]
+\end{itemize}
+
+\subsection*{Behavioral Cloning}
+[FILL 16]
+Downside: The robot learns similarly to what you tell it to do, but may not be able to apply the situation.  For example, if you train a robot to turn right, it may turn right spontaneously while driving on a very long, straight road.
+
+\subsection*{Challenges in Imitation Learning}
+[FILL 18]
+
+\subsection*{Quadratic Regret}
+\begin{itemize}
+	\item \textbf{Regret} (in decision theory) measures the difference between the reward (or outcome) one actually received and the best possible reward one \textit{could have received} if one had made the optimal choice
+	\[\hat{\pi}_{sup} = \arg \min_{\pi \in \Pi} \mathbb{E}_{s \sim d_{s^*}} [l(s, \pi)]\]
+    \item Assuming $l(s, \pi)$ is the 0-1 loss (or upper bound on the 0-1 loss) implies the following performance guarantee with respect to any task cost function $C$ bounded in [0, 1]:
+    \item \textbf{Theorem 2.1} (Ross and Bagnell, 2010), \textit{Let $\mathbb{E}_{s \sim d_{s^*} [l(s, \pi)] = \epsilon}$, then $J(\pi) \leq K(\pi^*) + T^2 \epsilon$.}
+    \item Compare to typical supervised learning loss that grows as: $O(\epsilon T)$    
+\end{itemize}
+Ross, Stéphane, Geoffrey Gordon, and Drew Bagnell. \textbf{"A reduction of imitation learning and structured prediction to no-regret online learning.}" \textit{Proceedings of the fourteenth international conference on artificial intelligence and statistics.} JMLR Workshop and Conference Proceedings, 2011.
+
+\subsection*{DAgger: Dataset Aggregation}
+End-to-End Control Tasks
+[FILL 21]
+
+\begin{itemize}[label={~}]
+    \item \texttt{initialize $\mathcal{D} \leftarrow \emptyset$}
+    \item \texttt{initialize $\hat{\pi}_1$ to any policy in $\Pi$}
+    \item \texttt{for i = 1 to N do:}
+    \item \texttt{~~~~Let $\pi_i = \beta_i \pi^* + (1 - \beta_i) \hat{\pi}_i$}
+    \item \texttt{~~~~Sample $T$-step trajectories using $\pi_i$}
+    \item \texttt{~~~~Get dataset $\mathcal{D}_i = \{(s, \pi^*(s))\}$ of visited states by $\pi_i$ and actions given by expert.}
+    \item \texttt{~~~~Aggregate datasets: $\mathcal{D} \leftarrow \mathcal{D} \cup \mathcal{D}_i$}
+    \item \texttt{~~~~Train classifier $\hat{\pi}_{i + 1}$ on $\mathcal{D}$}
+    \item \texttt{return best $\hat{\pi}_i$ on validation}
+\end{itemize}
+
+\textbf{Key idea:} keep collecting demonstration data that is on-distribution for current policy, and reduce dependence on expert over time
+\begin{itemize}
+	\item \textbf{Theorem 2.2} \textit{Let $\pi$ be such that $\mathbb{E}_{s \sim d_s} [l(s, \pi)] = \epsilon$, and $Q_{T - t + 1}^{\pi^*} (s, a) - Q_{T - t + 1}^{\pi^*}(s, \pi^*) \leq u$ for all action $a, t \in \{1, 2, \dots, T\}, d_\pi^t (s) > 0$, then $J(\pi) \leq J(\pi^*) + uT\epsilon$}
+	\item If difference between optimal t-step Q and any other action is u (e.g., the worst single action regret): The end cost is (no) worse than optimal plus number of mistakes times u, the worst possible regret of each mistake.
+\end{itemize}
+Ross, Stéphane, Geoffrey Gordon, and Drew Bagnell. \textbf{"A reduction of imitation learning and structured prediction to no-regret online learning.}" \textit{Proceedings of the fourteenth international conference on artificial intelligence and statistics.} JMLR Workshop and Conference Proceedings, 2011.
+
+\subsection*{What are some other ways to improve robustness?}
+\[J(\pi) \leq J(\pi^*) + T^2 \epsilon\]
+\begin{itemize}
+	\item Modify the $T^2$!
+	\item Increasing $T$ is basically increasing the number of actions.
+\end{itemize}
+
+[FILL 24]
+In this image, the yellow line represents the trainer's performance.  The orange line represents the robot cloning the behavior.
+[FILL 26, 25, remove red/green text, combine]
+\begin{itemize}
+	\item Unintended low-level motions constitute noise in demonstrations
+	\item The demonstrator's \textbf{high-level actions} are optimal!
+	\item These actions can be categorized into \textbf{two general modes.}
+\end{itemize}
+
+\subsection*{HYDRA}
+[FILL 27, 28, 30]
+
+\subsection*{Challenges in Imitiation Learning \#2}
+[FILL 31]
+
+\subsection*{Generative Modeling}
+[FILL 32, 33]
+
+\subsection*{Diffusion}
+[FILL 34, 35, 36, 37]
+
+\subsection*{How to learn from human data?}
+\begin{itemize}
+	\item Behavioral Cloning
+	\begin{itemize}
+        \item Quadratic regret in worst case; bad performance out of expert distribution
+        \item Can't learn from additional data collected by the agent
+    \end{itemize}
+	\item DAgger
+	\begin{itemize}
+        \item Provides data/feedback on-policy
+        \item still can't learn from additional data collected by the agent
+    \end{itemize}
+    \item Inverse reinforcement learning
+    \begin{itemize}
+        \item Infers reward function from demonstrations so that RL can be used
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Inverse Reinforcement Learning}
+[FILL 40, full]
+
+\begin{enumerate}
+    \item Collect user demonstration $(s_0, a_0), (s_1, a_1), \dots, (s_n, a_n)$ and assume it is sampled from the expert's policy, $\pi^E$
+    \item Explain expert demos by finding $R^*$ such that:
+    \begin{align*}
+        E[\sum_{t = 0^\infty} \gamma^t R^* (s_t) | \pi^E] &\geq E[\sum_{t = 0}^\infty \gamma^t R^* (s_t) | \pi] \forall \pi\\
+        E_{s_0 \sim D} [V^{\pi^E} (s_0)] &\geq E_{s_0 \sim D}[V^\pi (s_0)] \forall \pi
+    \end{align*}
+\end{enumerate}
+How can search be made tractable?
+
+\subsection*{Linear reward functions}
+Define $R^*$ as a linear combination of features:
+\[R^*(s) = w^T \phi(s), \text{ where } \phi \::\: S \rightarrow \mathbb{R}^n\]
+Then,
+\begin{align*}
+    E[\sum_{t = 0}^\infty \gamma^t R^* (s_t) | \pi] &= E[\sum_{t = 0}^\infty \gamma^t w^T \phi(s_t) | \pi] \\
+    &= w^T E[\sum_{t = 0}^\infty \gamma^t \phi(s_t)|\pi]\\ 
+    &= w^T \mu(\pi)
+\end{align*}
+Thus, the expected value of a policy can be expressed as a weighted sum of the expected features $\mu(\pi)$
+
+\subsection*{A simplified optimization problem}
+Originally, Explain expert demos by finding $R^*$ such that:
+\[E[\sum_{t = 0}^\infty \gamma^t R^* (s_t) | \pi^E] \geq E[\sum_{t = 0}^\infty \gamma^t R^* (s_t) | \pi] \forall \pi\]
+Use expected features:
+\[E[\sum_{t = 0}^\infty \gamma^t R^* (s_t) | \pi] = w^T \mu(\pi)\]
+Restated - find $w^*$ such that:
+\[w^* \mu(\pi^E) \geq w^* \mu(\pi) \forall \pi\]
+
+\subsection*{Iterative Reward Search}
+Goal: Find $w^*$ such that $w^* \mu(\pi^E) \geq w^* \mu(\pi) \forall \pi$
+\begin{itemize}
+    \item Initialize $\pi_0$ to any policy.  
+    \item Iterate for $i = 1, 2, \dots$:
+    \begin{itemize}
+        \item Find $w^*$ such that expert maximally outperforms all previously examined policies $\pi_{0, \dots, i - 1}$
+        \[\max_{\epsilon, w^* \::\: \Vert w^* \Vert_2 \leq 1} \epsilon \text{ s.t. } w^* \mu(\pi^E) \geq w^* \mu(\pi_j) + \epsilon\]
+        \begin{itemize}
+            \item The above is a support vector machine (SVM) solver
+        \end{itemize}
+        \item Use RL to calculate optimal policy $\pi_i$ associated with $w^*$
+        \item Stop if $\epsilon \leq$ threshold
+    \end{itemize}
+\end{itemize}
+
+\subsection*{A (rough) illustration}
+[FILL 45-47, combined]
+
+\subsection*{Naive IRL Challenges}
+\begin{itemize}
+	\item RL in the inner loop
+	\item Where do linear features come from?
+	\item Underspecified inference problem: infinite reward functions that explain behavior equally well.  Which one to choose?
+	\item Policies are underspecified too: many policies lead to the same expected features counts.  Which one to choose?
+	\item What if demonstrated behavior was actually suboptimal?
+\end{itemize}
+
+\subsection*{Suboptimality and Policy Mixtures}
+\begin{itemize}
+	\item If a demonstrator acts optimally, then there trivially is some reward function for which \textbf{at least one} optimal policy exists that matches the demonstrator's expected feature counts exactly
+	\item But if the demonstrations are sometimes suboptimal, then here may be no single reward function with this property (aside from degenerate ones e.g. all zeros, under which everything is optimal)
+	\item This can be thought of as the demonstrator sometimes acting optimally under a different reward function, so a mixture of reward functions (and their corresponding optimal policies) would be needed to match the feature counts
+	\item Instead, we will now consider policies that are not strictly optimal, but produce trajectories in proportion to their return:
+	\[P(\zeta_i | \theta) = \frac{1}{Z(\theta)} e^{\theta^T f_{\zeta_i}}\]
+\end{itemize}
+
+\subsection*{Principle of Maximum Entropy}
+\begin{itemize}
+	\item \textbf{Definition}: the probability distribution which best represents the current state of knowledge about a system is the one with largest entropy, subject to your constraints.
+    \item \textbf{Intuitively}: Don't overcommit in ways that aren't supported by the data — e.g. don't prefer one trajectory over another if they have the same return.
+    \item \textbf{Practical consequence for IRL}: Tells us how to tiebreak between reward functions that explain the data equally well.
+    \item \textbf{How?}: Find a reward function that matches expert feature counts under a specific trajectory distribution:
+    \[P(\zeta_i | \theta) = \frac{1}{Z(\theta)} e^{\theta^T f_{\zeta_i}}\]
+    \item \textbf{Why this distribution?}: If you have specific expected feature counts f that you wish to match, it is known that the maximum entropy trajectory distribution that matches f is of the above form for some $\theta$
+\end{itemize}
+
+[FILL 51]
+
+\subsection*{Trajectory vs. Action-based Reasoning}
+[FILL 52, full, incl text]
+
+\subsection*{Trajectory Probabilities}
+\begin{itemize}
+	\item Deterministic: $P(\zeta_i | \theta) = \frac{1}{Z(\theta)} e^{\theta^T f_{\zeta_i}}$
+	\item Stochastic: $P(\zeta|\theta, T) \approx \frac{e^{\theta^T f_\zeta}}{Z(\theta, T)} \prod_{s_{t + 1}, a_t, s_{t \in \zeta}} P_t (s_{t + 1} | a_t, s_t)$
+\end{itemize}
+
+\subsection*{Learning a Reward Function}
+\[\theta^* = \arg\max_{\theta} L(\theta) = \arg\max_{\theta} \sum_{\text{examples}} \log P(\bar{\zeta} | \theta, T)\]
+\[\nabla L(\theta) = \bar{f} - \sum_{\zeta} P(\zeta | \theta, T) f_\zeta = \bar{f} - \sum_{s_i} D_{s_i} f_{s_i}\]
+\begin{itemize}
+	\item How do we compute the $D_{s_i}$?
+\end{itemize}
+
+\subsection*{Calculating state visitation frequencies}
+[FILL 55]
+
+\subsection*{Driver Route Modeling}
+[FILL 57]
+\begin{itemize}
+	\item Collected driving data of 100,000 miles spanning 3,000 driving hours for Pittsburgh
+	\item Fitted GPS data to the road network, to generate $\sim 13,000$ road trips
+	\item Discarded noisy trips, or trips that were too short (less than 10 road segments)
+\end{itemize}
+Four different road aspects considered:
+\begin{itemize}
+	\item Road type: interstate to local road
+	\item Speed: high speed to low speed
+	\item Lanes: multi-lane or single lane
+	\item Transitions: straight, left, right, hard left, hard right
+\end{itemize}
+There was a total of 22 features used to represent this state.
+\begin{center} 
+	\begin{tabular}{lllll}
+        Model & \% Matching & \% \textgreater{}90\% Match & Log Prob & Reference \\ \hline
+        Time-Based & 72.38 & 43.12 & N/A & N/A \\
+        Max Margin & 75.29 & 46.56 & N/A & {[}Ratliff, Bagnell, and Zinkevich, 2006{]} \\
+        Action & 77.30 & 50.37 & -7.91 & {[}Ramchandran and Amir 2007{]} \\
+        Action (Cost) & 77.74 & 50.75 & N/A & {[}Ramchandran and Amir 2007{]} \\
+        \textbf{MaxEnt} & \textbf{78.79} & \textbf{52.98} & \textbf{-6.85} & \textbf{{[}Zeibart et al. 2008{]}}
+        \end{tabular}
+\end{center}
+
+\subsection*{What about Larger Problems?}
+\begin{itemize}
+	\item MaxEnt IRL: probabilistic framework for learning reward functions:
+	\begin{itemize}
+        \item Computing gradient requires enumerating state-action visitations for all states and actions
+        \item Only really viable for small, discrete state and action spaces
+        \item Amounts to a dynamic programming algorithm (exact forward-backward inference)
+    \end{itemize}
+	\item For deep IRL, we want two things:
+	\begin{itemize}
+        \item Large and continuous state and action spaces
+        \item Effectinve learning under unknown dynamics
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Guided Cost Learning}
+[FILL 60]
 
 \end{document}
