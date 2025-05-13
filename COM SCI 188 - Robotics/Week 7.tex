@@ -1,0 +1,351 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+\usepackage{xcolor}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[table,xcdraw]{xcolor}
+
+% lists
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{tabularx}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+% colors
+\definecolor{paint_red}{RGB}{237, 28, 36}
+\definecolor{paint_green}{RGB}{34, 177, 76}
+\definecolor{paint_blue}{RGB}{63, 72, 204}
+\definecolor{paint_purple}{RGB}{163, 73, 164}
+
+\newcommand{\dd}{\text{d}}
+
+\graphicspath{{./assets/images/Week 7}}
+
+\title{CS 188 Robotics Week 7} 
+
+\author{Aidan Jan}
+
+\date{\today}
+
+\begin{document}
+\maketitle 
+
+\section*{Human Robot Interaction}
+\begin{itemize}
+	\item Proposed definitions:
+	\begin{itemize}
+        \item A field of study dedicated to \underline{understanding}, \underline{designing}, and \underline{evaluating} robotic systems for use by or with humans.  Interaction requires \underline{communication} between robots and humans
+        \item Define models of \underline{humans' expectations} regarding robot interaction to guide robot design and algorithmic development that would allow more \underline{natural} and \underline{effective} interaction between humans and robots
+    \end{itemize}
+	\item The HRI problem is to \textit{understand and shape the interactions between one or more humans and one or more robots}
+\end{itemize}
+
+\subsection*{A Little Bit of History}
+\begin{itemize}
+	\item HRI as a field started to emerge in the mid-1990s
+	\item Interdisciplinary in nature, requiring contributions from cognitive science, linguistics, and psychology; from engineering, mathematics, and computer science; and from human factors engineering and design.
+\end{itemize}
+
+\subsection*{(Some) Topics in HRI}
+\begin{center}
+    \begin{tabularx}{\textwidth}{XX}
+        \textbullet \hspace{3mm} Expression and Gase & \textbullet \hspace{3mm} Robot Futures and Singularity \\
+        \textbullet \hspace{3mm} Proxemics & \textbullet \hspace{3mm} Shared Autonomy \\
+        \textbullet \hspace{3mm} Speech & \textbullet \hspace{3mm} Exoskeletons \\
+        \textbullet \hspace{3mm} Perception & \textbullet \hspace{3mm} Assistive Robotics \\
+        \textbullet \hspace{3mm} Interaction Design & \textbullet \hspace{3mm} Educational Robotics \\
+        \textbullet \hspace{3mm} Manipulation & \textbullet \hspace{3mm} Philosophy \\
+        \textbullet \hspace{3mm} Decision-Making & \textbullet \hspace{3mm} Ethics \\
+        \textbullet \hspace{3mm} Mental Models & \textbullet \hspace{3mm} Law \\
+        \textbullet \hspace{3mm} Perspective-Taking & \textbullet \hspace{3mm} \dots \\
+        \textbullet \hspace{3mm} Systems Engineering & 
+        \end{tabularx} 
+\end{center}
+
+\subsection*{Types of Interactions with Robots}
+\begin{itemize}
+	\item Intentional
+	\begin{itemize}
+        \item E.g., human-robot search and rescue team
+    \end{itemize}
+	\item Incidental
+	\begin{itemize}
+        \item E.g., valuum cleaning robot bumping into your foot
+    \end{itemize}
+	\item Explicit
+	\begin{itemize}
+        \item E.g., assistive robot lifting a patient out of bed
+    \end{itemize}
+	\item Implicit
+	\begin{itemize}
+        \item E.g., UAV flying over your home
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Example: Autonomous Cars}
+\begin{itemize}
+	\item Intentional physical contact
+	\begin{itemize}
+        \item Car is physically transporting a person
+    \end{itemize}
+	\item Unintentional physical contact
+	\begin{itemize}
+        \item In case of an accident
+    \end{itemize}
+	\item Explicit social interactions
+	\begin{itemize}
+        \item Alerting people in the car about changing the route home
+    \end{itemize}
+	\item Implicit social interactions
+	\begin{itemize}
+        \item Opinions human drivers in other cars may have about the autonomous car's driving behavior
+    \end{itemize}
+	\item Plus ethical considerations!
+	\begin{itemize}
+        \item Who has access to the recorded data from the cameras in the car?
+        \item Should the car protect the driver or pedestrians in the case of an inevitable accident?
+    \end{itemize} 
+\end{itemize}
+
+\subsection*{Human Robot Interaction Design}
+\begin{itemize}
+	\item A designer can control five attributes that affect the interactions between humans and robots:
+	\begin{itemize}
+        \item Level and behavior of autonomy
+        \item Nature of information exchange
+        \item Structure of the team
+        \item Adaptation, learning, and training of people and the robot
+        \item Shape of the task
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Attribute 1: Autonomy}
+\begin{itemize}
+	\item Designing autonomy consists of mapping inputs from the environment into actuator movements, representational schemas, or speech acts
+    \item Autonomy is only useful insofar as it supports beneficial interaction between a human and a robot
+\end{itemize}
+
+\subsection*{Levels of Autonomy in HRI}
+\begin{itemize}
+	\item Teleoperation
+	\begin{itemize}
+        \item A human remotely controls a mobile robot or robotic arm
+        \item Cons: Higher cognitive load of the operator
+    \end{itemize}
+	\item Mediated Teleoperation
+	\begin{itemize}
+        \item Human remotely controls the robot; the robot autonomously intervenes as necessary
+    \end{itemize}
+	\item Supervisory Control
+	\begin{itemize}
+        \item Human supervises the behavior of an autonomous system and intervenes as necessary
+    \end{itemize}
+	\item Peer-to-peer Collaboration
+	\begin{itemize}
+        \item High-level supervision and direction of the robot; human provides goals and robot maintains knowledge about the world, task, and constraints
+        \item Cons:
+        \begin{itemize}
+            \item Difficult to create robots with the appropriate cognitive skills to interact naturally or efficient with a human
+            \item Must be able to flexibly exhibit "full autonomy" at appropriate times
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Teleoperation Example}
+\begin{itemize}
+	\item Da Vinci Surgical Robot (Intuitive Surgical)
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.5\textwidth]{L1_1.png} 
+\end{center}
+
+\subsubsection*{Mediated Teleoperation Example}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_2.png} 
+\end{center}
+
+\subsection*{Attribute 2: Information Exchange}
+\begin{itemize}
+	\item Efficient interactions characterized by productive exchanges between the human and robot
+	\item Measures of the efficiency of an interaction:
+	\begin{itemize}
+        \item Interaction time required for intent and/or instructions to be communicated to the robot
+        \item Cognitive or mental workload of an interaction
+        \item Amount of situation awareness produced by the interaction (or reduced because of interruptions from the robot),
+        \item Amount of shared understanding or common ground between humans and robots
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Visual Displays}
+\begin{itemize}
+	\item Typically presented as graphical user interfaces or augmented reality interfaces
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_3.png} 
+\end{center}
+
+\subsubsection*{Gestures}
+\begin{itemize}
+	\item Gestures, including hand and facial movements and by movement-based signaling of intent
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.7\textwidth]{L1_4.png} \\
+    \includegraphics*[width=0.7\textwidth]{L1_5.png} \\
+    \includegraphics*[width=0.7\textwidth]{L1_6.png} \\
+\end{center}
+
+\subsubsection*{Speech and natural language}
+\begin{itemize}
+	\item Auditory speech
+	\item Text-based responses
+	\item Robot must understand responses from human and must be able to perform appropriate task
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_7.png} 
+\end{center}
+
+\subsubsection*{Non-speech audio}
+\begin{itemize}
+	\item Frequently used in alerting
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=0.7\textwidth]{L1_8.png} 
+\end{center}
+
+\subsubsection*{Physical Interaction and Haptics}
+\begin{itemize}
+	\item Used remotely in augmented reality or in teleoperation to invoke a sense of presence especially in telemanipulation tasks
+    \item Used proximately to promote emotional, social, and assistive exchanges
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_9.png} 
+\end{center}
+
+\subsubsection*{Safety in HRI}
+\begin{itemize}
+	\item Industrial Robots
+	\begin{center} 
+        \includegraphics*[width=0.7\textwidth]{L1_10.png} 
+    \end{center}
+	\item Human-robot interaction
+	\begin{center} 
+        \includegraphics*[width=0.9\textwidth]{L1_11.png} 
+    \end{center}
+\end{itemize}
+
+\subsubsection*{The Uncanny Valley}
+\begin{center} 
+    \includegraphics*[width=0.7\textwidth]{L1_12.png} 
+\end{center}
+
+\subsection*{Attribute 3: Team Structure}
+\begin{itemize}
+	\item HRI is not restricted to a single human and a single robot
+	\item For example:
+	\begin{itemize}
+        \item Robots used in search and rescue are typically managed by two or more people, each with special roles in the team
+        \item Unmanned/Uninhabited Air Vehicles (UAVs) are typically managed by at least two people: a “pilot”, who is responsible for navigation and control and a sensor/payload operator, who is responsible for managing cameras, sensors, and other payloads
+        \item One human may also interact with multiple robots
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Attribute 4: Adaptation, learning, and training}
+\begin{itemize}
+	\item Training human operators
+	\begin{itemize}
+        \item Minimize needed training
+        \begin{itemize}
+            \item i.e., the Roomba should work even without taking a class in robotics
+            \item Robots for children are becoming more popular
+        \end{itemize}
+        \item Specialized robots or tasks may require additional training
+    \end{itemize}
+	\item Training robots
+	\begin{itemize}
+        \item Improving perceptual capabilities through efficient communication
+        \item Improving reasoning and planning through interaction
+        \item Improving autonomous capabilities
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Attribute 5: Task-shaping}
+\begin{itemize}
+	\item Robotic technology is introduced to allow a human to do a task that they could not do before, or to make the task easier or more pleasant for the human
+    \item Consider how the task should be done and will be done when new technology is introduced
+\end{itemize}
+
+\subsubsection*{Assistive Robots}
+\begin{itemize}
+	\item Seek to provide physical, mental, or social support to persons who could benefit from it such as the elderly or disabled
+	\item Challenges:
+	\begin{itemize}
+        \item Providing safe physical contact
+        \item Moving within very close proximity
+        \item Cognitive and emotive computing
+        \item Gesture and speech
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Physically Assistive Robots}
+\begin{itemize}
+	\item Robot physically interacts with the user to provide assistance in some task
+\end{itemize}
+\begin{center} 
+    \includegraphics*[width=\textwidth]{L1_13.png} 
+\end{center}
+
+\subsubsection*{Socially Assistive Robots}
+\begin{itemize}
+	\item Seeks to supplement and augment the support of clinicians and caregivers through individualized, socially mediated interventions with robots
+    \item No physical interaction with robots
+\end{itemize}
+\begin{center} 
+    \includegraphics*[width=\textwidth]{L1_14.png} 
+\end{center}
+
+\subsection*{Human Subject Studies in HRI}
+\begin{itemize}
+	\item Must evaluate the effectiveness of the system in context of the interaction with real (naive) users
+	\item Can measure:
+	\begin{itemize}
+        \item Qualitative
+        \begin{itemize}
+            \item How does the user perceive the (look, feel, sound) of the robot?
+            \item How much does the user trust the robot?
+        \end{itemize}
+        \item Quantitive
+        \begin{itemize}
+            \item How long does it take the user to complete the task?
+            \item How accurately does the robot follow the user's commands?
+            \item How much of the user's attention is required by the task?
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Designing Human Subject Studies}
+\begin{itemize}
+	\item Who are your subjects and how would you recruit them?
+    \item Where would you perform the study?
+    \item What do you want to discover? (what is the hypothesis or research question)?
+    \item What would the protocol be?
+    \item What would the performance metrics be?
+    \item How would you acquire and analyze the data?    
+\end{itemize}
+
+
+
+\end{document}
