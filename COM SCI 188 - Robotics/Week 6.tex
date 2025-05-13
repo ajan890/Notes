@@ -198,15 +198,24 @@ Stochastic and time invariant & & \checkmark & & \checkmark \\ \hline
 
 \section*{IID (Independent and Identically Distributed)}
 \subsection*{Imitation Learning}
-[FILL 7]
+\begin{center}
+    \includegraphics*[width=0.4\textwidth]{L2_1.png}
+\end{center}
 \subsection*{Supervised Learning}
-[FILL 9]
+\begin{center}
+    \includegraphics*[width=0.8\textwidth]{L2_2.png}
+\end{center}
 \subsection*{The i.i.d. Assumption}
 \begin{itemize}
 	\item "The training and testing data are \textbf{independent} and \textbf{identically} distributed."
 \end{itemize} 
-[FILL 11]
-[FILL 12, incl red text]
+\begin{center}
+    \includegraphics*[width=\textwidth]{L2_3.png}
+\end{center}
+The below are not identically distributed.
+\begin{center}
+    \includegraphics*[width=\textwidth]{L2_4.png}
+\end{center}
 \begin{itemize}
 	\item \textbf{Robustness} refers to the ability of a system, model, or method to maintain performance or produce reliable results \textbf{despite variations, noise, errors, or adversarial conditions} in the input or environment.
 \end{itemize}
@@ -214,17 +223,26 @@ Stochastic and time invariant & & \checkmark & & \checkmark \\ \hline
 \subsection*{Input Data Distribution}
 \begin{itemize}
 	\item End-to-End Control Tasks
-	[FILL 13]
+	\begin{center}
+        \includegraphics*[width=0.9\textwidth]{L2_5.png}
+    \end{center}
     \item Markov Decision Process <S, A, P, R>
-    [FILL 14, 15]
+    \begin{center}
+        \includegraphics*[width=0.9\textwidth]{L2_6.png} \\
+        \includegraphics*[width=0.9\textwidth]{L2_7.png} \\
+    \end{center}
 \end{itemize}
 
 \subsection*{Behavioral Cloning}
-[FILL 16]
+\begin{center}
+    \includegraphics*[width=\textwidth]{L2_8.png}
+\end{center}
 Downside: The robot learns similarly to what you tell it to do, but may not be able to apply the situation.  For example, if you train a robot to turn right, it may turn right spontaneously while driving on a very long, straight road.
 
 \subsection*{Challenges in Imitation Learning}
-[FILL 18]
+\begin{center}
+    \includegraphics*[width=\textwidth]{L2_9.png}
+\end{center}
 
 \subsection*{Quadratic Regret}
 \begin{itemize}
@@ -238,7 +256,9 @@ Ross, Stéphane, Geoffrey Gordon, and Drew Bagnell. \textbf{"A reduction of imit
 
 \subsection*{DAgger: Dataset Aggregation}
 End-to-End Control Tasks
-[FILL 21, im10]
+\begin{center}
+    \includegraphics*[width=0.3\textwidth]{L2_10.png}
+\end{center}
 
 \begin{itemize}[label={~}]
     \item \texttt{initialize $\mathcal{D} \leftarrow \emptyset$}
@@ -251,7 +271,6 @@ End-to-End Control Tasks
     \item \texttt{~~~~Train classifier $\hat{\pi}_{i + 1}$ on $\mathcal{D}$}
     \item \texttt{return best $\hat{\pi}_i$ on validation}
 \end{itemize}
-
 \textbf{Key idea:} keep collecting demonstration data that is on-distribution for current policy, and reduce dependence on expert over time
 \begin{itemize}
 	\item \textbf{Theorem 2.2} \textit{Let $\pi$ be such that $\mathbb{E}_{s \sim d_s} [l(s, \pi)] = \epsilon$, and $Q_{T - t + 1}^{\pi^*} (s, a) - Q_{T - t + 1}^{\pi^*}(s, \pi^*) \leq u$ for all action $a, t \in \{1, 2, \dots, T\}, d_\pi^t (s) > 0$, then $J(\pi) \leq J(\pi^*) + uT\epsilon$}
@@ -266,9 +285,13 @@ Ross, Stéphane, Geoffrey Gordon, and Drew Bagnell. \textbf{"A reduction of imit
 	\item Increasing $T$ is basically increasing the number of actions.
 \end{itemize}
 
-[FILL 24]
+\begin{center}
+    \includegraphics*[width=\textwidth]{L2_11.png}
+\end{center}
 In this image, the yellow line represents the trainer's performance.  The orange line represents the robot cloning the behavior.
-[FILL 26, 25, remove red/green text, combine]
+\begin{center}
+    \includegraphics*[width=\textwidth]{L2_12.png}
+\end{center}
 \begin{itemize}
 	\item Unintended low-level motions constitute noise in demonstrations
 	\item The demonstrator's \textbf{high-level actions} are optimal!
@@ -276,16 +299,30 @@ In this image, the yellow line represents the trainer's performance.  The orange
 \end{itemize}
 
 \subsection*{HYDRA}
-[FILL 27, im13, 28, 30]
+\begin{center}
+    \includegraphics*[width=\textwidth]{L2_13.png} \\
+    \includegraphics*[width=\textwidth]{L2_14.png} \\
+    \includegraphics*[width=\textwidth]{L2_15.png}
+\end{center}
 
 \subsection*{Challenges in Imitiation Learning \#2}
-[FILL 31]
+\begin{center}
+    \includegraphics*[width=0.6\textwidth]{L2_16.png}
+\end{center}
 
 \subsection*{Generative Modeling}
-[FILL 32, 33]
+\begin{center}
+    \includegraphics*[width=\textwidth]{L2_17.png} \\
+    \includegraphics*[width=\textwidth]{L2_18.png}
+\end{center}
 
 \subsection*{Diffusion}
-[FILL 34, 35, im20, 36, 37, im22]
+\begin{center}
+    \includegraphics*[width=\textwidth]{L2_19.png} \\
+    \includegraphics*[width=\textwidth]{L2_20.png} \\
+    \includegraphics*[width=\textwidth]{L2_21.png} \\
+    \includegraphics*[width=\textwidth]{L2_22.png}
+\end{center}
 
 \subsection*{How to learn from human data?}
 \begin{itemize}
@@ -306,7 +343,9 @@ In this image, the yellow line represents the trainer's performance.  The orange
 \end{itemize}
 
 \subsection*{Inverse Reinforcement Learning}
-[FILL 40, full]
+\begin{center}
+    \includegraphics*[width=0.5\textwidth]{L2_23.png}
+\end{center}
 
 \begin{enumerate}
     \item Collect user demonstration $(s_0, a_0), (s_1, a_1), \dots, (s_n, a_n)$ and assume it is sampled from the expert's policy, $\pi^E$
@@ -354,7 +393,10 @@ Goal: Find $w^*$ such that $w^* \mu(\pi^E) \geq w^* \mu(\pi) \forall \pi$
 \end{itemize}
 
 \subsection*{A (rough) illustration}
-[FILL 45-47, combined, im24]
+\begin{center}
+    \includegraphics*[width=\textwidth]{L2_24.png}
+\end{center}
+
 
 \subsection*{Naive IRL Challenges}
 \begin{itemize}
@@ -384,10 +426,14 @@ Goal: Find $w^*$ such that $w^* \mu(\pi^E) \geq w^* \mu(\pi) \forall \pi$
     \item \textbf{Why this distribution?}: If you have specific expected feature counts f that you wish to match, it is known that the maximum entropy trajectory distribution that matches f is of the above form for some $\theta$
 \end{itemize}
 
-[FILL 51]
+\begin{center}
+    \includegraphics*[width=0.5\textwidth]{L2_25.png}
+\end{center}
 
 \subsection*{Trajectory vs. Action-based Reasoning}
-[FILL 52, full, incl text]
+\begin{center}
+    \includegraphics*[width=\textwidth]{L2_26.png}
+\end{center}
 
 \subsection*{Trajectory Probabilities}
 \begin{itemize}
@@ -403,10 +449,16 @@ Goal: Find $w^*$ such that $w^* \mu(\pi^E) \geq w^* \mu(\pi) \forall \pi$
 \end{itemize}
 
 \subsection*{Calculating state visitation frequencies}
-[FILL 55]
+\begin{center}
+    \includegraphics*[width=\textwidth]{L2_27.png}
+\end{center}
+
 
 \subsection*{Driver Route Modeling}
-[FILL 57]
+\begin{center}
+    \includegraphics*[width=\textwidth]{L2_28.png}
+\end{center}
+
 \begin{itemize}
 	\item Collected driving data of 100,000 miles spanning 3,000 driving hours for Pittsburgh
 	\item Fitted GPS data to the road network, to generate $\sim 13,000$ road trips
@@ -447,6 +499,8 @@ There was a total of 22 features used to represent this state.
 \end{itemize}
 
 \subsection*{Guided Cost Learning}
-[FILL 60, im29]
+\begin{center}
+    \includegraphics*[width=\textwidth]{L2_29.png}
+\end{center}
 
 \end{document}
