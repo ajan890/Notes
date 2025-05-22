@@ -1,0 +1,159 @@
+% document formatting
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+% math symbols, etc.
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+\usepackage{xcolor}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[table,xcdraw]{xcolor}
+
+% lists
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{tabularx}
+
+% images
+\usepackage{graphicx} % for images
+
+% code blocks
+\usepackage{minted, listings} 
+
+% verbatim greek
+\usepackage{alphabeta}
+
+% links
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=blue, urlcolor=cyan}
+
+\newcommand{\dd}{\text{d}}
+
+\graphicspath{{./assets/images/Week 8}}
+
+\title{CS 188 Robotics Week 8} 
+
+\author{Aidan Jan}
+
+\date{\today}
+
+\begin{document}
+\maketitle 
+
+\section*{Foundation Models}
+
+\subsection*{The New Era of ML}
+\begin{center} 
+	\includegraphics*[width=0.9\textwidth]{L1_1.png} 
+\end{center}
+
+\subsection*{Two Paradigms of Robotics}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_2.png} 
+\end{center}
+
+\begin{itemize}
+	\item The modular approach breaks down perception, planning, and control into three separate problems, each of which can be solved using some form of artificial intelligence.  
+	\begin{itemize}
+        \item Perception is the common computer vision problem of image recognization and classification.
+        \item Planning is the step to decide what the robot should do given its perception.
+        \item Control converts the plan into commands for hardware parts or actuators.
+        \item All of these sections can be solved with foundation models
+    \end{itemize}
+	\item The end-to-end approach involves collecting data and throwing it into a neural network.
+\end{itemize}
+
+\subsection*{Integrating FMs in Robotics}
+\begin{enumerate}
+    \item FM as a \textbf{Perception} or Representation Backbone
+    \item FM as a \textbf{Planner or Reasoning} Engine
+    \item FM as an \textbf{End-to-End} Action Policy Prior or Decision-Maker
+\end{enumerate}
+
+\subsection*{Computer Vision FMs}
+\begin{itemize}
+	\item \textbf{CLIP (Contrastive Language-Image Pretraining)} learns the relationship between \textbf{a whole sentence} and the \textbf{image} it describes
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_3.png} 
+\end{center}
+
+\subsubsection*{Example: SAM}
+SAM: Segment Anything Model
+\begin{itemize}
+	\item Website: \url{https://segment-anything.com/demo}
+	\item Documentation: \url{https://docs.ultralytics.com/models/sam/}
+\end{itemize}
+
+\pagebreak
+\subsubsection*{LLM as Planner}
+SayCan
+\begin{center} 
+	\includegraphics*[width=0.9\textwidth]{L1_4.png} 
+\end{center}
+
+\subsubsection*{LLM / VLM Code Generation}
+Code As Policies (\url{https://code-as-policies.github.io/})
+\begin{center} 
+	\includegraphics*[width=0.9\textwidth]{L1_5.png} 
+\end{center}
+
+\subsubsection*{Vision Language Action Models (VLAs)}
+\begin{itemize}
+	\item Multi-task
+	\item Language-conditioned
+\end{itemize}
+\begin{center} 
+	\includegraphics*[width=\textwidth]{L1_6.png} 
+\end{center}
+\begin{itemize}
+    \item \url{https://openvla.github.io/}
+\end{itemize}
+
+\subsection*{Challenges?}
+\subsubsection*{Challenges in Embodiment and Grounding}
+\begin{itemize}
+	\item FMs lack embodied experience; they process abstract data (e.g., text, images), not the physical effects of actions.
+	\item Aligning abstract representations (like "grasp the cup") with real motor commands and sensor feedback.
+	\item A model that understands "grasping" in language may still not control a gripper effectively.
+\end{itemize}
+
+\subsubsection*{Challenges in Data Efficiency and Cost}
+\begin{itemize}
+	\item Robotic data is expensive and slow to collect compared to web-scale text/image data.
+	\item FMs need to learn or adapt using relatively little robotic data.
+	\item Scaling up robotic training like we do with vision/language is not yet feasible.
+\end{itemize}
+
+\subsubsection*{Challenges in Real-Time Constraints}
+\begin{itemize}
+	\item FMs are large and computationally intensive.
+	\item Running inference fast enough for real-time control on embedded hardware.
+	\item Robots often need millisecond-level decision-making; FMs often can't meet these latencies natively.
+\end{itemize}
+
+\subsubsection*{Challenges in Safety and Reliability}
+\begin{itemize}
+	\item FMs can be unpredictable or "hallucinate."
+	\item Ensuring safe, explainable, and fail-safe actions in physical environments.
+	\item Mistakes can cause real-world damage or harm.
+\end{itemize}
+
+\subsubsection*{Challenges in Multimodal Integration}
+\begin{itemize}
+	\item FMs typically operate on specific modalities (e.g., text, vision).
+	\item Fusing multimodal sensory input (e.g., vision, proprioception, tactile) with high-level reasoning.
+	\item Effective robotic control requires coordinated understanding across many input streams.
+\end{itemize}
+
+\subsubsection*{Challenges in Generalization}
+\begin{itemize}
+	\item FMs don't always generalize across different embodiments or tasks.
+	\item Making a single model work across varied robots (arms, legs, drones) and diverse manipulation goals.
+	\item One of the key promises of FMs is general-purpose utility, but robotics tasks are often highly specific.
+\end{itemize}
+
+
+\end{document}
